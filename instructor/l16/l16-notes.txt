@@ -1,0 +1,92 @@
+
+challening topic, but you can all follow this (with struggle)
+
+mazes
+ - we solve them almost instantly
+ - but how might a program do it
+ - generate a space of paths to solution
+ - search that space
+
+ - lay out tree, x y positions, need to add a maze that has 2 subs
+ 
+ - 3 things:
+  - changing
+  - generate next
+  - tell when done
+
+- jump to w2, if you have time over weekend start from -starter
+- represent changing
+- genrec ?? try-catch
+- blend
+   find the join points:
+        (genrec (next-problem d))
+        (fn-for-lop (pos-subs p))
+
+	(define try <option 1>)
+	(fn-for-p (first lop))
+
+- wish lists
+
+start class on completing solved? by -35
+
+paste and discuss solution
+
+start class on completing valid-next-positions by -20
+
+paste and discuss solution
+
+
+- done
+
+
+(define (solvable? m)            ;+try-catch
+  ;; trivial:   reaches lower right
+  ;; reduction: moves down and right when possible
+  ;; argument:  maze is finite, so moving will eventually
+  ;;            reach trivial case or run out of moves
+  (local [(define (fn-for-pos p)
+            (if (solved? p)
+                true
+                (fn-for-lop (valid-next-positions p))))
+          (define (fn-for-lop lop)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try (fn-for-pos (first lop)))]
+                     (if (not (false? try))
+                         try		       
+                         (fn-for-lop (rest lop))))]))
+
+          (define MAX-X/Y (sub1 (sqrt (length m))))  ;max x/y dims
+
+          (@signature Position -> Boolean)
+          ;; produce true if p represents the lower right corner of a maze
+          (@template-origin Position)
+          ;; (solved? <4,4>) in a size 5 maze is true
+          (define (solved? p)
+            (= (pos-x p) (pos-y p) MAX-X/Y))
+          
+          
+          (@signature Position -> (listof Position))
+          ;; Produce a list of up to two valid next positions (right and down)
+          (@template-origin fn-composition use-abstract-fn)
+          (define (valid-next-positions p)
+            (filter valid? (all-next-positions p)))
+
+          (@signature Position -> (listof Position))
+          (@template-origin Position)
+          ;; (anp <0,0>) --> (list <0,1> <1,0>)
+          ;; (anp <1,0>) --> (list <1,1> <2,0>)
+          (define (all-next-positions p)
+            (local [(define x (pos-x p))
+                    (define y (pos-y p))]
+              (list (make-pos (add1 x)      y)
+                    (make-pos       x (add1 y)))))
+
+          (@signature Position -> Boolean)
+          (@template-origin Position)
+          (define (valid? p)
+            (and (<= 0 (pos-x p) MAX-X/Y)
+                 (<= 0 (pos-y p) MAX-X/Y)
+                 (mref m p)))]
+
+    (fn-for-pos (make-pos 0 0))))

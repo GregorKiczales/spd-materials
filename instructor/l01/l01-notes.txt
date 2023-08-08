@@ -1,0 +1,161 @@
+
+
+Timeline:
+
+  20	intro, overview slides
+   5	quick tour of edx and cs110.students
+
+   -- expressions --
+
+   4	Dr Racket
+   6	numbers
+   5 	exercise (most will not be setup to handin)
+   4    show handback
+   8	images
+   	(no exercise)
+
+   -- functions --
+
+   10   idea
+   12	exercise
+    8	evaluation
+
+
+[need to keep slides to 20]
+
+After slides...
+
+[need to keep this to what's there, not explaining it]
+
+Setup in tabs: links.html, edX Course page, Piazza, edX Lectures page
+
+Walk through QUICKLY showing what is there, the goal here is for students
+to know there is a lot there and that they need to go through it after
+class. The goal is not for them to remember everything that is there.
+
+admin pages in links are admin material
+reference pages in links are course content reference material
+edX Lectures/Labs/ProblemSets is "the course"
+edX numbered sections are "the textbook"
+    like many courses in schools that try to advance the state of the
+    art, the course is ahead of the textbook - DIFFS describes that
+
+Each lecture page has three parts:
+     you must do before lecture
+     what we do in lecture (and you must finish after)
+     you must do after lecture
+
+starters are submitted during lecture and can be re-submitted up to 10pm
+	 starts w/ lecture 2
+
+
+[be sure to anchor the Language page]
+
+Today we are going to start learning BSL, the language page is the reference for this material.
+
+Here is Dr Racket, the tool we use for writing programs.
+We are not programming in Racket or Dr. Racket.
+We are programming in Beginning Student Language (BSL).
+
+definitions window (we write the programs here)
+
+results window (see and interrogate program results here)
+
+(+ 1 2)
+
+(+ 4 5)
+
+expressions are like what you know from grade school math;
+except operator goes at front and there are parens around
+every sub-expression
+
+ask for help with 3 * 4
+
+introduce ;
+
+(+ 1 (* 3 2))
+
+ask other ways to write (+ 1 2 3)
+
+evaluation is left to right, inside to outside
+
+do step-by-step reduction of (* (+ 1 2) (/ 4 2))
+
+detailed evaluation rules are critical, need them to debug, need them to do well on exams
+they are covered in edX numbered videos
+
+(sqr 9)
+(sqrt 4)   explain #i
+
+quick question:
+
+what's the result of this formula   4 * 3 ^ 2 - 5
+while they are thinking type (- (* 4 (sqr 3)) 5)
+
+what's important is to be clear - what is not important is to save time typing
+
+
+36:00
+problem from starter
+most will not be setup to handin (do that in L2)
+
+Images (quickly)
+
+(require 2htdp/image)
+
+(circle 10 "solid" "red")
+
+(rectangle 20 40 "solid" "blue")
+
+(overlay (circle 10 "solid" "red")
+         (circle 20 "solid" "blue")
+         (circle 30 "solid" "red"))
+
+but also:
+
+(above (circle 10 "solid" "red")
+       (circle 20 "solid" "blue")
+       (circle 30 "solid" "red"))
+
+many many many more image primitives you can learn about
+
+do other problem in starter tonight (example of work you will finish later)
+
+61:00
+
+-- functions starter --
+
+
+(above (circle 40 "solid" "red")
+       (circle 40 "solid" "yellow")
+       (circle 40 "solid" "green"))
+
+redundancy seems annoying
+
+remember functions from high school?
+
+   f(x) = 5 * x
+
+   so f(2) is 10, f(4) is 20 etc.
+
+BSL has functions too
+
+(1) identify varying quantity
+
+;;                           v
+(above (circle 40 "solid" "red")
+       (circle 40 "solid" "yellow")
+       (circle 40 "solid" "green"))
+
+;fn name
+; parameter stands for varying quantity
+;body with non-varying expressions and using parameter
+
+(define (bulb c)
+  (circle 40 "solid" c))
+
+(above (bulb "red")
+       (bulb "yellow")
+       (bulb "green"))
+
+[got to this point, left them exercise to do]

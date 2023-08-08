@@ -1,0 +1,135 @@
+
+
+
+structure from data
+
+structure of course
+
+
+Clickers
+
+must include place-image question
+
+
+recipe checklist, today will do DW, while using DD and DF
+
+start to see a fundamental challenge in SW dev - keeping track of where you are
+Slides re trust the recipe. 3 recipes; we will call out to DD and DF from DW. Repeatedly to DF.  Working systematically can help us not be confused about where we are and what we are doing.
+
+In big programs there are thousands or more functions; with many under active design; this is the basis for being able to do that.
+
+
+HtDW (recipe sheet on LAPTOP)
+
+Domain analysis (ipad)
+  2 pictures first, usual constants
+  delay TOP and BOT until interp
+  everything will be driven off the careful analysis
+
+Constants
+  single point of control (width->ctr-x)
+  will need radius (might not have seen this one coming)
+  separate non-image and image
+
+(define WIDTH  400) ;pixels
+(define HEIGHT 600)
+
+(define CTR-X (/ WIDTH 2))
+
+(define SPIDER-RADIUS 10)
+
+
+(define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
+
+
+(define SPEED 2) ; pixels per tick
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+
+Data definition
+  quickly through TC
+  at interp, go back to issue of TOP and BOT, pictures, define, constraint
+  now that we have DD rename WS, use find/replace
+
+
+;; do these during interpretation DD
+
+(define TOP (+      0   SPIDER-RADIUS))
+(define BOT (- HEIGHT 1 SPIDER-RADIUS))  <**** note -1
+
+
+(@htdd Spider)
+;; Spider is Number
+;; interp. y coordinate of the spider
+;;         distance of the centre of the spider from top
+;; CONSTRAINT: to be entirely visible, must be in [TOP, BOT]
+;; TOP, BOT defined above
+(define MID (/ HEIGHT 2))
+
+(@dd-template-rules atomic-non-distinct)
+
+(define (fn-for-spider s)
+  (... s))
+
+
+main
+  leave unused commented out, make clear would not normally do that
+
+
+Do render QUICKLY interactively
+
+(@htdf render)
+(@signature Spider -> Image)
+;; place SPIDER-IMG on MTS at its proper x and y 
+(check-expect (render TOP) (place-image SPIDER-IMAGE CTR-X TOP MTS))
+(check-expect (render (/ HEIGHT 2))
+              (place-image SPIDER-IMAGE CTR-X (/ HEIGHT 2) MTS))
+
+;(define (render s) MTS) ;stub
+
+(@template-origin Spider)
+
+(@template
+ (define (render s)
+   (... s)))
+
+(define (render s)
+  (place-image SPIDER-IMAGE CTR-X s MTS))
+
+
+
+(@htdf tock)
+(@signature Spider -> Spider)
+;; produce next spider moving down by SPEED (s + SPEED), stopping at bottom
+
+setup point that we spend a long time on the examples by spending a long
+time on the examples, working them out carefully
+
+Main focus here is the BOT boundary, first fn behavior, then
+setting up the three tests.
+
+
+;; THE DOTTED BOT LINE is the CENTER of the spider
+(check-expect (tock TOP) (+ TOP SPEED))
+(check-expect (tock (- BOT SPEED  1)) (- BOT 1)) ;above BOT - SPEED
+(check-expect (tock (- BOT SPEED  0))    BOT)    ;at    BOT - SPEED
+(check-expect (tock (- BOT SPEED -1))    BOT)    ;below BOT - SPEED
+
+;(define (tock s) s) ;stub
+
+(@template-origin Spider)
+
+(@template
+ (define (tock s)
+   (... s)))
+
+
+walk through how to think about the if
+
+(define (tock s)
+  (if (>= (+ s SPEED) BOT) ;if we move by SPEED is it too far
+      BOT                  ;stop at BOT
+      (+ s SPEED)))        ;move by SPEED
+
+

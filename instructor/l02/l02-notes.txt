@@ -1,0 +1,116 @@
+
+go right into first poll, like 15 seconds after start
+
+check-in on prework...
+  questions, as zoom polls
+  anonymous, but answer
+  learning comes from answering
+
+[skipped contract because was in intro slides, remove from intro, do here]
+
+Evaluation rules are essential
+  need rules when debugging
+  the program isn't doing what it is supposed to
+  so you need to work out what it actually is doing
+
+  can use the stepper to check (but not in exams)
+
+HtDF
+  core of the course, will use 100s of times
+  will learn a little more about it each time
+  crawl, walk... run
+  recipe pages (must read, this is the reference text)
+  checklist (a reminder of the steps, not an understanding of them)
+
+Present
+  topple
+    checklist on screen
+    metadata (about the program, checkable, used by industry leaders)
+    post dev markup for review
+
+
+
+present / fast interactive
+  checkbox-line
+    use checklist
+
+class
+  tall?
+    at fn-name, signature they won't know to use ? and boolean
+    interrupt to talk about that (90 seconds)
+
+    at end they won't have done enough boundary tests,
+    talk about that, add tests
+    submit to AG after tests, talk about validity, thoroughness and cooldown
+    
+
+
+poll questions:
+
+(define FOO ...       60 seconds,  answer C
+
+
+(+ (* 2 3) ....       30 seconds,  answer D
+
+
+(if (< 2 1) ...       40 seconds,  answer E, if is a conditional expression
+
+(and (> 2 1) ...      30 seconds,  answer C, and is also conditional expression
+
+
+topple
+
+recipe page
+recipe checklist
+run c-es against stub, show check-syntax
+
+metadata is data about the program; checkable; design rule checking is growing     
+  
+HtDF function design for topple follows
+
+types of data consumed -> type of single data produced
+
+what is produced based on args; what not how
+
+examples to help you figure out what function does
+
+will also be tests, minimum 2, usually more
+
+correct name, # of params, result type; used to check test formedness
+
+RUN TESTS AGAINST STUB
+
+where the template (backbone) of the function comes from
+
+the template
+
+complete, debugged function definition
+
+
+
+
+
+
+checkbox-line
+
+signature is types not roles
+
+produce not return
+
+(yes, size could have been a parameter)
+
+
+
+For tall? elaborate on check-expects only, not remaining steps
+
+after they work for 90-120 seconds or so
+introduce rule that yes/no answer is ALWAYS Boolean
+introduce rule that such functions have names that end in ?
+
+10 20, 30 30, 40 10, 19 20, 30 29
+
+numerical boundaries at, below, above
+
+
+
+vary both height and width

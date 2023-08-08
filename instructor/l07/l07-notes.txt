@@ -1,0 +1,164 @@
+
+
+
+
+;; ERRORS
+;;
+;; Template has ball-x twice
+;; Only one test and test repeats 10
+;; @template has ball-x twice
+;; Function has ball-x twice
+
+
+
+Good Midterm Exercise - Writing a Larger Program
+
+(NO MIDTERM HINT THERE, JUST THAT THERE'S LOT'S OF PROGRAM DESIGN HERE)
+
+
+Clickers
+
+
+Present  Fast analysis, focus on changing
+
+ <after class you should start with v1, but we will start w/ v2.8>
+
+Present	 DDs, arrows, NR, NH,
+         fn-for-xxx means call a function with xxx Type in its signature
+
+
+Walk-through  lay-egg, handle-key, state true  (demo that)
+
+Present	 sig, stub, purpose, tests for next-eggs
+
++40:00
+
+Class	 complete both functions			[20 minutes]
+	 interrupt for helper
+
+
+Present	 sig, stub, purpose, tests for render-eggs      
+	 Note that there will be a helper for sure
+	 the arrows make that clear.  BUT combination
+	 works a little differently here. (leave at that for now)
+
+Class gets 5 mins on render, then take over at the -10 mark, show helper in comb. position, and paste in correct place-egg.
+
+
+(@htdf next-eggs)
+(@signature ListOfEgg -> ListOfEgg)
+;; produce the next eggs at appropriate locations and angles
+BASE FIRST, TWO-LONG, VARY NUMERICAL QUANTIES
+(check-expect (next-eggs empty) empty)
+(check-expect (next-eggs (cons (make-egg 10 20 30)
+                               (cons (make-egg 11 21 31) empty)))
+              (cons (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED))
+                    (cons (make-egg 11 (+ 21 FALL-SPEED)(+ 31 SPIN-SPEED))
+                    empty)))
+
+;(define (next-eggs loe) loe) ;stub
+
+(@template-origin ListOfEgg)
+
+(@template
+ (define (next-eggs loe)
+   (cond [(empty? loe) (...)]
+         [else
+          (... (fn-for-egg (first loe))
+               (next-eggs (rest loe)))])))
+
+(define (next-eggs loe)
+  (cond [(empty? loe) empty]
+        [else
+         (cons (next-egg (first loe))
+               (next-eggs (rest loe)))]))
+
+(@htdf next-egg)
+(@signature Egg -> Egg)
+;; produce the next egg and increase y by FALL-SPEED, r by SPIN-SPEED
+(check-expect (next-egg (make-egg 10 20 30))
+              (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED)))
+
+;(define (next-egg e) e) ;stub
+
+(@template-origin Egg)
+
+(@template
+ (define (next-egg e)
+   (... (egg-x e)
+        (egg-y e)
+        (egg-r e))))
+
+(define (next-egg e)
+  (make-egg (egg-x e)
+            (+ (egg-y e) FALL-SPEED)
+            (+ (egg-r e) SPIN-SPEED)))
+
+
+(@htdf render-eggs)
+(@signature ListOfEgg -> Image)
+;; Place YOSHI-EGG at appropriate x,y and r on MTS for each egg in loe
+(check-expect (render-eggs empty) MTS)
+(check-expect (render-eggs (cons (make-egg 10 20 30)
+                                 empty))
+              (place-image (rotate 30 YOSHI-EGG) 10 20
+                           MTS))
+(check-expect (render-eggs (cons (make-egg 110 120 130)
+                                 (cons (make-egg 10 20 30)
+                                       empty)))
+              (place-image (rotate 130 YOSHI-EGG) 110 120
+                           (place-image (rotate 30 YOSHI-EGG) 10 20
+                                        MTS)))
+
+;(define (render-eggs loe) MTS)
+
+(@template-origin ListOfEgg)
+
+(@template
+ (define (render-eggs loe)
+   (cond [(empty? loe) (...)]
+         [else
+          (... (fn-for-egg (first loe))
+               (render-eggs (rest loe)))])))
+
+;; base case result: MTS
+;; combination: place-image, but it needs x, and y from egg
+;;    --->> the combination has to be inside the helper
+;; contribution:
+#;
+(define (next-eggs loe)
+  (cond [(empty? loe) empty]
+        [else
+         (cons (next-egg (first loe))
+               (next-eggs (rest loe)))]))
+
+(define (render-eggs loe)
+  (cond [(empty? loe) MTS]
+        [else
+         (place-egg (first loe)
+                    (render-eggs (rest loe)))]))
+
+(@htdf place-egg)
+(@signature Egg Image -> Image)
+;; place e on img at appropriate location and rotation
+(check-expect (place-egg (make-egg 10 20 30) MTS)
+              (place-image (rotate  30 YOSHI-EGG) 10 20 MTS))
+(check-expect (place-egg (make-egg 110 120 130) empty-image)
+              (place-image (rotate  130 YOSHI-EGG) 110 120 empty-image))
+
+;(define (place-egg e img) img)
+
+(@template-origin Egg)
+
+(@template
+ (define (place-egg e img)
+   (... (egg-x e)
+        (egg-y e)
+        (egg-r e)
+        img)))
+
+(define (place-egg e img)
+  (place-image (rotate  (egg-r e) YOSHI-EGG)
+               (egg-x e)
+               (egg-y e)
+               img))	 

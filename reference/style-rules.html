@@ -1,0 +1,151 @@
+<h2>Style Rules</h2>
+<p>In addition to basic structure of the design recipes, there are a number of small details that matter when designing programs.</p>
+<p>These rules, or style conventions, are common through the world of software development. Different communities have their own conventions, so what's considered proper for one language is not proper for another. Sometimes, even within a programming language, one group of users will use different conventions than another.</p>
+<p>And so it is with our course. We have our own set of style conventions which we ask you to follow.</p>
+<p></p>
+<h4>Notation and Naming Conventions</h4>
+<p></p>
+<ol>
+<li><strong> Comments that are a permanent part of the program should have TWO semi-colons followed by a space. </strong><br>
+These always go at the beginning of the line.<br>
+These include purpose statements, type comments, etc.<br>
+<pre>;; multiplies number n by 2</pre>
+
+<li><strong> Comments that are temporary should have ONE semi-colon.  Comments at the end of a line also have 1 semi-colon.</strong><br>
+These are comments that would be deleted in a completed program.<br>
+These include commenting out stubs.<br>
+<pre>;(define (double n)  0)  ; this is the stub </pre>
+
+<li><strong> Use names that make sense with respect to the problem. </strong><br>
+Good names for a variable representing a count of some sort include <tt>count</tt>, <tt>cnt</tt> or possibly <tt>c</tt>.<br>
+</li>
+
+<li><strong>Do not use _ in names, use - instead</strong><br>
+<tt>render-body</tt> rather than <tt>render_body</tt>
+</li>
+
+<li><strong> Data definition names (type names) should use <a href="http://en.wikipedia.org/wiki/CamelCase" rel="nofollow" title="Link: http://en.wikipedia.org/wiki/CamelCase">upper camel case</a> </strong><br>
+<tt>WorldState</tt> rather than <tt>world-state</tt>, <tt>world_state</tt> or <tt>worldState</tt>.
+</li>
+
+<li><strong> Function names and parameter names should be hyphenated and not capitalized</strong>
+<tt>posn-x</tt> or <tt>tock-ball</tt>.
+</li>
+
+<li><strong>Functions that produce Boolean should have names that end in ?</strong>
+<tt>pass?</tt> or <tt>aisle?</tt>
+</li>
+
+<li><strong>Constant names should be in ALL-CAPS.</strong>
+Eg. <tt>HEIGHT</tt>, <tt>STOP-WHEN</tt>.
+</li>
+</ol>
+
+<p></p>
+<h4>Design and Layout Choices</h4>
+<ol>
+<li><strong>No line should span more than 80 characters. </strong>
+The bottom right of Dr. Racket shows how long a line is.<br>
+Break lines at those points suggested by examples you see on the websites.<br>
+Cond clauses, and the three parts of an if expression, should be on all separate lines.
+</li>
+
+<li><strong> Your code should be indented using the conventions seen in our examples </strong><br>
+Ctrl+I on PC, or command+I on Mac, are shortcuts that will automatically indent.
+</li>
+
+<li><strong> Spaces where they belong </strong><br>
+Use spaces in a manner consistent with the examples you see in lectures, videos etc.<br>
+<pre>;; This is good
+(define (foo n) 
+  (cond [(odd? n) 1]
+        [(even? n) 2]))
+;; This is not
+(define(foo n) 
+  (cond[ (odd? n) 1]
+  [(even? n)2]))
+</pre>  
+</li>
+
+<li><strong> No dangling parenthesis </strong><br>
+No parentheses left dangling on a line without any other text.
+<pre>(define (double n) 
+	(* 2 n)
+) ; This is a dangling parenthesis</pre>
+</li>
+
+<li><strong> No function should span more than five to ten lines.</strong><br>
+If it does, reconsider your interpretation of the "one task, one function" guideline.<br>
+This rule is relaxed when we learn <tt>local</tt>
+</li>
+
+<li><strong> In the functions section of a program, the most important functions should be first, and the least important ones last </strong><br>
+For world programs the <tt>main</tt> function should come first, followed by the <tt>big-bang</tt> handler functions.<br>
+NOTE: You don't have to design the functions in this order, you just have to arrange the program this way.<br>
+</li>
+
+<li><strong>Don't leave extra examples of making the program do something lying around- use <tt>check-expects</tt> instead.</strong></li>
+</ol>
+
+<p></p>
+<h4>A Small Comprehensive Example</h4>
+<p></p>
+<!------------ TABLE START -------------------------------------------------->
+<table border="1">
+<tbody>
+<tr><th><span face="verdana, sans-serif" style="font-family: verdana, sans-serif;"><span style="font-weight: normal;">Good</span></span></th><th><span face="verdana, sans-serif" style="font-family: verdana, sans-serif;"><span style="font-weight: normal;">Bad</span></span></th></tr>
+<tr valign="top">
+<td>
+<pre><code>
+</code>
+(@signature String -&gt; String)
+;; Produce a greeting with "Hello" before string.
+(check-expect (greet "World!") "Hello World!")
+(check-expect (greet "goodbye") "Hello goodbye")
+(check-expect (greet "loneliness") "Hello loneliness")
+
+;(define (greet o)  ; stub
+;  "a")
+
+(@template-origin String)
+
+(@template 
+ (define (greet o)
+   (... o)))
+  
+(define (greet o)
+  (string-append "Hello" " " o))
+
+</pre>
+<div></div>
+</td>
+<!-- -------------------------------------------- -->
+<td>
+<pre><code>
+</code>
+; string -&gt; string <br />
+; (greet "foo") produces "Hello foo" <br />
+
+(define (greet str)             
+              ;; put "Hello " before string
+              (string-append "Hello " str)
+)
+<br />
+(check-expect (greet "World!") "Hello World!")
+(check-expect (greet "goodbye")  "Hello goodbye")
+(check-expect (greet "loneliness")    "Hello loneliness")
+
+;(define (accio o)  ; stub 
+;  "a")
+
+(greet "World!")
+(greet "goodbye")
+(greet "loneliness")
+
+</pre>
+<div></div>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>

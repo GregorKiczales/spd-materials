@@ -1,0 +1,35 @@
+
+
+instructors/lxx folder copied to ipad, clickers.pdf and pad.pdf tested
+
+browser window setup with tabs for:
+  lecture page, links, recipes, recipe checklist, Piazza ...
+
+
+Dr. R open, 24pt font
+  starters open in it
+
+Quicktime open, showing pad
+
+music youtube queued up, know what start time is
+
+lecture notes open in emacs on other screen
+
+pad .ppt open on other screen
+
+start zoom
+  turn off: share screen, chat, unmute, start video, share whiteboards
+
+  share laptop screen, turn on share sound
+
+  in preferences check selected mic
+  also check zoom volume which tends to reset to very low
+  
+  open participants
+
+  open chat (used during work periods)
+  
+let TA know plan on slack
+  polls?
+  HtDF?
+  leave slack open to lecture ta channel

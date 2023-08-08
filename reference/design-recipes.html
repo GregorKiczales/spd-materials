@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+  <LINK href="../110-style.css" rel="stylesheet" type="text/css">
+</HEAD>
+
+
+<BODY>
+  <a name="top">
+    <h2>Systematic Program Design Recipes</h2>
+    <p>In this course, we teach an approach to program design based on design recipes. These recipes were originally based on those found in <a href="http://htdp.org/2022-2-9/Book/index.html">How To Design Programs, 2nd Edition</a>, but have been expanded in this course. Each recipe is applicable to certain problems, and following the recipes systematizes the process of designing solutions to those problems.</p>
+    
+    <p>The three core recipes are used most frequently. The templating recipes are used for the template phase of every data definition and function. Abstraction recipes are used to reduce redundancy in code.</p>
+  
+    <p>There is also a&nbsp;<a href="recipe-checklist.pdf">checklist</a> to help you remember the recipe steps.</p>
+  
+    <table title="Design Recipes" border="1" cellpadding="8" style="border: 1px solid #000000; padding: 8px; text-align: left; horizontal-align: left; vertical-align: top; max-width: 90%;">
+
+      <thead>
+	<tr><th rowspan="2" scope="col" width="28%">Core Recipes</th><th rowspan="1" colspan="2" scope="col" width="50%" style="text-align: center;">Template Origin</th><th rowspan="2" scope="col">Abstraction</th></tr>
+	<tr><th scope="col" width="25%">Data Driven</th><th scope="col" width="25%">Control Driven</th></tr>
+      </thead>
+      <tbody>
+  
+<tr>
+<td><a href="#HtDF">How to Design Functions (HtDF)</a> <br /> <small>Design any function.</small></td>
+<td><a href="#Data">Data Driven Templates</a><br /> <small> Produce template for a data definition based on the form of the type comment. </small></td>
+<td><a href="#FuncComp">Function Composition</a></td>
+<td><a href="#Examples">From Examples</a> <br /> <small> Produce an abstract function given two similar functions. </small></td>
+</tr>
+
+<tr>
+<td><a href="#HtDD">How to Design Data (HtDD)</a> <br /> <small> Produce data definitions based on structure of the information to be represented. </small></td>
+<td><a href="#2One-of">2 One-of Data</a> <br /> <small> Functions where 2 arguments have a one-of in their type comments. </small></td>
+<td><a href="#Failure">Failure Handling</a></td>
+<td><a href="#Type">From Type Comments</a> <br /> <small> Produce a fold function given type comments. </small></td>
+</tr>
+
+<tr>
+<td><a href="#HtDW">How to Design Worlds (HtDW)</a> <br /> <small> Produce interactive programs that use <tt>big-bang</tt>.</small></td>
+<td rowspan="3"></td>
+<td><a href="#Backtrack">Backtracking Search</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td rowspan="3"></td>
+<td><a href="#GenRec">Generative Recursion</a></td>
+<td><a href="#Using">Using Abstract Functions</a></td>
+</tr>
+
+
+<tr>
+<td><a href="#Accumulators">Accumulators</a></td>
+<td></td>
+</tr>
+
+
+<tr>
+<td colspan="2" scope="col" style="text-align: center;"><a href="#TempBlend">Template Blending</a></td>
+<td></td>
+</tr>
+
+</tbody>
+</table>
+<p><br /> <!----------------------------------------------------------------------------------></p>
+<p></p>
+<p><a name="HtDF"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>How To Design Functions (HtDF)</h2>
+<p>The How to Design Functions (HtDF) recipe is a <strong>design method</strong> that enables systematic design of functions. We will use this recipe throughout the term, although we will enhance it as we go to solve more complex problems.</p>
+<table summary="Steps of the HtDF Recipe." border="1" cellpadding="5" style="border: 1px solid #000000; padding: 5px; text-align: left; horizontal-align: left; vertical-align: top; max-width: 90%;">
+<tbody>
+<tr style="text-align: left;">
+<td>
+<p>The HtDF recipe consists of the following steps:</p>
+<ol>
+<li><a href="#S1">Signature, purpose and stub.</a></li>
+<li><a href="#S2">Define examples, wrap each in <tt>check-expect</tt>.</a></li>
+<li><a href="#S3">Template and inventory.</a></li>
+<li><a href="#S4">Code the function body.</a></li>
+<li><a href="#S5">Test and debug until correct</a></li>
+</ol>NOTE:
+<ul>
+<li>Each of these steps build on the ones that precede it. The signature helps write the purpose, the stub, and the check-expects; it also helps code the body. The purpose helps write the check-expects and code the body. The stub helps to write the check-expects. The check-expects help to code the body as well as to test the complete design.</li>
+<li>It is sometimes helpful to do the steps in a different order. Sometimes it is easier to write examples first, then do signature and purpose. Often at some point during the design you may discover an issue or boundary condition you did not anticipate, at that point go back and update the purpose and examples accordingly. But you should never write the function definition first and then go back and do the other recipe elements -- while that may work for simple functions, you will not be able to do that for the complex functions later in the course! Please learn to follow the recipes now - it will pay back in being able to design complex programs later in the course.</li>
+<li>Throughout the HtDF process be sure to "run early and run often". Run your program whenever it is well-formed. The more often you press run the sooner you can find mistakes. Finding mistakes one at a time is much easier than waiting until later when the mistakes can compound and be more confusing. Run, run, run!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><a name="S1"></a></p>
+<h4>Signature, purpose and stub.</h4>
+<p>The entire function design starts with an <tt>@htdf</tt> tag. This indicates the name of the function, and the fact that what follows the tag is a function design based on the HtDF recipe.</p>
+<p>Write the function signature, a one-line purpose statement and a function stub.</p>
+<p>A signature has the type of each argument, separated by spaces, followed by <tt>-&gt;</tt>, followed by the type of result. So a function that consumes an image and produces a number would have the signature <tt>Image -&gt; Number</tt>. The signature is written as metadata using the @signature tag.</p>
+<p>Note that the stub is a syntactically complete function definition that produces a value of the right type. If the type is Number it is common to use 0, if the type is String it is common to use a "" and so on. The value will not, in general, match the purpose statement. In the example below the stub produces 0, which is a Number, but only matches the purpose when double happens to be called with 0.</p>
+<pre>(@htdf double)
+(@signature Number -&gt; Number)
+;; produces n times 2
+
+(define (double n)  0)  ; this is the stub</pre>
+<p>The purpose of the stub is to serve as a kind of scaffolding to make it possible to run the examples even before the function design is complete. With the stub in place check-expects that call the function can run. Most of them will fail of course, but the fact that they can run at all allows you to ensure that they are at least well-formed: parentheses are balanced, function calls have the proper number of arguments, function and constant names are correct and so on. This is very important, the sooner you find a mistake -- even a simple one -- the easier it is to fix.</p>
+<p><a name="S2"></a></p>
+<h4>Define examples, wrap each one in check-expect.</h4>
+<p>Write at least one example of a call to the function and the expected result the call should produce.</p>
+<p>You will often need more examples, to help you better understand the function or to properly test the function. (If once your function works and you run the program some of the code is highlighted in black it means you definitely do not have enough examples.) If you are unsure how to start writing examples use the combination of the function signature and the data definition(s) to help you generate examples. The example data constants from the data definition may be useful, but it does not necessarily cover all the important cases for a particular function.</p>
+<p>The first role of an example is to help you understand what the function is supposed to do. If there are boundary conditions be sure to include an example of them. If there are different behaviours the function should have, include an example of each. Since they are examples first, you could write them in this form:</p>
+<pre>;; (double 0) should produce 0
+;; (double 1) should produce 2
+;; (double 2) should produce 4</pre>
+<p>When you write examples it is sometimes helpful to write not just the expected result, but also to elaborate how it is computed. For example, you might write the following instead of the above:</p>
+<pre>;; (double 0) should produce (* 0 2)
+;; (double 1) should produce (* 1 2)
+;; (double 2) should produce (* 2 2)</pre>
+<p>While the above form satisfies our need for examples, BSL gives us a better way to write them, by enclosing them in check-expect. This will allow BSL to check them automatically when the function is complete. (In technical terms it will turn the examples into unit tests.)</p>
+<pre>(@htdf double)
+(@signature Number -&gt; Number)
+;; produces n times 2
+(check-expect (double 0) (* 0 2))
+(check-expect (double 1) (* 1 2))
+(check-expect (double 3) (* 3 2))
+
+(define (double n)  0)  ; this is the stub</pre>
+<p>The existence of the stub will allow you to run the tests. Most (or even all) of the tests will fail since the stub is returning the same value every time. But you will at least be able to check that the parentheses are balanced, that you have not misspelled function names etc.</p>
+<p><a name="S3"></a></p>
+<h4>Template and inventory</h4>
+<p>The template is the basic structure of the function.  Before writing the actual template we write a <tt>@template-origin</tt> tag that tells us what strategy we plan to use to come up with the template - the basic function structure.  In module 1 the template is simple, but as the course goes on they become more and more complex.</p>
+<!--- Note how the following avoids saying "week 2/3" but instead uses the -->
+<!--- the symbolic term "once HtDD is introduced". That's crucial so that  -->
+<!--- when things move from week to week there aren't problems.            -->
+<p>In modules 2 - 6, once the How to Design Data Definitions (HtDD) recipe in introduced, templates are produced by following the rules in the <a href="#Data">Data Driven Templates</a> recipe. You should write a <tt>@template-origin</tt> tag giving the origin of the template, copy the template from the data definition to the function design, and rename it. Then make another copy, wrap the first one in a @template tag, and then set to work on the second one - once completed this will be your final function definition. Note that the template is copied from the data definition for the consumed type, not the produced type. Beyond module 6 templates are often produced by blending two or more basic templates.</p>
+<p>For primitive data like numbers, strings and images the body of the template is simply <tt>(... x)</tt> where x is the name of the parameter to the function.</p>
+<p>Once the template is done the stub should be commented out.</p>
+<pre>(@htdf double)
+(@signature Number -&gt; Number)
+;; produces n times 2
+(check-expect (double 0) (* 0 2))
+(check-expect (double 1) (* 1 2))
+(check-expect (double 3) (* 3 2))
+
+;(define (double n) 0) ;this is the stub
+
+(@template-origin Number)
+
+(@template   
+ (define (double n)    ;this a copy of the template for reference
+  (... n)))
+  
+(define (double n)     ;this is the start of the final function definition
+  (... n))</pre>
+
+<p>
+It can also be useful to add constant values which are extremely likely to be useful to the template body at this point. For example, the template for a function that renders the state of a world program might have an MTS constant added to its body. This causes the template to include an inventory of useful constants.</p>
+
+<p><a name="S4"></a></p>
+<h4>Code the function body</h4>
+<p>Now complete the function body by filling in the definition.</p>
+<p>Note that:</p>
+<ul>
+<li>the signature tells you the type of the parameter(s) and the type of the data the function body must produce</li>
+<li>the purpose describes what the function body must produce in English</li>
+<li>the examples provide several concrete examples of what the function body must produce</li>
+<li>the template tells you the basic function structure - the raw material you have to work with</li>
+</ul>
+<p>You should use all of the above to help you code the function body. In some cases further rewriting of examples might make it more clear how you computed certain values, and that may make it easier to code the function.</p>
+<pre>(@htdf double)
+(@signature Number -&gt; Number)
+;; produces n times 2
+(check-expect (double 0) (* 0 2))
+(check-expect (double 1) (* 1 2))
+(check-expect (double 3) (* 3 2))
+
+;(define (double n) 0) ; this is the stub
+
+(@template-origin Number)
+
+(@template   
+ (define (double n)    ;this a copy of the template for reference
+  (... n)))
+
+(define (double n)
+  (* n 2))</pre>
+<p><a name="S5"></a></p>
+<h4>Test and debug until correct</h4>
+<p>Run the program and make sure all the tests pass, if not debug until they do. Many of the problems you might have had will already have been fixed because of following the "run early, run often" approach. But if not, debug until everything works.</p>
+<p><a name="HtDD"></a> <!----------------------------------------------------------------------------------------></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>How To Design Data (HTDD)</h2>
+<p>Data definitions are a driving element in the design recipes.</p>
+<p>A data definition establishes the represent/interpret relationship between information and data:</p>
+<ul>
+<li>Information in the program's domain is represented by data in the program.</li>
+<li>Data in the program can be interpreted as information in the program's domain.</li>
+</ul>
+<p>A data definition must describe how to form (or make) data that satisfies the data definition and also how to tell whether a data value satisfies the data definition. It must also describe how to represent information in the program's domain as data and interpret a data value as information.</p>
+<p>So, for example, one data definition might say that numbers are used to represent the <tt>Speed</tt> of a ball. Another data definition might say that numbers are used to represent the <tt>Height</tt> of an airplane. So given a number like 6, we need a data definition to tell us how to interpret it: is it a <tt>Speed</tt>, or a <tt>Height</tt> or something else entirely. Without a data definition, the 6 is just data &ndash; it could mean anything.</p>
+<table title="Data Definitions." border="1" cellpadding="15" style="border: 1px solid #000000; padding: 15px; text-align: left; horizontal-align: left; vertical-align: top; max-width: 90%;">
+<tbody>
+<tr>
+<td>
+<p>The first step of the recipe is to identify the inherent structure of the information.</p>
+<p>Once that is done, a data definition consists of an @htdd tag followed by four or five elements:</p>
+<ol>
+<li>A possible <strong>structure definition</strong> (not until compound data)</li>
+<li>A <strong>type comment</strong> that defines a new type name and describes how to form data of that type.</li>
+<li>An <strong>interpretation</strong> that describes the correspondence between information and data.</li>
+<li>One or more <strong>examples</strong> of the data.</li>
+<li>A <strong>template</strong> for a 1 argument function operating on data of this type.</li>
+</ol>
+<p><emph>Through module 6 the template should be preceded by a <tt>dd-template-rules</tt> metadata annotation listing the template rules used to form the template. The tag is a record of the derivation of the template.</emph></p>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<hr /><hr />
+<h3>What is the Inherent Structure of the Information?</h3>
+<p>One of the most important points in the course is that:</p>
+<ul>
+<li>the <strong>structure of the information</strong> in the program's domain determines the kind of data definition used,</li>
+<li>which in turn determines <strong>the structure of the data-driven templates</strong> and helps determine the function examples (<tt>check-expect</tt>s),</li>
+<li>and therefore the <strong>structure of much of the final program design</strong>.</li>
+</ul>
+<p>The remainder of this page lists in detail different kinds of data definition that are used to represent information with different structures. The page also shows in detail how to design a data definition of each kind. This summary table provides a quick reference to which kind of data definition to use for different information structures.</p>
+<table cellpadding="5" border="1" frame="box" summary="Contents" rules="all" style="border: 1px solid #000000; horizontal-align: left; text-align: left; vertical-align: top;">
+<tbody>
+<tr style="text-align: left;"></tr>
+</tbody>
+<thead>
+<tr><th>When the form of the information to be represented...</th><th>Use a data definition of this kind</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>is atomic</td>
+<td><a href="#Atomic">Simple Atomic Data</a></td>
+</tr>
+<tr>
+<td>is numbers within a certain range</td>
+<td><a href="#Interval">Interval</a></td>
+</tr>
+<tr>
+<td>consists of a fixed number of distinct items</td>
+<td><a href="#Enumeration">Enumeration</a></td>
+</tr>
+<tr>
+<td>is comprised of 2 or more subclasses, at least one of which is not a distinct item</td>
+<td><a href="#Itemization">Itemization</a></td>
+</tr>
+<tr>
+<td>consists of two or more items that naturally belong together</td>
+<td><a href="#Compound">Compound data</a></td>
+</tr>
+<tr>
+<td>is naturally composed of different parts</td>
+<td><a href="#Reference" title="Link: #S6">References to other defined type</a></td>
+</tr>
+<tr>
+<td>is of arbitrary (unknown) size</td>
+<td><a href="#Self-Reference">self-referential or mutually referential</a></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<hr /><hr />
+<p><br /> <a id="Atomic"></a></p>
+<h3>Simple Atomic Data</h3>
+<p>Use simple atomic data <strong>when the information to be represented is itself atomic in form</strong>, such as the elapsed time since the start of the animation, the x coordinate of a car or the name of a cat.</p>
+<table title="Time Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd Time)
+;; Time is Natural
+;; interp. number of clock ticks since start of game
+
+(define START-TIME 0)
+(define OLD-TIME 1000)
+
+(@dd-template-rules atomic-non-distinct) ;Natural
+
+(define (fn-for-time t)
+  (... t))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Forming the Template</h4>
+<p>As noted below the template, it is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the right hand column of the atomic non-distinct rule.</p>
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>One or two data examples are usually sufficient for simple atomic data.</p>
+<p>When creating example/tests for a specific function operating on simple atomic data at least two test cases will be required. Additional tests are required if there are multiple cases involved. If the function produces <tt>Boolean</tt> there needs to be at least a <tt>true</tt> and <tt>false</tt> test case. Also be on the lookout for cases where a number of some form is an <a href="#Interval">interval</a> in disguise, for example given a type comment like <tt>Countdown is Natural</tt>, in some functions <tt>0</tt> is likely to be a special case.</p>
+<p><br /> <a id="Interval"></a></p>
+<h3>Intervals</h3>
+<p>A special case of the number types (Number, Integer, and Natural) arises when the information to be represented is numbers within a certain range.  In an interval data definition describe the bounds of the interval as part of the interpretation. For example, integers in the range [0, 10]. In specifying the bounds use the notation that [ and ] mean that the end of the interval includes the end point; ( and ) mean that the end of the interval does not include the end point. So [0, 10] is 0 to 10 inclusive; [0, 10) 0 inclusive to 10 exclusive.</p>
+
+<table title="Countdown Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd Countdown)
+;; Countdown is Integer
+;; interp. the number of seconds remaining to liftoff, restricted to [0, 10]
+(define C1 10)  ; start
+(define C2 5)   ; middle
+(define C3 0)   ; end
+
+(@dd-template-rules atomic-non-distinct) ;Integer
+
+(define (fn-for-countdown cd)
+  (... cd))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Forming the Template</h4>
+<p>As noted below the template, it is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the right hand column of the atomic non-distinct rule.</p>
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>For data examples provide sufficient examples to illustrate how the type represents information. The three data examples above are probably more than is needed in this case.</p>
+<p>When writing tests for functions operating on intervals be sure to test closed boundaries as well as points off the boundary such as midpoints. As always, be sure to include enough tests to check all other points of variance in behaviour across the interval.</p>
+<p><br /> <a id="Enumeration"></a></p>
+<h3>Enumerations</h3>
+<p>Use an enumeration <strong>when the information to be represented consists of a fixed number of distinct items</strong>, such as colors, letter grades, provinces etc. The data used to represent an enumeration could in principle be anything - strings, integers, images even. Some languages provide an explicit mechanism rather than allowing arbitrary data selection - we mirror that by always using strings for enumerations. In the case of enumerations it is sometimes redundant to provide an interpretation and nearly always redundant to provide examples.</p>
+<table title="TLColor Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd LightState)
+;; LightState is one of:
+;;  - "red"
+;;  - "yellow"
+;;  - "green"
+;; interp. the color of a traffic light
+
+;; &lt;examples are redundant for enumerations&gt;
+ 
+(@dd-template-rules one-of           ;3 cases
+                    atomic-distinct  ;"red"
+                    atomic-distinct  ;"yellow"
+                    atomic-distinct) ;"green"
+
+(define (fn-for-light-state ls)
+  (cond [(string=? ls "red") (...)]
+        [(string=? ls "yellow") (...)]
+        [(string=? ls "green") (...)]))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Forming the Template</h4>
+<p>As noted in the @dd-template-rules tag the template is formed according to the <a href="#Data">Data Driven Templates recipe</a> as follows:</p>
+<p>First, <tt>LightState</tt> is an enumeration with 3 cases, so the <i>one of rule</i> says to use a <tt>cond</tt> with 3 cases:</p>
+<table title="TLColor Template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@dd-template-rules one-of           ;3 cases
+                    )
+(define (fn-for-light-state ls)
+  (cond [Q1 A1]
+        [Q2 A2]
+        [Q3 A3])) 
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In the first subclass of the type comment, <tt>"red"</tt> is a distinct atomic value, so the <tt>cond</tt> question column of the <i>atomic distinct rule</i> says Q1 should be <tt>(string=? ls "red")</tt>. The cond answer column says A1 should be <tt>(...)</tt>. So we have:</p>
+<table title="TLColor Template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@dd-template-rules one-of           ;3 cases
+                    atomic-distinct  ;"red"
+                    )
+(define (fn-for-light-state ls)
+  (cond [(string=? ls "red") (...)]
+        [Q2 A2]
+        [Q3 A3])) 
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Then <tt>"yellow"</tt> and <tt>"green"</tt> are also distinct atomic values, so the final tag and template are:</p>
+<table title="TLColor Template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@dd-template-rules one-of           ;3 cases
+                    atomic-distinct  ;"red"
+                    atomic-distinct  ;"yellow"
+                    atomic-distinct) ;"green"
+
+(define (fn-for-light-state ls) 
+  (cond [(string=? ls "red") (...)]
+        [(string=? ls "yellow") (...)]
+        [(string=? ls "green") (...)]))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Do not use <tt>else</tt> as the last question in an enumeration unless you are using the <i>large enumeration rule</i>.</p>
+
+<p>Note that the order of question/answer pairs in the cond must match the order of subclasses in the type comment. In addition, in any function where the template is used, the cond question/answer pairs must not be re-ordered and the cond questions must not be edited in any way. Except when using the large enumeration rule all cond question/answer pairs must be preserved.</p>
+
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>Data examples are redundant for enumerations.</p>
+<p>Functions operating on enumerations should have (at least) as many tests as there are cases in the enumeration.</p>
+<h4>Large Enumerations</h4>
+<p>Some enumerations contain a large number of elements. A canonical example is <tt>KeyEvent</tt>, which is provided as part of big-bang. <tt>KeyEvent</tt> includes all the letters of the alphabet as well as other keys you can press on the keyboard. It is not necessary to write out all the cases for such a data definition. Instead write one or two, as well as a comment saying what the others are, where they are defined etc.</p>
+<p>Defer writing templates for such large enumerations until a template is needed for a specific function. At that point include the specific cases that particular function cares about. Be sure to include an else clause in the template to handle the other cases. As an example, some functions operating on <tt>KeyEvent</tt> may only care about the space key and ignore all other keys, the following would be an appropriate template for such functions.</p>
+<table title="KeyEvent template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@template-origin KeyEvent)
+
+(@template
+ (define (fn-for-key-event kevt)
+   (cond [(key=? " " kevt) (...)]
+         [else
+          (...)])))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The same is true of writing tests for functions operating on large enumerations. All the specially handled cases must be tested, in addition one more test is required to check the else clause.</p>
+<p><br /> <a id="Itemization"></a></p>
+<h3>Itemizations</h3>
+<p>An itemization describes <strong>data comprised of 2 or more subclasses, at least one of which is not a distinct item</strong>. (C.f. enumerations, where the subclasses are <strong>all</strong> distinct items.) In an itemization the template is similar to that for enumerations: a cond with one clause per subclass. In cases where the subclass of data has its own data definition the answer part of the cond clause includes a call to a helper template, in other cases it just includes the parameter.</p>
+<table title="Bird Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd Bird)
+;; Bird is one of:
+;;  - false
+;;  - Number
+;; interp. false means no bird, number is x position of bird
+
+(define B1 false)
+(define B2 3) 
+
+(@dd-template-rules one-of                ;2 cases
+                    atomic-distinct       ;false
+                    atomic-non-distinct)  ;Number
+
+
+(define (fn-for-bird b)
+  (cond [(false? b) (...)]
+        [else (... b)]))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Forming the Template</h4>
+<p>As noted below the template, it is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the <i>one-of rule</i>, the <i>atomic distinct rule</i> and the <i>atomic non-distinct rule</i> in order.</p>
+
+<p>Note that the order of question/answer pairs in the cond must match the order of subclasses in the type comment. In addition, in any function where the template is used, the cond question/answer pairs must not be re-ordered and the cond questions must not be edited in any way. Except when using the large enumeration rule all cond question/answer pairs must be preserved.</p>
+
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>As always, itemizations should have enough data examples to clearly illustrate how the type represents information.</p>
+<p>Functions operating on itemizations should have at least as many tests as there are cases in the itemizations. If there are intervals in the itemization, then there should be tests at all points of variance in the interval. In the case of adjoining intervals it is critical to test the boundaries.</p>
+<del><h4>Itemization of Intervals</h4></del> 
+<p>The course no longer includes itemizations of intervals.</p>
+<!--
+<p>A common case is for the itemization to be comprised of 2 or more intervals. In this case functions operating on the data definition will usually need to be tested at all the boundaries of closed intervals and points between the boundaries.</p>
+<table title="Reading Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>;;; Reading is one of:
+;;  - Number[&gt; 30]      
+;;  - Number(5, 30]     
+;;  - Number[0, 5]      
+;; interp. distance in centimeters from bumper to obstacle
+;;    Number[&gt; 30]    is considered "safe"
+;;    Number(5, 30]   is considered "warning"
+;;    Number[0, 5]    is considered "dangerous"
+(define R1 40)
+(define R2 .9)
+
+(define (fn-for-reading r)
+  (cond [(&lt; 30 r) (... r)]
+        [(and (&lt;  5 r) (&lt;= r  30)) (... r)]
+        [(&lt;= 0 r 5) (... r)]))
+
+;; Template rules used:
+;;  one-of: 3 cases
+;;  atomic non-distinct:  Number[&gt;30]
+;;  atomic non-distinct:  Number(5, 30]
+;;  atomic non-distinct:  Number[0, 5]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>As noted below the template, it is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the <i>one-of rule</i>, followed by 3 uses of the <i>atomic non-distinct rule</i>.</p>
+<p><br /> <a id="Compound"></a></p>
+-->
+<p><a name="Compound"></a></p>
+<h3>Compound data</h3>
+<p>Use compound when two or more values naturally belong together. The define-struct goes immediately after the @htdd tag, and before the type comment.</p>
+<table title="Ball Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd Ball)
+(define-struct ball (x y))
+;; Ball is (make-ball Number Number)
+;; interp. a ball at position x, y 
+
+(define BALL-1 (make-ball 6 10))
+
+(@dd-template-rules compound)  ;2 fields
+
+(define (fn-for-ball b)
+  (... (ball-x b)     ;Number
+       (ball-y b)))   ;Number
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The template above is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the compound rule. Then for each of the selectors, the result type of the selector (Number in the case of ball-x and ball-y) is used to decide whether the selector call itself should be wrapped in a call to another template function expression. In this case, where the result types are primitive, no additional wrapping occurs. C.f. cases below when the reference rule applies.</p>
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>For compound data definitions it is often useful to have numerous examples, for example to illustrate special cases. For a snake in a snake game you might have an example where the snake is very short, very long, hitting the edge of a box, etc. These data examples can also be useful for writing function tests because they save space in each <tt>check-expect</tt>.</p>
+<p><br /> <a id="Reference"></a></p>
+<h3>References to other data definitions</h3>
+<p>Some data definitions contain references to other data definitions you have defined (non-primitive data definitions). One common case is for a compound data definition to comprise other named data definitions. (Or, once lists are introduced, for a list to contain elements that are described by another data definition. In these cases the template of the first data definition should contain calls to the second data definition's template function wherever the second data appears. For example:</p>
+<table title="Game Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>---assume Ball is as defined above---
+(@htdd Game)
+(define-struct game (ball score))
+;; Game is (make-game Ball Number) 
+;; interp. the current state of a game, with the ball and score
+
+(define GAME-1 (make-game (make-ball 1 5) 2))
+
+(@dd-template-rules compound       ;2 fields
+                    ref)           ;(game-ball g) is Ball
+
+(define (fn-for-game g)
+  (... (fn-for-ball (game-ball g))
+       (game-score g)))            ;Number
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this case the template is formed according to the <a href="#Data">Data Driven Templates recipe</a> by first using the <i>compound rule</i>. Then, since the result type of <tt>(game-ball g)</tt> is Ball, the <i>reference rule</i> is used to wrap the selector so that it becomes <tt>(fn-for-ball (game-ball g))</tt>. The call to <tt>game-score</tt> is not wrapped because it produces a primitive type.</p>
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>For data definitions involving references to non-primitive types the data examples can sometimes become quite long. In these cases it can be helpful to define well-named constants for data examples for the referred to type and then use those constants in the referring from type. For example:</p>
+<pre>...in the data definition for Drop...
+(define DTOP (make-drop 10 0))            ;top of screen
+(define DMID (make-drop 20 (/ HEIGHT 2))) ;middle of screen
+(define DBOT (make-drop 30 HEIGHT))       ;at bottom edge
+(define DOUT (make-drop 40 (+ HEIGHT 1))) ;past bottom edge
+
+...in the data definition for ListOfDrop...
+(define LOD1 empty)
+(define LOD-ALL-ON             (cons DTOP (cons DMID )))
+(define LOD-ONE-ABOUT-TO-LEAVE (cons DTOP (cons DMID (cons DBOT empty))))
+(define LOD-ONE-OUT-ALREADY    (cons DTOP (cons DMID (cons DBOT (cons DOUT empty)))))
+</pre>
+<p>In the case of references to non-primitive types the function operating on the referring type (i.e. <tt>ListOfDrop</tt>) will end up with a call to a helper that operates on the referred to type (i.e. <tt>Drop</tt>). Tests on the helper function should fully test that function, tests on the calling function may assume the helper function works properly.</p>
+<p><br /> <a id="Self-Reference"></a></p>
+<h3>Self-referential or mutually referential</h3>
+<p>When the <strong>information in the program's domain is of arbitrary size</strong>, a well-formed self-referential (or mutually referential) data definition is needed.</p>
+<p>In order to be well-formed, a self-referential data definition must:</p>
+<ul>
+<li>(i) have at least one case without self reference (the base case(s))</li>
+<li>(ii) have at least one case with self reference</li>
+</ul>
+<p>The template contains a base case corresponding to the non-self-referential clause(s) as well as one or more natural recursions corresponding to each of the self-referential clauses.</p>
+<table title="ListOfString Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd ListOfString)
+;; ListOfString is one of:
+;;  - empty
+;;  - (cons String ListOfString)
+;; interp. a list of strings
+
+(define LOS-1 empty)
+(define LOS-2 (cons "a" empty))
+(define LOS-3 (cons "b" (cons "c" empty)))
+
+(@dd-template-rules one-of            ;2 cases
+                    atomic-distinct   ;empty
+                    compound          ;(cons String ListOfString)
+                    self-ref)         ;(rest los) is ListOfString
+
+(define (fn-for-los los)
+  (cond [(empty? los) (...)]                   ;BASE CASE
+        [else (... (first los)                 ;String
+                   (fn-for-los (rest los)))])) ;NATURAL RECURSION
+;;             /
+;;            /
+;;       COMBINATION
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In some cases a type comment can have both self-reference and reference to another type.</p>
+<table title="Dot and ListOfDot Data Definitions" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(@htdd Dot)
+(define-struct dot (x y))
+;; Dot is (make-dot Integer Integer)
+;; interp. A dot on the screen, w/ x and y coordinates in pixels.
+(define D1 (make-dot 10 30))
+
+(@dd-template-rules compound)  ;2 fields
+
+(define (fn-for-dot d)
+  (... (dot-x d)   ;Integer
+       (dot-y d))) ;Integer
+
+(@htdd ListOfDot)
+;; ListOfDot is one of:
+;;  - empty
+;;  - (cons Dot ListOfDot)
+;; interp. a list of Dot
+(define LOD1 empty)
+(define LOD2 (cons (make-dot 10 20) (cons (make-dot 3 6) empty)))
+
+(@dd-template-rules one-of               ;2 cases
+                    atomic-distinct      ;empty
+                    compound             ;(cons Dot ListOfDot)
+                    ref                  ;(first lod) is Dot 
+                    self-ref)            ;(rest lod) is ListOfDot
+
+(define (fn-for-lod lod)
+  (cond [(empty? lod) (...)]
+        [else
+         (... (fn-for-dot (first lod))
+              (fn-for-lod (rest lod)))]))
+
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Guidance on Data Examples and Function Example/Tests</h4>
+<p>When writing data and function examples for self-referential data definitions always put the base case first. It's usually trivial for data examples, but many function tests don't work properly if the base case isn't working properly, so testing that first can help avoid being confused by a failure in a non base case test. Also be sure to have a test for a list (or other structure) that is at least 2 long. If the function has conditional behaviour be sure that all branches of the behaviour are tested at an element that is not the last in the list.</p>
+<p><!--------------------------------------------------------------> <a name="HtDW"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>How To Design Worlds (HtDW)</h2>
+<p>The How to Design Worlds process provides guidance for designing interactive world programs using <tt>big-bang</tt>. While some elements of the process are tailored to <tt>big-bang</tt>, the process can also be adapted to the design of other interactive programs. The wish-list technique can be used in any multi-function program.</p>
+<table summary="Steps of the HtDW Recipe." border="1" cellpadding="5" style="border: 1px solid #000000; padding: 5px; text-align: left; horizontal-align: left; vertical-align: top; max-width: 90%;">
+<tbody>
+<tr style="text-align: left;">
+<td>
+<p>World program design is divided into two phases, each of which has sub-parts:</p>
+<ol>
+<li>Domain analysis (use a piece of paper!)</li>
+<ol>
+<li>Sketch <emph>program scenarios</emph></li>
+<li>Identify <emph>constant information</emph></li>
+<li>Identify <emph>changing information</emph></li>
+<li>Identify <emph>big-bang options</emph></li>
+</ol>
+<li>Build the actual program</li>
+<ol>
+<li>Constants (based on 1.2 above)</li>
+<li>Data definitions using <a href="#HtDD">HtDD</a> (based on 1.3 above)</li>
+<li>Functions using <a href="#HtDF">HtDF</a></li>
+<ol>
+<li>main first (based on 1.3, 1.4 and 2.2 above)</li>
+<li><emph>wish list entries</emph>for <emph>big-bang handlers</emph></li>
+</ol>
+<li>Work through wish list until done</li>
+</ol></ol></td>
+</tr>
+</tbody>
+</table>
+<h4>Phase 1: Domain Analysis</h4>
+<p>Do a domain analysis by hand-drawing three or more pictures of what the world program will look like at different stages when it is running.</p>
+<p>Use this picture to identify constant information such as the height and width of screen, color of the background, the background image itself, the length of a firework's fuse, the image for a moving cat and so on.</p>
+<p>Also identify changing information such as the position of a firework, the color of a light, the number in countdown etc.</p>
+<p>Identify which <tt>big-bang</tt> options the program needs.</p>
+<table summary="big-bang options." border="1" cellpadding="5" style="border: 1px solid #000000; padding: 5px; text-align: left; horizontal-align: left; vertical-align: top; max-width: 90%;">
+<thead>
+<tr><th>If your program needs to:</th><th>Then it needs this option:</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>change as time goes by (nearly all do)</td>
+<td><tt>on-tick</tt></td>
+</tr>
+<tr>
+<td>display something (nearly all do)</td>
+<td><tt>to-draw</tt></td>
+</tr>
+<tr>
+<td>change in response to key presses</td>
+<td><tt>on-key</tt></td>
+</tr>
+<tr>
+<td>change in response to mouse activity</td>
+<td><tt>on-mouse</tt></td>
+</tr>
+<tr>
+<td>stop automatically</td>
+<td><tt>stop-when</tt></td>
+</tr>
+</tbody>
+</table>
+<p>(There are several more options to <tt>big-bang</tt>. Look in the DrRacket help desk under <tt>big-bang</tt> for a complete list.)</p>
+<h4>Phase 2: Building the actual program</h4>
+<p>Structure the actual program in four parts:</p>
+<ol>
+<li>Requires followed by one line summary of program's behavior</li>
+<li>Constants</li>
+<li>Data definitions</li>
+<li>Functions</li>
+</ol>
+<p>The program should begin with whatever require declarations are required. For a program using <tt>big-bang</tt> this is usually a require for <tt>2htdp/universe</tt> to get <tt>big-bang</tt> itself and a require for <tt>2htdp/image</tt> to get useful image primitives. This is followed by a <span style="text-decoration: underline;">short</span> summary of the program's behavior (ideally 1 line).</p>
+<p>The next section of the file should define constants. These will typically come directly from the domain analysis.</p>
+<p>This is followed by data definitions. The data definitions describe how the world state - the changing information identified during the analysis - will be represented as data in the program. Simple world programs may have just a single data definition. More complex world programs have a number of data definitions.</p>
+<p>The functions section should begin with the <tt>main</tt> function which uses <tt>big-bang</tt> with the appropriate options identified during the analysis. After that put the more important functions first followed by the less important helpers. Keep groups of closely related functions together.</p>
+<h5>Template for a World Program</h5>
+<p>A useful template for a world program, including a template for the main function and wish list entries for tick-handler and to-draw handler is as follows. To use this template replace WS with the appropriate type for your changing world state. You may want to give the handler functions more descriptive names and you should definitely give them all a more descriptive purpose.</p>
+<pre>(require spd/tags)
+(require 2htdp/image)
+(require 2htdp/universe)
+
+;; My world program  (make this more specific)
+
+(@htdw WS) ;(give WS a better name)
+
+;; =================
+;; Constants:
+
+
+;; =================
+;; Data definitions:
+
+(@htdd WS)
+;; WS is ... 
+
+
+
+;; =================
+;; Functions:
+
+(@htdf main)
+(@signature WS -&gt; WS)
+;; start the world with ...
+;; <no tests="" for="" main="" functions="">
+
+(@template-origin htdw-main)
+
+(define (main ws)
+  (big-bang ws                   ; WS
+            (on-tick   tock)     ; WS -&gt; WS
+            (to-draw   render)   ; WS -&gt; Image
+            (stop-when ...)      ; WS -&gt; Boolean
+            (on-mouse  ...)      ; WS Integer Integer MouseEvent -&gt; WS
+            (on-key    ...))))   ; WS KeyEvent -&gt; WS
+
+
+(@htdf tock)
+(@signature WS -&gt; WS)
+;; produce the next ...
+;; !!!
+(define (tock ws) ws)
+
+(@htdf render)
+(@signature WS -&gt; Image)
+;; render ... 
+;; !!!
+(define (render ws) empty-image)
+</no></pre>
+<p>Depending on which other big-bang options you are using you would also end up with wish list entries for those handlers. So, at an early stage a world program might look like this:</p>
+<pre>(require 2htdp/universe)
+(require 2htdp/image)
+
+;; A cat that walks across the screen.
+
+(@htdw Cat)
+
+;; Constants:
+
+(define WIDTH  200)
+(define HEIGHT 200)
+
+(define CAT-IMG (circle 10 "solid" "red")) ; a not very attractive cat
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+
+;; Data definitions:
+
+(@htdd Cat)
+;; Cat is Number
+;; interp. x coordinate of cat (in screen coordinates)
+(define C1 1)
+(define C2 30)
+
+(@dd-template-rules atomic-non-distinct)
+  
+(define (fn-for-cat c)
+  (... c))
+
+
+;; Functions:
+
+(@htdf main)
+(@signature Cat -&gt; Cat)
+;; start the world with initial state c, for example: (main 0)
+
+(@template-origin htdw-main)
+
+(define (main c)
+  (big-bang c                         ; Cat
+            (on-tick   tock)          ; Cat -&gt; Cat
+            (to-draw   render)))      ; Cat -&gt; Image
+
+(@htdf tock)
+(@signature Cat -&gt; Cat)
+;; Produce cat at next position
+;!!!
+(define (tock c) 1)  ;stub
+
+(@htdf render)
+(@signature Cat -&gt; Image)
+;; produce image with CAT-IMG placed on MTS at proper x, y position
+; !!!
+(define (render c) MTS)
+
+</pre>
+<p>Note that we are maintaining a <emph>wish list</emph>of functions that need to be designed. The way to maintain the wish list is to just write a signature, purpose and stub for each wished-for function, also label the <emph>wish list entry</emph>with <tt>!!!</tt> or some other marker that is easy to search for. That will help you find your unfilled wishes later.</p>
+<p>Forming wish list entries this way is enough for <tt>main</tt> (or other functions that call a wished for function) to be defined without error. But of course <tt>main</tt> (and other such functions) will not run properly until the wished for functions are actually completely designed.</p>
+<p>As you design the program remember to run early and run often. The sooner you can run the program after writing anything the sooner you can find any small mistakes that might be in it. Fixing the small mistakes earlier makes it easier to find any harder mistakes later.</p>
+<h5>Key and Mouse Handlers</h5>
+<p>The <tt>on-key</tt> and <tt>on-mouse</tt> handler function templates are handled specially. The <tt>on-key</tt> function is templated according to its second argument, a <tt>KeyEvent</tt>, using the large enumeration rule. The <tt>on-mouse</tt> function is templated according to its <tt>MouseEvent</tt> argument, also using the large enumeration rule. So, for example, for a key handler function that has a special behaviour when the space key is pressed but does nothing for any other key event the following would be the template:</p>
+<pre>(@template-origin KeyEvent)
+
+(@template   
+ (define (handle-key ws ke)
+   (cond [(key=? ke " ") (... ws)]
+         [else 
+          (... ws)])))
+</pre>
+<p>Similarly the template for a mouse handler function that has special behavior for mouse clicks but ignores all other mouse events would be:</p>
+<pre>(@template-origin MouseEvent)
+
+(@template
+ (define (handle-mouse ws x y me)
+   (cond [(mouse=? me "button-down") (... ws x y)]
+         [else
+          (... ws x y)])))
+</pre>
+<p>For more information on the <tt>KeyEvent</tt> and <tt>MouseEvent</tt> large enumerations see the DrRacket help desk.</p>
+<p><a name="Data"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Data Driven Templates</h2>
+<p>Templates are the core structure that we know a function must have, independent of the details of its definition. In many cases the template for a function is determined by the type of data the function consumes. We refer to these as data driven templates. The recipe below can be used to produce a data driven template for any type comment.</p>
+<p>For a given type <tt>TypeName</tt> the data driven template is:</p>
+<table border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(define (fn-for-type-name x)
+  &lt;body&gt;)
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Where <tt>x</tt> is an appropriately chosen parameter name (often the initials of the type name) and the body is determined according to the table below. To use the table, start with the type of the parameter, i.e. TypeName, and select the row of the table that matches that type. The first row matches only primitive types, the later rows match parts of type comments.</p>
+<p>(Note that when designing functions that consume additional atomic parameters, the name of that parameter gets added after every <tt>...</tt> in the template. Templates for functions with additional complex parameters are covered in <a href="#2One-of">Functions on 2 One-Of Data</a>.)</p>
+<table border="1" cellpadding="5" style="text-align: left; vertical-align: text-top;">
+<thead>
+<tr><th style="width: 30%;">Type of data</th><th style="width: 25%;"><tt>cond</tt> question (if applicable)</th><th style="width: 45%;">Body or <tt>cond</tt> answer (if applicable)</th></tr>
+</thead>
+<tbody>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Atomic Non-Distinct</strong></p>
+<ul>
+<li><tt>Number</tt></li>
+<li><tt>String</tt></li>
+<li><tt>Boolean</tt></li>
+<li><tt>Image</tt></li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>Appropriate predicate</p>
+<ul>
+<li><tt>(number? x)</tt></li>
+<li><tt>(string? x)</tt></li>
+<li><tt>(boolean? x)</tt></li>
+<li><tt>(image? x)</tt></li>
+<li><tt>(and (&lt;= 0 x)</tt><br /> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&lt; x 10))</tt></li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>Expression that operates on the parameter.</p>
+<p><tt>(... x)</tt></p>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Atomic Distinct Value</strong></p>
+<ul>
+<li><tt>"red"</tt></li>
+<li><tt>false</tt></li>
+<li><tt>empty</tt></li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>Appropriate predicate</p>
+<ul>
+<li><tt>(string=? x "red")</tt></li>
+<li><tt>(false? x)</tt></li>
+<li><tt>(empty? x)</tt></li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>Since value is distinct, parameter does not appear.</p>
+<p><tt>(...)</tt></p>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>One Of</strong></p>
+<ul>
+<li>enumerations</li>
+<li>itemizations</li>
+</ul>
+</td>
+<td></td>
+<td>
+<p>Cond with one clause per subclass of one of.</p>
+<p><tt>(cond [&lt;question1&gt; &lt;answer1&gt;]<br /></tt> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&lt;question2&gt; &lt;answer2&gt;])</tt></p>
+<p>Where each question and answer expression is formed by following the rule in the question or answer column of this table for the corresponding case. A detailed derivation of a template for a one-of type appears below.</p>
+<p>Always use <tt>else</tt> for the last question for itemizations and large enumerations. Normal enumerations should not use else.</p>
+<p>Note that in a <i>mixed data itemization</i>, such as</p>
+<p><tt>;; Measurement is one of:</tt><br /> <tt>;; - "high"</tt><br /> <tt>;; - "low"</tt><br /> <tt>;; - Number</tt></p>
+<p>the cond questions must be <strong>guarded</strong> with an appropriate type predicate. In particular, the first cond question for <tt>Measurement</tt> must be</p>
+<p><tt>(and (string? m)</tt><br /> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string=? m "high"))</tt></p>
+<p>where the call to <tt>string?</tt> guards the call to <tt>string=?</tt>. This will protect <tt>string=?</tt> from ever receiving a number as an argument.</p>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Compound</strong></p>
+<ul>
+<li><tt>Position</tt></li>
+<li><tt>Firework</tt></li>
+<li><tt>Ball</tt></li>
+<li>cons</li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>Predicate from structure</p>
+<ul>
+<li><tt>(posn? x)</tt></li>
+<li><tt>(firework? x)</tt></li>
+<li><tt>(ball? x)</tt></li>
+<li><tt>(cons? x)</tt> (often just else)</li>
+<li>etc.</li>
+</ul>
+</td>
+<td>
+<p>All selectors.</p>
+<ul>
+<li><tt>(... (posn-x x) (posn-y x))</tt></li>
+<li><tt>(... (firework-y x) (firework-color x))</tt></li>
+<li><tt>(... (ball-x x) (ball-dx x))</tt></li>
+<li><tt>(... (first x) (rest x))</tt></li>
+<li>etc.</li>
+</ul>
+<br />
+<p>Then consider the result type of each selector call and wrap the accessor expression appropriately using the table with that type. So for example, if after adding all the selectors you have:</p>
+<p><tt>(... (game-ball g) ;produces Ball</tt><br /> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(game-paddle g)) ;produces Paddle</tt></p>
+<p>Then, because both Ball and Paddle are non-primitive types (types that you yourself defined in a data definition) the reference rule (immediately below) says that you should add calls to those types' template functions as follows:</p>
+<p><tt> (... (fn-for-ball (game-ball g))</tt><br /> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fn-for-paddle (game-paddle g)))</tt></p>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Other Non-Primitive Type Reference</strong></p>
+</td>
+<td>
+<p>Predicate, usually from structure definition</p>
+<ul>
+<li><tt>(firework? x)</tt></li>
+<li><tt>(person? x)</tt></li>
+</ul>
+</td>
+<td>
+<p>Call to other type's template function</p>
+<ul>
+<li><tt>(fn-for-firework x)</tt></li>
+<li><tt>(fn-for-person x)</tt></li>
+</ul>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Self Reference</strong></p>
+</td>
+<td></td>
+<td>
+<p>Form natural recursion with call to this type's template function:</p>
+<ul>
+<li><tt>(fn-for-los (rest los))</tt></li>
+</ul>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<p><strong>Mutual Reference</strong></p>
+<br />
+<p>Note: form and group all templates in mutual reference cycle together.</p>
+</td>
+<td></td>
+<td>
+<p>Call to other type's template function:</p>
+<p><tt>(fn-for-lod (dir-subdirs d)</tt><br /> <tt>(fn-for-dir (first lod))</tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h4>Producing the Template for an Example One Of Type</h4>
+<p>In many cases more than one of the above rules will apply to a single template. Consider this type comment:</p>
+<pre>
+;; Clock is one of:
+;; - Natural
+;; - false
+</pre>
+<p>and the step-by-step construction of the template for a function operating on <tt>Clock</tt>.</p>
+<table title="Clock Template Derivation" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px; text-align: left; vertical-align: top;">
+<tbody>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<pre>
+(@dd-template-rules one-of       ;2 cases
+                    )
+
+(define (fn-for-clock c)
+  (cond [Q A]
+        [Q A]))
+</pre>
+</td>
+<td style="width: 65%;"><tt>Clock</tt> is a one of type with two subclasses (one of which is not distinct making it an itemization). The one of rule tells us to use a <tt>cond</tt>. The <tt>cond</tt> needs one clause for each subclass of the itemization.</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<pre>
+(@dd-template-rules one-of               ;2 cases
+                    atomic-non-distinct  ;Natural
+                    )
+
+(define (fn-for-clock c)
+  (cond [(number? c) (... c)]
+        [Q A]))
+</pre>
+</td>
+<td>
+<p>The <tt>cond</tt> questions need to identify each subclass of data. The <tt>cond</tt> answers need to follow templating rules for that subclasses data. In the first subclass, <tt>Natural</tt> is a non-distinct type; the <i>atomic non-distinct rule</i> tells us the question and answer as shown to the left.</p>
+</td>
+</tr>
+<tr style="text-align: left; vertical-align: text-top;">
+<td>
+<pre>
+(@dd-template-rules one-of               ;2 cases
+                    atomic-non-distinct  ;Natural
+                    atomic-distinct)     ;false
+
+(define (fn-for-clock c)
+  (cond [(number? c) (... c)]
+        [else
+          (...)]))
+</pre>
+</td>
+<td>
+<p>In the second case <tt>false</tt> is an atomic distinct type, so the <i>atomic-distinct rule</i> gives us the question and answer. Since the second case is also the last case we can use <tt>else</tt> for the question.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>Templates for Mutually Referential Types</h4>
+<p>The previous example doesn't cover the <i>mutual-reference rule</i>, which says that in the case of mutually-referential data definitions, when you template one function in the mutual-reference cycle you should <strong>immediately template all the functions in the mutual-reference cycle</strong>. So, for example, given:</p>
+<table title="Time Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>(define-struct person (name subs))
+;; Person is (make-person String ListOfPerson)
+
+;; ListOfPerson is one of:
+;;  - empty
+;;  - (cons Person ListOfPerson)</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Then if you need a template for a function operating on a <tt>Person</tt> (or a function operating on a <tt>ListOfPerson</tt>) you should immediately write a template for both functions, resulting in something like this:</p>
+<table title="Time Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>
+(define (fn-for-person p)
+  (... (person-name p)
+       (fn-for-lop (person-subs p))))      ;mutual recursion from mutual-reference
+
+(define (fn-for-lop lop)
+  (cond [(empty? lop) ...]
+        [else
+         (... (fn-for-person (first lop))  ;mutual recursion from mutual-reference
+              (fn-for-lop (rest lop)))]))  ;natural recursion from self-reference
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>(Note that producing that template will also involve using the atomic-distinct, atomic, one-of and compound rules.)</p>
+<p>As with self-reference, its a good idea to draw a mutual-reference line on the data definition and ensure you have corresponding mutual recursion lines in your templates.</p>
+<h4>Testing</h4>
+<p>The principles above can also be used to understand how many tests a data definition implies. Simply put, the set of tests/examples should cover all cases, call all helper functions, involve all selectors, and avoid duplicated values.</p>
+<h4>Additional Design Rules for Helpers</h4>
+<p>During coding three additional guidelines suggest situations under which a helper function should be added:</p>
+<ol>
+<li>Use a separate function for each difference between quantities in a problem.</li>
+<li>If a subtask requires operating on arbitrary sized data a helper function must be used.</li>
+<li>If a subtask involves special domain knowledge a helper function should be used.</li>
+<li>In addition always keep the "one task per function" goal in mind. If part of a function you are designing seems to be a well-defined subtask put that into a helper function.</li>
+</ol>
+<p> <a name="2One-of"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Functions On 2 One-Of Data</h2>
+<p>This page outlines the variations in the normal HtDF recipe when designing a function that consumes 2 data that have a one-of in their type comments. Examples of functions for which this applies include functions with the following signatures:</p>
+<ol>
+  <li><code>ListOfString ListOfString -&gt; Boolean</code></li>
+  <li><code>ListOfString ListOfString -&gt; ListOfString</code></li>
+  <li><code>ListOfString BinaryTree -&gt; Boolean</code></li>
+  <li><code>ListOfNatural FamilyTree -&gt; ListOfString</code></li>
+</ol>
+<p>For the purpose of this explanation, assume that the goal is to design a function that consumes two <tt>ListOfString</tt> and produces true&nbsp;if the strings in the first list are equal to the corresponding strings in the second list. If that is true and the second list is longer than the first the function should produce&nbsp;true; if the second list is shorter it always produces false. <br /> <br />The first three steps of the recipe - signature, purpose and stub - are unchanged.</p>
+<pre><code>(@signature ListOfString ListOfString -&gt; Boolean)<br />;; produce true if lsta is a prefix of lstb<br /><br />(define (prefix=? lsta lstb) false)<br /></code></pre>
+<p><br />But at this point the next step is to form a&nbsp;<b>cross-product of type comments</b> table as follows. The row labels of the table are the cases of the one-of type comment for one argument (perhaps the first), and the column labels are the cases of the one-of type comment for the other argument.&nbsp;</p>
+<pre><code>;; CROSS PRODUCT OF TYPE COMMENTS TABLE
+;;
+;;                                     lstb
+;;                           empty           (cons String LOS)                
+;;                                         
+;; l   empty                               
+;; s
+;; t   (cons String LOS)                   
+;; a                                       
+</code></pre>
+<p><br />In this case, where both arguments have 2 cases in their one-of type comments, the cross-product formed has 4 cells (2 * 2 = 4). The next step of the process is to use the cross product table to help form at least as many tests as there are cells. The upper left cell describes a scenario where both <tt>lsta</tt> and <tt>lstb</tt> are empty. The lower left cell is where <tt>lsta</tt> is non-empty but <tt>lstb</tt> is empty and so on. The lower right cell is where both lists are non-empty, and this case requires more than one test. So we end up with:&nbsp;</p>
+<pre><code>(check-expect (prefix=? empty empty) true)
+(check-expect (prefix=? empty (list "a" "b")) true)
+(check-expect (prefix=? (list "a") empty) false)
+
+(check-expect (prefix=? (list "a") (list "b")) false)
+(check-expect (prefix=? (list "a") (list "a")) true)
+(check-expect (prefix=? (list "a" "b") (list "a" "x")) false)
+(check-expect (prefix=? (list "a" "b") (list "a" "b")) true)
+</code></pre>
+<p></p>
+<div>We can now use the tests to help fill in the contents of the table cells, indicating what the function should do in each case.</div>
+<pre><code>;; CROSS PRODUCT OF TYPE COMMENTS TABLE
+;;
+;;                                     lstb
+;;                           empty           (cons String LOS)                
+;;                                          
+;; l   empty                   true           true
+;; s                         
+;; t   (cons String LOS)       false          (and (string=? (first lsta) (first lstb))
+;; a                                               (prefix=? (rest lsta) (rest lstb)))
+</code></pre>
+<div>Now comes the most fun step. We look for a way to simplify the table by identifying cells that have the same answer. In this case the entire first row produces <tt>true</tt>, so we can simplify the table by combining the two cells in the first row into a single cell:</div>
+<pre><code>;; CROSS PRODUCT OF TYPE COMMENTS TABLE
+;;
+;;                                     lstb
+;;                           empty           (cons String LOS)                
+;;                                         
+;; l   empty                           true
+;; s                         
+;; t   (cons String LOS)       false          (and (string=? (first lsta) (first lstb))
+;; a                                               (prefix=? (rest lsta) (rest lstb)))
+</code></pre>
+<div>Now we are almost done. The next step is to code the function body directly from the table. This in effect intertwines templating with coding of details. Because the simplified table has only three cells, we know that the body of the function will be a three case <tt>cond</tt>. For the first question we always pick the largest cell, in this case the top row. The question needs to be true of the entire combined cell, so in this case the question is <tt>(empty? lsta)</tt>. The answer in this case is just <tt>true</tt>.</div>
+<div>For the next case of the <tt>cond</tt> we pick the lower left cell. At this point, we know that the top row has been handled, so we only need a question that distinguishes the remaining cells apart. In this case <tt>(empty? lstb)</tt> distinguishes the lower left from the lower right cell. The answer in this case is <tt>false</tt>.</div>
+<div>In larger tables this process continues until you get to the last cell, at which point the question can be <tt>else</tt>.</div>
+<div>In cells that involve natural recursion, the natural recursion can be formed by applying the normal rules for handling self-reference. In this case the template for the <tt>cond</tt> answer in the third <tt>cond</tt> case is:</div>
+<pre><code>              (... (first lsta)
+                   (first lstb)
+                   (prefix=? (rest lsta) ...)
+                   (prefix=? ... (rest lstb)))
+</code></pre>
+<div>After filling that in we end up with:</div>
+<pre><code>(@template-origin 2-one-of)
+
+;; no @template for 2-one-of    
+
+(define (prefix=? lsta lstb)
+  (cond [(empty? lsta) true]
+        [(empty? lstb) false]
+        [else
+         (and (string=? (first lsta) (first lstb))
+              (prefix=? (rest lsta)
+                        (rest lstb)))]))
+</code></pre>
+<div>In general, when designing a function on 2 one of data it is a good idea to include the cross-product table in the design.</div>
+<p><a name="FuncComp"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Function Composition</h2>
+<p>Use function composition when a function must perform two or more distinct and complete operations on the consumed data. For example:</p>
+<ul>
+<li>A function that must sort and layout a list of images. First it must sort the complete list and then lay it out. It cannot sort and layout each image one at a time.</li>
+<li>A function that must advance a list of raindrops and then remove the ones that have left the screen. First it must advance all the drops and then remove the ones that have advanced too far. (With difficulty this could be done in a single pass through the list of drops, but it is much more cumbersome to do that way.)</li>
+</ul>
+<p>When using function composition the normal template for the function is discarded, and the body of the function has two or more function compositions. So in the case of <tt>arrange-images</tt> the function design would look like this:</p>
+<pre>(@signature ListOfImage -&gt; Image)
+;; arrange images left to right in increasing order of size
+(check-expect (arrange-images (list I1 I3 I2))
+              (beside I1 I2 I3 empty-image))
+
+(@template-origin fn-composition)
+
+(@template   
+ (define (arrange-images loi)
+   (layout-images (sort-images ...))))
+  
+(define (arrange-images loi)
+  (layout-images (sort-images loi)))
+</pre>
+<p>Which we read as saying "first sort the images, and then layout the sorted list". At the point this is written wish list entries would be created for <tt>layout-images</tt> and <tt>sort-images</tt> unless those functions already existed.</p>
+<p>Tests for a function that uses function composition should be selected to ensure that the function is calling all the appropriate functions and composing them properly. For example, assuming that images <tt>I1</tt>, <tt>I2</tt> and <tt>I3</tt> are in increasing order of size, then this test alone would not be adequate:</p>
+<pre>(check-expect (arrange-images (list I1 I2 I3))
+              (beside I1 I2 I3 empty-image))
+</pre>
+<p>Because a faulty implementation of <tt>arrange-images</tt> that just calls <tt>layout-images</tt> would pass. Instead a test like the original one above is needed, to ensure that both <tt>sort-images</tt> and <tt>layout-images</tt> are called. But note that the tests for arrange-images do not themselves need to fully test both composed functions. They only need to test the composition. That is why <tt>arrange-images</tt> does not absolutely have to have a base case test. (Although it wouldn't hurt it to have one.)</p>
+<p><a name="Failure"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Failure Handling</h2>
+<p>The template for failure handling comprises 3 elements:</p>
+<nl>
+  <li> The signature of a function that might fail includes <tt>or false</tt> after the result type.  This is read as saying "or this function could fail."</li>
+  <li> When the function wants to produce a result saying it failed it should produce <tt>false</tt>.</li>
+  <li> Code that calls the function that might fail must be prepared to handle that failure.  This includes recursive calls. It does so by including <tt>try-catch</tt> in the template tag, and wrapping the calls to the function in a try-catch template as follows:
+<pre>
+  
+(@template-origin X try-catch)
+
+(@template 
+ (define (fn-for-x x)
+   (if (not (false? (fn-that-might-fail &ltargs&gt))) ;does this function call fail?
+       (fn-that-might-fail &ltargs&gt)                ;if not, produce it
+       &ltsome alternative result&gt)))               ;if so, produce something else
+</pre>
+
+Note that once we have local, this gets re-written as:
+<pre>
+(@template   
+ (define (fn-for-x x)
+   (local [(define try (fn-that-might-fail &ltargs&gt))]
+     (if (not (false? try))
+         try
+         &ltsome alternative result&gt))))
+</pre>
+</nl>
+
+<p></p>
+<p><a name="Backtrack"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Backtracking Search</h2>
+<p>The template for backtracking search is comprised of several elements: the structural recursion templates for some kind of tree (binary tree, arbitrary-arity tree, etc., and using failure handling to produce the <ul>first</ul> matching result when found. Here is an example with an arbitrary-arity tree:</p>
+<pre>(@template-origin X)
+
+(@template 
+ (define (fn-for-x x)
+   (if (have-we-found-result? x)  ;success?
+       (produce-result x)         ;produce correct value
+       (fn-for-lox (x-subs x))))) ;search in the subs of this node
+
+(@template-origin try-catch ListOfX)
+
+(@template 
+ (define (fn-for-lox lox)
+   (cond [(empty? lox) false]
+         [else
+           (if (not (false? (fn-for-x (first lox))))  ;is first child successful?
+               (fn-for-x (first lox))                 ;if so produce that
+               (fn-for-lox (rest lox)))])))           ;or try rest of children
+
+
+</pre>
+<p>Note that this template incorporates the template for an n-ary tee, where the tree nodes have type x and x-subs produces the children of a tree node given the node. The backtracking works as commented above. Once we have local expressions we tend to write the backtracking search template as follows:</p>
+<pre>(@template-origin encapsulated X ListOfX try-catch)
+
+(@template   
+ (define (backtracking-fn x)
+   (local [(define (fn-for-x x)
+             (if (have-we-found-result? x)
+                 (produce-result x)       
+                 (fn-for-lox (x-subs x))))
+
+           (define (fn-for-lox lox)
+             (cond [(empty? lox) false]
+                   [else
+                    (local [(define try (fn-for-x (first lox)))]
+                      (if (not (false? try))                    
+                          try                                   
+                          (fn-for-lox (rest lox))))]))]
+
+     (fn-for-x x))))</pre>
+<p></p>
+<p> <a name="GenRec"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Generative Recursion</h2>
+<p>The template for generative recursion is:</p>
+<pre>(define (genrec-fn d)
+  (cond [(trivial? d) (trivial-answer d)]
+        [else
+         (... d 
+              (genrec-fn (next-problem d)))]))
+
+</pre>
+<p><a name="Accumulators"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Accumulators</h2>
+<p>There are three general ways to use an accumulator in a recursive function (or set of mutually recursive functions):</p>
+<ol>
+<li>To preserve context otherwise lost in structural recursion.</li>
+<li>To make a function tail recursive by preserving a representation of the work done so far (aka a result-so-far accumulator).</li>
+<li>To make a function tail recursive by preserving a representation of the work remaining to do (aka a worklist accumulator).</li>
+</ol>
+<p>The same basic recipe covers all three forms of accumulators. The main example shown here is a context preserving accumulator.&nbsp;</p>
+<p><a href="#work%20list%20accumulators"> </a> <a name="context"></a></p>
+<h3>The basic recipe and context preserving accumulators.</h3>
+<h4>Signature, purpose, stub and examples</h4>
+<p>Design of the function begins normally, with signature, purpose, stub and examples.</p>
+<pre><code>(@signature (listof X) -&gt; (listof X))<br />;; produce list formed by keeping the 1st, 3rd, 5th and so on elements of lox<br />(check-expect (skip1 (list "a" "b" "c" "d")) (list "a" "c"))<br />(check-expect (skip1 (list 0 1 2 3 4)) (list 0 2 4))<br /><br />(define (skip1 lox) empty) ;stub</code></pre>
+<h4>Templating</h4>
+<p>The template step is a 3 part process. The first step is to template normally according to the rules for structural recursion, i.e. template according to the (listof X) parameter.</p>
+<pre><code>(@template-origin (listof X) accumulator)
+
+(define (skip1 lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (first lox)
+              (skip1 (rest lox)))]))</code></pre>
+<p>The next step is to encapsulate that function in an outer function and local. As part of this step give the outer function parameter a different name than the inner function parameter. Note that if you are working with multiple mutually recursive functions they call get wrapped in a single outer function.</p>
+<pre><code>(@template (listof X) accumulator)
+
+(define (skip1 lox0)
+  (local [(define (skip1 lox)
+            (cond [(empty? lox) (...)]
+                  [else
+                   (... (first lox)
+                        (skip1 (rest lox)))]))]
+    
+    (skip1 lox0)))</code></pre>
+<p>Now add the accumulator parameter to the inner function. In addition, add ... or more substantial template expressions in each place that calls the inner function. During this step treat the accumulator parameter as atomic.</p>
+<pre><code>(@template (listof X) accumulator)
+
+(define (skip1 lox0)
+  (local [(define (skip1 lox acc)
+            (cond [(empty? lox) (... acc)]
+                  [else
+                   (... acc
+                        (first lox)
+                        (skip1 (rest lox)
+                               (... acc (first lox))))]))]
+    
+    (skip1 lox0 ...)))</code></pre>
+
+<p>Once the template is fully blended it gets wrapped in the @template tag. Waiting until this point allows Check Syntax to give you better error messages about problems in the template as you blend it.</p>
+
+<h4>Accumulator type, invariant and examples</h4>
+<p>The next step is to work out what information the accumulator will represent and how it will do that. Will the accumulator serve to represent some context that would otherwise be lost to structural recursion? Or, to support tail recursion will it represent some form of result so far? Or will it represent a work list of some sort. In many cases this is clear before reaching this stage of the design process. In other cases examples can be used to work this out. But in all cases examples are useful to work out exactly how the accumulator will represent the information. <br /><br />In this case we need to know, in each recursive call to the inner function, whether the current first item in the list should be kept or skipped. There are many ways to represent this, but one simple way is to use a natural that represents how far into the original list (lox0) we have traveled. If we assume the call to the top-level definition of skip1 is (skip1 (list 0 1 2 3 4)), then the progression of calls to the internal skip1 would be as follows: <code></code></p>
+<pre><code>(skip1 (list 0 1 2 3 4) 1)       the 0 is the 1st element of lox0 (using 1 based indexing)
+(skip1 (list   1 2 3 4) 2)       the 1 is the 2nd element
+(skip1 (list     2 3 4) 3)       the 2 is the 3rd 
+(skip1 (list       3 4) 4)       the 3 is the 4th
+(skip1 (list         4) 5)       the 4 is the 5th
+(skip1 (list          ) 6)</code></pre>
+<p>Note that the accumulator value is not constant, but it always represents the position of the current (first lox) in the original list lox0. (You can see here why we renamed the parameter to the outer function, it makes it easier to describe the relation between the original value lox0 and the value in each recursive call lox.) <br /><br />These examples of the progression of calls to the internal recursive function(s) allow us to work out clearly the accumulator type, as well as its <i>invariant</i>, which describes what is constant about the accumulator as it changes in other words, what property it always represents. In this case the type is Natural, and the invariant is the 1 based index of (first lox) in lox0. So when the accumulator is an odd number we will keep (first lox) in the result, when it is even we will skip (first lox).</p>
+<pre><code>(@template-origin (listof X) accumulator)
+
+(@template
+ (define (skip2 lox0)
+   ;; acc is ...; ...
+   (local [(define (skip2 lox acc)
+            (cond [(empty? lox) (... acc)]
+                  [else
+                   (... acc
+                        (first lox)
+                        (skip2 (rest lox)
+                               (... acc (first lox))))]))]
+    
+    (skip2 lox0 ...))))
+
+(define (skip2 lox0)
+  ;; acc is Natural; how many elements of lox to keep before next skip
+  ;; (skip2 (list 0 1 2 3 4) 1)
+  ;; (skip2 (list   1 2 3 4) 0)
+  ;; (skip2 (list     2 3 4) 1)
+  ;; (skip2 (list       3 4) 0)
+  ;; (skip2 (list         4) 1)
+  ;; (skip2 (list          ) 
+  (local [(define (skip2 lox acc)
+            (cond [(empty? lox) (... acc)]
+                  [else
+                   (... acc
+                        (first lox)
+                        (skip2 (rest lox)
+                               (... acc (first lox))))]))]
+    
+    (skip2 lox0 ...)))</code></pre>
+<h4>Complete the code</h4>
+<p>At this point the function definition can be completed by using the signature, purpose, examples, accumulator type, invariant and examples to fill in the details. When doing so, note three distinct aspects of coding with the accumulator invariant. <i>Initializing</i> the accumulator happens in the trampoline, and involves providing an initial value of the accumulator that satisfies the invariant. <i>Exploiting</i> the invariant involves counting on the accumulator to always represent what the accumulator describes. <i>Preserving</i> the invariant happens in recursive calls to the function where a (possibly) new value is provided for the accumulator argument. Preserving the invariant means making sure that the value provided in the recursive call satisfies the invariant.<code></code></p>
+<pre>(@template-origin (listof X) accumulator)
+
+(@template
+ (define (skip2 lox0)
+   ;; acc is ...; ...
+   (local [(define (skip2 lox acc)
+            (cond [(empty? lox) (... acc)]
+                  [else
+                   (... acc
+                        (first lox)
+                        (skip2 (rest lox)
+                               (... acc (first lox))))]))]
+    
+    (skip2 lox0 ...))))
+
+(define (skip1 lox0)
+  ;; acc is Natural; 1 based index of (first lox) in lox0
+  ;; (skip1 (list 0 1 2 3 4) 1)    ;0 should be kept
+  ;; (skip1 (list   1 2 3 4) 2)    ;1 should be skipped
+  ;; (skip1 (list     2 3 4) 3)    ;0 should be kept
+  ;; (skip1 (list       3 4) 4)    ;1 should be skipped
+  ;; (skip1 (list         4) 5)    ;0 should be kept
+  ;; (skip1 (list          ) 6)
+  (local [(define (skip1 lox acc)
+            (cond [(empty? lox) empty]
+                  [else
+                   (if (even? acc)
+                       (skip1 (rest lox) (add1 acc))
+                       (cons (first lox)
+                             (skip1 (rest lox) (add1 acc))))]))]
+    
+    (skip1 lox0 1)))</pre>
+<h3><br class="Apple-interchange-newline" />Tail Recursion</h3>
+<p><span style="font-size: 1em; line-height: 1.6em;">To make the function tail recursive, all recursive calls must be in tail position. For functions that operate on flat structures (data that has only one reference cycle), this can be accomplished by using an accumulator to represent build up information about the final result through the series of recursive calls. &nbsp;We often name these accumulators rsf but it is worth noting that some functions require more than one result so far accumulator (see average).</span></p>
+<p>Making functions that operate on data with more than one cycle in the graph (such as arbitrary-arity trees) usually requires the use of an accumulator to build up the data that still remains to be operated on. This is a worklist accumulator, often called todo.</p>
+<hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<a name="TempBlend"></a>
+<h2>Template Blending</h2>
+<p>To understand template blending its important to understand that templates are what we know about the core of a function (or set of functions) before we get to the details. Data driven (or structural recursion) templates are that, backtracking templates are that, and generative recursion templates are that.<i></i></p>
+<p>In some cases we know more than one thing about the core structure of a function (or set of functions). In the <a href="https://s3.amazonaws.com/edx-course-spdx-kiczales/HTC/sudoku-starter.rkt" target="[object Object]">sudoku-solver</a>&nbsp;for example&nbsp;three different templates apply to the solve functions.</p>
+<ul>
+<li><b>arbitrary-arity tree</b> - we consider each board to have a set of next boards formed by filling the first empty cell with the numbers from 1 - 9. So this forms an arbitrary-arity tree (the arity is actually [0, 9]).</li>
+<li><b>generative recursion</b> - while each board has a set of next boards that set is included in the representation of the board. Instead those next boards have to be generated. So we have a generated arbitrary-arity tree.</li>
+<li><b>backtracking search</b> - in addition we need to do a backtracking search over the arbitrary-arity tree.</li>
+</ul>
+<p>In template blending we take multiple templates that contribute to the structure of a function (or functions) and combine them together.&nbsp;</p>
+<p>We have the following for the <tt>solve</tt> function:</p>
+<pre>(@signature Board -&gt; Board or false)
+;; produce a solution for bd; or false if bd is unsolvable
+;; CONSTRAINT: bd is valid
+
+(check-expect (solve BD4) BD4s)
+(check-expect (solve BD5) BD5s)
+(check-expect (solve BD7) false)
+
+
+
+
+
+
+
+(define (solve bd) false) ;stub
+
+</pre>
+<p></p>
+<p>Now let's start with the template for arbitrary-arity tree. Remember that the template for an arbitrary-arity tree involves a mutual recursion. In this case, we would have a function that consumes Board (ie. <tt>solve--bd</tt>) and calls another function (ie. <tt>solve--lobd</tt>) that does something to the (listof Board) that is supposed to come with the Board (a Board doesn't actually come with a (listof Board) but we will deal with it using generative recursion later). In order to complete the mutual recursion, we need to call <tt>solve--bd</tt> inside the function <tt>solve--lobd</tt>. So now we have the following template:</p>
+<pre>(define (solve bd)
+  (local [(define (solve--bd bd)
+            (... (solve--lobd (bd-subs bd))))
+          (define (solve--lobd lobd)
+            (cond [(empty? lobd) (...)]
+                  [else
+                   (... (solve--bd (first lobd))
+                        (solve--lobd (rest lobd)))]))]    
+
+    (solve--bd bd)))
+
+</pre>
+<p>Keep in mind that the <tt>bd-subs</tt> selector doesn't exist because Board does not keep a (listof Board). We need to deal with it using generative recursion.</p>
+<p></p>
+<p>Let's blend this template with the generative recursion template. The generative recursion template looks like this:</p>
+<pre>(define (genrec-fn d)
+  (if (trivial? d)
+      (trivial-answer d)
+      (... d 
+           (genrec-fn (next-problem d)))))
+
+</pre>
+<p>Since we know that <tt>solve--bd</tt> must generate a (listof Board) to pass to <tt>solve--lobd</tt>, we must blend the template into the <tt>solve--bd</tt> function. Then we would have (the red part was changed):</p>
+<pre>(define (solve bd)
+  (local [(define (solve--bd bd)
+            <span style="color:FF0000">(if (solved? bd)
+                bd
+                (solve--lobd (next-boards bd)))</span>)
+
+          (define (solve--lobd lobd)
+            (cond [(empty? lobd) (...)]
+                  [else
+                   (... (solve--bd (first lobd))
+                        (solve--lobd (rest lobd)))]))]    
+
+    (solve--bd bd)))
+
+</pre>
+<p>Notice the following:</p>
+<ul>
+<li><tt>bd-subs</tt> is changed to <tt>next-boards</tt> because it suggests that we are generating new boards.</li>
+<li><tt>trivial?</tt> from the generative recursion template is changed to <tt>solved?</tt> because the trivial case (ie. the case where the recursion should stop at) is when the board is solved.</li>
+<li><tt>trivial-answer</tt> from the generative recursion template is omitted because in this case, the trivial answer is the board that is solved, which is represented by <tt>bd</tt>.</li>
+</ul>
+<p></p>
+<p>Lastly, we need to blend in the template for backtracking search. The template is:</p>
+<pre>(define (backtracking-fn x)
+  (local [(define (fn-for-x x)
+            (... (fn-for-lox (x-subs x))))          
+
+          (define (fn-for-lox lox)
+            (cond [(empty? lox) false]
+                  [else
+                   (local [(define try (fn-for-x (first lox)))] ;try first child
+                     (if (not (false? try))                     ;successful?
+                         try                                    ;if so produce that
+                         (fn-for-lox (rest lox))))]))]          ;or try rest of children
+
+    (fn-for-x x)))
+
+</pre>
+<p>We need to blend the template for <tt>fn-for-lox</tt> from above into the function <tt>solve-lobd</tt>. The changes are in red:</p>
+<pre>(define (solve bd)
+  (local [(define (solve--bd bd)
+            (if (solved? bd)
+                bd
+                (solve--lobd (next-boards bd))))          
+
+          (define (solve--lobd lobd)
+            (cond [(empty? lobd) <span style="color:FF0000">false</span>]
+                  [else
+                   <span style="color:FF0000">(local [(define try (solve--bd (first lobd)))]
+                        (if (not (false? try))
+                            try
+                            (solve--lobd (rest lobd))))</span>]))]    
+
+    (solve--bd bd)))
+
+</pre>
+<p>The template allows the <tt>solve--lobd</tt> function to do the following:</p>
+<ul>
+<li>If we have reached the end of the (listof Board) (ie. if <tt>lobd</tt> is empty - the base case), then produce false, meaning that the (listof Board) has no solution.</li>
+<li>If the (listof Board) is not empty, then try to solve the first board in the list (ie. <tt>(solve--bd (first lobd))</tt>).</li>
+<li>If the outcome of the try is not false (ie. <tt>(not (false? try))</tt>), then produce that outcome because it means the board has been solved.</li>
+<li>If the outcome is false, then recurse and try the rest of the list (ie. <tt>(solve--lobd (rest lobd))</tt>).</li>
+</ul>
+<p></p>
+<p>Now we have the complete template below. The arbitrary-arity tree template is underlined in blue. The generative recursion template is in red. And the backtracking search template is in green.</p>
+<pre>(define (solve bd)
+  (local [<span style="border-bottom: thin solid #0000FF;">(define (solve--bd bd)</span>
+            <span style="color:FF0000">(if <i>(solved? bd)</i>
+                bd
+                <span style="border-bottom: thin solid #0000FF;">(solve--lobd <i>(next-boards bd)</i>)</span>)</span>)          
+
+          <span style="border-bottom: thin solid #0000FF;">(define (solve--lobd lobd)</span>
+            <span style="border-bottom: thin solid #0000FF;">(cond [(empty? lobd)</span> <span style="color:00FF00">false</span>]
+                  <span style="border-bottom: thin solid #0000FF;">[else</span>
+                   <span style="color:00FF00">(local [(define try (solve--bd (first lobd)))]
+                        (if (not (false? try))
+                            try
+                            <span style="border-bottom: thin solid #0000FF;">(solve--lobd (rest lobd))</span>))</span>]))]    
+
+    (solve--bd bd)))
+
+</pre>
+<p>The next step to completing the function is to implement the two helper functions - <tt>solved?</tt> and <tt>next-boards</tt>.</p>
+<p> <a name="Examples"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Abstraction From Examples</h2>
+<p>We design abstract functions in the opposite order of the normal HtDF recipe. We always want to do the easiest thing first, and with the abstract function design processes getting the working function definition is the easiest thing to do. In fact going through the recipe in the opposite order exactly goes from easiest to hardest.</p>
+<ol>
+<li>Identify two or more fragments of highly repetitive code. In general these can be expressions that appear within functions, or they can be entire functions. The rest of this recipe is tailored to the case where entire functions have been chosen.</li>
+<li>Arrange the two functions so that it is easy to see them at the same time.</li>
+<li>Identify one or more points where the functions differ (points of variance). Do not count differences in function names or parameter names as points of variance.</li>
+<li>Copy one function definition to make new one
+<ul>
+<li>give the new function a more general name</li>
+<li>add a new parameter for each point of variance</li>
+<li>update any recursive calls to use new name and add new parameters in recursive calls</li>
+<li>use the appropriate new parameter at each point of variability</li>
+<li>rename other parameters to be more abstract (lon to lox for example)</li>
+</ul>
+</li>
+<li>Adapt tests from original functions to new abstract function
+<ul>
+<li>be sure to test variability</li>
+<li>attempt to test behavior of the abstract function beyond that exercised by the two examples</li>
+</ul>
+</li>
+<li>Develop an appropriately abstract purpose based on the examples.</li>
+<li>Develop an appropriate signature for the abstract function; in many cases the signature will include type parameters.</li>
+<li>Rewrite the body of the two original functions to call the abstract function.</li>
+</ol>
+<p> <a name="Type"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Abstraction From Type Comments</h2>
+<p>We design abstract functions in the opposite order of the normal HtDF recipe. We always want to do the easiest thing first, and with the abstract function design processes getting the working function definition is the easiest thing to do. In fact going through the recipe in the opposite order exactly goes from easiest to hardest.</p>
+<ol>
+<li>if there are templates for mutually recursive functions first encapsulate them in a single template with local</li>
+<li>replace each ... in the templates with a new parameter; for (...) remove the parens</li>
+<li>develop examples (check-expects)</li>
+<li>develop abstract purpose from examples</li>
+<li>develop abstract signature from concrete examples</li>
+</ol>
+<p></p>
+<p>Let's now go through generating a fold function for <tt>(listof X)</tt>. Here is the type comment for <tt>(listof X)</tt>:</p>
+<pre>;; ListOfX is one of:
+;; - empty
+;; - (cons X ListOfX)
+</pre>
+<p>We can generate the following template based on this type comment:</p>
+<pre>(define (fn-for-lox lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (first lox)
+              (fn-for-lox (rest lox)))]))
+</pre>
+<p>Since there is no mutual recursion in the template, we can skip step 1. According to step 2, we need to replace each <tt>...</tt> with a new parameter. We also need to rename the function to <tt>fold</tt>. Here is what we would have after step 2:</p>
+<pre>(define (fold fn b lox)
+  (cond [(empty? lox) b]
+        [else
+         (fn (first lox)
+             (fold fn b (rest lox)))]))
+</pre>
+<p>Note that we called the <tt>...</tt> in place of the base case is named to <tt>b</tt>, and the <tt>...</tt> in place of the function is named to <tt>fn</tt>.</p>
+<p>For step 3, there are two tests we typically write for fold functions: a copy test and some kind of counting or summing test</p>
+<pre>
+(check-expect (fold cons empty (list 1 2 3)) (list 1 2 3)) ;copy the list
+(check-expect (local [(define (c1 x rnr) (add1 rnr))]      ;count elements of list
+                (fold c1 0 (list 1 2 3)))
+              3)
+(check-expect (fold + 0 (list 1 2 3)) 6)                   ;add elements of list
+
+(check-expect (fold string-append "" (list "a" "bc" "def"));a different kind of adding
+              "abcdef")
+
+
+(check-expect (local [(define (total-area i a)             ;even more different adding
+                        (+ (* (image-width i)
+                              (image-height i))
+                           a))]
+                (fold total-area 0 (list (rectangle 20 40 "solid" "red")
+                                         (right-triangle 10 20 "solid" "red")
+                                         (circle 20 "solid" "red"))))
+              (+ (* 20 40) (* 10 20) (* 40 40)))
+
+</pre>
+<p>Step 4 requires us to develop an abstract purpose from the examples. For fold functons we just write:</p>
+<pre>;; the abstract fold function for (listof X)
+
+</pre>
+<p>In the last step, we need to determine the abstract signature from the examples that we have written. The more diverse the examples that we have, the easier it is to come up with the correct signature.</p>
+<p><br /> From the function defintion for <tt>fold</tt>, we can first reason the following for the signature of <tt>fold</tt>:</p>
+<ul>
+<li>the parameter <tt>lox</tt> is of the type (listof X)</li>
+<li>the parameter <tt>b</tt> is of the same type as what the <tt>fold</tt> function produces because it is the base case</li>
+<li>the predicate function <tt>fn</tt> takes in two arguments</li>
+<li>the predicate function <tt>fn</tt> produces the same type as what the <tt>fold</tt> function produces</li>
+<li>the first parameter for the predicate function <tt>fn</tt> is of the type X</li>
+<li>the second parameter for the predicate function <tt>fn</tt> is of the same type as what the <tt>fold</tt> function produces</li>
+</ul>
+<p>From the above reasonings, we can narrow the signature down to:</p>
+<pre>(X ??? -&gt; ???) ??? (listof X) -&gt; ???
+
+</pre>
+<p>Note that all of the <tt>???</tt> are of the same type according to the above reasoning. Now the question is whether <tt>???</tt> has to be the same type as X or can be something else (ie. Y). <br /> From the fourth example in step 3, we can see that the signature for the predicate function <tt>total-area</tt> is:</p>
+<pre>Image Number -&gt; Number
+
+</pre>
+<p>In this case, the X is Image and the <tt>???</tt> is Number. This is an example of <tt>???</tt> being something different than X. Therefore, we can conclude that the abstract signature for <tt>fold</tt> is:</p>
+<pre>(X Y -&gt; Y) Y (listof X) -&gt; Y
+
+</pre>
+<p><a name="Using"></a></p>
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+<h2>Using Abstract Functions</h2>
+<p>The template for using a built-in abstract function like filter is:</p>
+<pre>(@htdf only-positive)
+(@signature (listof Number) -&gt; (listof Number))
+;; produce only positive? elements of lon
+
+;; tests elided
+
+(@template-origin use-abstract-fn)
+
+(@template 
+ (define (only-positive lon)
+   (filter ... lon)))
+</pre>
+<p>Now we note that the type of lon is (listof Number); and the signature of filter is <tt>(X -&gt; Boolean) (listof X) -&gt; (listof X)</tt>. This means that that signature of the function passed to filter is <tt>(Number -&gt; Boolean)</tt> so we can further decorate the template as follows:</p>
+<pre>(define (only-positive lon)
+          ;(Number -&gt; Boolean)
+  (filter ...                   lon))
+</pre>
+<p> as a note to ourselves about the signature of the function we replace ... with. 
+<p></p>
+</BODY>

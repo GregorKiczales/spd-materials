@@ -1,0 +1,77 @@
+
+where we are in the course
+
+accumulator overview - will understand all these words more soon
+
+sequence?  present
+
+ work up to wanting to fill in <previous>
+ put accumulator design slide up
+ note acc refactoring will be on video
+ stress example progression
+   work beginning to end progression of arb-sized-data arg
+   then work backward for accumulator
+     wish for final value
+     push that backwards
+
+
+context preserving accumulator
+
+(@htdf sequence?)
+
+(@signature (listof Natural) -> Boolean)
+;; produces true if the list is a strict sequence
+;; CONSTRAINT: the list has at least one element.   <<DROP THIS
+(check-expect (sequence? (list 2))     true)
+(check-expect (sequence? (list 2 3 4)) true)
+(check-expect (sequence? (list 3 5 6)) false)
+
+(@template-origin (listof Natural) accumulator)
+
+(define (sequence? lon0)
+  ;; acc is  Natural
+  ;; invariant: the element of lon0 immediately before (first lon)
+  ;; (sequence? (list 2 3 4 5 6))
+  
+  ;; (sequence? (list   3 4 5 6) 2)  
+  ;; (sequence? (list     4 5 6) 3)
+  ;; (sequence? (list       5 6) 4)
+  (local [(define (sequence? lon acc)
+            (cond [(empty? lon) true]
+                  [else
+                   (if (= (first lon) (+ 1 acc)) ;exploit
+                       (sequence? (rest lon)
+                                  (first lon))   ;preserve
+                       false)]))]
+    
+    (sequence? (rest lon0)
+               (first lon0))))                   ;initialize
+
+
+
+
+bst?  class
+hand problem to them no later than -40:00
+take it back to complete at -15:00
+
+interruptions:
+  for picture
+  how many accumulators
+  -inf.0 +inf.0
+
+
+(define (bst? bt0)
+  ;; lower is Integer, lower bound of key at this node (based on parents)
+  ;; upper is Integer, upper bound of key at this node (based on parents)
+  (local [(define (bst? bt lower upper)
+            (cond [(false? bt) true]
+                  [else
+                   (and (< lower (node-k bt) upper)                  ;exploit
+                        (bst? (node-l bt)  lower        (node-k bt)) ;preserve
+                        (bst? (node-r bt)  (node-k bt)  upper))]))]  ;preserve
+    
+    (bst? bt0 -inf.0 +inf.0)));                                      ;initialize
+;                             ;NOTE that we would never expect you to have
+;                             ;     already known about these two constants!
+
+

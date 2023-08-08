@@ -1,0 +1,305 @@
+<h2>Glossary</h2>
+<p>Definitions of terms used in this course. Some of these terms have a more broad meaning in computer science, others have multiple meanings. But for clarity the definition given below is restricted to the way in which we use the term in this course.</p>
+<h4>Contents</h4>
+<ul>
+<li><a href="#Abstract">Abstract (verb)</a></li>
+<li><a href="#Accumulator">Accumulator</a></li>
+<li><a href="#Arbitrary Sized">Arbitrary Sized</a></li>
+<li><a href="#Argument">Argument</a></li>
+<li><a href="#Atomic Data">Atomic Data</a></li>
+<li><a href="#Backtracking">Backtracking</a></li>
+<li><a href="#Boolean">Boolean</a></li>
+<li><a href="#BST">BST</a></li>
+<li><a href="#Closure">Closure</a></li>
+<li><a href="#Comment">Comment</a></li>
+<li><a href="#Compound">Compound</a></li>
+<li><a href="#Conditional">Conditional Expression</a></li>
+<li><a href="#Constant">Constant</a></li>
+<li><a href="#Data">Data</a></li>
+<li><a href="#Data Definition">Data Definition</a></li>
+<li><a href="#Directed Acyclic Graph">Directed Acyclic Graph</a></li>
+<li><a href="#Directed Graph">Directed Graph</a></li>
+<li><a href="#Enumeration">Enumeration</a></li>
+<li><a href="#Evaluate">Evaluate</a></li>
+<li><a href="#Expression">Expression</a></li>
+<li><a href="#Function">Function</a></li>
+<li><a href="#Graph">Graph</a></li>
+<li><a href="#Helper Function">Helper Function</a></li>
+<li><a href="#Image">Image</a></li>
+<li><a href="#Integer">Integer</a></li>
+<li><a href="#Itemization">Itemization</a></li>
+<li><a href="#Lambda">Lambda</a></li>
+<li><a href="#List">List</a></li>
+<li><a href="#Mixed Data Itemization">Mixed Data Itemization</a></li>
+<li><a href="#Mutable Variable">Mutable Variable</a></li>
+<li><a href="#Natural">Natural</a></li>
+<li><a href="#Number">Number</a></li>
+<li><a href="#Operand">Operand</a></li>
+<li><a href="#Operator">Operator</a></li>
+<li><a href="#Parameter">Parameter</a></li>
+<li><a href="#Predicate">Predicate</a></li>
+<li><a href="#Primitive">Primitive</a></li>
+<li><a href="#ProgramDomain">Program Domain (aka Problem Domain)</a></li>
+<li><a href="#Purpose">Purpose</a></li>
+<li><a href="#Recursion">Recursion</a></li>
+<li><a href="#Recursion">Recursive Function</a></li>
+<li><a href="#Selector">Selector</a></li>
+<li><a href="#Signature">Signature</a></li>
+<li><a href="#String">String</a></li>
+<li><a href="#Stub">Stub</a></li>
+<li><a href="#Template">Template</a></li>
+<li><a href="#Type Comment">Type Comment</a></li>
+<li><a href="#Value">Value</a></li>
+</ul>
+<p></p>
+<hr />
+
+
+<p><a name="Abstract"></a></p>
+
+<dl><dt>Abstract (verb)</dt><dd>Abstraction means taking two or more expressions or functions that are very similar, and turning those differences into parameters of a more general-purpose <strong>abstract function</strong>. The Abstraction From Examples and Abstraction From Type Comments recipes cover the design of abstract functions. It is also possible to design abstract types, but we do not do that in this course.</dd></dl>
+
+
+<p><br /><a name="Accumulator"></a></p>
+
+<dl><dt>Accumulator</dt><dd>An accumulator is a parameter that keeps track of information that was available earlier in a structural recursion, sometimes that information is built-up, or accumulated through the recursion. An accumulator can also be a mutable variable used with a looping construct to achieve the same effect.</dd></dl>
+
+
+<p><br /><a name="Arbitrary Sized"></a></p>
+
+<dl><dt>Arbitrary Sized</dt><dd>Arbitrary Sized information (or data) is information (or data) for which the size is not known at the time the program is designed. A "player with a name and jersey number" is not arbitrary sized, it is compound data with two parts. But "all the players in the league" is arbitrary sized because we do not know ahead of time how many players there will be.</dd></dl>
+
+
+<p><br /><a name="Argument"></a></p>
+
+<dl><dt>Argument</dt><dd>An argument is a value that passed to a function or a primitive operation when it is called. The arguments are the values that result from evaluating the operands in the function or primitive call. See <a href="#Parameter" title="Link: #Parameter">parameter</a> for a discussion of the differences between operands, arguments and parameters.</dd></dl>
+
+
+<p><br /><a name="Atomic Data"></a></p>
+
+<dl><dt>Atomic Data</dt><dd>Atomic data is a form of data that cannot be broken down into smaller data pieces. </dd></dl>
+
+
+<p><br /><a name="Backtracking"></a></p>
+
+<dl><dt>Backtracking</dt><dd>In a backtracking search the traversal first proceeds down one branch of the tree (or graph). If that branch fails the search along that branch produces a special failure value, such as false, and the calling function then search the next branch. In this way the search backtracks to the nearest node in the tree and follows the next branch.</dd></dl>
+
+
+<p><br /><a name="Boolean"></a></p>
+
+<dl><dt>Boolean</dt><dd><tt>Boolean</tt> is a primitive type that is comprised of just two values: <tt>true</tt> and <tt>false</tt>.</dd></dl>
+
+
+<p><br /><a name="BST"></a></p>
+
+<dl><dt>BST</dt><dd>A BST, or binary search tree, a data structure used to hold data that has been sorted in some way. Binary means that each node has has at most two children. &ldquo;Search&rdquo; means that the nodes are structured in a particular sorted order: for any given node n with a key k, all of its children with a key smaller than k are in the left sub-branch. All of its children with a key larger than k are in the right sub-branch. &ldquo;Tree&rdquo; describes what this structure would look like if it were drawn on paper.</dd></dl>
+
+
+<p><br /><a name="Closure"></a></p>
+
+<dl><dt>Closure</dt><dd>A closure is a locally defined function in which the body of the function uses a parameter of the enclosing function definition. The closure can be defined with local or lambda, but it must be defined inside of another function. In the example below, the helper function bigger? is a closure. <br /> <img src="https://spark-public.s3.amazonaws.com/programdesign/image_files/closure.jpg" alt="closure " title="Image: https://spark-public.s3.amazonaws.com/programdesign/image_files/closure.jpg" /></dd></dl>
+
+
+<p><br /><a name="Comment"></a></p>
+
+<dl><dt>Comment</dt><dd>In BSL, all the text on a line after a ; is a comment. It is ignored by BSL, and is intended to communicate to human readers something important about the program.</dd></dl>
+<p><br /><a name="Compound"></a></p>
+<dl><dt>Compound</dt><dd>Compound data is a single data item that is made up of more than one related values, such as a person's first name, last name, and age. In this course compound data is defined using&nbsp;<tt>define-struct</tt>.</dd></dl>
+
+
+<p><a href="#Conditional">Conditional Expression</a></p>
+
+<p><br /><a name="Conditional"></a></p>
+<dl><dt>Conditional Expression</dt><dd>A primitive expression that conditionally evaluates its enclosed expressions.  An if expression first evaluates the question position, then conditionally evaluates either the true or false answer positions.  A cond expression first evaluates the first question, if it is true it evaluates the first answer; otherwise it starts over with the second question answer pair.  An or expression conditionally evaluates its operands until it finds one that produces true.  is</dd></dl>
+
+
+
+<p><br /><a name="Constant"></a></p>
+
+<dl><dt>Constant</dt><dd>A constant is named value defined using <tt>define</tt>. It is called a constant because once it is defined it never changes.</dd></dl>
+
+
+<p><br /><a name="Data"></a></p>
+
+<dl><dt>Data</dt><dd>Data is the mass noun for values in our programs including numbers, strings, images, lists and compound data. In the design of programs we make a number of decisions about how to represent information as data. </dd></dl>
+
+
+<p><br /><a name="Data Definition"></a></p>
+
+<dl><dt>Data Definition</dt><dd>A data definition describes a plan for representing information from the program's domain using data inside the program. A data definition includes a type comment that describes how to form the new type of data; an interpretation that describes how the data represents information in the program's domain; examples of the new type of data and a data driven template for functions that consume a single argument of the new type of data. Data definitions are designed using the <a href="https://courses.edx.org/courses/course-v1:UBCx+HtC1x+2T2017/77860a93562d40bda45e452ea064998b/#HtDD" target="_blank">How to Design Data recipe</a>. </dd></dl>
+
+
+<p><br /><a name="Directed Acyclic Graph"></a></p>
+
+<dl><dt>Directed Acyclic Graph</dt><dd>A directed acyclic graph (DAG) is a <a href="#Directed Graph">directed graph</a> that does not contain cycles. In other words, it is impossible to start at a node, follow the edges of the graph and visit the same node more than once.</dd></dl>
+
+
+<p><br /><a name="Directed Graph"></a></p>
+
+<dl><dt>Directed Graph</dt><dd>A directed graph is a <a href="#Graph">graph</a> in which the edges between the nodes have a single direction.</dd></dl>
+
+
+<p><br /><a name="Enumeration"></a></p>
+
+<dl><dt>Enumeration</dt><dd>A form of data definition in which the program domain information consists of a fixed number of distinct values. </dd></dl>
+
+
+<p><br /><a name="Evaluate"></a></p>
+
+<dl><dt>Evaluate</dt><dd>In BSL, program execution proceeds by evaluating expressions to produce values. See the Language page for the detailed rules for forming an expression.</dd></dl>
+
+
+<p><br /><a name="Expression"></a></p>
+
+<dl><dt>Expression</dt><dd>An expression is an element of a program that is evaluated to produce a value. See the Language page for the detailed rules for forming an expression.</dd></dl>
+
+
+<p><br /><a name="Function"></a></p>
+
+<dl><dt>Function</dt><dd>Functions in programs are very similar to functions in mathematics. In math, a function f(x) can be passed a value for x, and it will produce a result based on that value. Functions in programs act the same way. They have a name (in the math example this name was "f ") and one or more parameters (in the math example, the parameter was "x"). Functions also have a body, which is an expression that is evaluated to produce the resulting value of the function. </dd></dl>
+
+
+<p><br /><a name="Graph"></a></p>
+
+<dl><dt>Graph</dt><dd>A graph is a set of nodes and a set of edges such that each edge joins two nodes.</dd></dl>
+
+
+<p><br /><a name="Helper Function"></a></p>
+
+<dl><dt>Helper Function</dt><dd>In the design of a complex function it is often useful to design sub-functions that the main function can call to do part of its work. These sub-functions are sometimes called helper functions.</dd></dl>
+
+
+<p><br /><a name="Image"></a></p>
+
+<dl><dt>Image</dt><dd><tt>Image</tt> is a primitive type of data that represents image, such as the result of a built in image function or a copy-pasted picture. </dd></dl>
+
+
+<p><br /><a name="Integer"></a></p>
+
+<dl><dt>Integer</dt><dd><tt>Integer</tt> is a primitive type of data that represents any positive or negative whole number (&hellip; -2, -1, 0, 1, 2 &hellip;).</dd></dl>
+
+
+<p><br /><a name="Itemization"></a></p>
+
+<dl><dt>Itemization</dt><dd>A form of data definition in which the data is comprised of two or more subclasses, in which at least one of the subclasses is not a distinct value. </dd></dl>
+
+
+<p><br /><a name="Lambda"></a></p>
+
+<dl><dt>Lambda</dt><dd>Lambda expressions make it possible to produce anonymous (or nameless) functions. They are convenient to use when it is necessary to pass a function as an argument to another function.</dd></dl>
+
+
+<p><br /><a name="List"></a></p>
+
+<dl><dt>List</dt><dd>A list is a data structure that represents a list of items. If there is nothing in the list, its value is empty, whereas if there is data in the list (say the numbers 1 2 3), the value would be <tt>(cons 1 (cons 2 (cons 3 empty)))</tt>. Conses are a type of compound data: The constructor is cons, the different elements in the list can be accessed by using the selectors first and rest, and there are predicates available such as <tt>cons?</tt> and <tt>empty?</tt></dd></dl>
+
+
+<p><br /><a name="Mixed Data Itemization"></a></p>
+
+<dl><dt>Mixed Data Itemization</dt><dd>A mixed data itemization is one in which at least two of the subclasses are&nbsp;<span style="color: #323333; font-family: 'Helvetica Neue'; line-height: normal;">represented</span>&nbsp;by data of different types. </dd></dl>
+
+
+<p><br /><a name="Mutable Variable"></a></p>
+
+<dl><dt>Mutable Variable</dt><dd>A mutable variable is a variable that can have its value changed after it has been defined. Mutable variables are not used in Part 1 of the course.</dd></dl>
+
+
+<p><br /><a name="Natural"></a></p>
+
+<dl><dt>Natural</dt><dd><tt>Natural</tt> is a primitive type data that represents any non-negative whole number (0, 1, 2, 3&hellip;).</dd></dl>
+
+
+<p><br /><a name="Number"></a></p>
+
+<dl><dt>Number</dt><dd><tt>Number</tt> is a primitive type of data that represents any number, including 0, fractions, decimal numbers and inexact numbers. For example, <tt>1, -5, 3.4, 134.9853957</tt> and <tt>#i1.4142135623730951</tt> are all <tt>Numbers</tt>. </dd></dl>
+
+
+<p><br /><a name="Operand"></a></p>
+
+<dl><dt>Operand</dt><dd>The expressions following the function name in a function call expression (or the operator name in a primitive call expression) are called operands. [See <a href="#Parameter">Parameter</a>.]</dd></dl>
+
+
+<p><br /><a name="Operator"></a></p>
+
+<dl><dt>Operator</dt><dd>Primitive operators are provided by the BSL language to operate on primitive data. They include &nbsp;+<tt style="line-height: 25.6000003814697px;">, -, string-append, substring, image-width&nbsp;</tt>and&nbsp;many others.</dd></dl>
+
+
+<p><br /><a name="Parameter"></a></p>
+
+<dl><dt>Parameter</dt><dd>A parameter is an identifier (or name) used in a function declaration that represents the changing value, or the variable. The parameter(s) appear in parentheses just after the function name. Within the body of the function the parameters stand for the arguments each time the function is called. <br />
+<pre>(define (bulb c)                  ;In this function definition, c
+  (color 40 "solid" c))           ;is the only parameter of the function.
+                                  ;The body of the function is itself a primitive call
+                                  ;to the primitive operator color. The call has 3 operands.
+  
+(bulb (string-append "r" "ed"))   ;In this function call expression 
+                                  ;(string-append "r" "ed") is the operand
+                                  ;When the function call is evaluated,
+                                  ;"red" is the argument.
+</pre>
+</dd></dl>
+<p></p>
+
+
+<p><br /><a name="Predicate"></a></p>
+
+<dl><dt>Predicate</dt><dd>A function or primitive that produces a boolean value. </dd></dl>
+
+
+<p><br /><a name="Primitive"></a></p>
+
+<dl><dt>Primitive</dt><dd>A primitive is a basic building block provided by BSL that we use when we design our programs. BSL provides primitive data and primitive operations on data. </dd></dl>
+
+
+<p><br /><a name="ProgramDomain"></a></p>
+
+<dl><dt>Program Domain (aka Problem Domain)</dt><dd>The domain of a program is the subject matter or nature of the problem. So in a payroll system the program domain includes concepts like employees and salaries etc. In a transit system it would include concepts like bus stops and routes and schedules. The SPD approach, and in particular the HtDD and HtDW recipes stress focusing on the domain of the problem (salaries and&nbsp;<span style="color: #323333; font-family: 'Helvetica Neue'; line-height: normal;">paycheques</span>) before the domain of the solution (<tt>Number</tt>, <tt>Integer</tt> etc.). </dd></dl>
+
+
+<p><br /><a name="Purpose"></a></p>
+
+<dl><dt>Purpose</dt><dd>A purpose is a comment that is written when a function is designed that explains in words what the function is supposed to produce. Try to keep purposes below 78 characters, but be specific!</dd></dl>
+
+
+<p><br /><a name="Recursion"></a></p>
+
+<dl><dt>Recursion</dt><dd>When a function calls itself we say that the function is recursive. When a type comment refers to itself we say that the type involves self-reference. Both are forms of recursion.</dd></dl>
+
+
+<p><br /><a name="Selector"></a></p>
+
+<dl><dt>Selector</dt><dd>A selector is a function that is used on compound data to "select for" (or, to get the values of) the different fields of the data. The selector name consists of the data structure's name followed by a dash and then the name of the field that the selector&nbsp; <span style="color: #323333; font-family: 'Helvetica Neue'; line-height: normal;">accesses</span>&nbsp; The argument for the selector should be the specific compound data for which you want to access the field. For example, with a data definition such as:&nbsp; <br /> <img src="https://spark-public.s3.amazonaws.com/programdesign/image_files/selector.jpg" alt="selector " title="Image: https://spark-public.s3.amazonaws.com/programdesign/image_files/selector.jpg" /> <br />Then for a cat c, the expressions would be <tt>(cat-x c)</tt> to get the cat's x-coordinate and <tt>(cat-y c)</tt> to get the cat's y-coordinate.</dd></dl>
+
+
+<p><br /><a name="Signature"></a></p>
+
+<dl><dt>Signature</dt><dd>A signature is the first line written in a function design. It is a comment that specifies the types of arguments that the function will consume, as well as what type of data the function produces.&nbsp;</dd></dl>
+
+
+<p><br /><a name="String"></a></p>
+
+<dl><dt>String</dt><dd>A <tt>String</tt> is a kind of primitive data that consists of symbols &ldquo;strung&rdquo; together. Strings are always enclosed in double quotation marks <tt>&ldquo;like this&rdquo;</tt>. It is important to note that if numbers are written inside strings, they are strings not numbers. <tt>&ldquo;123&rdquo;</tt> does not have the value of one hundred twenty three, since it is a <tt>String</tt>, whereas 123 does have the value of one hundred twenty three, since it is a Number. </dd></dl>
+
+
+<p><br /><a name="Stub"></a></p>
+
+<dl><dt>Stub</dt><dd>A stub is a mock-version of a function that specifies the function's proper name and parameter(s), but where the body of the function is simply a value of the proper return type. See the HtD Functions page for more information on stubs.</dd></dl>
+
+
+<p><br /><a name="Template"></a></p>
+
+<dl><dt>Template</dt><dd>A template describes the basic structure or backbone of the function independent of its details. Data driven templates are based on the type of data the function consumes. Other kinds of templates are based on knowing something about the basic structure of the computation the function will perform. The idea of the template is to let us write down quickly what we know about the function definition "before we get to the details".</dd></dl>
+
+
+<p><a name="Type Comment"></a></p>
+
+<dl><dt></dt><dt>Type Comment</dt><dd>A type comment is a comment in a data definition that defines how the new type of data is formed. </dd></dl>
+
+
+<p><br /><a name="Value"></a></p>
+
+<dl><dt>Value</dt><dd>A value is a data element, such as 1, <tt>"foo"</tt>, <tt>(make-cat 10 20)</tt> etc. </dd></dl>
+<p></p>
+<p></p>
+<p></p>
+<p></p>

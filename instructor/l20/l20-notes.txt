@@ -1,0 +1,131 @@
+Jerry, Greek, w/ Bonnie Raitt. Knockin.  8-30-1987 (BDAY!)
+https://youtu.be/1cbUPHVAY9Q
+1:15:31 1:22:55 = 7:24  start at x2:35
+
+
+
+;;
+;; PROBLEM
+;;
+;; Complete the design of the find-path function below.
+;;
+;; Your function definition should use a context preserving accumulator to
+;; represent the path to the current tree.
+;;
+
+class designs the acc, does diagram (few minutes)
+
+then develop code interactively
+ - stress the role of the invariant
+ - examples -> invariant; then check everything else against invariant
+ - be sure to phrase invariant in tree terms, NOT in term of the recursion
+     "names of ... grandparent, parent trees to t"
+
+
+POLL question about worklist accumulators
+take questions about worklist accumulators
+
+NOW we want a tr version of find path
+
+start with tr version of find-tree; add rsf path (but call it ???)
+
+(@template-origin encapsulated Tree (listof Tree) try-catch accumulator)
+
+(define (find-path t n)
+  ;; path is (listof String); names of ... grandparent, parent trees to here
+  (local [(define (fn-for-t t path)
+            (local [(define name (node-name t))
+                    (define subs (node-subs t))
+                    (define npath (append path (list name)))]
+              (if (string=? name n)
+		  npath
+                  (fn-for-lot subs npath))))
+          
+          (define (fn-for-lot lot path)
+            (cond [(empty? lot) false]
+                  [else
+		   (local [(define try (fn-for-t (first lot) path))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lot (rest lot) path)))]))]
+    
+    (fn-for-t t empty)))
+
+
+
+
+;;
+;;  COPY FROM ABOVE;;
+;;  RECURSIVE CALLS IN FN-FOR-T ALREADY TR
+;;  CAN'T WRAP MR AROUND NR OR VICE VERSA
+;;  INSTEAD OF WAITING TO DO THIS WORK, PASS A DESCRIPTION OF WORK
+;;  WORKLIST,  CALLED THE T-WL (TREE WORKLIST)
+;;
+
+(@template-origin Tree (listof Tree)
+           accumulator)         ;t-wl ???
+
+;; Tail recursion with ??? accumulator. FAILS SOME TESTS!!!
+(define (find-path t n)  
+  ;; t-wl is (listof Tree);
+  ;; worklist of trees to visit (un??? subs of already ??? trees)
+  ;;
+  ;; ??? is (listof String)
+  ;; names of trees ??? so far (builds along tail recursive calls)
+  (local [(define (fn-for-t t t-wl ???)
+            (local [(define name (node-name t))
+                    (define subs (node-subs t))
+                    (define n??? (append ??? (list name)))]
+              (if (string=? name to)
+                  n???
+                  (fn-for-lot (append subs t-wl)
+                              n???))))
+          
+          (define (fn-for-lot t-wl ???)
+            (cond [(empty? t-wl) false]
+                  [else
+                   (fn-for-t (first t-wl)
+                             (rest t-wl)
+                             ???)]))]
+    
+    (fn-for-t t empty empty)))
+
+
+
+(@template-origin Tree (listof Tree)
+           accumulator)        ;t-wl p-wl visited
+
+;; Tail recursion with tandem worklists - tree worklist and path worklist. 
+(define (find-path t n)
+  ;; t-wl is (listof Tree)
+  ;; worklist of trees to visit (unvisited subs of already visited trees)
+  ;;
+  ;; p-wl is (listof (listof String))
+  ;; worklist of paths to corresponding trees in t-wl
+  ;;
+  ;; visited is (listof String)
+  ;; names of trees visited so far (builds along tail recursive calls)
+  (local [(define (fn-for-t t path t-wl p-wl visited)
+            (local [(define name (node-name t))
+                    (define subs (node-subs t))
+                    (define npath (append path (list name)))
+                    (define nvisited (append visited (list name)))]
+              (if (string=? name n)
+                  npath
+                  (fn-for-lot (append                    subs         t-wl)
+                              (append (make-list (length subs) npath) p-wl)
+                              nvisited))))
+          
+          (define (fn-for-lot t-wl p-wl visited)
+            (cond [(empty? t-wl) false]
+                  [else
+                   (fn-for-t (first t-wl)
+                             (first p-wl)
+                             (rest t-wl)
+                             (rest p-wl)
+                             visited)]))]
+    
+    (fn-for-t t empty  empty empty empty)))
+
+
+

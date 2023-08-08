@@ -1,0 +1,135 @@
+
+
+
+IN 2023W1, DON'T DO THE TREE-WL SLIDES HERE, INSTEAD DO THE 3 ACC PROBLEMS
+
+THEN L20 IS ALL ABOUT THE PATH, WL, AND PATH-WL ACCUMULATORS
+
+
+acc overview slide, what we have done
+
+plan for 4 lectures slide
+
+
+warm up questions
+	identify tail pos, tail recursion
+
+
+; start w/ fn-for-lox template
+
+
+(define (fn-for-lox lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (first lox)
+              (fn-for-lox (rest lox)))]))
+
+
+; make it copy
+
+(check-expect (fn-for-lox (list 1 2 3)) (list 1 2 3))
+
+(define (fn-for-lox lox0)
+  (cond [(empty? lox) empty]                ;base is empty
+        [else
+         (cons (first lox)                  ;combination is cons
+               (fn-for-lox (rest lox)))]))
+
+; but not TR
+
+(define (fn-for-lox lox rsf)
+  (cond [(empty? lox) empty]
+        [else
+         (fn-for-lox (rest lox))]))         ;tail recursive, but result always empty
+
+
+; step 1 of acc refactoring
+
+(define (rev lox0)                          ;setup for accumulator named 'rsf'
+  ;; rsf is 
+  (local [(define (fn-for-lox lox rsf)
+            (cond [(empty? lox) empty]
+                  [else
+                   (fn-for-lox (rest lox)
+                               ...rsf)]))]
+    (fn-for-lox lox0 ...)))
+
+
+(define (rev lox0)
+  ;; rsf is ...
+  (local [(define (fn-for-lox lox rsf)
+            (cond [(empty? lox) empty]
+                  [else
+                   (fn-for-lox (rest lox)
+                               (cons (first lox)      ;combination moves 
+                                     rsf))]))]        ;into rsf update
+    (fn-for-lox lox0 empty)))
+
+
+(define (rev lox0)
+  ;; rsf is (listof X); result so far
+  ;;                    elements of lox0 seen so far in reverse order
+  ;;
+  ;; (fn-for-lox (list 1 2 3) (list))
+  ;; (fn-for-lox (list   2 3) (list 1))
+  ;; (fn-for-lox (list     3) (list 2 1))
+  ;; (fn-for-lox (list      ) (list 3 2 1))
+  (local [(define (fn-for-lox lox rsf)
+            (cond [(empty? lox) empty]
+                  [else
+                   (fn-for-lox (rest lox)
+                               (cons (first lox)      ;combination moves 
+                                     rsf))]))]        ;into rsf update
+    (fn-for-lox lox0 empty)))
+
+
+
+
+
+find-tree/sr
+	interactive
+	familiar blending of SR and try-catch
+
+
+find-tree/tr
+	is current one tr? NO
+	where not?
+	is there a built-up result? NO
+        --> no rsf
+        --> but will need a tree-wl
+	present
+        explain refactoring
+
+
+- rename lot to tree-wl (just because)
+- rewrite mref in fn-for-lot (pass remaining options as worklist)
+- add t-wl to other fn
+- rewrite mref in fn-for-t (be sure to ADD TO not replace worklist)
+
+;; Tail recursion
+(define (find-tree/tr t tn)
+  ;; t-wl is (listof Tree)
+  ;; worklist of pending trees to visit
+  ;; the unvisited direct subs of all the visited trees
+  ;; aka the upper left fringe of the unvisited part of original tree
+  (local [(define (fn-for-t t t-wl)
+            (local [(define name (node-name t))  ;unpack the fields
+                    (define subs (node-subs t))] ;for convenience
+              (if (string=? name tn)
+                  t
+                  (fn-for-lot (append subs t-wl)))))
+          
+          (define (fn-for-lot t-wl)
+            (cond [(empty? t-wl) false]
+                  [else
+                   (fn-for-t (first t-wl)
+                             (rest t-wl))]))]
+    
+    (fn-for-t t empty)))
+
+
+start going through pictures
+      assign value of t-wl each time fn-for-t or fn-for-lot is called
+
+
+get class to start one of three extra problems

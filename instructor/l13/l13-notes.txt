@@ -1,0 +1,222 @@
+
+
+clickers  D C  B
+
+goal of clickers is to clarify first class functions
+
+- can demonstrate QUICKLY ONCE with function call evaluation step
+
+
+NOTE: Do not drop problem 1 from functions starter. We tried that it was a big mistake! It means
+that students didn't see the massaging before abstraction example.
+
+
+----
+Today is hard work. Second half of 110 we are going to cover more.
+
+All present/interactive lecture.
+
+functions-starter
+problem 1 - extract andmap2 with massaging, STUDENTS COMPLETE LATER (annotate starter)
+
+problem 2 - complete filter2, given fn definition, learn type inference
+
+problem 3 - USE filter2
+
+problem 4 - complete map2 STUDENTS DO LATER
+
+problem 5 - design foldr2 from template
+
+
+use-bia-fns starter
+
+setup concept of map/filter/fold/andmap/ asking does this fit what fn will do
+
+----
+
+massage all-greater to make part of its body match all-positive
+
+use highlighting on pad to show what is matching / different
+
+(define (all-greater? lon x)
+  (cond [(empty? lon) true] 
+        [else	  
+         (and (> (first lon) x)                 ;try to make this one arg fn
+               (all-greater? (rest lon) x))]))) ;ignore recursive call
+
+(define (all-greater? lon x)
+  (local [(define (>x? n) (> n x))]
+    (cond [(empty? lon) true] 
+          [else	  
+           (and (>x? (first lon))
+                (all-greater? (rest lon) x))])))
+
+(define (all-positive? lon)
+  (cond [(empty? lon) true]
+        [else
+         (and (positive? (first lon))
+              (all-positive? (rest lon)))]))
+		
+
+(define (all-greater? lon x)
+  ;; NOTE: >x? is a closure, a locally defined function that refers to
+  ;;       a parameter of the surrounding function
+  (local [(define (>x? n) (> n x))]
+    (andmap2 >x? lon)))
+
+(define (all-positive? lon)
+  (andmap2 positive? lon))
+
+
+STUDENTS COME BACK AND COMPLETE ANDMAP2 LATER
+markup for @to, checks, purpose, signature
+
+;; given p and (list x0 x1 ...) produce (and (p x0) (p x1) ...)
+(check-expect (andmap2 positive? empty) true)
+(check-expect (andmap2 positive? (list 2 3 -4)) false)
+(check-expect (andmap2 positive? (list 2 3  4)) true)
+(check-expect (local [(define (fn n) (> n -3))] (andmap2 fn (list -2 -3 -4)))
+              false)
+(check-expect (local [(define (fn n) (< n 0))] (andmap2 fn (list -2 -3 -4)))
+              true)
+(check-expect (andmap2 false? (list true false true)) false)
+
+(@template-origin (listof X))
+(define (andmap2 p lox)
+  (cond [(empty? lox) true]
+        [else
+         (and (p (first lox))
+              (andmap2 p (rest lox)))]))
+
+
+
+
+problem 2, complete design of filter2, present up to @signature, then interactive
+
+add origin
+add tests, need base, need 2 preds,
+introduce listof, type params
+inference
+  (_ _ -> _)  number of params              
+  (( -> __) _ -> _)  what's a function
+  ((_ -> _) _ -> _) how many args
+  ((_ -> Boolean) _ -> _) if wants a Boolean answer
+  ((_ -> Boolean) (listof _) -> _) first, rest
+  ((_ -> Boolean) (listof _) -> (listof _)) cons, empty
+  ((X -> Boolean) (listof X) -> (listof _)) first  goes to p
+  ((X -> Boolean) (listof X) -> (listof X)) first goes to cons
+
+(@htdf filter2)
+(@signature (X -> Boolean) (listof X) -> (listof X))
+;; produce list of only those elements of lst for which p produces true
+(check-expect (filter2 zero?     (list))           (list))
+(check-expect (filter2 positive? (list 1 -2 3 -4)) (list 1 3))
+(check-expect (filter2 negative? (list 1 -2 3 -4)) (list -2 -4))
+(check-expect (filter2 empty?    (list (list 1 2) empty (list 3 4) empty))
+              (list empty empty))
+
+(@template-origin (listof X))
+
+(define (filter2 p lox) 
+  (cond [(empty? lox) empty]
+        [else     
+         (if (p (first lox))
+             (cons (first lox) 
+                   (filter2 p (rest lox)))
+             (filter2 p (rest lox)))]))
+
+
+problem 3
+all-greater-than
+
+origin
+template (filter2 ... lon)
+<some fn that tells whether x is >n ?>
+define locally
+use in filter
+
+
+closure again
+
+
+problem 5 (interactive)
+
+type inference...
+
+@template-origin
+
+tests - these are combination and base  +,0  *,1  string-append,""
+
+;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
+nobody writes that the first time!
+
+
+
+
+;; links -> language -> biaf list
+
+draw a map, a filter, a foldr
+
+look at what the function consumes and produces does it maych a bia-fn
+
+<stop here>
+
+
+
+
+use-bia-fn-starter
+problems 1, 2, 3
+
+first figure out the fns to use, based on args and results
+
+
+odds-minus-evens
+
+List -> Number  ---> foldr
+
+(foldr ... loi)
+
+(foldr +/- loi)
+
+(define (+/- i rnr)
+  (... i rnr))
+
+(define (odds-minus-evens loi)
+  (local [(define (+/- n rnr)
+            (if (odd? n)
+                (+ rnr n)
+                (- rnr n)))]
+    (foldr +/- 0 loi)))
+
+
+sum-larger-than
+
+list -> sublist -> number
+
+(foldr ... ... (filter ... loi))
+
+(define (sum-larger-than n loi)
+  (local [(define (>n? x) (> x n))]	
+    (foldr + 0 (filter >n? loi))))
+
+
+explain build-list in interactions area
+(build-list 3 sqr)
+(list (sqr 0) (sqr 1) (sqr 2))
+doesn't have to produce numbers
+
+(build-list 2 number->string)
+(list (number->string 0) (number->string 1))
+
+boxes
+
+number -> image (n overlayed images)
+
+number -> list of images -> single image
+
+(foldr ... ... (build-list n ...))
+
+(define (boxes n)
+  (local [(define (box n)
+            (square (+ (* n 10) 1) "outline" "black"))]
+    (foldr overlay empty-image (build-list n box))))
