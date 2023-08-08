@@ -1,2 +1,2 @@
 # spd-materials
-lectures, problem bank, problem sets, labs, instructor notes for Systematic Program Design
+lectures w instructor notes and practice problem bank for Systematic Program Design
