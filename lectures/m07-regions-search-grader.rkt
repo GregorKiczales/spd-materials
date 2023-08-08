@@ -1,0 +1,73 @@
+#lang racket
+(require spd-grader/check-template
+         spd-grader/grader
+         spd-grader/walker
+         spd-grader/utils)
+
+(provide grader)
+
+
+(define grader
+  (lambda ()
+    (grade-submission
+      (weights (*)
+        (grade-problem 1
+          (let* ([sexps  (problem-sexps (car (context)))])
+            (weights (.3 *)
+              (rubric-item 'other 1
+                           (and (>= (length sexps) 1)
+                                (equal-sets? (car sexps) (car PROBLEM-1-SOLUTION)))
+                           "@template-origin tag - which is there to make it easy to copy")
+              (rubric-item 'other 1
+                           (and (>= (length sexps) 2)
+                                (equal? (cadr sexps) (cadr PROBLEM-1-SOLUTION)))
+                           "encapsulated fn-for-region"))))
+
+
+        (grade-problem 2
+          (grade-htdf find-region
+            (let* ([htdf  (car (context))]
+                   [defns (htdf-defns htdf)]
+                   [locs  (filter fn-defn? (cdr (defines defns)))]
+                   [names (map caadr locs)])
+              (weights (*)
+                (grade-signature (String Region -> Region or false))
+
+                (rubric-item 'other 1 (= (length defns) 1) "Only one top-level function")
+                (rubric-item 'other 1 (= (length locs) 2)  "With 2 locally defined functions")
+                (rubric-item 'other 1
+                             (and (member (car  names) (free (caddr (cadr locs))))
+                                  (member (cadr names) (free (caddr (car  locs)))))
+                             "That are in mutual recursion")
+
+                (grade-template-origin 1 (encapsulated Region ListOfRegion try-catch))
+
+                (grade-additional-tests 1
+                  (check-expect (find-region "one" S1) S1)
+                  (check-expect (find-region "one" S2) false)
+                  (check-expect (find-region "three" G4) S3))))))))))
+
+            
+
+
+  
+(define PROBLEM-1-SOLUTION
+  '((@template-origin Region ListOfRegion encapsulated)
+
+    (define (fn-for-region r)
+      (local [(define (fn-for-region r)
+                (cond [(single? r)
+                       (... (single-label r)
+                            (single-weight r)
+                            (single-color r))]
+                      [else
+                       (... (group-color r)
+                            (fn-for-lor (group-subs r)))]))
+              
+              (define (fn-for-lor lor)
+                (cond [(empty? lor) (...)]
+                      [else
+                       (... (fn-for-region (first lor))
+                            (fn-for-lor (rest lor)))]))]
+        
+        (fn-for-region r)))))
