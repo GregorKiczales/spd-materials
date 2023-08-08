@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+  <LINK href="../110-style.css" rel="stylesheet" type="text/css">
+</HEAD>
+
+
+<BODY>
+  <a name="top">
+    <h2>Differences Between Current Course and Legacy edX Numbered Videos</h2>
+
+
+    <p>This page will help you understand the differences between how we do things in lecture/lab/problem sets/exams from the way they are in the edX videos.</p>
+<p>The goal of CPSC 110 is to be a world leading introductory course in software development.  We aim to help you learn expert-like ways of thinking about programming that can begin a path to being an excellent software engineer.  As such, CPSC 110 it is always evolving, always improving to keep up with research and practice in programming languages and software engineering. The great thing about that is that you will learn about ideas use in companies with leading software development cultures.</p>
+<p>But being on the cutting edge has some costs.  Because we are always improving the course, some of the scaffolding is still visible.  This shouldn't surprise students at what is sometimes called the <span style="text-decoration: underline;">u</span>niversity of <span style="text-decoration: underline;">b</span>uilding <span style="text-decoration: underline;">c</span>onstruction.   Computer science, and certainly 110, is the department of course construction.  One of the most visible pieces of scaffolding is that there are some improvements to the course that are not yet reflected in the module videos.  The cost and mechanics of updating the videos is such that we want to have a number of improvements ready before we update them next.</p>
+<p>The purpose of this page is to explain the differences between the module videos and the other course material.</p>
+<h5>Types</h5>
+<p>In the module videos we sometimes use something called an interval type.  An interval type looks something like Integer[10, 20), which means integers in the interval from 10 to 19 inclusive.  But we no longer use interval types in the course.  They are definitely on the horizon for professional software development, but there were too many complexities associated with integrating them with some of the other improvements we have made to the course.  It is nonetheless sometimes important to restrict the range of numeric values, we now do that with a constraint in the function signature, or in a data definition as shown here (module videos on the left, all other course material on the right):</p>
+<table style="width: 1200px;">
+<tbody>
+<tr>
+<td>edX videos</td>
+<td>lecture, labs, problem sets, exams</td>
+</tr>
+<tr>
+<td valign="top" style="width: 600px;">
+<p>In a data definition:</p>
+<pre>;; Cat is Number[0, WIDTH]<br />;; interp. The cat's x position in pixels</pre>
+<p>In a function signature:</p>
+<pre>;; Integer[5, 10] -&gt; Number</pre>
+</td>
+<td valign="top" style="width: 600px;">
+<p>In a data definition:</p>
+<pre>(@htdd Cat)<br />;; Cat is Number<br />;; interp. The cat's x position in pixels<br />;; CONSTRAINT: always in the interval [0, WIDTH]</pre>
+<p>In a function signature:</p>
+<pre>(@signature Integer -&gt; Number)<br />;; function purpose<br />;; CONSTRAINT: first argument is in the interval [5, 10]</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h5>@Tags</h5>
+<p>An emerging practice in leading software development organizations is to add annotations to programs that describe additional properties of the program's design.  Because these annotations are data about the program itself, they are called metadata annotations or metadata tags.  In 110 we uses a systematic design process which inherently generates important metadata describing how the program was designed.  In the videos this additional information always appears in comments; but we are now writing that information using metadata tags.  These tags formalize the notation for writing the information, and will also allow tools like the autograder to check the information.  All the information in the tags also appears in the videos - it just takes a different form in the tags.</p>
+<p></p>
+<table style="width: 1200px;">
+<tbody>
+<tr>
+<td>edX videos</td>
+<td>lecture, labs, problem sets, exams</td>
+</tr>
+<tr>
+<td valign="top" style="width: 600px;">
+<p>File header:</p>
+<pre>&lt;nothing&gt;</pre>
+<p style="font-size: 14px;">Start of Function Design:</p>
+<p style="font-size: 14px;">&lt;nothing&gt;</p>
+<p>Signatures:</p>
+<pre>;; Number String -&gt; String</pre>
+<p>Origin of template:</p>
+<p></p>
+<pre>;; template from SpaceShip</pre>
+<p></p>
+<p>Start of Data Design:</p>
+<pre>&lt;nothing&gt;</pre>
+<p>Data driven template rules used:</p>
+<pre>;; Template rules used:<br />;;  - atomic distinct: "Stopped"<br />;;  - atomic non-distinct: Number</pre>
+<p></p>
+</td>
+<td valign="top" style="width: 600px;">
+<p>File header:</p>
+<pre>(require spd/tags)</pre>
+<p style="font-size: 14px;">Start of Function Design:</p>
+<pre>(@htdf &lt;function-name&gt;)</pre>
+<p>Signatures:</p>
+<pre>(@signature Number String -&gt; String)</pre>
+<p>Origin of template:</p>
+<p style="font-size: 14px;"><span style="font-family: monospace, serif; font-size: 1em; white-space: pre-wrap;">(@template-origin SpaceShip)</span></p>
+<p style="font-size: 14px;"></p>
+<p style="font-size: 14px;">Start of Data Design:</p>
+<pre>(@htdd &lt;type-name&gt;)</pre>
+<p>Data driven template rules used:</p>
+<pre>(@dd-template-rules atomic-distinct      ; "Stopped"<br />                    atomic-non-distinct) ; Number<br /><br /></pre>
+<p></p>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>Glossary of @tags:</p>
+<table style="width: 1200px;">
+<tbody>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@assignment &lt;id&gt;)</pre>
+</td>
+<td>
+<p>Goes at top of file to indicate which assignment is being submitted with SPD handin. Never edit this annotation.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@cwl &lt;id1&gt;  &lt;id2 (optional)&gt;)</pre>
+</td>
+<td>
+<p>Goes after @assignment to indicate one or two ids of students submitting assignment.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@problem &lt;Natural&gt;)</pre>
+</td>
+<td>
+<p>Goes throughout file to indicate that portion of file from that @problem to the next is the solution to the given problem number. Never edit this tag.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@htdw &lt;TypeName&gt;)</pre>
+</td>
+<td>
+<p>Indicates that entire file follows the HtDW design recipe for a world program with the given world state type.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@htdd &lt;TypeName&gt;)<br />(@htdf &lt;function-name&gt;</pre>
+</td>
+<td>
+<p>Indicates that portion of file up to next @htdd or @htdf follows the HtDD or HtDF design recipe for a type/function of the given name.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@dd-template-rules &lt;rule&gt;...)</pre>
+</td>
+<td>
+<p>Lists HtDD data driven template rules used to form the immediately following template function. Note that the function must NOT be commented out. All rules in an @dd-template-rules annotation must be one of: one-of, atomic-non-distinct, atomic-distinct, compound, self-ref, or ref.</p>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@signature &lt;TypeName&gt;... -&gt; &lt;TypeName&gt;)<br />(@signature &lt;TypeName&gt;... -&gt; &lt;TypeName&gt; or false)</pre>
+</td>
+<td>
+<p>Specifies signature of current @htdf design.</p>
+</td>
+</tr>
+
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@template-origin &lt;origin&gt;...)</pre>
+</td>
+<td>
+<p>Specifies origin(s) of the template for the immediately following function definition. Every origin in an @template-origin annotation must be one of:</p>
+<ul>
+<li>A primitive type.</li>
+<li>A typed defined in an @htdd section of the same file.</li>
+<li>A non-type template origin: htdw-main, fn-composition, try-catch, 2-one-of, encapsulated, use-abstract-fn, genrec, bin-tree (must be used w/ genrec), arb-tree (must be used w/ genrec), accumulator, or for-each.</li>
+</ul>
+</td>
+</tr>
+
+<tr>
+<td valign="top" style="width: 500px;">
+<pre>(@template (define ...))</pre>
+</td>
+<td>
+<p>Preserves a copy of the function template after creating the template from all the origins, but before beginning to fill in the ... in the template. The template must match the template origin tag, and the actual funciton definition must clearly reflect the template.</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</BODY>

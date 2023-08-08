@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <HEAD>
+    <LINK href="110-style.css" rel="stylesheet" type="text/css">
+  </HEAD>
+
+<body>
+
+<h2>Explanation of Autograder Reports</h2>
+
+<p>
+In CPSC 110 we use an automatic grader (autograder) to grade
+lecture work, labs, problem sets and exams.  The autograder score
+is never the only way an assignment is graded, and what percentage
+of the score it represents depends on the kind of assignment:
+
+</p>
+
+Each lecture starter has an autograder that will give you feedback
+on your work on that starter.  Lecture starters are graded, you
+must hand in the lecture starter once during lecture; then you have
+until 10pm to complete it.  The final grade before 10pm will be your
+grade.
+<ul>
+<li>
+Problem sets. See
+<a href="https://cs110.students.cs.ubc.ca/admin/syllabus.html#grading">Grading</a>
+in the syllabus.
+</li>
+<li>
+Labs. See
+<a href="https://cs110.students.cs.ubc.ca/admin/syllabus.html#grading">Grading</a>
+in the syllabus.
+</li>
+<li>
+Exams. Depending on the problem, exam problems are graded using a mix of
+autograding and TA grading.
+</li>
+</ul>
+
+
+
+<h3>Must Pass Check Syntax Button</h3>
+
+<p>
+The auto-grader cannot grade your file unless it passes the Check
+Syntax button in your Dr Racket.  So before you press handin always
+press Check Syntax. If Check Syntax shows errors you MUST fix those
+before you handin, otherwise you will get a 0 for your autograder
+score.  Depending on the assessment your total score may also be 0.
+So Check Syntax often as you work.
+</p>
+
+<p>
+The Run button is strictly more demanding than the Check Syntax
+button, so you may often press Run instead.  If your file runs, even
+if some tests fail, or some specific tests have errors, then it can be
+graded. If you run your file and there are problems, then be sure to
+press Check Syntax before you handin so you know whether those
+problems will prevent it from being graded.
+</p>
+
+
+<h3>HtDF Problem Grading</h3>
+<p>
+This section describes the feedback you will receive from the
+autograder for HtDF problems. 
+</p>
+<p>
+<h4>Signature</h4>
+<p>
+The signature item is the most straightforward. It says whether the
+signature argument and result types are correct. 
+</p>
+<p>
+<h4>Test validity</h4> 
+<p>
+The item is evaluating the submitted check-expects only.  The score
+indicates whether your tests are valid - meaning do they match the
+course staff's interpretation of the problem statement. All the
+arguments must conform to the function's signature; and the result
+value must be correct for those arguments.
+</p>
+
+<p>
+The test validity score is very useful when you start an HtDF problem
+to be sure you understand the problem statement.  You can write
+examples wrapped in check-expects and submit them.  If they are valid
+you know you can use them to design the function. If they are not
+valid then you need to reconsider the problem statement. To encourage
+you to do this, the autograder will produce test validity scores even
+if you resubmit your file before the cooldown period.  Take advantage
+of this to make sure you know the details of what the function should
+do before you move on to the template origin, template and coding the
+function body.
+</p>
+
+<p>
+Note that submitted tests can pass but still not be valid. If, for
+example, the submitted tests pass, but they are not valid and
+additional tests fail, then this is a good sign that your
+interpretation of the problem statement is incorrect.
+</p>
+
+<h4>Test thoroughness (test argument coverage)</h4>
+<p>
+This item is evaluating the submitted check-expects only.  This item
+evaluates whether the submitted tests, as a group, cover all the
+argument values they should, including boundary conditions and other
+particular argument values that should be tested.
+</p>
+<p>
+Note that submitted tests can pass and be valid, but still not have
+complete test argument coverage. If for example there is no test for
+a boundary condition in the function then this item will be incorrect.
+</p>
+
+<h4>Test thoroughness (fault detection)</h4>
+<p>
+This item is evaluating the submitted check-expects only.  For this
+evaluation the autograder has a set of its own faulty versions of the
+functions.  These are versions of the function that don't quite work
+properly. For each of those faulty functions the autograder runs all
+of the submitted tests.  If one or more of the tests fail that's
+good. But if no tests fail for one of the buggy functions then it
+means that <em>fault was not detected</em>.
+</p>
+<p>
+This item is incorrect when one or more known faults are not detected.
+As with test argument coverage, submitted tests can pass and be valid,
+but still not detect faulty functions
+  </p>
+
+<h4>Template origin tag</h4>
+<p>
+  This item is evaluating the (@template-origin ..) tag.  The tag
+  should appear in the htdf function design, before both the function
+  definition and the @template tag. The grader checks to see that all
+  correct template origins are listed, and that no incorrect origins
+  are listed.
+</p>
+
+<p>
+  This item is marked against the template origin tag that the course
+  staff believes is correct for the problem.
+</p>
+
+<h4>Template tag</h4>
+<p>
+  This item is evaluating the (@template ..) tag.  The tag should
+  appear in the htdf function design, immediately after the
+  @template-origin tag and before the function definition. The grader
+  checks to see that the function definition template in the tag
+  is correct.
+</p>
+
+<p>
+  This item is marked against the template origin tag that the course
+  staff believes is correct for the problem.
+</p>
+
+<h4>Template intact</h4>
+<p>
+  This item is evaluating the function definition as compared to the
+  template origin and/or template tags.  Among other things this
+  assesses whether the rules about editing cond questions, and
+  question/answer pair order are followed in the actual function
+  definition.
+</p>
+
+<p>
+  This item is marked against the template origin tag and/or template
+  tag that the course staff believes is correct for the problem.
+  </p>
+
+<h4>Submitted tests</h4>
+<p>
+  This item is evaluating whether the submitted tests run and pass.
+</p>
+
+<h4>Additional tests</h4>
+<p>
+  This item is evaluating whether the course staff's additional tests
+  run and pass.  These are tests which check whether the submitted
+  function has the behaviour that the staff wants it to have.
+</p>
+<p>
+  A common situation is for submitted tests to pass but one or more
+  additional tests to fail.  This indicates a situation where the
+  submitted problem set has a self-consistent design; but not quite
+  for the right problem. In other words, your function does what you
+  want it to do, but it doesn't do what the staff wants it to do.
+</p>
+
+</body>

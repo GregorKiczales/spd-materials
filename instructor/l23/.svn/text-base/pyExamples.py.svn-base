@@ -1,0 +1,74 @@
+import doctest
+
+def sum(lon):
+    """Return the sum of a list of numbers.
+
+    >>> sum([2, 3, 4]) 
+    9
+    """
+    res = 0
+    for n in lon:
+        res = res + n
+    return res
+
+
+
+
+def doubles(lon):
+    """Return a list of 2 times each number in lon.
+
+    >>> doubles([2, 3, 4]) 
+    [4, 6, 8]
+    """
+    res = []
+    for n in lon:
+        res = res+[2*n]
+    return res
+
+
+
+def rev(lox):
+    """Return the reversed list.
+
+    >>> rev([2, 3, 4]) 
+    [4, 3, 2]
+    """
+    acc = []
+    for x in lox:
+        acc = [x]+acc
+    return acc
+
+
+def skip1(lox):
+    """Return the reversed list.
+
+    >>> skip1([2, 3, 4]) 
+    [2, 4]
+    """
+    acc = []
+    isOdd = 1
+    for x in lox:
+        if isOdd:
+            acc = acc + [x]
+        isOdd = not(isOdd)
+    return acc
+
+
+def avg(lon):
+    """Return the average of a list of numbers.
+    Assumes the list is not empty.
+    >>> avg([2, 3, 4]) 
+    3
+    """
+    sum = 0
+    count = 0
+    for n in lon:
+        sum = sum + n
+        count = count + 1
+    return sum / count
+
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

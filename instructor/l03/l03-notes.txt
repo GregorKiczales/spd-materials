@@ -1,0 +1,146 @@
+
+3 SUMMARY reports
+ key point is that on autograder assignments median is 100, mean is close to it
+
+10   clickers (6 + 4)
+
+25   can-vote?
+	no idea?
+	what do 0, 1 mean
+	primitives operate on data,
+	we want to design functions that process information
+	status+ can-vote?
+
+45   Grade-standing
+
+     information   |
+     type comment  | interactive
+     examples      |
+     
+     template	   | present mixed data
+                     guarding, no simplification (type safety)l..;l
+
+     functions 	   | class
+    
+
+Data is not information! MJ says start in the domain of the problem (information).
+Be clear about what information data represents.
+
+
+
+(@problem 1)
+(@htdd Status)
+;; Status is one of:
+;;  - "minor"
+;;  - "adult"
+;; interp. the legal status of a person
+;; <examples are redundant for enumerations>
+
+(@dd-template-rules one-of           ;2 cases
+                    atomic-distinct  ;"minor"
+                    atomic-distinct) ;"adult"
+
+(define (fn-for-status s)
+  (cond [(string=? s "minor") (...)]
+        [(string=? s "adult") (...)]))
+
+
+(@htdf can-vote?)
+(@signature Status -> Boolean)
+;; produces true if a person with given status is eligible to vote
+(check-expect (can-vote? "minor") false)
+(check-expect (can-vote? "adult") true)
+
+(@template-origin Status)
+
+(@template
+ (define (can-vote? s)
+   (cond [(string=? s "minor") (...)]
+         [(string=? s "adult") (...)])))
+
+(define (can-vote? s)
+  (cond [(string=? s "minor") false]
+        [(string=? s "adult") true]))
+
+
+
+--
+
+(@problem 1)
+(@htdd GradeStanding)
+;; GradeStanding is one of:       MIXED DATA ITEMIZATION
+;;  - Natural
+;;  - "H"
+;;  - "P"
+;;  - "F"
+;;  - "T"
+;; interp. a percent grade OR standing
+;; CONSTRAINT: If natural is in [0, 100]
+(define GS1 10)
+(define GS2 "H")
+
+(@dd-template-rules one-of               ;5 cases
+                    atomic-non-distinct  ;Natural
+                    atomic-distinct      ;"H"
+                    atomic-distinct      ;"P"
+                    atomic-distinct      ;"T"
+                    atomic-distinct)     ;"F"
+
+;; initial template, w/ all guarding
+;(define (fn-for-grade-standing gs)
+;  (cond;[                  (<= 0 gs 100)  (... gs)] ;NO!
+;       ;[(and (number? gs) (<= 0 gs 100)) (... gs)] ;OK, not needed this term
+;        [     (number? gs)                (... gs)] ;can be simpler like this
+;        [(and (string? gs) (string=? gs "H")) (...)]
+;        [(and (string? gs) (string=? gs "P")) (...)]
+;        [(and (string? gs) (string=? gs "T")) (...)]
+;        [else (...)])) 
+
+;; with guard simplification
+(define (fn-for-grade-standing gs)
+  (cond [(number? gs) (... gs)] 
+        [(string=? gs "H") (...)]
+        [(string=? gs "P") (...)]
+        [(string=? gs "F") (...)]
+        [else (...)]))            ;template rules page asks for else as the
+;                                 ;last question in an itemization.  You
+;                                 ;might be tempted to use (string=? gs "F")
+;                                 ;in this case since the last four subclasses
+;                                 ;of the itemization look like they form
+;                                 ;an enumeration
+
+
+(@htdf excellent?)
+(@signature GradeStanding -> Boolean)
+;; produce true if percentage mark is 90 or greater
+(check-expect (excellent? 91) true)
+(check-expect (excellent? 90) true) 
+(check-expect (excellent? 89) false) 
+(check-expect (excellent? 80) false) 
+(check-expect (excellent? 0) false)
+(check-expect (excellent? "H") false)
+(check-expect (excellent? "P") false)
+(check-expect (excellent? "F") false)
+(check-expect (excellent? "T") false)
+
+
+;(define (excellent? gs) false) ;stub
+
+(@template-origin GradeStanding)
+
+(@template
+ (define (excellent? gs)
+   (cond [(number? gs) (... gs)] 
+         [(string=? gs "H") (...)]
+         [(string=? gs "P") (...)]
+         [(string=? gs "F") (...)]
+         [else (...)])))
+
+;; when working with a template that has a cond from a one-of type
+;; not allowed to reduce number of questions or edit questions
+(define (excellent? gs)
+  (cond [(number? gs) (>= gs 90)] 
+        [(string=? gs "H") false]
+        [(string=? gs "P") false]
+        [(string=? gs "F") false]
+        [else false]))

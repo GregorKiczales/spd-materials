@@ -1,0 +1,109 @@
+
+
+5	clickers
+
+1  B	30
+2  A	30
+3  C	30
+4  C	30
+
+
+show schedule page
+do midterm clicker
+
+
+
+	theory begins to pay where intuition might fail
+	
+	you've invested a lot in learning the core of the recipe
+	in particular learning to work with templates based on
+	recursive type theory - really pays off today, making
+	programs that might otherwise be difficult actually be
+	simple to write
+
+15	ListOfString		present
+
+
+
+15 	contains-canucks?	do/interactive
+
+10	key recipe points
+
+	 - arb sized data -> well formed SR type comment
+	 - sr template rule
+	 - SR - NR
+	 - base test first
+	 - at least two long
+	 - both sides of conditionals
+	 - base case
+	 - combination
+	 - trust the NR
+	 - don't step it in your head!
+
+
+15	 sum	      	    	 class
+
+10	 count/product		class
+
+5 	 table
+
+
+
+Canucks   "Canucks"
+Flames	  "Flames"
+
+arb number of them...
+
+info in separate tab, get to (cons " " (cons " " empty)) then jump
+to fully fledged version in starter
+
+delete compound and self-ref parts of template and re-do to explain
+
+
+
+
+;; poll at about 4
+;; give them to about 6
+;; then paste in solution
+;;
+;; Design a function that computes the sum of a list of numbers.
+;; 
+
+(@htdf sum)
+(@signature ListOfNumber -> Number)
+;; produce the sum of a list of numbers
+(check-expect (sum empty) 0)
+(check-expect (sum (cons 1 (cons 2 (cons 3 empty)))) (+ 1 2 3 0))
+(check-expect (sum (cons 9.1 (cons 5.2 (cons 7 empty)))) (+ 9.1 5.2 7))
+
+;(define (sum lon) 0)
+
+(@template-origin ListOfNumber)
+
+(@template
+ (define (sum lon)
+   (cond [(empty? lon) (...)]
+         [else
+          (... (first lon)
+               (sum (rest lon)))])))
+
+(define (sum lon)
+  (cond [(empty? lon) 0]
+        [else
+         (+ (first lon)
+            (sum (rest lon)))]))
+
+
+(@problem 2)
+;; just discuss note that empty --> 1
+;; that's domain knowledge you might not know
+
+
+(@problem 3)
+;; just leave a note that result type is Natural
+
+(@problem 4)
+
+try to have time to do one non-empty ce with elaborated result
+
+then fill in template

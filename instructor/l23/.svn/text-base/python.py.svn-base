@@ -1,0 +1,61 @@
+import doctest
+
+
+def times2(n):
+    """Return the given number times 2.
+
+    >>> times2(1)
+    2
+    >>> times2(3)
+    6
+    """
+    return 2 * n
+
+
+def accio(o):
+    """Return a summoning charm for o.
+
+    >>> accio(2)
+    'accio Firebolt'
+    """
+    return 'accio ' + o
+    
+
+
+def sum(lon):
+    """Return the sum of a list of numbers.
+
+    >>> sum([1, 2, 3])
+    6
+    """
+    rsf = 0
+    for n in lon:
+        rsf = rsf + n
+    return rsf
+
+
+def doubles(lon):
+    """produce a list of each number in lon times 2
+
+    >>> doubles([1, 2, 3])
+    [2, 4, 6]
+    """
+    return [ 2*n for n in lon]
+
+
+def triples(lon):
+    """produce a list of each number in lon times 3
+
+    >>> triples([1, 2, 3])
+    [3, 6, 9]
+    """
+    rsf = []
+    for n in lon:
+        rsf = rsf+[3*n]
+    return rsf
+
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

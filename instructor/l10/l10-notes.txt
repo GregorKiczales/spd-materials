@@ -1,0 +1,171 @@
+
+1  quick intro
+
+   arb-arity tree, quick analysis
+   walk through DD
+
+   poll questions for SR, then 2xMR
+   be sure to say can be more than 2!
+
+   establish the named constants
+
+   templates have SR & MR - locked together
+
+   total-weight
+
+
+
+
+
+
+fn naming convention        present
+@htdf, then sigs, then one  present
+then all tests - base first - or close to base  interactive
+
+templating, both templates, ALL renaming, extra params  present
+   
+complete the function definition ON THE PAD
+
+what will the result of this S/MR call be???
+
+
+(@htdf total-weight--region total-weight--lor)
+(@signature Region -> Natural)
+(@signature ListOfRegion -> Natural)
+;; produce total weight of region / list of region
+
+** 2 wide  2 deep
+
+(check-expect (total-weight--region S1) 20)
+(check-expect (total-weight--region S2) 40)
+(check-expect (total-weight--lor empty) 0)
+(check-expect (total-weight--lor (list S1 S2 S3)) (+ 20 40 60))  ;2 wide
+(check-expect (total-weight--region (make-group "red" empty)) 0)
+(check-expect (total-weight--region G1) (+ 20 40 60))            ;kind of 2 deep
+(check-expect (total-weight--region G4) (+ 20 40 60 30 50 80))   ;2 deep for sure
+
+** don't need all of these if you understand what the function should produce
+
+(@template-origin Region)
+
+;; don't keep, fill in on the pad
+(define (total-weight--region r)
+  (cond [(single? r)
+         (... (single-label r)
+              (single-weight r)
+              (single-color r))]
+        [else
+         (... (group-color r)
+              (total-weight--lor (group-subs r)))]))
+
+** use crossing out and filling in on the pad
+
+(define (total-weight--region r)
+  (cond [(single? r) (single-weight r)]
+        [else (total-weight--lor (group-subs r))]))
+
+(@template-origin ListOfRegion)
+
+;; don't keep, fill in on the pad
+(define (total-weight--lor lor)
+  (cond [(empty? lor) (...)]
+        [else
+         (... (total-weight--region (first lor))
+              (total-weight--lor (rest lor)))]))
+
+(define (total-weight--lor lor)
+  (cond [(empty? lor) 0]
+        [else
+         (+ (total-weight--region (first lor))
+            (total-weight--lor (rest lor)))]))
+
+
+
+start w/ v2 starter
+
+;; take back at + :48
+
+(@htdf all-with-color--region all-with-color--lor)
+(@signature Color Region -> ListOfRegion)
+(@signature Color ListOfRegion -> ListOfRegion)
+;; produce all regions with given color
+
+(check-expect (all-with-color--lor "red" empty) empty)
+(check-expect (all-with-color--region "red" S1) (list S1))
+(check-expect (all-with-color--region "blue" S1) empty)
+(check-expect (all-with-color--lor "red" LOR123) (list S1))
+(check-expect
+ (all-with-color--region "red"
+                         (make-group "blue"
+                                     (list G4
+                                           (make-single "X" 90 "red"))))
+ (list G1 S1 (make-single "X" 90 "red")))
+
+(@template-origin Region)
+
+(@template
+ (define (all-with-color--region c r)
+   (cond [(single? r)
+          (... c
+               (single-label r)
+               (single-weight r)
+               (single-color r))]
+         [else
+          (... c
+               (group-color r)
+               (all-with-color--lor c (group-subs r)))])))
+
+(define (all-with-color--region c r)
+  (cond [(single? r) (if (string=? (single-color r) c) (list r) empty)]
+        [else        (if (string=? (group-color r) c)
+                         (cons r (all-with-color--lor c (group-subs r)))
+                         (all-with-color--lor c (group-subs r)))]))
+
+(@template-origin ListOfRegion)
+
+(@template
+ (define (all-with-color--lor c lor)
+   (cond [(empty? lor) (... c)]
+         [else
+          (... c
+               (all-with-color--region c (first lor))
+               (all-with-color--lor c (rest lor)))])))
+
+(define (all-with-color--lor c lor)
+  (cond [(empty? lor) empty]
+        [else
+         (append (all-with-color--region c (first lor))
+                 (all-with-color--lor c (rest lor)))]))
+
+
+;; explain "or false", explain is used when no meaningful value to produce
+;; contrast with all-with-color which can produce empty
+
+(@htdf find-region--region find-region--lor)
+(@signature String Region -> Region or false)
+(@signature String ListOfRegion  -> Region or false)
+;; find region w/ given label
+(check-expect (find-region--lor "one" empty) false)
+(check-expect (find-region--region "one" S1) S1)
+(check-expect (find-region--region "one" S2) false)
+(check-expect (find-region--lor "two" LOR123) S2)
+(check-expect (find-region--region "three" G4) S3)
+
+(@template-origin Region)
+
+
+(define (find-region--region l r)
+  (cond [(single? r) (if (string=? (single-label r) l) r false)]
+        [else        (find-region--lor l (group-subs r))]))
+
+(@template-origin ListOfRegion try-catch) ;add try-catch part way through
+
+(define (find-region--lor l lor)
+  (cond [(empty? lor) false]
+        [else
+         ;; use try-catch when 2 THINGS ARE TRUE:
+         ;;  - calling a function that might fail
+         ;;  - want to do something different depending on whether it fails
+         (if (not (false? (find-region--region l (first lor))))
+             (find-region--region l (first lor))
+             (find-region--lor l (rest lor)))]))

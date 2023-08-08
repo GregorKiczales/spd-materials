@@ -1,0 +1,124 @@
+
+clickers
+
+
+review quickly maze, re-establish need for:
+  - what is changing (and what isn't)
+  - how to generate next states
+  - how to tell if state is solution, and out of possibilities
+
+
+V2 has solve sig/purp/tests
+V3 has complete solve, sig/purp/tests for solved? and next-boards
+
+
+careful analysis:
+  - board geometry not changing
+  - potential moves not change
+  - board w/ pegs changing
+
+walk through v2
+
+sometimes if something is complicated but has very small domain/range,
+it's simpler just to represent it as a constant rather than a function that can compute it
+
+all the possible moves on this board
+
+
+derive solve - jump to v3 for termination argument
+ - two try-catch, two places where we are calling something that might fail
+   and we have two different options depending on whether it does or not
+ - otherwise just like maze solver genrec arb-tree try-catch
+
+
+let class work solved, including coming up with the full wish list entry
+then paste in solution and discuss take questions
+
+
+setup signature and purose for next-boards
+class works on
+then paste in solution and discuss take questions
+
+
+summarize whole thing starting from beginning of tree
+
+
+
+
+(@template-origin try-catch genrec arb-tree encapsulated)
+
+(define (solve bd)
+  ;; Termination argument:
+  ;;  base: not possible to remove anymore pegs (solved or no valid jumps)
+  ;;  reduction: make one of n valid jumps
+  ;;  argument: making one jump at a time always reaches no more possible jumps
+  (local [(define (solve-bd bd)
+            (if (solved? bd)
+                (list bd)
+                (local [(define try (solve-lobd (next-boards bd)))]
+                  (if (not (false? try))
+                      (cons bd try)
+                      false))))
+          
+          (define (solve-lobd lobd)
+            (cond [(empty? lobd) false]
+                  [else
+                   (local [(define try (solve-bd (first lobd)))]
+                     (if (not (false? try))
+                         try
+                         (solve-lobd (rest lobd))))]))]
+    (solve-bd bd)))
+
+
+
+
+(@htdf solved?)
+(@signature Board -> Boolean)
+;; produce true if only one peg is left on board
+(check-expect (solved? BD1)  false)
+(check-expect (solved? BD1s) true)
+
+(@template-origin use-abstract-fn)
+
+(define (solved? bd)
+  (= 1 (length (filter identity bd))))
+
+;(@template-origin fn-composition use-abstract-fn)
+;
+;(define (solved? bd)
+;  (= 1
+;     (foldr + 0                            ;sum
+;            (map (lambda (x) 1)            ;convert to 1s
+;                 (filter identity bd)))))  ;keep trues
+
+
+
+(@htdf next-boards)
+(@signature Board -> (listof Board))
+;; Produce list of all possible next boards
+(check-expect (next-boards BD1)  (list BD1a BD1b))
+(check-expect (next-boards BD1s) (list))
+
+(@template-origin fn-composition use-abstract-fn)
+
+(define (next-boards bd)
+  (local [;; Jump -> Board
+          (@template-origin Jump)
+          (define (do-jump j)
+            (local [(define from (jump-from j))
+                    (define over (jump-over j))
+                    (define to   (jump-to   j))]
+              
+              (set-cell (set-cell (set-cell bd
+                                            to true)
+                                  over false)
+                        from false)))
+          
+          ;; Jump -> Boolean
+          (@template-origin Jump)
+          (define (valid? j)
+            (and (get-cell bd (jump-from j))        ;from is full
+                 (get-cell bd (jump-over j))        ;over is full
+                 (not (get-cell bd (jump-to j)))))] ;to is empty
+    
+    (map do-jump (filter valid? JUMPS))))

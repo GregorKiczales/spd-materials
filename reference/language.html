@@ -1,0 +1,295 @@
+<h2>Language</h2>
+<p>This page provides a summary of the programming language used in this course: Beginning Student Language in How to Code: Simple Data, then progressing to Intermediate and Advanced in How to Code: Complex Data.</p>
+<p></p>
+<h3>Values&nbsp;</h3>
+<table cellpadding="5" style="padding: 5px; text-align: left; horizontal-align: left; vertical-align: top;">
+<tbody>
+<tr>
+<td>Numbers:</td>
+<td><tt>1, 3.5, 1/2, #i1.4142135623730951, ...</tt></td>
+</tr>
+<tr>
+<td>Strings:</td>
+<td><tt>"Marvolo", "Black", "carrot", ...</tt></td>
+</tr>
+<tr>
+<td>Images:</td>
+<td><img src="https://spark-public.s3.amazonaws.com/programdesign/image_files/green-triangle.png" />, <img src="https://spark-public.s3.amazonaws.com/programdesign/image_files/red-square.png" />,...</td>
+</tr>
+<tr>
+<td>Booleans:</td>
+<td><tt>true, false</tt></td>
+</tr>
+<tr>
+<td>Compound data:</td>
+<td><tt>(make-person "Claude" "Monet"), ...</tt></td>
+</tr>
+<tr>
+<td>Lists:</td>
+<td><tt>empty, (cons 2 (cons 1 empty)), (cons "x" (cons "y" (cons "z" empty))), ...</tt></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>NOTE: The primitive types are: <tt> Number, Integer, Natural </tt>(Integers greater than or equal to 0)<tt>, String, Image and Boolean<br /><span face="Helvetica Neue, Helvetica, Arial, sans-serif" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2htdp/image also provides a primitive <tt>Color</tt> type, and 2htdp/universe provides primitive <tt>KeyEvent</tt> and <tt>MouseEvent</tt> types.</span></tt></p>
+<h3>Primitive Operations</h3>
+<p><tt>+, -, *, / ...<br /> string-append, string-length, substring ...<br /> circle, square, overlay, above, beside...<br />not, =, &lt;, &gt;, string=?, string&lt;?, cons, first, rest, empty?, cons?</tt></p>
+<h3>Forming Expressions</h3>
+<p></p>
+<table border="1" cellpadding="5" style="border: .5px solid #000000; padding: 5px; text-align: left; horizontal-align: left; vertical-align: top;">
+<thead>
+<tr><th scope="col" width="60%">Form</th><th scope="col">Example</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><tt>&lt;value&gt;</tt></td>
+<td><tt>3</tt></td>
+</tr>
+<tr>
+<td><tt>&lt;name-of-defined-constant&gt;</tt></td>
+<td><tt>WIDTH</tt></td>
+</tr>
+<tr>
+<td><tt>(&lt;name-of-primitive-operation&gt; &lt;expression&gt; ...)</tt></td>
+<td><tt>(+ 2 (* 3 6))</tt></td>
+</tr>
+<tr>
+<td><tt>(&lt;name-of-defined-function&gt; &lt;expression&gt; ...)</tt> <br /> <br />A function call should have the same number of operands as parameters.</td>
+<td><tt>(yell "hello")</tt></td>
+</tr>
+<tr>
+<td><tt>(if&nbsp;&lt;question&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&lt;true-answer&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&lt;false-answer&gt;)</tt> <br /> <br /><tt>&lt;question&gt;</tt> must be an expression that evaluates to a boolean. <br /><tt>&lt;true-answer&gt;</tt> and <tt>&lt;false-answer&gt;</tt> must be expressions.</td>
+<td><tt>(if (&gt; (string-length x) 3)<br /> &nbsp;&nbsp;&nbsp;&nbsp;"long"<br /> &nbsp;&nbsp;&nbsp;&nbsp;"short")</tt></td>
+</tr>
+<tr>
+<td><tt>(cond [&lt;question&gt; &lt;answer&gt;]<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...)</tt> <br /> <br />Each <tt>&lt;question&gt;</tt> must be either <tt>else</tt> or an expression that evaluates to a boolean. <br />Each <tt>&lt;answer&gt;</tt> must be an expression.</td>
+<td><tt>(cond [(&gt; x y) "more"]<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[(&lt; x y) "less"]<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[else "same"])<tt> </tt></tt></td>
+</tr>
+<tr>
+<td><tt>(and &lt;question&gt;&nbsp;...)</tt> <br /> <br />Each <tt>&lt;question&gt;</tt> must be an expression that evaluates to a boolean.</td>
+<td><tt>(and (&lt; 0 x) (&gt;= x 10))</tt></td>
+</tr>
+<tr>
+<td><tt>(or &lt;question&gt;&nbsp;...)</tt> <br /> <br />Each <tt>&lt;question&gt;</tt> must be an expression that evaluates to a boolean.</td>
+<td><tt>(or (&lt; x 0) (&gt; x 10))</tt></td>
+</tr>
+<tr>
+<td><tt><i>Intermediate Student Language</i><br /><br />(local [&lt;definition&gt;...] <br />&nbsp;&nbsp;&lt;expression&gt;)</tt> <br /> <br />Any function or constant defined within the <tt>local</tt> is valid within the entire body of the local expression, but not outside of the local expression.&nbsp;</td>
+<td><tt><br />(local [(define DOT&nbsp;(circle 5 "solid" "red"))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(define (add-dot img)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (beside img DOT))]&nbsp;<br />&nbsp;&nbsp;(add-dot (square 20 "solid" "blue")))<br /><br /></tt></td>
+</tr>
+<tr>
+<td><tt><i>Intermediate Student Language</i><br /><br />(shared [(&lt;variable-name&gt; &lt;expression&gt;)...] <br />&nbsp;&nbsp;&lt;expression&gt;)</tt> <br /> <br />Shared is a special version of local that makes it possible to build circular structure. Any variable defined within the shared is valid within the entire body of the shared expression, but not outside of the shared expression. By convention the variable names that are used in circular references are given names of the form -1- -2- etc. But this is just a convention, any variable name can be used.</td>
+<td><tt><br />(shared [(-1- (list -2-))<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(-2- (list -1-))]<br />&nbsp;&nbsp;-1-)<br /><br /></tt></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h3>Forming Definitions</h3>
+<pre>(define SIZE (* 3 6))         ;a constant definition, the value of SIZE is 18
+</pre>
+<pre>(define (bulb c)              ;defines a function named bulb, with parameter c
+  (circle 30 "solid" c))      ;this is the body of the function
+</pre>
+<pre>(define-struct wand (wood core length))  ;defines the functions below:
+
+; constructor: make-wand
+; selectors:   wand-wood, wand-core, wand-length
+; predicate:   wand?
+</pre>
+<p></p>
+<h3>Evaluation Rules</h3>
+<p>For a <strong>constant reference</strong>, such as <tt>SIZE</tt>:</p>
+<ul>
+<li>The constant reference evaluates to the defined value of the constant.</li>
+</ul>
+<p>For a <strong>call to a primitive</strong> such as <tt>(+ 2 (* 3 6))</tt>:</p>
+<ul>
+<li>First reduce the operands to values: proceed left to right making sure all the operands are values, for any that are not, evaluate them. <br />These values are called the arguments to the primitive.</li>
+<li>Apply the primitive to those arguments.</li>
+</ul>
+<p>For a <strong>call to a defined function</strong> such as <tt>(bulb (string-append "r" "ed"))</tt>:</p>
+<ul>
+<li>First reduce the operands to values (as for a call to a primitive). These values are called the arguments to the function.</li>
+<li>Replace the function call expression with the body of the function in which every occurrence of the parameter(s) has been replaced by the corresponding argument(s).</li>
+</ul>
+<p>For example:</p>
+<pre>(bulb (string-append "r" "ed"))
+(bulb "red")
+(circle 30 "solid" "red")
+</pre>
+<p>For an <strong>if expression</strong>:</p>
+<ul>
+<li>If the question is not a value, evaluate it and replace it with its value.</li>
+<li>If the question is <tt>true</tt>, replace the entire if expression with the true answer expression.</li>
+<li>If the question is <tt>false</tt>, replace the entire if expression with the false answer expression</li>
+<li>If the question is a value other than <tt>true</tt> or <tt>false</tt>, signal an error</li>
+</ul>
+<p>For example:</p>
+<pre>(if (&gt; (+ 1 2) 3)     
+    (* 2 3)          
+    (* 3 4))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;since (&gt; (+ 1 2) 3) is an expression, not a value,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;evaluate it left to right
+(if (&gt; 3 3)
+    (* 2 3)
+    (* 3 4))       
+
+(if false     
+    (* 2 3) 
+    (* 3 4))           
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;replace entire if expression with the false answer expression
+(* 3 4)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;evaluate false answer expression 
+12
+</pre>
+<p></p>
+<p>For a <strong>cond expression</strong>:</p>
+<ul>
+<li>If there are no question/answer pairs, signal an error.</li>
+<li>If the first question is not a value, evaluate it and replace it with its value. That is, replace the entire <tt>cond</tt> with a new <tt>cond</tt> in which the first question has been replaced by its value.</li>
+<li>If the first question is <tt>true</tt> or <tt>else</tt>, replace the entire <tt>cond</tt> expression with the first answer.</li>
+<li>If the first question is <tt>false</tt> drop the first question/answer pair; that is, replace the <tt>cond</tt> with a new <tt>cond</tt> that does not have the first question/answer pair</li>
+<li>Since the first question is a value other than <tt>else</tt>,&nbsp;<tt>true</tt> or <tt>false</tt>, signal an error.</li>
+</ul>
+<p>For example:</p>
+<pre>(cond [(&gt; 3 3) "more"]     
+      [(&lt; 3 3) "less"]     
+      [else "same"]) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;the first question is not a value, the expression
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;(&gt; 3 3) is evaluated and replaced with a value
+(cond [false "more"]        
+      [(&lt; 3 3) "less"]                            
+      [else "same"])     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;the first question is false, so the first
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;question/answer pair is dropped &nbsp;
+(cond [(&lt; 3 3) "less"]     
+      [else "same"])       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;the first question is not a value, so (&lt; 3 3) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;is evaluated and replaced with its value
+(cond [false "less"]       
+      [else "same"])       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;the first question is false, so the first
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;question/answer pair is dropped 
+(cond [else "same"])       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;since the question is else, the entire cond expression            
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;is replaced by the answer               
+"same"</pre>
+<p>For an <strong>and expression</strong>:</p>
+<ul>
+<li>If there are fewer than 2 operands an error is signalled.</li>
+<li>Evaluate the operands one at a time, left to right, replacing each operand with its value.</li>
+<li>Except that as soon as an operand evaluates to <tt>false</tt> then immediately produce <tt>false</tt> from the entire <tt>and</tt> expression.</li>
+<li>If all operands evaluate to <tt>true</tt> then produce <tt>true</tt> from the entire <tt>and</tt> expression.</li>
+</ul>
+<p>For example:</p>
+<pre>(and (&lt; 0 3) 
+     (&lt; 3 10))  &nbsp;&nbsp;;since (&lt; 0 3) is an expression, not a value,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;evaluate it
+(and true        
+     (&lt; 3 10))    
+
+(and true
+     (&lt; 3 10))    ;now evaluate (&lt; 3 10)       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(and true
+     true)
+
+true              ;entire and produces true
+</pre>
+<p>For an&nbsp;<strong>or expression</strong>:</p>
+<ul>
+<li>If there are fewer than two operands an error is signalled.</li>
+<li>Evaluate the operands one at a time, left to right, replacing each operand with its value.</li>
+<li>Except that as soon as an operand evaluates to <tt>true</tt> then immediately produce <tt>true</tt> from the entire <tt>or</tt> expression.</li>
+<li>If all operands evaluate to <tt>false</tt> then produce <tt>false</tt> from the entire <tt>or</tt> expression.</li>
+</ul>
+<p>For example:</p>
+<pre>(or (&lt; 14 0)      ;evaluate (&lt; 14 0)
+    (&gt; 14 10)) 
+(or false        
+    (&gt; 14 10))    ;now evaluate (&gt; 14 10)
+
+(or false
+    true)         ;operand produced true
+
+true              ;so entire or produces true</pre>
+<p><br /> <br /><i>Intermediate Student Language</i></p>
+<p>For a <strong>local expression</strong>:</p>
+<ul>
+<li>For each locally defined function or constant, rename it and all references to it to a globally unique name, and</li>
+<li><strong>in the same step</strong> lift the local definition(s) to the top level with any existing global definitions, and</li>
+<li><strong>in the same step</strong> replace the local expression with the body of the local in which all references to the defined functions and constants have been renamed.</li>
+</ul>
+<p>For example:</p>
+<pre>(define b 1)
+(+ b
+   (local [(define b 2)]
+     (* b b))
+   b)
+                        ;b evaluates to its defined value, 1
+
+
+(define b 1)
+(+ 1
+   (local [(define b 2)]
+     (* b b))
+   b)
+                        ; since b is a locally-defined constant,
+                        ;it is renamed to a globally unique name b_0
+                        ;the local definition of b_0 is lifted to
+                        ;the top level and the entire local expression
+                        ;is replaced by its body
+
+(define b 1)
+(define b_0 2)          ;---this renamed define was lifted
+
+(+ 1
+  (* b_0 b_0)           ;---entire local replaced by renamed body
+  b)
+
+                        ;evaluation continues normally from this point
+</pre>
+<p>For a <strong>shared expression</strong>:</p>
+<p>The evaluation of shared is truly one of the deep mysteries of the universe. There are two very different ways to describe the evaluation rules.</p>
+<p>One cannot be described exactly in terms of BSL (or ISL), but informally goes as follows:</p>
+<ul>
+<li>Each of the variables is defined as a constant with a special unique dummy value.</li>
+<li>Then the expressions are evaluated.</li>
+<li>Then each of the constants has its value change to the corresponding value. This is the part we have no words for in BSL or ISL, it is called mutation.</li>
+<li>Finally each of those values is traversed and each time one of the dummy values appears it is replaced in-situ by the corresponding value. (A different form of mutation.)</li>
+</ul>
+<p>This evaluation rule for shared is cumbersome but goes beyond what we know.</p>
+<p>The other evaluation rule is truly profound, see <a href="http://www.dreamsongs.com/Files/WhyOfY.pdf">The Why of Y</a> for an explanation.</p>
+<!-- <p>For <strong>lambda</strong> expressions:</p> -->
+<p></p>
+<h3>Built-In Abstract Functions</h3>
+<p>ISL and ASL have the following built-in abstract functions.</p>
+<pre>(@signature Natural (Natural -&gt; X) -&gt; (listof X))
+;; produces (list (f 0) ... (f (- n 1)))
+(define (build-list n f) ...)
+
+(@signature (X -&gt; boolean) (listof X) -&gt; (listof X))
+;; produce a list from all those items on lox for which p holds
+(define (filter p lox) ...)
+
+(@signature (X -&gt; Y) (listof X) -&gt; (listof Y))
+;; produce a list by applying f to each item on lox
+;; that is, (map f (list x-1 ... x-n)) = (list (f x-1) ... (f x-n))
+(define (map f lox) ...)
+
+(@signature (X -&gt; boolean) (listof X) -&gt; Boolean)
+;; produce true if p produces true for every element of lox
+(define (andmap p lox) ...)
+
+(@signature (X -&gt; boolean) (listof X) -&gt; Boolean)
+;; produce true if p produces true for some element of lox
+(define (ormap p lox) ...)
+
+(@signature (X Y -&gt; Y) Y (listof X) -&gt; Y)
+;; (foldr f base (list x-1 ... x-n)) = (f x-1 ... (f x-n base))
+(define (foldr f base lox) ...)
+
+(@signature (X Y -&gt; Y) Y (listof X) -&gt; Y)
+;; (foldl f base (list x-1 ... x-n)) = (f x-n ... (f x-1 base))
+(define (foldl f base lox) ...)
+</pre>
+<p></p>
