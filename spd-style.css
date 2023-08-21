@@ -1,0 +1,40 @@
+
+/*
+  Stylesheet adapted from
+  https://github.com/mdn/learning-area/blob/master/html/tables/basic/minimal-table.css 
+*/
+ 
+	 html {
+	     width: 1000px;
+		 font-family: sans-serif;
+		 letter-spacing: 1px;
+	     font-size: 1.2rem;
+	 }
+ 
+	 table {
+	     max-width: 850px;
+		 border-collapse: collapse;
+	     border: 2px solid rgb(200,200,200);
+		 cellpadding: 10px;
+	 }
+
+	 td, th {
+	     border: 1px solid rgb(190,190,190);
+	     padding: 10px 20px;
+	 }
+
+	 th {
+	     background-color: rgb(235,235,235);
+	 }
+
+	 tr:nth-child(even) td {
+	     background-color: rgb(250,250,250);
+	 }
+
+	 tr:nth-child(odd) td {
+	     background-color: rgb(230,230,230);
+	 }
+
+	 caption {
+	     padding: 10px;
+	 }
