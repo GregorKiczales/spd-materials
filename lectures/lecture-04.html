@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <HEAD>
+    <LINK href="../spd-style.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  
+  <body>
+
+    <p>
+      [
+      <a href="lecture-01.html">L01</a>
+      <a href="lecture-02.html">L02</a>
+      <a href="lecture-03.html">L03</a>
+      L04
+      <a href="lecture-05.html">L05</a>
+      <a href="lecture-06.html">L06</a>
+      <a href="lecture-07.html">L07</a>
+      <a href="lecture-08.html">L08</a>
+      <a href="lecture-09.html">L09</a>
+      <a href="lecture-10.html">L10</a>
+      <a href="lecture-11.html">L11</a>
+      <a href="lecture-12.html">L12</a>
+      <a href="lecture-13.html">L13</a>
+      <a href="lecture-14.html">L14</a>
+      <a href="lecture-15.html">L15</a>
+      <a href="lecture-16.html">L16</a>
+      <a href="lecture-17.html">L17</a>
+      <a href="lecture-18.html">L18</a>
+      <a href="lecture-19.html">L19</a>
+      <a href="lecture-20.html">L20</a>
+      <a href="lecture-21.html">L21</a>
+      <a href="lecture-22.html">L22</a>
+      ]
+    </p>
+    
+    <h2>Lecture 04</h2>
+    
+    <h3>Before Lecture</h3>
+
+    <p>At this point you should be comfortable solving problems based
+    on material in all of Module 0, 1a, 1b and 2. Please reach out for
+    help if there is any part of that material you have questions
+    about.</p>
+
+    <p>Before lecture you should complete the following 3 subsections
+    of Module 3a: Module Overview, Interactive Programs, and The Big
+    Bang Mechanism.</p>
+
+    <p>If you have any concerns about that material work carefully
+    through the relevant videos. You can also pick problems from the
+    Problem Bank tab in the edX course to practice. Or go to TA or
+      instructor office hours.</p>
+
+    <h3>During Lecture</h3>
+
+    <p>The HtDD and HtDF recipes give you the foundations for
+      designing programs.  But real programs are much more than a
+      single data definition or a single function.  Indeed they can
+      comprise thousands of data definitions and tens of thousands of
+      functions - or even much more. Managing such a large project
+      requires working systematically.</p>
+
+    <p>The world program recipe (HtDW) helps us manage the design of a
+      particular category of larger program, a simple interactive
+      animation. As you work through these problems you will be
+      working on "copy" of HtDW, one or more copies of HtDD, and a
+      number of copies of HtDF.
+      </p>
+
+    <p>By the end of the lecture&ndash;including the post-lecture work&ndash;you should be able to:</p>
+
+    <ul>
+      <li>Use the HtDW recipe to systematically design a world program
+	operating on atomic data.</li>
+      <li> Complete the entire design, including every
+	HtDW, HtDD, and HtDF design element.</li>
+      <li> Use all appropriate metadata tags - @htdw, @htdd, @dd-template-rules,
+	@htdf, @signature, and @template.</li>
+    </ul>
+
+    <p>The starter for this lecture is:</p>
+
+    <ul>
+      <li><a href="m03-spider-starter.rkt">m03-spider-starter.rkt</a></li>
+    </ul>
+    	
+    
+    <h3>After Lecture</h3>
+
+    <p>First off, big congratulations!  Seriously.  Most of you did
+    not know how to program at all 3 weeks ago.  Now you are learning
+    how to make a simple animated program.  It may have gone by too
+    quickly in lecture, but we know that you caught parts of it as it
+    went by.  And if you review this material carefully now you will
+    be able to do this.  Rest assured that in two weeks you will think
+    this a world program like this is easy.  So congratulations for
+    learning so much already!</p>
+
+    <p>Here is the solution for this lecture:</p>
+
+    <ul>
+      <li><a href="m03-spider-solution.rkt">m03-spider-solution.rkt</a></li>
+    </ul>
+    
+    <p>We are going to keep working on this program in the next
+    lecture, so please note that this is not a complete solution.</p>
+
+    <p>The main point of today's lecture, and one of the main points
+      of the whole course, and in fact design in general is that you
+      can solve big problems by breaking them down into small
+      problems. But to do that:</p>
+    
+    <ol type="A">
+      <li>You have to manage to break it up into smaller problems.</li>
+      <li>You have to have the discipline to focus on the smaller
+	problems one at a time.</li>
+      <li>The smaller problems have to be chosen so that their solutions fit
+	back together nicely.</li>
+    </ol>
+    
+
+    <p>One of the biggest things the design recipes do is A and C above. In
+      the case of a world program design we get lots of small problems,
+      including:</p>
+
+    <ul>
+      <li>The domain analysis, which itself has smaller sub-parts.</li>
+      <li>The data definition for changing information, which itself has smaller sub-parts.</li>
+      <li>The main function.</li>
+      <li>Completing each of the "wished for" handler functions.</li>
+    </ul>
+    
+    <p>The key to success is the discipline to trust the recipe. At any
+      point in time you need to know exactly where in the recipes you are,
+      and you need to focus on that point. If you allow yourself to get lost
+      and focus on the whole big design problem you will be in trouble. So
+      trust the recipe to help you know what to focus on at any given point
+      in time.</p>
+    
+    <p>What you should do to review today's material:</p>
+    
+    <p>If you were comfortable with today's material, then quickly replay
+      the entire design for yourself, by quickly going through the Domain
+      Analysis, Program through main function and Working through the wish
+      list sections.  If today's material was challenging for you, then
+      start by carefully working through the domain analysis video, and then
+      redoing the domain analysis for the spider. Then carefully work
+      through the program through main function section, and then do that
+      for the spider.</p>
+    
+    <p>Next you cal improve the program to have the extra functionality
+      described in the starter.  Do this by re-working the entire recipe
+      starting from analysis for each new feature.  Do the practice problems
+      as you feel you need to so that you have mastered module 3a.  It is
+      critical that you have this material mastered before next lecture.</p>
+    
+    <p>Finally be sure to complete the Before Lecture section of the next
+      lecture before the next class.</p>
+
+    <p>Be sure to complete the before lecture section of <a href="lecture-05.html">Lecture 5</a> before the next class.</p>
+    
+  </body>
+</html>

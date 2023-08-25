@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <HEAD>
+    <LINK href="../spd-style.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  
+  <body>
+
+    <p>
+      [
+      <a href="lecture-01.html">L01</a>
+      <a href="lecture-02.html">L02</a>
+      <a href="lecture-03.html">L03</a>
+      <a href="lecture-04.html">L04</a>
+      <a href="lecture-05.html">L05</a>
+      L06
+      <a href="lecture-07.html">L07</a>
+      <a href="lecture-08.html">L08</a>
+      <a href="lecture-09.html">L09</a>
+      <a href="lecture-10.html">L10</a>
+      <a href="lecture-11.html">L11</a>
+      <a href="lecture-12.html">L12</a>
+      <a href="lecture-13.html">L13</a>
+      <a href="lecture-14.html">L14</a>
+      <a href="lecture-15.html">L15</a>
+      <a href="lecture-16.html">L16</a>
+      <a href="lecture-17.html">L17</a>
+      <a href="lecture-18.html">L18</a>
+      <a href="lecture-19.html">L19</a>
+      <a href="lecture-20.html">L20</a>
+      <a href="lecture-21.html">L21</a>
+      <a href="lecture-22.html">L22</a>
+      ]
+    </p>
+    
+    <h2>Lecture 06</h2>
+    
+    <h3>Before Lecture</h3>
+    
+    <p>At this point in the course, you are responsible for everything
+      in the following edX modules: Welcome to 110, BSL, HtDF, HtDD,
+      HtDW and Compound. (That includes videos, online questions,
+      practice problems, lecture problems, lecture discussion.)</p>
+
+    <p>To prepare for this lecture, please work through: Introduction to
+      Arbitrary sized data and List Mechanisms in the Self-Reference
+      module on edX. Be sure to solve all the online questions, since
+      one of them may be our clicker question.</p>
+
+    
+    <h3>During Lecture</h3>
+    
+    <p>One of the things that makes computers useful is their ability
+      to operate on large amounts of information.  But up to this point in
+      the course all of our data definitions have described data of fixed
+      size.  That changes in this lecture.</p>
+
+    <p>By the end of the lecture&ndash;including the post-lecture work&ndash;you should be able to:</p>
+
+    <ul>
+      <li>Identify information of arbitrary-size.</li>
+      <li>Design data definitions using lists of primitive atomic
+	data.</li>
+      <li>Explain what makes a self-referential data definition well
+	formed.</li>
+      <li>Identify the base case, contribution, combination, and
+	natural recursion in a template for that data.</li>
+      <li>Design functions operating on that data.</li>
+    </ul>
+    
+    <p>The starters for this lecture are:</p>
+
+    <ul>
+      <li><a href="m04-lon-starter.rkt">m04-lon-starter.rkt</a></li>
+      <li><a href="m04-los-starter.rkt">m04-los-starter.rkt</a></li>
+    </ul>
+
+    
+    <h3>After Lecture</h3>
+
+    <p>Here are the solutions for this lecture:</p>
+
+    <ul>
+      <li><a href="m04-lon-solution.rkt">m04-lon-solution.rkt</a></li>
+      <li><a href="m04-los-solution.rkt">m04-los-solution.rkt</a></li>
+    </ul>
+    
+    <p>Wow! That was pretty interesting.</p>
+
+    <p>Self-reference and natural recursion is perhaps the most
+      interesting part of the course. We will keep using these
+      techniques throughout the rest of the course.</p>
+
+    <p>Below are some notes that can help you master this material. It
+      is crucial that you do so - in the next lecture, we will do a
+      world program with lists!</p>
+
+    <p>First, note that what we have been learning about templating
+      really helps us. Because even though recursion may seem a bit
+      confusing at first, by following the revised recipe it turns out
+      to be fairly easy to write a working recursive function. The
+      template already has the recursion we need in the natural place
+      for it.</p>
+
+    <p>You should review the recipe pages, but the recipe revisions,
+      in short, are:</p>
+
+    <ul>
+      <li>In HtDD: if you need to represent arbitrary sized data you
+      must use a well-formed self-referential type comment.</li>
+      <li>In data driven template rules: wherever there is a
+	self-reference in the type comment, add a natural recursion to the
+	template.</li>
+      <li>In HtDF, when designing a function that consumes
+	arbitrary-sized data: the first test should be for the base
+	case, and</li>
+      <li>there should be at least one test on data that is >= 2 long.</li>
+      <li>At the moment you copy the template and rename the function, also
+	fix the name in the natural recursion right away.</li>
+      <li>Always trust the natural recursion. Really trusting it is
+	hard, but once once you do, then you will be using the more
+	sophisticated way of thinking about recursive functions. It is
+	the only approach that will scale to the problems we do later
+	in the term.</li>
+    </ul>
+
+    <p>The reason you can trust the natural recursion is that the type
+      comments and template rules are based on type theory, so the
+      natural recursions are theoretically sound.  This is how
+      designers and engineers often work, they know that a theoretical
+      result makes a certain way of thinking about the problem sound
+      and then they work that way. This is thus software engineering
+      based on results in programming language research.
+      </p>
+
+    <p>BUT... you might want to "look inside" at the recursion a little
+      bit right now. If so, put the following into a Racket tab, select
+      the BSL language, and use the Stepper button to see how it runs.
+    </p>
+
+    <pre>
+(define (sum lon) 
+  (cond [(empty? lon) 0] 
+        [else 
+         (+ (first lon) 
+            (sum (rest lon)))]))
+
+(sum (cons 1 (cons 2 (cons 3 empty))))
+    </pre>
+
+    
+    <p>While that will show you how the recursion runs, we want to
+      stress that the more sophisticated way of thinking about it is to
+      consider one call to the function, trust the natural recursion to
+      produce the correct result, and then work out what the function
+      should do with that result.</p>
+    
+    <p>To review:</p>
+
+    <ul>
+      <li> Work through the units of the Self-Reference module: - The
+	first 5 cover the same ground as covered in lecture, but go
+	into some important points in more detail.</li>
+      <li> Work through the "Designing with Lists" unit
+	carefully. This is a chance to really solidify your
+	understanding of functions that operate on lists.</li>
+      <li>The "Positions in List Templates" unit will give you a
+	clearer sense of what's common among the list functions we
+	write and set us up to talk about some very powerful
+	techniques later in the course.</li>
+      <li>As always, work the practice problems in the module
+	(Self-Reference) and re-work our own problems from class!</li>
+      <li>Finally be sure to complete the Before Lecture section of
+	the next lecture before the next class.</li>
+    </ul>
+    
+    <p>Be sure to complete the before lecture section
+      of <a href="lecture-07.html">Lecture 7</a> before the next
+      class.</p>
+
+  </body>
+</html>
