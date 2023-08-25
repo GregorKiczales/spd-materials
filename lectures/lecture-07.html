@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <HEAD>
+    <LINK href="../spd-style.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  
+  <body>
+
+    <p>
+      [
+      <a href="lecture-01.html">L01</a>
+      <a href="lecture-02.html">L02</a>
+      <a href="lecture-03.html">L03</a>
+      <a href="lecture-04.html">L04</a>
+      <a href="lecture-05.html">L05</a>
+      <a href="lecture-06.html">L06</a>
+      L07
+      <a href="lecture-08.html">L08</a>
+      <a href="lecture-09.html">L09</a>
+      <a href="lecture-10.html">L10</a>
+      <a href="lecture-11.html">L11</a>
+      <a href="lecture-12.html">L12</a>
+      <a href="lecture-13.html">L13</a>
+      <a href="lecture-14.html">L14</a>
+      <a href="lecture-15.html">L15</a>
+      <a href="lecture-16.html">L16</a>
+      <a href="lecture-17.html">L17</a>
+      <a href="lecture-18.html">L18</a>
+      <a href="lecture-19.html">L19</a>
+      <a href="lecture-20.html">L20</a>
+      <a href="lecture-21.html">L21</a>
+      <a href="lecture-22.html">L22</a>
+      ]
+    </p>
+    
+    <h2>Lecture 07</h2>
+    
+    <h3>Before Lecture</h3>
+    
+    <p>To prepare for this lecture First be sure that you are totally
+      comfortable with HtdW. If you need any help with this ask on
+      Piazza or go to office hours.</p>
+
+    <p>Then watch the "Reference Rule Part 1" and "Reference Rule Part
+      2" videos. This is a rare case where we mean just watch, not work
+      through. But, do pay close attention; you will need to have watched it
+      in order to be able to work through the example we will do next
+      time. The clicker question will probably be from this unit!</p>
+
+    
+    <h3>During Lecture</h3>
+    
+    <p>In this lecture we will design a world program in which the
+      world state is a list of elements, for which we will have a
+      separate data definition.</p>
+      
+    <p>By the end of the lecture&ndash;including the post-lecture work&ndash;you should be able to:</p>
+
+    <ul>
+      <li>Design data definitions to represent an arbitrary number of
+	compound information elements.</li>
+      <li>Design a world program using such a data definition.</li>
+      <li>Identify an application of the reference rule and follow the
+	rule to properly design a separate helper function.</li>
+    </ul>
+    
+    <p>The starters for this lecture are:</p>
+
+    <ul>
+      <li><a href="m04-raining-eggs-analysis.pdf">m04-raining-eggs-analysis.pdf</a></li>
+      <li><a href="m04-raining-eggs-v1-starter.rkt">m04-raining-eggs-v1-starter.rkt</a></li>
+      <li><a href="m04-raining-eggs-v2-starter.rkt">m04-raining-eggs-v2-starter.rkt</a></li>
+      <li><a href="m04-raining-eggs-v-2-5-starter.rkt">m04-raining-eggs-v-2-5-starter.rkt</a></li>
+    </ul>
+
+    <p>NOTE: Starter files with numbers in their names show a
+      progression of intermediate states of solving the problem.</p>
+
+	
+    <h3>After Lecture</h3>
+
+
+    <p>Here is the solution for this lecture:</p>
+
+    <ul>
+      <li><a href="m04-raining-eggs-v3-solution.rkt">m04-raining-eggs-v3-solution.rkt</a></li>
+      <li><a href="m04-raining-eggs-v4-solution.rkt">m04-raining-eggs-v3-solution.rkt</a></li>
+    </ul>
+
+    <p>Once again, congratulate yourself on the hard work in lecture
+      today. Ask yourself whether you could have understood much less
+      written that program at the start of the term. So even if you
+      struggled with lecture you should feel proud of how much you have
+      learned. And you can use the lecture as a measure of getting ready
+      for the midterm.</p>
+
+    <p>This lecture is the last one in module 4. To complete module 4
+      you should:</p>
+    
+    <ul>
+      <li>Rework Today'S Example, paying particular attention to how
+	render-eggs and place-egg work (see below).</li>
+      <li>Work through the 3 reference rule videos as needed to be
+	sure you are clear on this kind of problem.</li>
+      <li>Use the practice problems and if needed the problem bank for
+	extra help in solidifying your understanding of these
+	problems.</li>
+    </ul>
+
+    <p>There are three key points in this lecture that you want to be 
+      sure you understand:</p>
+
+    <p>(1) The information we needed to represent consisted of an
+      arbitrary number of non-atomic entities (i.e. eggs). To do
+      that we end up with two types: one for the individual entities
+      (eggs), and one for the arbitrary number of them (the
+      list).</p>
+    
+    <p>The type comments have self-reference and reference arrows,
+      and the templates have corresponding natural recursion and
+      natural helper arrows.</p>
+
+    <p>(2) The natural helper in the template means that if a function
+      based on the template (next-eggs, render-eggs) needs to
+      perform some operation on the referred to type, then it must
+      call a single function, with that type in its signature, to
+      perform that operation.</p>
+
+    <p>So next-eggs needs to call a new function next-egg to advance
+      the egg, rather than calling all three of egg-x egg-y egg-r.</p>
+
+    <p>(3) One of the key issues is figuring out what arguments the
+      natural helper will receive. Specifically does the natural
+      helper receive the result of the natural recursion as an
+      argument or not. In other words, is the helper in combination
+      position or contribution position. Consider these two
+      cases:</p>
+
+    <pre>
+(check-expect (next-eggs (cons (make-egg 100 200 300) 
+                               (cons (make-egg 400 500 600) 
+                                      empty))) 
+              (cons (make-egg 100 (+ 200 FALL-SPEED) (+ 300 SPIN-SPEED)) 
+                    (cons (make-egg 400 (+ 500 FALL-SPEED) (+ 600 SPIN-SPEED)) 
+                          empty))) 
+    </pre>
+
+    <p>In this case we can see that cons is in the combination
+      position.  That's because it accepts the result of the natural
+      recursion as an argument (2nd in this case).  Make-egg is in the
+      contribution position. The make-egg part of the example needs
+      access to two or more of the fields, so the natural helper will
+      take care of the make-egg functionality (contribution of the
+      first) and cons is the combination.</p>
+
+    <pre>
+(define (next-eggs loe) 
+  (cond [(empty? loe) empty]
+        [else 
+         (cons (next-egg (first loe)) 
+               (next-eggs (rest loe)))]))
+    </pre>
+
+    <p>Now consider render-eggs:</p>
+    
+    <pre>
+(check-expect (render-eggs (cons (make-egg 100 50 25) 
+                                 (cons (make-egg 10 20 30) 
+                                       empty))) 
+              (place-image (rotate 25 YOSHI-EGG) 100 50 
+                           (place-image (rotate 30 YOSHI-EGG) 10 20 
+                                        MTS)))
+    </pre>
+
+    <p>In this case the call to place-image is in the combination
+    position (it gets the result of the natural recursion as an
+    argument). Place-image also needs access to the results of
+    multiple field selectors. So the place-image functionality goes
+    into the helper and the helper is in combination position.</p>
+
+    <pre>
+(define (render-eggs loe) 
+  (cond [(empty? loe) MTS] 
+        [else 
+         (place-egg (first loe) 
+                    (render-eggs (rest loe)))]))
+    </pre>
+
+    <p>Be sure that you can see that place-egg consumes the result of the
+      natural recursion, but next-egg does not. That happens because in
+      tock-eggs we don't need to know anything about the details of the
+      egg to know where to put it in the list. It always gets consed
+      onto the front. So cons doesn't need to look inside the egg, it
+      just puts it on the front.</p>
+
+    <p>But in render-eggs we do need to know the details of the egg to
+      know where to put it on the image (on the result of the natural
+      recursion). So place-egg needs to consume the egg as well as the
+      result of the natural recursion.</p>
+
+    <p>The videos on edX cover this in great detail. Be sure to work
+      through them and this example until you are confident you
+      understand what happened here. Use the forums and/or office hours
+      and DLC hours for extra help.  Here also is another way of
+      presenting this same difference:</p>
+
+    <pre>
+(define (next-eggs loe)
+  (cond [(empty? loe) empty]
+        [else
+         ;generic composition: cons
+         ;egg specific contribution: uses x, y and r
+         ;---> combination in list fn, contribution entirely in helper
+         ;(cons (make-egg (egg-x (first loe))
+         ;                (+ (egg-y (first loe)) FALL-SPEED)
+         ;                (+ (egg-r (first loe)) SPIN-SPEED))
+         (cons (next-egg (first loe))
+               (next-eggs (rest loe)))]))
+
+
+(define (render-eggs loe)
+  (cond [(empty? loe) MTS]
+        [else
+         ;egg specific composition: place-image needs x, y
+         ;egg specific contribution: uses r
+         ;---> combination is in helper, also does contribution work
+         ;(place-image (rotate (egg-r (first loe)) YOSHI-EGG)
+         ;             (egg-x (first loe))
+         ;             (egg-y (first loe))
+         ;             (render-eggs (rest loe)))
+         (place-egg (first loe)
+                    (render-eggs (rest loe)))]))
+    </pre>
+
+    <p>Note that we are using single semi-colon comments because these
+    are not the kind of comment that we would normally leave in
+    code. They are temporary.</p>
+
+    <p>Be sure to complete the before lecture section of <a href="lecture-08.html">Lecture 8</a> before the next class.</p>
+
+  </body>
+</html>
