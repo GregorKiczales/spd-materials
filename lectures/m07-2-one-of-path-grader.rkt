@@ -80,15 +80,15 @@
                                    cond-expr
                  (weights (.6 .1 *)
                    (weights (*)
-                     (rubric-item 'template 1 (= (length questions) 4) "reduced to 4 cond question/answer pairs")
-                     (rubric-item 'template 1 (andmap not-and? questions) "no questions use and")
-                     (rubric-item 'template 1 (andmap (curryr member legal) questions)
+                     (rubric-item 'template (= (length questions) 4) "reduced to 4 cond question/answer pairs")
+                     (rubric-item 'template (andmap not-and? questions) "no questions use and")
+                     (rubric-item 'template (andmap (curryr member legal) questions)
                                   "each cond question must be one of ~a" legal)
-                     (rubric-item 'template 1 (andmap (compose not (curryr member legal)) answers)
+                     (rubric-item 'template (andmap (compose not (curryr member legal)) answers)
                                   "cond answers must not contain any of ~a" legal))
-                
+                   
                    (grade-submitted-tests 1)
-               
+                   
                    (grade-additional-tests 1
                      (check-expect (has-path? false empty) false)
                      (check-expect (has-path? false P2) false)

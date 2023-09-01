@@ -24,12 +24,12 @@
                                                          (eqv? (car (cadr (caddr cond-exp)))
                                                                'fn-for-lox))])
             (weights (*)
-              (rubric-item 'signature 1 (unchanged? REV-SIG-TESTS sexps)
+              (rubric-item 'signature (unchanged? REV-SIG-TESTS sexps)
                            "the supplied signature and check-expects must not be changed")
               (grade-submitted-tests)
-              (rubric-item 'template 1 produces-value-of-param?
+              (rubric-item 'template produces-value-of-param?
                            "has accumulator parameter and produce its result in base case")
-              (rubric-item 'template 1 tail-recursive?
+              (rubric-item 'template tail-recursive?
                            "is tail recursive in non base case"))))))))
 
 (define REV-SIG-TESTS

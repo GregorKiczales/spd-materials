@@ -60,11 +60,11 @@
                   (grade-signature (ListOfEgg -> ListOfEgg))))))
 
           (if (false? (tick-handler))
-              (rubric-item 'signature 1 #f "on-tick option to big-bang exists")
+              (rubric-item 'signature #f "on-tick option to big-bang exists")
               (grade-htdf* (tick-handler)
-               (lambda ()
-                 (weights (*)
-                           
+                           (lambda ()
+                             (weights (*)
+                                      
                    (grade-signature (ListOfEgg -> ListOfEgg))
 
                    (grade-tests-validity (loe) r
@@ -126,11 +126,11 @@
                               (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED))))))
           
           (if (false? (draw-handler))
-              (rubric-item 'signature 1 #f "to-draw/on-draw option to big-bang exists")
+              (rubric-item 'signature #f "to-draw/on-draw option to big-bang exists")
               (grade-htdf* (draw-handler)
-                (lambda ()
-                  (weights (*)
-
+                           (lambda ()
+                             (weights (*)
+                                      
                     (grade-signature (ListOfEgg -> Image))
 
                     (grade-tests-validity (loe) r
@@ -216,11 +216,11 @@
 
         
           (if (false? (mouse-handler))
-              (rubric-item 'signature 1 #f "on-mouse option to big-bang exists")
+              (rubric-item 'signature #f "on-mouse option to big-bang exists")
               (grade-htdf* (mouse-handler)
-                (lambda ()
-                  (weights (*)
-
+                           (lambda ()
+                             (weights (*)
+                                      
                     (grade-signature (ListOfEgg Integer Integer MouseEvent -> ListOfEgg))
 
                     (grade-tests-validity (loe i1 i2 me) r
@@ -252,11 +252,11 @@
           
 
           (if (false? (key-handler))
-              (rubric-item 'signature 1 #f "on-key option to big-bang exists")
+              (rubric-item 'signature #f "on-key option to big-bang exists")
               (grade-htdf* (key-handler)
-                (lambda ()
-                  (weights (*)
-
+                           (lambda ()
+                             (weights (*)
+                                      
                     (grade-signature (ListOfEgg KeyEvent -> ListOfEgg))
 
                     (grade-tests-validity (loe ke) r

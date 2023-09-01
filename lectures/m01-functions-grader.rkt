@@ -9,10 +9,10 @@
   (lambda ()
     (grade-submission
       (grade-problem 1                       
-        (rubric-item 'signature 1
+        (rubric-item 'signature
                      (check '(< (abs (- (area 3) (* 3.14 (sqr 3)))) .1))
                      "Evaluating (area 3) produces (* 3.14 (sqr 3))")
-        (rubric-item 'signature 1
+        (rubric-item 'signature
                      (check '(< (abs (- (area 5) (* 3.14 (sqr 5)))) .1))
                      "Evaluating (area 5) produces (* 3.14 (sqr 5))"))
         

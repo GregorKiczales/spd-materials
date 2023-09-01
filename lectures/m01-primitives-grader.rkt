@@ -15,9 +15,8 @@
                              (member (car sexps) '((sqrt (+ (sqr 3)    (sqr 4)))
                                                    (sqrt (+ (* 3 3)    (* 4 4)))
                                                    (sqrt (+ (expt 3 2) (expt 4 2))))))])
-            (rubric-item 'signature 1
+            (rubric-item 'signature
                          corr?
                          "Expression that clearly computes  sqrt ( 3^2 + 4^2 )")))
         (grade-problem 2
-          (score-it 'signature 1 1 #f
-                    "The autograder can't grade this problem."))))))
+          (rubric-item 'signature #t "The autograder does not grade this problem."))))))

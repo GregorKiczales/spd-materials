@@ -39,11 +39,11 @@
         (if (not (andmap (lambda (n)
                            (get-by-pred (lambda (x) (and (@problem? x) (= (problem-num x) n)))))
                          '(3 4 5)))
-            (rubric-item 'other 1 #f "The revised starter has optional problems you can download.")
-
+            (rubric-item 'other #f "The revised starter has optional problems you can download.")
+            
             (weights (*)
-
-        (grade-problem 3
+                     
+                     (grade-problem 3
           (grade-htdf count-nodes
             (let ()
               (ensure-unchanged '((@signature Tree -> Natural)
