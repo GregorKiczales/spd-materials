@@ -19,9 +19,9 @@
                 (grade-submitted-tests 2)
                 (grade-template-origin (Region ListOfRegion encapsulated))
 
-                (rubric-item 'other 1 (= (length defns) 1) "Only one top-level function")
-                (rubric-item 'other 1 (= (length locs) 2)  "With 2 locally defined functions")
-                (rubric-item 'other 1
+                (rubric-item 'other (= (length defns) 1) "Only one top-level function")
+                (rubric-item 'other (= (length locs) 2)  "With 2 locally defined functions")
+                (rubric-item 'other 
                              (and (member (car  names) (free (caddr (cadr locs))))
                                   (member (cadr names) (free (caddr (car  locs)))))
                              "That are in mutual recursion")
@@ -40,9 +40,9 @@
                 (grade-submitted-tests 2)
                 (grade-template-origin (Region ListOfRegion encapsulated))
 
-                (rubric-item 'other 1 (= (length defns) 1) "Only one top-level function")
-                (rubric-item 'other 1 (= (length locs) 2)  "With 2 locally defined functions")
-                (rubric-item 'other 1
+                (rubric-item 'other (= (length defns) 1) "Only one top-level function")
+                (rubric-item 'other (= (length locs) 2)  "With 2 locally defined functions")
+                (rubric-item 'other
                              (and (member (car  names) (free (caddr (cadr locs))))
                                   (member (cadr names) (free (caddr (car  locs)))))
                              "That are in mutual recursion")

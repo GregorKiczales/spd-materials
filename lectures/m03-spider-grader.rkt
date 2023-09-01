@@ -44,11 +44,11 @@
                   (grade-signature (Spider -> Spider))))))
 
           (if (false? (tick-handler))
-              (rubric-item 'signature 1 #f "on-tick option to big-bang exists")
+              (rubric-item 'signature #f "on-tick option to big-bang exists")
               (grade-htdf* (tick-handler)
-                (lambda ()
-                  (weights (*)
-                    (grade-signature (Spider -> Spider))
+                           (lambda ()
+                             (weights (*)
+                                      (grade-signature (Spider -> Spider))
 
                     (grade-tests-validity (sp) r
                       (%%spider? sp)
@@ -78,11 +78,11 @@
                       (check-expect (,(tick-handler) (- BOT -1 SPEED))    BOT))))))
 
           (if (false? (draw-handler))
-              (rubric-item 'signature 1 #f "on-draw or to-draw option to big-bang exists")
+              (rubric-item 'signature #f "on-draw or to-draw option to big-bang exists")
               (grade-htdf* (draw-handler)
-                (lambda ()
-                  (weights (*)
-                    (grade-signature (Spider -> Image))
+                           (lambda ()
+                             (weights (*)
+                                      (grade-signature (Spider -> Image))
 
                     (grade-tests-validity (sp) r
                       (%%spider? sp)

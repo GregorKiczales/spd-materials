@@ -56,11 +56,11 @@
                 (grade-signature (Spider -> Spider)))))
 
           (if (false? (tick-handler))
-              (rubric-item 'signature 1 #f "on-tick option to big-bang exists")
+              (rubric-item 'signature #f "on-tick option to big-bang exists")
               (grade-htdf* (tick-handler)
-                (lambda ()
-                  (weights (*)
-                           
+                           (lambda ()
+                             (weights (*)
+                                      
                     (grade-signature (Spider -> Spider))
 
                     (grade-tests-validity (sp) r
@@ -111,22 +111,22 @@
                       (check-expect (,(tick-handler) (make-spider (- BOT 3)  4)) (%%tock (make-spider (- BOT 3)  4))))))))
 
           (if (false? (draw-handler))
-              (rubric-item 'signature 1 #f "on-draw or to-draw option to big-bang exists")
+              (rubric-item 'signature #f "on-draw or to-draw option to big-bang exists")
               (grade-htdf* (draw-handler)
-                (lambda ()
-                  (weights (*)
-                    (grade-signature (Spider -> Image))
+                           (lambda ()
+                             (weights (*)
+                                      (grade-signature (Spider -> Image))
                     (grade-template-origin (Spider))
                     (grade-template (s) (compound (Number Number) make-spider spider? (spider-y spider-dy)))
                     (grade-submitted-tests)))))
 
               
           (if (false? (key-handler))
-              (rubric-item 'signature 1 #f "on-key option to big-bang exists")
+              (rubric-item 'signature #f "on-key option to big-bang exists")
               (grade-htdf* (key-handler)
-                (lambda ()
-                  (weights (*)
-
+                           (lambda ()
+                             (weights (*)
+                                      
                     (grade-signature (Spider KeyEvent -> Spider))
 
                     (grade-tests-validity (s ke) r

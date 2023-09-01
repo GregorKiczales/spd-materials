@@ -14,15 +14,15 @@
         (grade-problem 1
           (let* ([sexps  (problem-sexps (car (context)))])
             (weights (.3 *)
-              (rubric-item 'other 1
+              (rubric-item 'other
                            (and (>= (length sexps) 1)
                                 (equal-sets? (car sexps) (car PROBLEM-1-SOLUTION)))
                            "@template-origin tag - which is there to make it easy to copy")
-              (rubric-item 'other 1
+              (rubric-item 'other
                            (and (>= (length sexps) 2)
                                 (equal? (cadr sexps) (cadr PROBLEM-1-SOLUTION)))
                            "encapsulated fn-for-region"))))
-
+        
 
         (grade-problem 2
           (grade-htdf find-region
@@ -33,13 +33,13 @@
               (weights (*)
                 (grade-signature (String Region -> Region or false))
 
-                (rubric-item 'other 1 (= (length defns) 1) "Only one top-level function")
-                (rubric-item 'other 1 (= (length locs) 2)  "With 2 locally defined functions")
-                (rubric-item 'other 1
+                (rubric-item 'other (= (length defns) 1) "Only one top-level function")
+                (rubric-item 'other (= (length locs) 2)  "With 2 locally defined functions")
+                (rubric-item 'other
                              (and (member (car  names) (free (caddr (cadr locs))))
                                   (member (cadr names) (free (caddr (car  locs)))))
                              "That are in mutual recursion")
-
+                
                 (grade-template-origin 1 (encapsulated Region ListOfRegion try-catch))
 
                 (grade-additional-tests 1

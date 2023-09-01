@@ -82,11 +82,11 @@
                                     (= (length (filter (curry eqv? 'foldr) called))
                                        (length (filter (curry eqv? 'build-list) called))))])
                 (weights (*)
-                  (rubric-item 'template 1 correct? "must call both foldr and build-list twice")
+                  (rubric-item 'template correct? "must call both foldr and build-list twice")
                   (grade-additional-tests 1
-                    (check-expect (pyramid 4)
-                                  (above CIRCLE
-                                         (beside CIRCLE CIRCLE)
+                                          (check-expect (pyramid 4)
+                                                        (above CIRCLE
+                                                               (beside CIRCLE CIRCLE)
                                          (beside CIRCLE CIRCLE CIRCLE)
                                          (beside CIRCLE CIRCLE CIRCLE CIRCLE))))))
   
