@@ -42,7 +42,7 @@ def generate_page(problems):
     with tag('html'):
         
         with tag('head'):
-            doc.stag('link', href='https://' + HOST + '/110-style.css', rel='stylesheet', type='text/css')
+            doc.stag('link', href='https://' + HOST + '../spd-style.css', rel='stylesheet', type='text/css')
         with tag('title'):
             text('Problem Bank')
 
