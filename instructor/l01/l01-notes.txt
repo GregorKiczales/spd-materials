@@ -25,7 +25,7 @@ Timeline:
 
 After slides...
 
-[need to keep this to what's there, not explaining it]
+[need to keep this to just showing what's there, not explaining it]
 
 Setup in tabs: links.html, edX Course page, Piazza, edX Lectures page
 
