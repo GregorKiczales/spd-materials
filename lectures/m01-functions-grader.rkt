@@ -8,7 +8,7 @@
 (define grader
   (lambda ()
     (grade-submission
-      (grade-problem 1                       
+      (grade-problem 1
         (rubric-item 'signature
                      (check '(< (abs (- (area 3) (* 3.14 (sqr 3)))) .1))
                      "Evaluating (area 3) produces (* 3.14 (sqr 3))")
