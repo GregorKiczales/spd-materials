@@ -28,8 +28,12 @@
               (grade-tests-validity (img) r
                 (image? img)
                 (equal? r (%%topple img)))
-              (grade-tests-argument-thoroughness (img)
-                (not (= (image-width img) (image-height img))))
+              (grade-argument-thoroughness
+                (all-args (loi)
+                  (and (> (length loi) 1)
+                       (not (apply equal? loi))))
+                (per-args (img)
+                  (not (= (image-width img) (image-height img)))))
               #; ;too early for this
               (grade-thoroughness-by-faulty-functions 1
                 (define (topple img)
@@ -50,9 +54,10 @@
               (grade-tests-validity (s) r
                 (image? r)
                 (string? s))
-              (grade-tests-argument-thoroughness (str)
-                (string=? str "") 
-                (not (string=? str "")))
+              (grade-argument-thoroughness
+                (per-args (str)
+                  (string=? str "") 
+                  (not (string=? str ""))))
               
               (grade-template-origin (String))
               (grade-template 1 (str) String)
@@ -66,10 +71,11 @@
               (grade-tests-validity (img) r
                 (image? img)
                 (equal? r (%%tall? img)))
-              (grade-tests-argument-thoroughness (img)
-                (< (image-height img) (image-width img))
-                (> (image-height img) (image-width img))
-                (= (image-height img) (image-width img)))
+              (grade-argument-thoroughness
+                (per-args (img)
+                  (< (image-height img) (image-width img))
+                  (> (image-height img) (image-width img))
+                  (= (image-height img) (image-width img))))
               #; ;too early for this
               (grade-thoroughness-by-faulty-functions 1
                 (define (tall? i)
@@ -94,12 +100,13 @@
                 (image? i1)
                 (image? i2)
                 (equal? r (%%image> i1 i2)))
-              (grade-tests-argument-thoroughness (i1 i2)
-                (not (= (image-height i1) (image-width i1)))
-                (not (= (image-height i2) (image-width i2)))
-                (> (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2)))
-                (< (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2)))
-                (= (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2))))
+              (grade-argument-thoroughness
+                (per-args (i1 i2)
+                  (not (= (image-height i1) (image-width i1)))
+                  (not (= (image-height i2) (image-width i2)))
+                  (> (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2)))
+                  (< (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2)))
+                  (= (* (image-height i1) (image-width i1)) (* (image-width i2) (image-height i2)))))
               #;
               (grade-thoroughness-by-faulty-functions 1
                 (define (image> i1 i2)
