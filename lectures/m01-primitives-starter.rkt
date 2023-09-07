@@ -61,7 +61,10 @@
 ;; 
 ;; The background for the Canadian Flag (without the maple leaf) is two
 ;; red bands on either side of a white band. Write an expression to produce that
-;; background. If you want to get the details right, officially the overall flag
-;; has proportions 1:2, and the band widths are in the ratio 1:2:1.
+;; background. In more detail, in your image:
 ;;
-
+;;   the left   solid red   band should be 100 x 200
+;;   the center solid white band should be 200 x 200
+;;   the right  solid red   band should be 100 x 200
+;;
+ 
