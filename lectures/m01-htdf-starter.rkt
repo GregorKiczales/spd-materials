@@ -64,11 +64,11 @@
 ;;
 ;; Design a function, called image>, that takes two images and determines 
 ;; whether the first is larger than the second.
-;;
-;; For this function we are giving you the signature template-origin
-;; and template below
+;; For this function we are giving you the htdf tag, signature, template-origin
+;; and template below.
 ;;
 
+(@htdf image>)
 (@signature Image Image -> Boolean)
 
 (@template-origin Image)

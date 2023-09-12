@@ -1,9 +1,9 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname m03-compound-spider-v2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+(require spd/tags)
 (require 2htdp/image)
 (require 2htdp/universe)
-(require spd/tags)
 (@assignment lectures/m03-compound-spider)
 
 ;; Spider, goes up/down screen with thread, changes, and wiggles
@@ -98,19 +98,19 @@
                            false))
 ;; top edge
 (check-expect
- (tock (make-spider (+ TOP 3) -2 true)) (make-spider (+ TOP 1) -2 false))
+ (tock (make-spider (+ TOP 3) -2 true))  (make-spider (+ TOP 1) -2 false))
 (check-expect
  (tock (make-spider (+ TOP 3) -3 false)) (make-spider    TOP     3 true))
 (check-expect
- (tock (make-spider (+ TOP 3) -4 true)) (make-spider    TOP     4 false))
+ (tock (make-spider (+ TOP 3) -4 true))  (make-spider    TOP     4 false))
 
 ;; bottom edge
 (check-expect
- (tock (make-spider (- BOT 3) 2 true))  (make-spider (- BOT 1)  2 false))
+ (tock (make-spider (- BOT 3) 2 true))   (make-spider (- BOT 1)  2 false))
 (check-expect
  (tock (make-spider (- BOT 3) 3 false))  (make-spider    BOT    -3 true))
 (check-expect
- (tock (make-spider (- BOT 3) 4 true))  (make-spider    BOT    -4 false))
+ (tock (make-spider (- BOT 3) 4 true))   (make-spider    BOT    -4 false))
 
 ;(define (tock s) s) ;stub
 
@@ -119,7 +119,8 @@
 (@template
  (define (tock s)
    (... (spider-y s)
-        (spider-dy s))))
+        (spider-dy s)
+        (spider-lw? s))))
 
 (define (tock s)
   (cond [(<= (+ (spider-y s) (spider-dy s)) TOP)
@@ -159,7 +160,8 @@
 (@template
  (define (render s)
    (... (spider-y s)
-        (spider-dy s))))
+        (spider-dy s)
+        (spider-lw? s))))
   
 (define (render s)
   (add-line (place-image (if (spider-lw? s) LW-SPIDER-IMAGE RW-SPIDER-IMAGE)
@@ -188,7 +190,7 @@
 
 (@template 
  (define (reverse-spider s ke)
-  (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
+  (cond [(key=? ke " ") (... (spider-y s) (spider-dy s) (spider-lw? s))]
         [else (... (spider-y s) (spider-dy s))])))
 
 (define (reverse-spider s ke)
