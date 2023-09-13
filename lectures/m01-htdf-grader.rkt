@@ -29,9 +29,6 @@
                 (image? img)
                 (equal? r (%%topple img)))
               (grade-argument-thoroughness
-                (all-args (loi)
-                  (and (> (length loi) 1)
-                       (not (apply equal? loi))))
                 (per-args (img)
                   (not (= (image-width img) (image-height img)))))
               #; ;too early for this
