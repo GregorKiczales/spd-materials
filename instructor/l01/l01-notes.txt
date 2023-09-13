@@ -158,4 +158,11 @@ BSL has functions too
        (bulb "yellow")
        (bulb "green"))
 
-[got to this point, left them exercise to do]
+A function call is evaluated by:
+  - first reducing operands to values, the values are the arguments
+  - replace the call to the function by the body of the function
+    in which each parameter is replaced by the corresponding argument
+
+At that point the function call is gone.  [don't say, but no stack in this model]
+
+tell students to carefully watch edx videos, and practice w/ stepper

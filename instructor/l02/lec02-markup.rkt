@@ -2,6 +2,51 @@
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname lec02-markup) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 
+
+#|
+
+Today we learn the How to Design Functions (HtDF) recipe.
+
+ - it's the core of the course
+ - you will use it 100s of times
+ - each time you'll understand it better
+
+Note that design methods (like the HtDF recipe):
+
+ - make easy problems more cumbersome
+ - make hard problems easier
+ - make really hard problems possible
+
+So that means you have to be patient with HtDF.
+
+ - at first it will seem like it gets in the way
+ - later it will be essential to solving the problems
+
+
+|#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (@htdf topple)
 (@signature Image -> Image)
 ;; produce image rotated by 90 degrees
