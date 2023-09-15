@@ -4,6 +4,7 @@
 (require spd/tags)
 (require 2htdp/image)
 (require 2htdp/universe)
+
 (@assignment lectures/m03-compound-spider)
 
 ;; Spider, goes down screen with thread, changes dir on space and at top/bottom

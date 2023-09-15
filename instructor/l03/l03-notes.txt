@@ -3,22 +3,43 @@
  key point is that on autograder assignments median is 100, mean is close to it
 
 10   clickers (6 + 4)
-
-25   can-vote?
+ -
+25   can-vote v0?
 	no idea?
+     can-vote v1?
 	what do 0, 1 mean
 	primitives operate on data,
 	we want to design functions that process information
-	status+ can-vote?
 
-45   Grade-standing
+        DD is in starter  [talk through it]
+
+        can-vote? function redesign  [interactive]
+	  - type comment drives check-expects
+	  - templating
+	     first origin
+	     then copy, wrapped in @template, renamed, cmd-I
+	     then copy out to top-level
+	  - focus on the ...
+
+;; if the template is a cond, from a one-of type you MUST NOT:
+;;  - delete the cond
+;;  - reorder the QA pairs
+;;  - edit the questions
+;;  - delete any QA pair
+;;  - add any QA pair
+;; basically just edit the ...
+
+
+2 structure from info slide
+
+43   Grade-standing
 
      information   |
      type comment  | interactive
      examples      |
      
      template	   | present mixed data
-                     guarding, no simplification (type safety)l..;l
+                     guarding, no simplification
 
      functions 	   | class
     
@@ -26,14 +47,14 @@
 Data is not information! MJ says start in the domain of the problem (information).
 Be clear about what information data represents.
 
-
+;; present the htdd, then paste in the function design and talk through it
 
 (@problem 1)
 (@htdd Status)
 ;; Status is one of:
 ;;  - "minor"
 ;;  - "adult"
-;; interp. the legal status of a person
+;; interp. the legal status of a CITIZEN
 ;; <examples are redundant for enumerations>
 
 (@dd-template-rules one-of           ;2 cases
