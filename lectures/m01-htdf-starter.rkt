@@ -68,7 +68,7 @@
 ;; and template below.
 ;;
 
-(@htdf image>)
+;(@htdf image>) ;UNCOMMENT THIS LINE WHEN YOU START THIS PROBLEM
 (@signature Image Image -> Boolean)
 
 (@template-origin Image)

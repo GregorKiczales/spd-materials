@@ -24,32 +24,36 @@
                     atomic-non-distinct  ;Natural
                     atomic-distinct      ;"H"
                     atomic-distinct      ;"P"
-                    atomic-distinct      ;"T"
-                    atomic-distinct)     ;"F"
+                    atomic-distinct      ;"F"
+                    atomic-distinct)     ;"T"
 
-;; initial template, w/ all guarding
-;(define (fn-for-grade-standing gs)
-;  (cond;[                  (<= 0 gs 100)  (... gs)] ;NO!
-;       ;[(and (number? gs) (<= 0 gs 100)) (... gs)] ;OK, not needed this term
-;        [     (number? gs)                (... gs)] ;can be simpler like this
-;        [(and (string? gs) (string=? gs "H")) (...)]
-;        [(and (string? gs) (string=? gs "P")) (...)]
-;        [(and (string? gs) (string=? gs "T")) (...)]
-;        [else (...)])) 
-
-;; with guard simplification
+;
+; In a mixed-data itemization, you must guard any predicates
+; that can be called with a different kind of data. This means
+; you do not need to guard the last kind of data in the one of.
+;
+; In this case, the string=? do NOT NEED TO BE GUARDED because
+; the four strings ("H" "P" "F" "T") come at the end of the
+; one of.  There is no other type of data afterwards (like a
+; boolean, or an image or something).
+;
 (define (fn-for-grade-standing gs)
   (cond [(number? gs) (... gs)] 
         [(string=? gs "H") (...)]
         [(string=? gs "P") (...)]
         [(string=? gs "F") (...)]
-        [else (...)]))            ;template rules page asks for else as the
-;                                 ;last question in an itemization.  You
-;                                 ;might be tempted to use (string=? gs "F")
-;                                 ;in this case since the last four subclasses
-;                                 ;of the itemization look like they form
-;                                 ;an enumeration
+        [else (...)]))
 
+;
+; If you want to do all the guarding, even though it isn't needed,
+; then it would look like this:
+;
+;(define (fn-for-grade-standing gs)
+;  (cond [(number? gs)      (... gs)]
+;        [(and (string? gs) (string=? gs "H")) (...)]
+;        [(and (string? gs) (string=? gs "P")) (...)]
+;        [else              (...)]
+;
 
 (@htdf excellent?)
 (@signature GradeStanding -> Boolean)
@@ -77,8 +81,16 @@
          [(string=? gs "F") (...)]
          [else (...)])))
 
+;;
 ;; when working with a template that has a cond from a one-of type
-;; not allowed to reduce number of questions or edit questions
+;; you MUST NOT:
+;;  - delete the cond
+;;  - reorder the QA pairs
+;;  - delete any QA pair
+;;  - add any QA pair
+;;  - edit the questions
+;; you just edit the answers
+;;
 (define (excellent? gs)
   (cond [(number? gs) (>= gs 90)] 
         [(string=? gs "H") false]

@@ -18,6 +18,8 @@
 
 
 
+
+
 ;; How about now? Is it correct now?
 
 (@htdf can-vote?)
@@ -36,3 +38,24 @@
 
 |#
 (@problem 1)
+
+;; Given this data definition...
+
+(@htdd Status)
+;; Status is one of:
+;;  - "minor"
+;;  - "adult"
+;; interp. the legal status of a person
+;; <examples are redundant for enumerations>
+
+(@dd-template-rules one-of           ;2 cases
+                    atomic-distinct  ;"minor"
+                    atomic-distinct) ;"adult"
+
+(define (fn-for-status s)
+  (cond [(string=? s "minor") (...)]
+        [(string=? s "adult") (...)]))
+
+
+;; redesign the can-vote function from above:
+
