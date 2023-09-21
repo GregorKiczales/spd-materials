@@ -79,6 +79,7 @@ DD  y, dy, good examples
 (define MTS (empty-scene WIDTH HEIGHT))
 
 
+
 ;; =================
 ;; Data definitions:
 (@problem 1)
@@ -94,7 +95,14 @@ DD  y, dy, good examples
 (define S-MID-U (make-spider MID -3))   ;middle going up
 (define S-BOT-U (make-spider BOT -3))   ;bottom going up
 
-LEAVE OLD TEMPLATE, THEN COMPARE, THIS GIVES SENSE OF WHAT THE WORK WILL BE
+
+LEAVE OLD TEMPLATE, THEN COMPARE TWO. STILL LEAVE IT GIVES IDEA OF WORK TO BE DONE
+
+#;#; ;!!! OLD DELETE WHEN DONE
+(@dd-template-rules atomic-non-distinct)
+
+(define (fn-for-spider s)
+  (... s))
 
 (@dd-template-rules compound);2 fields
 
@@ -143,6 +151,12 @@ LEAVE OLD TEMPLATE, THEN COMPARE, THIS GIVES SENSE OF WHAT THE WORK WILL BE
 ;(define (tock s) s) ;stub
 
 (@template-origin Spider)
+
+leave old @template during work on function
+#; ;!!! DELETE LATER
+(@template
+ (define (tock s)
+   (... s)))
 
 ;PUT THIS IN TO POINT OUT NEW TEMPLATE
 (@template

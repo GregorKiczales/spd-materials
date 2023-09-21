@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname m03-compound-spider-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname m03-compound-spider-v2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 (require 2htdp/image)
 (require 2htdp/universe)
@@ -55,6 +55,8 @@ explicitly as a field in the world state.
 (define TOP (+ 0        SPIDER-RADIUS)) ;to be entirely visible
 (define BOT (- HEIGHT 1 SPIDER-RADIUS)) ;center has to be in [TOP, BOT]
 
+(define MID (/ HEIGHT 2))
+
 
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
@@ -65,17 +67,28 @@ explicitly as a field in the world state.
 ;; Data definitions:
 (@problem 1)
 (@htdd Spider)
-;; Spider is Number
-;; interp. y coordinate of the spider
-;;         distance of the centre of the spider from top
+(define-struct spider (y dy))
+;; Spider is (make-spider Number Number)
+;; interp. y is spider's vertical position in screen coordinates (pixels)
+;;         dy is velocity in pixels per tick, + is down, - is up
 ;; CONSTRAINT: to be visible, must be in
 ;;             [TOP, BOT] which is [SPIDER-RADIUS, HEIGHT - 1 - SPIDER-RADIUS]
-(define MID (/ HEIGHT 2))
+(define S-TOP-D (make-spider TOP  3))   ;top going down
+(define S-MID-D (make-spider MID  2))   ;middle going down
+(define S-MID-U (make-spider MID -3))   ;middle going up
+(define S-BOT-U (make-spider BOT -3))   ;bottom going up
 
+#;#; ;!!! OLD DELETE WHEN DONE
 (@dd-template-rules atomic-non-distinct)
 
 (define (fn-for-spider s)
   (... s))
+
+(@dd-template-rules compound);2 fields
+
+(define (fn-for-spider s)
+  (... (spider-y s)
+       (spider-dy s)))
 
 ;; =================
 ;; Functions:
