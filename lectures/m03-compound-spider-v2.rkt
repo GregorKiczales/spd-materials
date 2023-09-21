@@ -191,3 +191,32 @@ explicitly as a field in the world state.
             CTR-X 0
             CTR-X s
             "black"))
+
+
+(@htdf reverse-spider)
+(@signature Spider KeyEvent -> Spider)
+;; change direction of spider on space, unchanged for other keys
+(check-expect (reverse-spider (make-spider 100  2) " ") (make-spider 100 -2))
+(check-expect (reverse-spider (make-spider 200 -3) " ") (make-spider 200  3))
+(check-expect (reverse-spider (make-spider 100  2) "a") (make-spider 100  2))
+
+;(define (reverse-spider s ke) s)
+
+;(@template-origin KeyEvent Spider);using large enumeration rule
+;
+;(@template 
+; (define (reverse-spider s ke)
+;  (cond [(key=? ke " ") (... s)]
+;        [else s])))
+
+(@template-origin KeyEvent ;using large enumeration rule
+                  Spider)  ;to get Spider selectors in cond answer
+
+(@template 
+ (define (reverse-spider s ke)
+  (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
+        [else (... (spider-y s) (spider-dy s))])))
+
+(define (reverse-spider s ke)
+  (cond [(key=? ke " ") (make-spider (spider-y s) (- (spider-dy s)))]
+        [else s]))

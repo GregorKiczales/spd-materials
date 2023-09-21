@@ -12,15 +12,18 @@ Poll questions
      do not show how to write with min it confuses with compound data
      can do that later in the term
 
+
+
 reverse engineer  present
 revise dd         interactive
 
-reverse-spider    TA paste to chat
-                  discuss (note origin is special in 2 ways)
+tock              give 3 tests, then class   (v1 has this)
 
-tock              give 3 tests, then class
 
-render            show and talk briefly
+reverse-spider    load v2 and discuss        (v2 has this)
+                  note origin is special in 2 ways
+
+render            show and talk briefly      (solution has this)
 
 
 
@@ -118,8 +121,46 @@ LEAVE OLD TEMPLATE, THEN COMPARE, THIS GIVES SENSE OF WHAT THE WORK WILL BE
     (to-draw   render)           ; Spider -> Image
     (on-key    reverse-spider))) ; Spider KeyEvent -> Spider
 
-;; PUT THIS AT END OF CODE FILE SO SAME ORDER AS BIG-BANG
-;; IT IS HERE IN LECTURE NOTES BECAUSE OF ORDER OF PRESENTATION
+
+
+
+(@htdf tock)
+(@signature Spider -> Spider)
+;; move spider by dy, except change direction at bottom and top edges
+
+;; top edge: doesn't touch TOP, just touches TOP, tries to go past TOP
+(check-expect (tock (make-spider (+ TOP 3) -2)) (make-spider (+ TOP 1) -2))
+(check-expect (tock (make-spider (+ TOP 3) -3)) (make-spider    TOP     3))
+(check-expect (tock (make-spider (+ TOP 3) -4)) (make-spider    TOP     4))
+
+
+;; UPDATE THESE TESTS IN PLACE - STUDENTS SHOULD DO ABOVE TESTS AND BELOW
+;; bottom edge: doesn't touch BOT, just touches BOT, tries to go past BOT
+(check-expect (tock (make-spider (- BOT 3) 2))  (make-spider (- BOT 1)  2))
+(check-expect (tock (make-spider (- BOT 3) 3))  (make-spider    BOT    -3))
+(check-expect (tock (make-spider (- BOT 3) 4))  (make-spider    BOT    -4))
+
+;(define (tock s) s) ;stub
+
+(@template-origin Spider)
+
+;PUT THIS IN TO POINT OUT NEW TEMPLATE
+(@template
+ (define (tock s)
+   (... (spider-y s)
+        (spider-dy s))))
+
+(define (tock s)
+  (cond [(<= (+ (spider-y s) (spider-dy s)) TOP)
+         (make-spider TOP (- (spider-dy s)))]
+        [(>= (+ (spider-y s) (spider-dy s)) BOT)
+         (make-spider BOT (- (spider-dy s)))]
+        [else
+         (make-spider (+ (spider-y s) (spider-dy s))
+                      (spider-dy s))]))
+        
+
+;; goes at end of file
 
 (@htdf reverse-spider)
 (@signature Spider KeyEvent -> Spider)
@@ -144,38 +185,8 @@ LEAVE OLD TEMPLATE, THEN COMPARE, THIS GIVES SENSE OF WHAT THE WORK WILL BE
 
 
 
-(@htdf tock)
-(@signature Spider -> Spider)
-;; move spider by dy, except change direction at bottom and top edges
+;; highlight add-line if time
 
-;; top edge: doesn't touch TOP, just touches TOP, tries to go past TOP
-(check-expect (tock (make-spider (+ TOP 3) -2)) (make-spider (+ TOP 1) -2))
-(check-expect (tock (make-spider (+ TOP 3) -3)) (make-spider    TOP     3))
-(check-expect (tock (make-spider (+ TOP 3) -4)) (make-spider    TOP     4))
-
-;; bottom edge: doesn't touch BOT, just touches BOT, tries to go past BOT
-(check-expect (tock (make-spider (- BOT 3) 2))  (make-spider (- BOT 1)  2))
-(check-expect (tock (make-spider (- BOT 3) 3))  (make-spider    BOT    -3))
-(check-expect (tock (make-spider (- BOT 3) 4))  (make-spider    BOT    -4))
-
-;(define (tock s) s) ;stub
-
-(@template-origin Spider)
-
-(@template
- (define (tock s)
-   (... (spider-y s)
-        (spider-dy s))))
-
-(define (tock s)
-  (cond [(<= (+ (spider-y s) (spider-dy s)) TOP)
-         (make-spider TOP (- (spider-dy s)))]
-        [(>= (+ (spider-y s) (spider-dy s)) BOT)
-         (make-spider BOT (- (spider-dy s)))]
-        [else
-         (make-spider (+ (spider-y s) (spider-dy s))
-                      (spider-dy s))]))
-        
 
 (@htdf render)
 (@signature Spider -> Image) 
@@ -209,5 +220,4 @@ LEAVE OLD TEMPLATE, THEN COMPARE, THIS GIVES SENSE OF WHAT THE WORK WILL BE
             CTR-X 0
             CTR-X (spider-y s)
             "black"))
-
 
