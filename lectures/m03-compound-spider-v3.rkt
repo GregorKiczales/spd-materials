@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname m03-compound-spider-v2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname m03-compound-spider-v3) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 (require 2htdp/image)
 (require 2htdp/universe)
@@ -43,25 +43,28 @@
 ;; Data definitions:
 (@problem 1)
 (@htdd Spider)
-(define-struct spider (y dy lw?))
-;; Spider is (make-spider Number Number Boolean)
-;; interp. y   is spider's vertical position in screen coordinates (pixels)
-;;         dy  is velocity in pixels per tick, + is down, - is up
-;;         lw? is true if left wiggle, false if right
+(define-struct spider (y dy))
+;; Spider is (make-spider Number Number)
+;; interp. y is spider's vertical position in screen coordinates (pixels)
+;;         dy is velocity in pixels per tick, + is down, - is up
 ;; CONSTRAINT: to be visible, must be in
-;;             [TOP, BOT] which is [SPIDER-RADIUS, HEIGHT - SPIDER-RADIUS]
-(define S-TOP-D (make-spider TOP  3 true))   ;top going down
-(define S-MID-D (make-spider MID  3 false))  ;middle going down
-(define S-MID-U (make-spider MID -3 true))   ;middle going up
-(define S-BOT-U (make-spider BOT -3 true))   ;bottom going up
+;;             [TOP, BOT] which is [SPIDER-RADIUS, HEIGHT - 1 - SPIDER-RADIUS]
+(define S-TOP-D (make-spider TOP  3))   ;top going down
+(define S-MID-D (make-spider MID  2))   ;middle going down
+(define S-MID-U (make-spider MID -3))   ;middle going up
+(define S-BOT-U (make-spider BOT -3))   ;bottom going up
 
+#;#; ;!!! OLD DELETE WHEN DONE
+(@dd-template-rules atomic-non-distinct)
+
+(define (fn-for-spider s)
+  (... s))
 
 (@dd-template-rules compound);2 fields
 
 (define (fn-for-spider s)
   (... (spider-y s)
-       (spider-dy s)
-       (spider-lw? s)))
+       (spider-dy s)))
 
 
 ;; =================
