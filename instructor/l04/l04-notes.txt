@@ -1,9 +1,20 @@
 
 
+Review/context
 
 structure from data
 
-structure of course
+structure of this part of the course
+
+
+design methods (recipes) are what make the breakdown into smaller problems repeatable
+
+recipes also let you keep track of where you are in a large problem
+
+Slides re trust the recipe. 3 recipes; we will call out to DD and DF from DW. Repeatedly to DF.  Working systematically can help us not be confused about where we are and what we are doing.
+
+In big programs there are thousands or more functions; with many under active design; this is the basis for being able to do that.
+
 
 
 Clickers
@@ -11,15 +22,12 @@ Clickers
 must include place-image question
 
 
+
 recipe checklist, today will do DW, while using DD and DF
 
-start to see a fundamental challenge in SW dev - keeping track of where you are
-Slides re trust the recipe. 3 recipes; we will call out to DD and DF from DW. Repeatedly to DF.  Working systematically can help us not be confused about where we are and what we are doing.
-
-In big programs there are thousands or more functions; with many under active design; this is the basis for being able to do that.
 
 
-HtDW (recipe sheet on LAPTOP)
+HtDW (recipe sheet in slides)
 
 Domain analysis (ipad)
   2 pictures first, usual constants
@@ -38,13 +46,14 @@ Constants
 
 (define SPIDER-RADIUS 10)
 
+(define SPEED 2) ; pixels per tick
+
+
+(define MTS (empty-scene WIDTH HEIGHT))
 
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
 
-(define SPEED 2) ; pixels per tick
-
-(define MTS (empty-scene WIDTH HEIGHT))
 
 
 Data definition
@@ -52,6 +61,8 @@ Data definition
   at interp, go back to issue of TOP and BOT, pictures, define, constraint
   now that we have DD rename WS, use find/replace
 
+
+model-view-controller (non local structure)
 
 ;; do these during interpretation DD
 
@@ -77,7 +88,11 @@ main
   leave unused commented out, make clear would not normally do that
 
 
-Do render QUICKLY interactively
+Do render interactively, stress these points:
+ - go back to DD to understand what Spider represents
+ - only two tests needed, no boundary conditions in render
+ - render just displays, it doesn't move
+ - COPY the template
 
 (@htdf render)
 (@signature Spider -> Image)
@@ -98,16 +113,25 @@ Do render QUICKLY interactively
   (place-image SPIDER-IMAGE CTR-X s MTS))
 
 
+Take questions on render.
+
+Start in on tock.
+
+Work out purpose by looking at domain analysis, constants
+
 
 (@htdf tock)
 (@signature Spider -> Spider)
 ;; produce next spider moving down by SPEED (s + SPEED), stopping at bottom
 
-setup point that we spend a long time on the examples by spending a long
-time on the examples, working them out carefully
 
-Main focus here is the BOT boundary, first fn behavior, then
-setting up the three tests.
+setup point that we spend a long time on the examples by spending a long
+time on the examples, working them out carefully. draw a picture of the
+four cases.
+
+Note that while students have already seen a boundary condition in this
+case the immediately apparent boundary condition is in the result, they
+have to work that back to the boundary condition in the input
 
 
 ;; THE DOTTED BOT LINE is the CENTER of the spider
@@ -118,14 +142,21 @@ setting up the three tests.
 
 ;(define (tock s) s) ;stub
 
+At this point copy the rest in and talk through the final function
+definition.
+
 (@template-origin Spider)
 
 (@template
  (define (tock s)
    (... s)))
 
+The if reads as
 
-walk through how to think about the if
+ suppose I add SPEED to s,
+ does that take me up to or past BOT
+ in that case stop at BOT
+ otherwise go ahead and add SPEED to s
 
 (define (tock s)
   (if (>= (+ s SPEED) BOT) ;if we move by SPEED is it too far
