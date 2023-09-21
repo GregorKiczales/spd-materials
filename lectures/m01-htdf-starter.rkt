@@ -45,36 +45,26 @@
 
 (@problem 2)
 ;;
-;; Design a function that consumes the name of something and produces a
-;; "checkbox line" image that allows someone to check off that item.  For 
-;; example (checkbox-line "apples") would produce an image with a small
-;; check box next to the word apples.
+;; Design a function, that consumes an image and determines whether it is tall.
 ;;
 
 
 
 (@problem 3)
 ;;
-;; Design a function, that consumes an image and determines whether it is tall.
-;;
-
-
-
-(@problem 4)
-;;
-;; Design a function, called image>, that takes two images and determines 
+;; Design a function, called image>?, that takes two images and determines 
 ;; whether the first is larger than the second.
 ;; For this function we are giving you the htdf tag, signature, template-origin
 ;; and template below.
 ;;
 
-;(@htdf image>) ;UNCOMMENT THIS LINE WHEN YOU START THIS PROBLEM
+;(@htdf image>?) ;UNCOMMENT THIS LINE WHEN YOU START THIS PROBLEM
 (@signature Image Image -> Boolean)
 
 (@template-origin Image)
 
 (@template
- (define (image> i1 i2)
+ (define (image>? i1 i2)
    (... i1 i2)))
 
 

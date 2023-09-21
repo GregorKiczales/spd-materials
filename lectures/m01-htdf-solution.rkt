@@ -36,41 +36,6 @@
 
 (@problem 2)
 ;;
-;; Design a function that consumes the name of something and produces a
-;; "checkbox line" image that allows someone to check off that item.  For 
-;; example (checkbox-line "apples") would produce an image with a small
-;; check box next to the word apples.
-;;
-
-(@htdf checkbox-line)
-(@signature String -> Image)
-;; produce image of box next to text
-(check-expect (checkbox-line "")
-              (beside (square 20 "outline" "black")
-                      (text "" 20 "black")))
-(check-expect (checkbox-line "apples")
-              (beside (square 20 "outline" "black")
-                      (text "apples" 20 "black")))
-(check-expect (checkbox-line "oranges")
-              (beside (square 20 "outline" "black")
-                      (text "oranges" 20 "black")))
-              
-;(define (checkbox-line s) empty-image) ;stub
-
-(@template-origin String)
-
-(@template
- (define (checkbox-line s)
-   (... s)))
- 
-(define (checkbox-line s)
-  (beside (square 20 "outline" "black")
-          (text s 20 "black")))
-
-
-
-(@problem 3)
-;;
 ;; Design a function, that consumes an image and determines whether it is tall.
 ;; 
 (@htdf tall?)
@@ -95,34 +60,34 @@
 
 
 
-(@problem 4)
+(@problem 3)
 ;;
-;; Design a function, called image>, that takes two images and determines 
+;; Design a function, called image>?, that takes two images and determines 
 ;; whether the first is larger than the second.
 ;;
-(@htdf image>)
+(@htdf image>?)
 (@signature Image Image -> Boolean)
 ;; produce true if i1 is larger than i2 (comparing areas with >)
-(check-expect (image> empty-image empty-image) false)
-(check-expect (image> (rectangle 10 21 "outline" "black")
+(check-expect (image>? empty-image empty-image) false)
+(check-expect (image>? (rectangle 10 21 "outline" "black")
                       (rectangle 10 20 "outline" "black"))
               true)
-(check-expect (image> (rectangle 10 20 "outline" "black")
+(check-expect (image>? (rectangle 10 20 "outline" "black")
                       (rectangle 10 20 "outline" "black"))
               false)
-(check-expect (image> (rectangle 10 19 "outline" "black")
+(check-expect (image>? (rectangle 10 19 "outline" "black")
                       (rectangle 10 20 "outline" "black"))
               false)
 
-;(define (image> i1 i2) false)
+;(define (image>? i1 i2) false)
 
 (@template-origin Image)
 
 (@template
- (define (image> i1 i2)
+ (define (image>? i1 i2)
    (... i1 i2)))
 
-(define (image> i1 i2)
+(define (image>? i1 i2)
   (> (* (image-width i1) (image-height i1))
      (* (image-width i2) (image-height i2))))
 
