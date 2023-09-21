@@ -38,19 +38,24 @@ HtDF
   checklist (a reminder of the steps, not an understanding of them)
 
 
-Present
+Present, with questions as we go
   topple
-    recipe page
-    checklist on screen
-    metadata (about the program, checkable, used by industry leaders)
+    setup recipe page (read later)
+    checklist on screen (it's a CHECKLIST)
+    metadata (about the program, checkable, used by top companies)
     post dev markup for review
-
-
-present / fast interactive
-  checkbox-line
-    use checklist
 
 
 class
   tall?
+  yes/no question means produce Boolean
+  produce Boolean means name ends in ?
+  what's the boundary?
+  vary both x and y
+  aha there's an ambiguity - resolve and document and test
+
+
+home
+  image>? (note new name)
+  
 

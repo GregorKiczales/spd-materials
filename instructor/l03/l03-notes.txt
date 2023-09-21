@@ -11,7 +11,7 @@
 	primitives operate on data,
 	we want to design functions that process information
 
-        DD is in starter  [talk through it]
+        DD is in starter [talk through it]  (was not in starter last term)
 
         can-vote? function redesign  [interactive]
 	  - type comment drives check-expects
