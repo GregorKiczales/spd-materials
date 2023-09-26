@@ -17,7 +17,7 @@ Poll questions
 reverse engineer  present
 revise dd         interactive
 
-tock              give 3 tests, then class   (v1 has this)
+tock              give 3 tests, then class does other and fn (8mins tops)   (v1 has this)
 
 
 reverse-spider    load v2 and discuss        (v2 has this)
@@ -185,6 +185,15 @@ leave old @template during work on function
 
 ;(define (reverse-spider s ke) s)
 
+; TEMPLATE IN TWO STEPS
+
+;(@template-origin KeyEvent);using large enumeration rule, treat s as atomic
+;
+;(@template 
+; (define (reverse-spider s ke)
+;  (cond [(key=? ke " ") (... s)]
+;        [else s])))
+
 (@template-origin KeyEvent ;using large enumeration rule
                   Spider)  ;to get Spider selectors in cond answer
 
@@ -192,6 +201,7 @@ leave old @template during work on function
  (define (reverse-spider s ke)
   (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
         [else (... (spider-y s) (spider-dy s))])))
+
 
 (define (reverse-spider s ke)
   (cond [(key=? ke " ") (make-spider (spider-y s) (- (spider-dy s)))]
