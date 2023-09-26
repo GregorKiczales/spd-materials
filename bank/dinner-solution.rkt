@@ -33,7 +33,7 @@
                     atomic-distinct  ;"Chicken"
                     atomic-distinct) ;"Pasta"
 
-#;
+
 (define (fn-for-dinner-order d)
   (cond [(string=? d "No dinner") (...)]
         [(string=? d "Chicken") (...)]
