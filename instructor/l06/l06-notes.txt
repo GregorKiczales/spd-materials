@@ -41,11 +41,18 @@ do midterm clicker
 	 - don't step it in your head!
 
 
-15	 sum	      	    	 class
+10	 sum	      	    	 class
 
-10	 count/product		class
+5        sum			 interactive
 
-5 	 table
+
+5	 count/product
+          just a couple of points build out using the table
+          1 not 0
+	  Natural
+	  1 not first
+
+5 sumarize recipe pointns
 
 
 
@@ -57,14 +64,69 @@ arb number of them...
 info in separate tab, get to (cons " " (cons " " empty)) then jump
 to fully fledged version in starter
 
+show the self-ref, work through a couple of data examples to show
+they match the type comment
+
 delete compound and self-ref parts of template and re-do to explain
 
+say little about NR now
+
+just to function 
+
+
+(@htdf contains-canucks?)
+(@signature ListOfString -> Boolean)   
+;; produce true if los contains "Canucks"
+
+take suggestions for signature, empty test, "simplest non empty test"
+then just do the 2 long tests
+
+
+(check-expect (contains-canucks? empty) false)
+(check-expect (contains-canucks? (cons "Canucks" (cons "Flames" empty))) true)
+(check-expect (contains-canucks? (cons "Flames" (cons "Canucks" empty))) true)
+(check-expect (contains-canucks? (cons "Flames" (cons "Leafs" empty)))   false)
+
+;(define (contains-canucks? los) false)
+
+(@template-origin ListOfString)  
+
+rename the natural recursion, will see why later
+
+(@template
+ (define (contains-canucks? los)
+  (cond [(empty? los) (...)]
+        [else 
+         (... (first los)
+              (contains-canucks? (rest los)))])))
+
+take suggestion for base case result
+then show how the three examples show there are two cases:
+  - "Canucks" is first
+  - maybe it's in rest
+
+(define (contains-canucks? los)
+  (cond [(empty? los) false]
+        [else
+
+Just add if and string=? and true.
+"or produce result of looking in the rest" (declarative statement)
+
+         (if (string=? (first los) "Canucks")
+             true      
+             (contains-canucks? (rest los)))]))
+
+put up 2 slides summarizing how the recipe has changed
+
+talk about how the theory says that if we get base and combination right then RNR will be right and function will be right.
+
+talk about how this declartive understanding is more powerful than stepwise evaluation, and will be essntial for problems later in the term
 
 
 
 ;; poll at about 4
 ;; give them to about 6
-;; then paste in solution
+;; then PASTE IN solution
 ;;
 ;; Design a function that computes the sum of a list of numbers.
 ;; 
@@ -95,7 +157,7 @@ delete compound and self-ref parts of template and re-do to explain
 
 
 (@problem 2)
-;; just discuss note that empty --> 1
+;; just note that empty --> 1
 ;; that's domain knowledge you might not know
 
 
@@ -104,6 +166,4 @@ delete compound and self-ref parts of template and re-do to explain
 
 (@problem 4)
 
-try to have time to do one non-empty ce with elaborated result
-
-then fill in template
+leave this for them
