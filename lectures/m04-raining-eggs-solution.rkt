@@ -70,7 +70,7 @@
                     self-ref)        ;(rest loe) is ListOfEgg
 
 (define (fn-for-loe loe)
-  (cond [(empty? loe)(...)]
+  (cond [(empty? loe) (...)]
         [else
          (... (fn-for-egg (first loe))
               (fn-for-loe (rest loe)))]))
@@ -100,8 +100,8 @@
 (check-expect (next-eggs empty) empty)
 (check-expect (next-eggs (cons (make-egg 10 20 30)
                                (cons (make-egg 11 21 31) empty)))
-              (cons (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED))
-                    (cons (make-egg 11 (+ 21 FALL-SPEED)(+ 31 SPIN-SPEED))
+              (cons (make-egg 10 (+ 20 FALL-SPEED) (+ 30 SPIN-SPEED))
+                    (cons (make-egg 11 (+ 21 FALL-SPEED) (+ 31 SPIN-SPEED))
                     empty)))
 
 ;(define (next-eggs loe) loe) ;stub
@@ -125,7 +125,7 @@
 (@signature Egg -> Egg)
 ;; produce the next egg and increase y by FALL-SPEED, r by SPIN-SPEED
 (check-expect (next-egg (make-egg 10 20 30))
-              (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED)))
+              (make-egg 10 (+ 20 FALL-SPEED) (+ 30 SPIN-SPEED)))
 
 ;(define (next-egg e) e) ;stub
 
