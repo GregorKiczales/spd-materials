@@ -71,10 +71,10 @@
 (@template-origin htdw-main)
 
 (define (main loe)
-  (big-bang loe           ;(listof Egg)
-    (on-tick next-eggs)   ;(listof Egg) -> (listof Egg)
-    (to-draw render-eggs) ;(listof Egg) -> Image
-    (on-mouse lay-egg)))  ;(listof Egg) Integer Integer MouseEvent -> Image
+  (big-bang loe                ;(listof Egg)
+    (on-tick next-eggs)        ;(listof Egg) -> (listof Egg)
+    (to-draw render-eggs)      ;(listof Egg) -> Image
+    (on-mouse handle-mouse)))  ;(listof Egg) Integer Integer MouseEvent -> Image
 
 
 
@@ -179,18 +179,18 @@
 
 
 
-(@htdf lay-egg)
+(@htdf handle-mouse)
 (@signature (listof Egg) Integer Integer MouseEvent -> (listof Egg))
 ;; add and egg at x, y with rotation 0 when the mouse is clicked
-(check-expect (lay-egg empty 10 40 "button-down")
+(check-expect (handle-mouse empty 10 40 "button-down")
               (cons (make-egg 10 40 0) empty))
 
-(check-expect (lay-egg empty 90 100 "drag") empty)
+(check-expect (handle-mouse empty 90 100 "drag") empty)
 
-;(define (lay-egg loe x y me) loe) ;stub
+;(define (handle-mouse loe x y me) loe) ;stub
 
 (@template-origin MouseEvent)
 
-(define (lay-egg loe x y me)
+(define (handle-mouse loe x y me)
   (cond [(mouse=? me "button-down") (cons (make-egg x y 0) loe)]
         [else loe]))

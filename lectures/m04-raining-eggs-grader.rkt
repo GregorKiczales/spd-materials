@@ -25,7 +25,7 @@
                      (egg-y e)
                      img))
       
-      (define (%%lay-egg loe x y me)
+      (define (%%handle-mouse loe x y me)
         (cond [(mouse=? me "button-down") (cons (make-egg x y 0) loe)]
               [else loe]))
       
