@@ -68,7 +68,7 @@
                     self-ref)        ;(rest loe) is ListOfEgg
 
 (define (fn-for-loe loe)
-  (cond [(empty? loe)(...)]
+  (cond [(empty? loe) (...)]
         [else
          (... (fn-for-egg (first loe))
               (fn-for-loe (rest loe)))]))

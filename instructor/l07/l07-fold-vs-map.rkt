@@ -24,8 +24,10 @@
          ;             (egg-x (first loe))
          ;             (egg-y (first loe))
          ;             (render-eggs (rest loe)))
-         ;combination: place-image needs x, y
-         ;contribution: uses r
+         ;combination: place-image needs x, y, rotate needs r
+         ;contribution: <is folded into combination>
          ;---> combination is in helper, also does contribution work
          (place-egg (first loe)
                     (render-eggs (rest loe)))]))
+
+
