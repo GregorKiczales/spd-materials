@@ -91,7 +91,7 @@
     ;(state    true)
     (on-tick  next-eggs)   ;ListOfEgg -> ListOfEgg
     (to-draw  render-eggs) ;ListOfEgg -> Image
-    (on-mouse lay-egg)     ;ListOfEgg Integer Integer MouseEvent -> ListOfEgg
+    (on-mouse handle-mouse);ListOfEgg Integer Integer MouseEvent -> ListOfEgg
     (on-key   handle-key)));ListOfEgg KeyEvent -> ListOfEgg
 
 (@htdf next-eggs)
@@ -126,6 +126,8 @@
 ;; produce the next egg and increase y by FALL-SPEED, r by SPIN-SPEED
 (check-expect (next-egg (make-egg 10 20 30))
               (make-egg 10 (+ 20 FALL-SPEED) (+ 30 SPIN-SPEED)))
+(check-expect (next-egg (make-egg 11 21 31))
+              (make-egg 11 (+ 21 FALL-SPEED) (+ 31 SPIN-SPEED)))
 
 ;(define (next-egg e) e) ;stub
 
@@ -215,25 +217,25 @@
 
 
 
-(@htdf lay-egg)
+(@htdf handle-mouse)
 (@signature ListOfEgg Integer Integer MouseEvent -> ListOfEgg)
 ;; add and egg at x, y with rotation 0 when the mouse is clicked
-(check-expect (lay-egg empty 10 40 "button-down")
+(check-expect (handle-mouse empty 10 40 "button-down")
               (cons (make-egg 10 40 0) empty))
 
-(check-expect (lay-egg empty 90 100 "drag") empty)
+(check-expect (handle-mouse empty 90 100 "drag") empty)
 
-;(define (lay-egg loe x y me) loe) ;stub
+;(define (handle-mouse loe x y me) loe) ;stub
 
 (@template-origin MouseEvent)
 
 (@template
- (define (lay-egg loe x y me)
+ (define (handle-mouse loe x y me)
    (cond [(mouse=? me "button-down") (... loe x y)]
          [else
           (... loe x y)])))
 
-(define (lay-egg loe x y me)
+(define (handle-mouse loe x y me)
   (cond [(mouse=? me "button-down") (cons (make-egg x y 0) loe)]
         [else loe]))
 

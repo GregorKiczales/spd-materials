@@ -80,10 +80,10 @@
 ;; no @template for htdw-main template
 
 (define (main s)
-  (big-bang s                    ; Spider
-    (on-tick   tock)             ; Spider -> Spider
-    (to-draw   render)           ; Spider -> Image
-    (on-key    reverse-spider))) ; Spider KeyEvent -> Spider
+  (big-bang s                ; Spider
+    (on-tick   tock)         ; Spider -> Spider
+    (to-draw   render)       ; Spider -> Image
+    (on-key    handle-key))) ; Spider KeyEvent -> Spider
 
 
 (@htdf tock)
@@ -176,27 +176,27 @@
             "black"))
 
 
-(@htdf reverse-spider)
+(@htdf handle-key)
 (@signature Spider KeyEvent -> Spider)
 ;; change direction of spider on space, unchanged for other keys
-(check-expect (reverse-spider (make-spider 100  2 true) " ")
+(check-expect (handle-key (make-spider 100  2 true) " ")
               (make-spider 100 -2 true))
-(check-expect (reverse-spider (make-spider 200 -3 false) " ")
+(check-expect (handle-key (make-spider 200 -3 false) " ")
               (make-spider 200  3 false))
-(check-expect (reverse-spider (make-spider 100  2 true) "a")
+(check-expect (handle-key (make-spider 100  2 true) "a")
               (make-spider 100  2 true))
 
-;(define (reverse-spider s ke) s)
+;(define (handle-key s ke) s)
 
 (@template-origin KeyEvent ;using large enumeration rule
                   Spider)  ;to get Spider selectors in cond answer
 
 (@template 
- (define (reverse-spider s ke)
+ (define (handle-key s ke)
   (cond [(key=? ke " ") (... (spider-y s) (spider-dy s) (spider-lw? s))]
         [else (... (spider-y s) (spider-dy s))])))
 
-(define (reverse-spider s ke)
+(define (handle-key s ke)
   (cond [(key=? ke " ")
          (make-spider (spider-y s) (- (spider-dy s)) (spider-lw? s))]
         [else s]))
