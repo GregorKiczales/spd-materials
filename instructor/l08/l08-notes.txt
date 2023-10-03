@@ -22,12 +22,19 @@ Complete boxes quickly.
 
 THEY MUST COMPLETE AND SUBMIT FILE BY 10PM
 
+;; arrange-images-starter.rkt (problem statement)
+;; arrange-images-v1.rkt      (includes ListOfImage)
+;; arrange-images-v2.rkt      (+ arrange-images and 2 wish-list entries)
+;; arrange-images-v3.rkt      (+ layout-images, stub for sort-images)
+;; arrange-images-v4.rkt      (+ sort-images and stub for insert)
+;; arrange-images-v5.rkt      (+ insert and stub for larger?)
+;; arrange-images-v6.rkt      (+ larger?)
+
 using example from videos because of midterm
 
 arrange-images
 
 slide, overview
-
 
 
 start w/ v2
@@ -36,7 +43,7 @@ start w/ v2
     fn composition rule
  add origin, template, fn-definition and wish list entries
 
-(@template-origin fn-composition)  
+(@template-origin fn-composition)
 (define (arrange-images loi)
   (layout-images (sort-images loi)))
 
