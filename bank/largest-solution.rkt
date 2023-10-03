@@ -26,7 +26,6 @@
                     compound             ;(cons Number ListOfNumber)
                     self-ref)            ;(rest lon) is ListOfNumber
                     
-#;
 (define (fn-for-lon lon)
   (cond [(empty? lon) (...)]
         [else
@@ -46,9 +45,8 @@
 
 (@htdf largest)
 (@signature ListOfNumber -> Number)
-;; produce the largest number in the given list, or 0 if empty
-;; ASSUMES that every element of lon is > 0
-(check-expect (largest empty) 0)
+;; produce the largest number in the given list, or -inf.0 if empty
+(check-satisfied (equal? (largest empty) -inf.0) identity) ;is result -inf.0 ?
 (check-expect (largest LON2) 60)
 (check-expect (largest (cons 10 (cons 20 (cons 50 empty)))) 50)
 
@@ -64,7 +62,7 @@
                (largest (rest lon)))])))
 
 (define (largest lon)
-  (cond [(empty? lon) 0]
+  (cond [(empty? lon) -inf.0]
         [else
          (if (> (first lon) (largest (rest lon)))
              (first lon)
