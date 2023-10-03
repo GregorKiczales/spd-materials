@@ -5,11 +5,12 @@
 (require 2htdp/image)
 
 (@assignment lectures/m05-arrange-images)
-;; arrange-images-starter.rkt (problem statement)
-;; arrange-images-v1.rkt      (includes ListOfImage)
-;; arrange-images-v2.rkt      (+ arrange-images and 2 wish-list entries)
-;; arrange-images-v3.rkt      (+ layout-images, stub for sort-images)
-;; arrange-images-v4.rkt      (+ sort-images and stub for insert)
+
+;; arrange-images-starter.rkt  (problem statement)
+;; arrange-images-v1.rkt       (includes ListOfImage)
+;; arrange-images-v2.rkt       (+ arrange-images through stub)
+;; arrange-images-v3.rkt       (+ layout-images, stub for sort-images)
+;; arrange-images-v4.rkt       (+ sort-images and stub for insert)
 
 (@cwl ???) ;replace ??? with your cwl
 

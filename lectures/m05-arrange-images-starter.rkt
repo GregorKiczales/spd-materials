@@ -6,11 +6,10 @@
 
 (@assignment lectures/m05-arrange-images)
 
+;; arrange-images-starter.rkt  (problem statement)
+
+
 (@cwl ???) ;replace ??? with your cwl
-
-
-;; arrange-images-starter.rkt (problem statement)
-
 
 (@problem 1)
 #|
