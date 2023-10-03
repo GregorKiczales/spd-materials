@@ -5,8 +5,9 @@
 (require 2htdp/image)
 
 (@assignment lectures/m05-arrange-images)
-;; arrange-images-starter.rkt (problem statement)
-;; arrange-images-v1.rkt      (includes ListOfImage)
+
+;; arrange-images-starter.rkt  (problem statement)
+;; arrange-images-v1.rkt       (includes ListOfImage)
 
 
 (@cwl ???) ;replace ??? with your cwl

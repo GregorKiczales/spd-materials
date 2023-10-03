@@ -22,13 +22,14 @@ Complete boxes quickly.
 
 THEY MUST COMPLETE AND SUBMIT FILE BY 10PM
 
-;; arrange-images-starter.rkt (problem statement)
-;; arrange-images-v1.rkt      (includes ListOfImage)
-;; arrange-images-v2.rkt      (+ arrange-images and 2 wish-list entries)
-;; arrange-images-v3.rkt      (+ layout-images, stub for sort-images)
-;; arrange-images-v4.rkt      (+ sort-images and stub for insert)
-;; arrange-images-v5.rkt      (+ insert and stub for larger?)
-;; arrange-images-v6.rkt      (+ larger?)
+;; arrange-images-starter.rkt  (problem statement)
+;; arrange-images-v1.rkt       (includes ListOfImage)
+;; arrange-images-v2.rkt       (+ arrange-images through stub)
+;; arrange-images-v3.rkt       (+ layout-images, stub for sort-images)
+;; arrange-images-v4.rkt       (+ sort-images and stub for insert)
+;; arrange-images-v5.rkt       (+ insert and stub for larger?)
+;; arrange-images-solution.rkt (+ larger?)
+
 
 using example from videos because of midterm
 
@@ -37,7 +38,8 @@ arrange-images
 slide, overview
 
 
-start w/ v2
+start w/ v2 (+ arrange-images through stub)
+
  must sort entire list before rendering any
  reject listof template
     fn composition rule
@@ -46,6 +48,7 @@ start w/ v2
 (@template-origin fn-composition)
 (define (arrange-images loi)
   (layout-images (sort-images loi)))
+
 
 (@htdf layout-images)
 (@signature ListOfImage -> Image)
@@ -59,11 +62,13 @@ start w/ v2
 ;; !!!
 (define (sort-images loi) loi)
 
+
 go to v3, has layout- done and wish-list for sort
 
 30  sort images use V3   (class up to arb-sized)
     arb-sized data rule
     remember to add CONSTRAINT to wish list entry for insert
+    
 
 (@htdf sort-images)
 (@signature ListOfImage -> ListOfImage)
@@ -96,6 +101,7 @@ go to v3, has layout- done and wish-list for sort
                  (sort-images (rest loi)))])) ;result of NR will be sorted
 
 35  insert use V4  (class, let them diverge on wish for larger)
+
 
 (@htdf insert)
 (@signature Image ListOfImage -> ListOfImage)
