@@ -26,7 +26,7 @@
                     compound             ;(cons Number ListOfNumber)
                     self-ref)            ;(rest lon) is ListOfNumber
                     
-#;
+
 (define (fn-for-lon lon)
   (cond [(empty? lon) (...)]
         [else
