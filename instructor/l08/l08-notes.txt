@@ -1,8 +1,8 @@
 
 
-Take 1 exam question?
-
 Ada Lovelace Day? (October)
+
+exam clicker...
 
 Do 2 or three arrows: fn-for-cat, ListOfCat, Cat
 End up with 2 pairs of colored arrows
@@ -12,7 +12,6 @@ Complete boxes quickly.
  - show examples, recursive structure of examples
  - show template
  - fills in just like recursion on a list
- - MUST COMPLETE THIS STARTER
 
 (define (boxes n)
   (cond [(zero? n) (square 1 "outline" "black")]
@@ -20,7 +19,12 @@ Complete boxes quickly.
          (overlay (square (+ 1 (* n 10)) "outline" "black")
                   (boxes (sub1 n)))]))
 
-THEY MUST COMPLETE AND SUBMIT FILE BY 10PM
+Students MUST COMPLETE THIS STARTER tonight
+
+
+
+slide, overview
+
 
 ;; arrange-images-starter.rkt  (problem statement)
 ;; arrange-images-v1.rkt       (includes ListOfImage)
@@ -28,19 +32,17 @@ THEY MUST COMPLETE AND SUBMIT FILE BY 10PM
 ;; arrange-images-v3.rkt       (+ layout-images, stub for sort-images)
 ;; arrange-images-v4.rkt       (+ sort-images and stub for insert)
 ;; arrange-images-v5.rkt       (+ insert and stub for larger?)
-;; arrange-images-solution.rkt (+ larger?)
 
 
 using example from videos because of midterm
 
 arrange-images
 
-slide, overview
 
 
 start w/ v2 (+ arrange-images through stub)
 
- must sort entire list before rendering any
+ must sort entire list before rendering any [use slide]
  reject listof template
     fn composition rule
  add origin, template, fn-definition and wish list entries
@@ -68,7 +70,7 @@ go to v3, has layout- done and wish-list for sort
 30  sort images use V3   (class up to arb-sized)
     arb-sized data rule
     remember to add CONSTRAINT to wish list entry for insert
-    
+
 
 (@htdf sort-images)
 (@signature ListOfImage -> ListOfImage)
@@ -167,6 +169,6 @@ go to v3, has layout- done and wish-list for sort
    (... img1 img2)))
 
 (define (larger? img1 img2)   
-  (> (* (image-width img1) (image-height img1)) 
+	  (> (* (image-width img1) (image-height img1)) 
      (* (image-width img2) (image-height img2))))
   
