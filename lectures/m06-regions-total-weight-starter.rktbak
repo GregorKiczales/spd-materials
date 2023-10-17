@@ -1,13 +1,16 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-all-labels-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-total-weight-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
-(@assignment lectures/m06-regions-all-labels)
 
-(@problem 1)
+(@assignment lectures/m06-regions-total-weight)
+
+(@cwl ???) ;replace ??? with your cwl
+
 ;;
-;; Region and ListOfRegion data definitions provided.  
-;; 
+;; Region and ListOfRegion data definitions provided. 
+;;
+(@problem 1)
 (@htdd Region ListOfRegion)
 (define-struct leaf (label weight color))
 (define-struct inner (color subs))
@@ -38,7 +41,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -64,36 +67,19 @@
 
 
 
-(@htdd ListOfString)
 
 
-;; Design a function that consumes a region and
-;; produces a list of all the labels in the region.  Be sure to
-;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag.
 
-(@htdf all-labels--region all-labels--lor)
-(@signature Region -> ListOfString)
-(@signature ListOfRegion -> ListOfString)
-;; produce labels of all regions in region (including root)
-(check-expect (all-labels--lor empty) empty)
-(check-expect (all-labels--region L1) (list "one"))
-(check-expect (all-labels--lor LOR123) (list "one" "two" "three"))
-(check-expect (all-labels--region I4)
-              (list "one" "two" "three"
-                    "four" "five" "six"))
+;; Design a function that produces the total weight of a region 
 
-(@template-origin Region)
 
-(define (all-labels--region r)
-  (cond [(leaf? r) (list (leaf-label r))]   
-        [else (all-labels--lor (inner-subs r))]))
+(@htdf total-weight--region total-weight--lor) ;pair of MR functions
+(@signature Region -> Natural)
+(@signature ListOfRegion -> Natural)
+;; produce total weight of region / list of region
 
-(@template-origin ListOfRegion)
+;; ** ADD TESTS **
 
-(define (all-labels--lor lor)   
-  (cond [(empty? lor) empty] 
-        [else                      
-         (append (all-labels--region (first lor))
-                 (all-labels--lor (rest lor)))]))
+(define (total-weight--region r) 0)
+(define (total-weight--lor lor) 0)
+

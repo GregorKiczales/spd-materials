@@ -29,20 +29,20 @@
 ;; interp. a list of regions
 
 ;; All the Ss and Gs are Regions
-(define S1 (make-leaf "one" 20 "red"))
-(define S2 (make-leaf "two" 40 "blue"))
-(define S3 (make-leaf "three" 60 "orange"))
-(define S4 (make-leaf "four" 30 "black"))
-(define S5 (make-leaf "five" 50 "purple"))
-(define S6 (make-leaf "six" 80 "yellow"))
+(define L1 (make-leaf "one" 20 "red"))
+(define L2 (make-leaf "two" 40 "blue"))
+(define L3 (make-leaf "three" 60 "orange"))
+(define L4 (make-leaf "four" 30 "black"))
+(define L5 (make-leaf "five" 50 "purple"))
+(define L6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-inner "red"  (list S1 S2 S3)))
-(define G2 (make-inner "blue" (list G1 S4)))
-(define G3 (make-inner "orange" (list S5 S6)))
-(define G4 (make-inner "black" (list G2 G3)))
+(define I1 (make-inner "red"  (list L1 L2 L3)))
+(define I2 (make-inner "blue" (list I1 L4)))
+(define I3 (make-inner "orange" (list L5 L6)))
+(define I4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
-(define LOR123 (list S1 S2 S3))
+(define LOR123 (list L1 L2 L3))
 
 (@template-origin Region)
 
@@ -80,13 +80,13 @@
 (@signature ListOfRegion -> Image)
 ;; produce simple nested rendering of region
 (check-expect (render--lor empty) empty-image)
-(check-expect (render--region S1) (text "one" 20 "red"))
-(check-expect (render--lor LOR123) (beside (render--region S1)
-                                           (render--region S2)
-                                           (render--region S3))) 
+(check-expect (render--region L1) (text "one" 20 "red"))
+(check-expect (render--lor LOR123) (beside (render--region L1)
+                                           (render--region L2)
+                                           (render--region L3))) 
 
-(check-expect (render--region G1)
-              (border "red" (render--lor (inner-subs G1))))
+(check-expect (render--region I1)
+              (border "red" (render--lor (inner-subs I1))))
 
 
 (@template-origin Region)
