@@ -20,6 +20,7 @@
      find-region (interactive)
       or false (fail)
       try-catch
+        when calling fn that might fail, and want to produce something else if fails
 
 
 
