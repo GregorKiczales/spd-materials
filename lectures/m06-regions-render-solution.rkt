@@ -28,7 +28,7 @@
 ;;  - (cons Region ListOfRegion)
 ;; interp. a list of regions
 
-;; All the Ss and Gs are Regions
+;; All the Ls and Is are Regions
 (define L1 (make-leaf "one" 20 "red"))
 (define L2 (make-leaf "two" 40 "blue"))
 (define L3 (make-leaf "three" 60 "orange"))
