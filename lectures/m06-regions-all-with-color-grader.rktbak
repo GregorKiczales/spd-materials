@@ -122,11 +122,11 @@
                 (grade-submitted-tests 2)
 
                 (grade-additional-tests 1
-                  (check-expect (,$F2 "red" L1) (list L1))
+                  (check-expect (,$F2 "red" L1) (list S1))
                   (check-expect (,$F2 "blue" L1) '())
                   (check-expect
                    (,$F2 "red"
                          (make-inner "blue"
-                                     (list I4
+                                     (list G4
                                            (make-leaf "X" 90 "red"))))
                    (list I1 L1 (make-leaf "X" 90 "red"))))))))))))

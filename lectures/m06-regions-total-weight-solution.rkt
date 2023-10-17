@@ -27,20 +27,20 @@
 ;; interp. a list of regions
 
 ;; All the Ss and Gs are Regions
-(define S1 (make-leaf "one" 20 "red"))
-(define S2 (make-leaf "two" 40 "blue"))
-(define S3 (make-leaf "three" 60 "orange"))
-(define S4 (make-leaf "four" 30 "black"))
-(define S5 (make-leaf "five" 50 "purple"))
-(define S6 (make-leaf "six" 80 "yellow"))
+(define L1 (make-leaf "one" 20 "red"))
+(define L2 (make-leaf "two" 40 "blue"))
+(define L3 (make-leaf "three" 60 "orange"))
+(define L4 (make-leaf "four" 30 "black"))
+(define L5 (make-leaf "five" 50 "purple"))
+(define L6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-inner "red"  (list S1 S2 S3)))
-(define G2 (make-inner "blue" (list G1 S4)))
-(define G3 (make-inner "orange" (list S5 S6)))
-(define G4 (make-inner "black" (list G2 G3)))
+(define I1 (make-inner "red"  (list L1 L2 L3)))
+(define I2 (make-inner "blue" (list I1 L4)))
+(define I3 (make-inner "orange" (list L5 L6)))
+(define I4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
-(define LOR123 (list S1 S2 S3))
+(define LOR123 (list L1 L2 L3))
 
 (@template-origin Region)
 
@@ -69,13 +69,13 @@
 (@signature Region -> Natural)
 (@signature ListOfRegion -> Natural)
 ;; produce total weight of region / list of region
-(check-expect (total-weight--region S1) 20)
-(check-expect (total-weight--region S2) 40)
+(check-expect (total-weight--region L1) 20)
+(check-expect (total-weight--region L2) 40)
 (check-expect (total-weight--lor empty) 0)
-(check-expect (total-weight--lor (list S1 S2 S3)) (+ 20 40 60))             
+(check-expect (total-weight--lor (list L1 L2 L3)) (+ 20 40 60))             
 (check-expect (total-weight--region (make-inner "red" empty)) 0)
-(check-expect (total-weight--region G1) (+ 20 40 60))
-(check-expect (total-weight--region G4) (+ 20 40 60 30 50 80))
+(check-expect (total-weight--region I1) (+ 20 40 60))
+(check-expect (total-weight--region I4) (+ 20 40 60 30 50 80))
 
 (@template-origin Region)
 

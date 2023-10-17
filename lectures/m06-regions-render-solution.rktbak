@@ -1,15 +1,12 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-render-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-render-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 (require 2htdp/image)
 
 (@assignment lectures/m06-regions-render)
-
-(@cwl ???) ;replace ??? with your cwl
-
 ;;
-;; Region and ListOfRegion data definitions provided. 
+;; Region and ListOfRegion data definitions provided.  
 ;;
 (@problem 1)
 (@htdd Region ListOfRegion)
@@ -42,7 +39,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -67,24 +64,17 @@
               (fn-for-lor (rest lor)))]))
 
 
+(@htdd ListOfString)
 
 
-
-;;
 ;; Design a function that renders a region and its subregions as
 ;; nested boxes. The rendering does not have to be pretty, but it must somehow
 ;; reflect the coloring, the labels and the weights.  The border function below
-;; will be helpful to you.
-;;
-;; To save time, the starter has part of the solution done.  You need to
-;; fully understand all the check-expects, and then go on to @template-origin,
-;; @template, and the final function definitions. But be sure you are able to
-;; do the provided steps yourself. You will need to do them on later problems,
-;; and of course problem sets, labs, and exams.  
-;; 
-;; Remember, trust the natural recursionS, and think about contributions and 
-;; combinations.
-;;
+;; may be helpful to you.   Be sure to
+;; follow the structure above, where the @htdf tag names both
+;; functions, the signatures are innered, leaf purpose, tests
+;; are innered, and each function has its own template tag.
+
 (@htdf render--region render--lor)
 (@signature Region -> Image)
 (@signature ListOfRegion -> Image)
@@ -99,20 +89,27 @@
               (border "red" (render--lor (inner-subs I1))))
 
 
+(@template-origin Region)
+
+(define (render--region r)
+  (cond [(leaf? r)
+         (text (leaf-label r)
+               (leaf-weight r)
+               (leaf-color r))]
+        [else  
+         (border (inner-color r)
+                 (render--lor (inner-subs r)))])) 
+
+(@template-origin ListOfRegion)
+
+(define (render--lor lor)
+  (cond [(empty? lor) empty-image]
+        [else            
+         (beside (render--region (first lor))
+                 (render--lor (rest lor)))]))
 
 
-
-
-
-
-
-
-
-
-
-
-
-(define BORDER-THICKNESS 5)
+(define BORDER-THICKNESS 10)
 
 (@htdf border)
 (@signature Color Image -> Image)
@@ -123,7 +120,7 @@
                        (rectangle (+ 50 BORDER-THICKNESS)
                                   (+ 100 BORDER-THICKNESS)
                                   "solid"
-                                  "red")))
+                                  "red")))   
 (check-expect (border "orange" (rectangle 60 70 "solid" "blue"))
               (overlay (rectangle 60 70 "solid" "blue")
                        (rectangle 60 70 "solid" "white")
@@ -136,7 +133,7 @@
   (overlay img
            (rectangle (image-width img)
                       (image-height img)
-                      "solid"
+                      "solid"      
                       "white")
            (rectangle (+ (image-width img) BORDER-THICKNESS)
                       (+ (image-height img) BORDER-THICKNESS)

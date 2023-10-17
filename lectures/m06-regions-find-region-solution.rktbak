@@ -1,14 +1,10 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-find-region-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-find-region-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
-
 (@assignment lectures/m06-regions-find-region)
-
-(@cwl ???) ;replace ??? with your cwl
-
 ;;
-;; Region and ListOfRegion data definitions provided.
+;; Region and ListOfRegion data definitions provided.  
 ;;
 (@problem 1)
 (@htdd Region ListOfRegion)
@@ -41,7 +37,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -63,57 +59,50 @@
   (cond [(empty? lor) (...)]
         [else
          (... (fn-for-region (first lor))
-              (fn-for-lor (rest lor)))]))
+              (fn-for-lor (rest lor)))])) 
 
-
-
-
-
-
-;; Design a function that consumes a string and a region and looks for a region
-;; with the given label.  If there is one the function should produce the first
-;; one it finds.  If there is not one it should signal failure by producing
-;; false.
-;;
-;; To save time the starter includes @htdf, @signature, purpose, stub and
-;; check-expects.  You need to complete the last two check-expects, and then
-;; go on to @template-origin, @template, and the final function definitions.
-;; But be sure you are able to do the provided steps yourself. You will need to
-;; do them on later problems, and of course problem sets, labs, and exams.
-;;
-;; Remember, trust the natural recursionS, and think about contributions and
-;; combinations.
-;;
 
 (@htdf find-region--region find-region--lor)
 (@signature String Region -> Region or false)
 (@signature String ListOfRegion  -> Region or false)
-;; find region w/ given label, or fail
+;; find region w/ given label
 (check-expect (find-region--lor "one" empty) false)
-(check-expect (find-region--region "one" L1) L1)
+(check-expect (find-region--region "one" L1) S1)
 (check-expect (find-region--region "one" L2) false)
 (check-expect (find-region--lor "two" LOR123) L2)
-(check-expect (find-region--region "three" I4) L3)
-
-(define (find-region--region label r) false)
-(define (find-region--lor label lor) false)
-
+(check-expect (find-region--region "three" G4) L3)
 
 (@template-origin Region)
 
-(define (fn-for-region r)
-  (cond [(leaf? r)
-         (... (leaf-label r)
-              (leaf-weight r)
-              (leaf-color r))]
-        [else
-         (... (inner-color r)
-              (fn-for-lor (inner-subs r)))]))
+(@template
+ (define (find-region--region l r)
+   (cond [(leaf? r)
+          (... l
+               (leaf-label r)
+               (leaf-weight r)
+               (leaf-color r))]
+         [else
+          (... l
+               (inner-color r)
+               (find-region--lor l (inner-subs r)))])))
 
-(@template-origin ListOfRegion)
+(define (find-region--region l r)   
+  (cond [(leaf? r) (if (string=? (leaf-label r) l) r false)]
+        [else        (find-region--lor l (inner-subs r))]))
 
-(define (fn-for-lor lor)
-  (cond [(empty? lor) (...)]
-        [else
-         (... (fn-for-region (first lor))
-              (fn-for-lor (rest lor)))]))
+(@template-origin ListOfRegion try-catch)
+
+(@template
+ (define (find-region--lor l lor)
+   (cond [(empty? lor) (... l)]
+         [else
+          (if (not (false? (find-region--region l (first lor))))
+              (find-region--region l (first lor))      
+              (find-region--lor l (rest lor)))])))
+
+(define (find-region--lor l lor)
+  (cond [(empty? lor) false]  
+        [else                         
+         (if (not (false? (find-region--region l (first lor))))
+             (find-region--region l (first lor))
+             (find-region--lor l (rest lor)))]))

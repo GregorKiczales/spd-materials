@@ -105,7 +105,7 @@
 
                 (grade-additional-tests 1
                   (check-expect (,$F2 L1) (list "one"))
-                  (check-expect (,$F2 I4)
+                  (check-expect (,$F2 G4)
                                 (list "one" "two" "three"
                                       "four" "five" "six")))))))))))
                                                     

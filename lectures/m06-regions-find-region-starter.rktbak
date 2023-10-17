@@ -1,14 +1,14 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-all-with-color-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-regions-find-region-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
-(@assignment lectures/m06-regions-all-with-color)
+(@assignment lectures/m06-regions-find-region)
 
 (@cwl ???) ;replace ??? with your cwl
 
 ;;
-;; Region and ListOfRegion data definitions provided.  
+;; Region and ListOfRegion data definitions provided.
 ;;
 (@problem 1)
 (@htdd Region ListOfRegion)
@@ -41,7 +41,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -67,30 +67,37 @@
 
 
 
-;; Design a function that consumes a color and a region
-;; and produces a list of all contained regions with the given color.
-;; Include the root if it has that color.   Be sure to
-;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag.
 
-(@htdf all-with-color--region all-with-color--lor)
-(@signature Color Region -> ListOfRegion)
-(@signature Color ListOfRegion -> ListOfRegion)
-;; produce all regions with given color
-(check-expect (all-with-color--lor "red" empty) empty)
-(check-expect (all-with-color--region "red" L1) (list L1))
-(check-expect (all-with-color--region "blue" L1) empty)
-(check-expect (all-with-color--lor "red" LOR123) (list L1))
-(check-expect
- (all-with-color--region "red"
-                         (make-inner "blue"
-                                     (list I4
-                                           (make-leaf "X" 90 "red"))))
- (list I1 L1 (make-leaf "X" 90 "red")))
 
-;(define (all-with-color--region c r) empty)
-;(define (all-with-color--lor c lor) empty)
+
+;; Design a function that consumes a string and a region and looks for a region
+;; with the given label.  If there is one the function should produce the first
+;; one it finds.  If there is not one it should signal failure by producing
+;; false.
+;;
+;; To save time the starter includes @htdf, @signature, purpose, stub and
+;; check-expects.  You need to complete the last two check-expects, and then
+;; go on to @template-origin, @template, and the final function definitions.
+;; But be sure you are able to do the provided steps yourself. You will need to
+;; do them on later problems, and of course problem sets, labs, and exams.
+;;
+;; Remember, trust the natural recursionS, and think about contributions and
+;; combinations.
+;;
+
+(@htdf find-region--region find-region--lor)
+(@signature String Region -> Region or false)
+(@signature String ListOfRegion  -> Region or false)
+;; find region w/ given label, or fail
+(check-expect (find-region--lor "one" empty) false)
+(check-expect (find-region--region "one" L1) S1)
+(check-expect (find-region--region "one" L2) false)
+(check-expect (find-region--lor "two" LOR123) L2)
+(check-expect (find-region--region "three" G4) L3)
+
+(define (find-region--region label r) false)
+(define (find-region--lor label lor) false)
+
 
 (@template-origin Region)
 

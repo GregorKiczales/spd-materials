@@ -4,9 +4,6 @@
 (require spd/tags)
 
 (@assignment lectures/m06-regions-all-with-color)
-
-(@cwl ???) ;replace ??? with your cwl
-
 ;;
 ;; Region and ListOfRegion data definitions provided.  
 ;;
@@ -41,7 +38,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -67,46 +64,59 @@
 
 
 
+(@htdd ListOfString)
+
+
 ;; Design a function that consumes a color and a region
 ;; and produces a list of all contained regions with the given color.
 ;; Include the root if it has that color.   Be sure to
 ;; follow the structure above, where the @htdf tag names both
 ;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag.
+;; are innered, and each function has its own template tag. 
 
 (@htdf all-with-color--region all-with-color--lor)
 (@signature Color Region -> ListOfRegion)
 (@signature Color ListOfRegion -> ListOfRegion)
 ;; produce all regions with given color
 (check-expect (all-with-color--lor "red" empty) empty)
-(check-expect (all-with-color--region "red" L1) (list L1))
+(check-expect (all-with-color--region "red" L1) (list S1))
 (check-expect (all-with-color--region "blue" L1) empty)
 (check-expect (all-with-color--lor "red" LOR123) (list L1))
-(check-expect
- (all-with-color--region "red"
-                         (make-inner "blue"
-                                     (list I4
-                                           (make-leaf "X" 90 "red"))))
- (list I1 L1 (make-leaf "X" 90 "red")))
-
-;(define (all-with-color--region c r) empty)
-;(define (all-with-color--lor c lor) empty)
+(check-expect (all-with-color--region "red" G4) (list I1 L1))
+(check-expect (all-with-color--region "orange" G4) (list L3 I3))
 
 (@template-origin Region)
 
-(define (fn-for-region r)
-  (cond [(leaf? r)
-         (... (leaf-label r)
-              (leaf-weight r)
-              (leaf-color r))]
-        [else
-         (... (inner-color r)
-              (fn-for-lor (inner-subs r)))]))
+(@template
+ (define (all-with-color--region c r)
+   (cond [(leaf? r)
+          (... c   
+               (leaf-label r)
+               (leaf-weight r)
+               (leaf-color r))]
+         [else     
+          (... c
+               (inner-color r)    
+               (all-with-color--lor c (inner-subs r)))])))
+
+(define (all-with-color--region c r)
+  (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) empty)]
+        [else        (if (string=? (inner-color r) c)       
+                         (cons r (all-with-color--lor c (inner-subs r)))
+                         (all-with-color--lor c (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
 
-(define (fn-for-lor lor)
-  (cond [(empty? lor) (...)]
-        [else
-         (... (fn-for-region (first lor))
-              (fn-for-lor (rest lor)))]))
+(@template
+ (define (all-with-color--lor c lor)
+   (cond [(empty? lor) (... c)]
+         [else      
+          (... c  
+               (all-with-color--region c (first lor))
+               (all-with-color--lor c (rest lor)))])))
+
+(define (all-with-color--lor c lor)
+  (cond [(empty? lor) empty]  
+        [else          
+         (append (all-with-color--region c (first lor))
+                 (all-with-color--lor c (rest lor)))]))

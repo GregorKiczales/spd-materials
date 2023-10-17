@@ -41,7 +41,7 @@
 (define I1 (make-inner "red"  (list L1 L2 L3)))
 (define I2 (make-inner "blue" (list I1 L4)))
 (define I3 (make-inner "orange" (list L5 L6)))
-(define I4 (make-inner "black" (list I2 I3)))
+(define G4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
 (define LOR123 (list L1 L2 L3))
@@ -79,13 +79,13 @@
 (@signature Color ListOfRegion -> ListOfRegion)
 ;; produce all regions with given color
 (check-expect (all-with-color--lor "red" empty) empty)
-(check-expect (all-with-color--region "red" L1) (list L1))
+(check-expect (all-with-color--region "red" L1) (list S1))
 (check-expect (all-with-color--region "blue" L1) empty)
 (check-expect (all-with-color--lor "red" LOR123) (list L1))
 (check-expect
  (all-with-color--region "red"
                          (make-inner "blue"
-                                     (list I4
+                                     (list G4
                                            (make-leaf "X" 90 "red"))))
  (list I1 L1 (make-leaf "X" 90 "red")))
 

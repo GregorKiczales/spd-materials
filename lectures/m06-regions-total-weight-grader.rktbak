@@ -99,4 +99,4 @@
                   (check-expect (,$F2 L2) 40)
                   (check-expect (total-weight--region (make-inner "red" empty)) 0)
                   (check-expect (,$F2 I1) (+ 20 40 60))
-                  (check-expect (,$F2 I4) (+ 20 40 60 30 50 80)))))))))))
+                  (check-expect (,$F2 G4) (+ 20 40 60 30 50 80)))))))))))

@@ -124,6 +124,6 @@
                 (grade-submitted-tests 2)
                 
                 (grade-additional-tests 1
-                  (check-expect (,$F2 "one" L1) L1)
+                  (check-expect (,$F2 "one" L1) S1)
                   (check-expect (,$F2 "one" L2) false)
-                  (check-expect (,$F2 "three" I4) L3))))))))))
+                  (check-expect (,$F2 "three" G4) L3))))))))))
