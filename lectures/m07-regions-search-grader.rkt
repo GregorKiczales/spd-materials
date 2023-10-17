@@ -56,13 +56,13 @@
 
     (define (fn-for-region r)
       (local [(define (fn-for-region r)
-                (cond [(single? r)
-                       (... (single-label r)
-                            (single-weight r)
-                            (single-color r))]
+                (cond [(leaf? r)
+                       (... (leaf-label r)
+                            (leaf-weight r)
+                            (leaf-color r))]
                       [else
-                       (... (group-color r)
-                            (fn-for-lor (group-subs r)))]))
+                       (... (inner-color r)
+                            (fn-for-lor (inner-subs r)))]))
               
               (define (fn-for-lor lor)
                 (cond [(empty? lor) (...)]

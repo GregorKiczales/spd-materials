@@ -10,18 +10,18 @@
 ;; Region and ListOfRegion data definitions provided.  
 ;;
 (@htdd Region ListOfRegion)
-(define-struct single (label weight color))
-(define-struct group (color subs))
+(define-struct leaf (label weight color))
+(define-struct inner (color subs))
 ;; Region is one of:
-;;  - (make-single String Natural Color)
-;;  - (make-group Color ListOfRegion)
+;;  - (make-leaf String Natural Color)
+;;  - (make-inner Color ListOfRegion)
 ;; interp.
 ;;  an arbitrary-arity tree of regions
-;;  single regions have label, weight and color
-;;  groups have a color and a list of sub-regions
+;;  leaf regions have label, weight and color
+;;  inners have a color and a list of sub-regions
 ;;
 ;;  weight is a unitless number indicating how much weight
-;;  the given single region contributes to whole tree
+;;  the given leaf region contributes to whole tree
 
 ;; ListOfRegion is one of:
 ;;  - empty
@@ -29,17 +29,17 @@
 ;; interp. a list of regions
 
 ;; All the Ss and Gs are Regions
-(define S1 (make-single "one" 20 "red"))
-(define S2 (make-single "two" 40 "blue"))
-(define S3 (make-single "three" 60 "orange"))
-(define S4 (make-single "four" 30 "black"))
-(define S5 (make-single "five" 50 "purple"))
-(define S6 (make-single "six" 80 "yellow"))
+(define S1 (make-leaf "one" 20 "red"))
+(define S2 (make-leaf "two" 40 "blue"))
+(define S3 (make-leaf "three" 60 "orange"))
+(define S4 (make-leaf "four" 30 "black"))
+(define S5 (make-leaf "five" 50 "purple"))
+(define S6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-group "red"  (list S1 S2 S3)))
-(define G2 (make-group "blue" (list G1 S4)))
-(define G3 (make-group "orange" (list S5 S6)))
-(define G4 (make-group "black" (list G2 G3)))
+(define G1 (make-inner "red"  (list S1 S2 S3)))
+(define G2 (make-inner "blue" (list G1 S4)))
+(define G3 (make-inner "orange" (list S5 S6)))
+(define G4 (make-inner "black" (list G2 G3)))
 
 (define LORE empty)
 (define LOR123 (list S1 S2 S3))
@@ -50,13 +50,13 @@
 (@template-origin Region)
 
 (define (fn-for-region r)
-  (cond [(single? r)
-         (... (single-label r)
-              (single-weight r)
-              (single-color r))]
+  (cond [(leaf? r)
+         (... (leaf-label r)
+              (leaf-weight r)
+              (leaf-color r))]
         [else
-         (... (group-color r)
-              (fn-for-lor (group-subs r)))]))
+         (... (inner-color r)
+              (fn-for-lor (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
 
@@ -87,9 +87,9 @@
 (@template-origin Region)
 
 (define (all-labels--region r)
-  (cond [(single? r) (list (single-label r))]
+  (cond [(leaf? r) (list (single-label r))]
         [else
-         (all-labels--lor (group-subs r))]))
+         (all-labels--lor (inner-subs r))]))
 
 (@template-origin ListOfRegion)
 
@@ -113,19 +113,19 @@
 (check-expect (all-with-color--lor "red" LOR123) (list S1))
 (check-expect
  (all-with-color--region "red"
-                         (make-group "blue"
+                         (make-inner "blue"
                                      (list G4
-                                           (make-single "X" 90 "red"))))
- (list G1 S1 (make-single "X" 90 "red")))
+                                           (make-leaf "X" 90 "red"))))
+ (list G1 S1 (make-leaf "X" 90 "red")))
 
 (@template-origin Region)
 
 (define (all-with-color--region c r)
-  (cond [(single? r) (if (string=? (single-color r) c) (list r) empty)]
+  (cond [(leaf? r) (if (string=? (single-color r) c) (list r) empty)]
         [else
-         (if (string=? (group-color r) c)
-             (cons r (all-with-color--lor c (group-subs r)))
-             (all-with-color--lor c (group-subs r)))]))
+         (if (string=? (inner-color r) c)
+             (cons r (all-with-color--lor c (inner-subs r)))
+             (all-with-color--lor c (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
 

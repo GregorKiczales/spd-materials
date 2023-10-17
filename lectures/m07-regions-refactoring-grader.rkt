@@ -50,10 +50,10 @@
                   (check-expect (all-with-color "red" S1) (list S1))
                   (check-expect (all-with-color "blue" S1) '())
                   (check-expect (all-with-color "red"
-                                                (make-group "blue"
+                                                (make-inner "blue"
                                                             (list G4
-                                                                  (make-single "X" 90 "red"))))
-                                (list G1 S1 (make-single "X" 90 "red"))))))))))))
+                                                                  (make-leaf "X" 90 "red"))))
+                                (list G1 S1 (make-leaf "X" 90 "red"))))))))))))
 
             
 
