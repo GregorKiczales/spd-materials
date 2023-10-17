@@ -21,7 +21,7 @@
       <a href="lecture-09.html">L09</a>
       <a href="lecture-10.html">L10</a>
       <a href="lecture-11.html">L11</a>
-      <a href="lecture-12.html">L12</a>
+      L12
       <a href="lecture-13.html">L13</a>
       <a href="lecture-14.html">L14</a>
       <a href="lecture-15.html">L15</a>
@@ -35,59 +35,100 @@
       ]
     </p>
     
-    <h2>Lecture 01</h2>
+    <h2>Lecture 12</h2>
     
     <h3>Before Lecture</h3>
-    
-    <p>If possible, before lecture 1, please go to the Setup page, which you can access from <a href="https://cs110.students.cs.ubc.ca/admin/links.html">https://cs110.students.cs.ubc.ca/admin/links.html</a> and follow the directions for setting up DrRacket.</p>
-    
-    <h3>During Lecture</h3>
-    
-    <a>This lecture has 3 parts:</a>
-    
-    <ul>
-      <li>An overview of the course content, organization, how you will learn, policies, and how to do well.</li>
-      <li>Primitive data and operations in the Beginning Student Language. Evaluation rules.</li>
-      <li>Function definition and evaluation.</li>
-    </ul>
-      
-    <p>By the end of the lecture&ndash;including the post-lecture work&ndash;you should be able to:</p>
+
+    <p>In this lecture you will learn how to use the local expression
+    construct available in the Intermediate Student Language. How
+    local expressions are formed and evaluated is covered in the
+    following edX videos. It is critical you understand this before
+    coming to lecture, because the lecture itself will be focused on
+    how to use local expressions. </p>
 
     <ul>
-      <li>Write expressions using primitive functions and data.</li>
-      <li>Write a simple function definition.</li>
-      <li>Write out the step-by-step evaluation of expressions and simple functions.</li>
+      <li>Local - Introduction</li>
+      <li>Local - Forming and Intuition</li>
+      <li>Local - Lexical Scoping</li>
+      <li>Local - Evaluation Rules</li>
     </ul>
     
+    <h3>During Lecture</h3>
+
+    <p>There are three principle ways we use local expressions:
+      avoiding recursive calls with identical arguments, encapsulating
+      2 or more functions, and giving names to intermediate values. We
+      will cover the first two in lecture and you will work through
+      the third after lecture.</p>
+
     <p>The starters for this lecture are:</p>
 
     <ul>
-      <li><a href="110-intro.pdf">110-intro.pdf</a></li>
-      <li><a href="m01-primitives-starter.rkt">m01-primitives-starter.rkt</a></li>
-      <li><a href="m01-functions-starter.rkt">m01-functions-starter.rkt</a></li>
+      <li><a href="m07-avoid-recomputation-starter.rkt">m07-avoid-recomputation-starter.rkt</a></li>
+      <li><a href="m07-regions-refactoring-starter.rkt">m07-regions-refactoring-starter.rkt</a></li>
+      <li><a href="m07-regions-search-starter.rkt">m07-regions-search-starter.rkt</a></li>
     </ul>
 	
     
     <h3>After Lecture</h3>
 
-    <p>Congratulations on finishing lecture 1!  Remember to ask questions anytime something isn't clear in lecture. Forming questions is a key part of learning, so forming and asking questions in lecture is learning!</p>
+    <p>Today we went through the Local module. You learned before class what local means and how it is evaluated. In class we saw three important ways to use it. For all three of those we saw a refactoring that allows you to take a working program and revise it, in a few simple steps, to be an improved program using local. They were:</p>
 
-    <p>To complete the lecture first review primitives-starter (the solution is below).</p>
+    <ul>
+      <li>to avoid [repeated identical recursive calls (these cause exponential performance problems)</li>
+      <li>for encapsulation</li>
+      <li>to give meaningful names to intermediate values</li>
+    </ul>
+      
+    <p>We saw that for templates involving natural mutual recursions
+    you can pre-encapsulate the templates, rather than waiting until
+    the functions are designed and then encapsulating them.</p>
 
-    <p>Then work through all the sections of Module 1A: BSL.  Once you are done you can complete the functions-starter file and work through it. Remember that reading the solution file before working hard to solve it yourself is the worst way to try and learning this material - you have to struggle through it some yourself before looking at the solution or else you spoil the learning opportunity the problem gives you.</p>
+    <p>We also saw that when we do encapsulate a set of functions, we
+      are not able to test the inner functions. BUT, we can still
+      write commented out examples to help us understand how to
+      combine those results though! We can write notes beside the
+      expressions in our body to help us reason about what it would
+      resolve to including the type and what we expected the result to
+      be). Such nodes are in the solution posted for you use. You can
+      also put @signature and @template-origin tags right in the local
+      expression. The edX videos go through a full HtDF process for
+      these inner functions directly - this is not necessary but again
+      it can be VERY helpful!<p>
+
+      <p>At the very end we saw that sometimes we use local for two
+      different purposes in the same function -- encapsulation and
+      avoiding redundant calls to a recursive function.</p>
+
+      <p>There's a third way to use local, which is to give meaningful
+      names to intermediate values.  Used properly this can make an
+      otherwise complex function easier to understand.  You should
+      carefully compare the intermediate and final versions of the
+      lines function in the solution file.</p>
+
+    <p>In summary there is a language construct called local, that has
+      well defined evaluation rules; there are also three classic ways
+      of using local. When you decide to use local, you should have a
+      clear sense of what you are using the local to accomplish.</p>
+
+    <p>To review today's material re-do the examples from class and
+      complete all the starter files. For more practice, look in the
+      problem bank for more problems. Local L1 has a video that goes
+      along with it if you need more help. The other problems are good
+      practice as well.</p>
 
     <p>The solutions for this lecture are:</p>
 
     <ul>
-      <li><a href="m01-primitives-solution.rkt">m01-primitives-solution.rkt</a></li>
-      <li><a href="m01-functions-solution.rkt">m01-functions-solution.rkt</a></li>
+      <li><a href="m07-avoid-recomputation-solution.rkt">m07-avoid-recomputation-solution.rkt</a></li>
+      <li><a href="m07-regions-refactoring-solution.rkt">m07-regions-refactoring-solution.rkt</a></li>
+      <li><a href="m07-regions-search-solution.rkt">m07-regions-search-solution.rkt</a></li>
     </ul>
-    
-    <p>BEFORE the next lecture be sure to go to it and do the pre-work it asks for.</p>
 
-    <p>Again, welcome to 110.  If you work hard and stay caught up we believe you will enjoy discovering programming and a knowing a systemtic approach to solving difficult design problems.</p>
-    
-    <p>Be sure to complete the before lecture section of <a href="lecture-02.html">Lecture 3</a> before that lecture.</p>
+
+    <p>Be sure to complete the before lecture section
+    of <a href="lecture-13.html">Lecture 13</a> before that
+    lecture.</p>
 
   </body>
 </html>

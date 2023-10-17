@@ -8,31 +8,31 @@
 
       (define (%%region? x)
         (local [(define (fn-for-region r)
-                  (cond [(single? r)
-                         (and (string? (single-label r))
-                              (and (integer? (single-weight r)) (>= (single-weight r) 0))
-                              (string? (single-color r)))]
+                  (cond [(leaf? r)
+                         (and (string? (leaf-label r))
+                              (and (integer? (leaf-weight r)) (>= (leaf-weight r) 0))
+                              (string? (leaf-color r)))]
                         [else
-                         (and (string? (group-color r))
-                              (fn-for-lor (group-subs r)))]))
+                         (and (string? (inner-color r))
+                              (fn-for-lor (inner-subs r)))]))
 
                 (define (fn-for-lor lor)
                   (cond [(empty? lor) true]
                         [else
                          (and (fn-for-region (first lor))
                               (fn-for-lor (rest lor)))]))]
-          (and (or (single? x) (group? x))
+          (and (or (leaf? x) (inner? x))
                (fn-for-region x))))
 
       (define (%%render r)
         (local [(define (fn-for--region r)
-                  (cond [(single? r)
-                         (text (single-label r)
-                               (single-weight r)
-                               (single-color r))]
+                  (cond [(leaf? r)
+                         (text (leaf-label r)
+                               (leaf-weight r)
+                               (leaf-color r))]
                         [else 
-                         (border (group-color r)
-                                 (fn-for--lor (group-subs r)))]))
+                         (border (inner-color r)
+                                 (fn-for--lor (inner-subs r)))]))
                 (define (fn-for--lor lor)
                   (cond [(empty? lor) empty-image]
                         [else
@@ -54,18 +54,18 @@
                   (equal? r (%%render reg)))
 
                 (grade-tests-argument-thoroughness (reg)
-                  (single? reg)
-                  (and (group? reg) (not (empty? (group-subs reg)))))
+                  (leaf? reg)
+                  (and (inner? reg) (not (empty? (inner-subs reg)))))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (,$F2 r)
                     (local [(define (render--region r)
-                              (cond [(single? r)
-                                     (text (single-label r)
-                                           (single-weight r)
-                                           (single-color r))]
+                              (cond [(leaf? r)
+                                     (text (leaf-label r)
+                                           (leaf-weight r)
+                                           (leaf-color r))]
                                     [else
-                                     (border (group-color r)
+                                     (border (inner-color r)
                                              empty-image)]))
                             (define (render--lor lor)
                               (cond [(empty? lor) empty-image]
@@ -75,26 +75,26 @@
                       (render--region r)))
                   (define (,$F2 r)
                     (local [(define (render--region r)
-                              (cond [(single? r)
-                                     (text (single-label r)
-                                           (single-weight r)
-                                           (single-color r))]
+                              (cond [(leaf? r)
+                                     (text (leaf-label r)
+                                           (leaf-weight r)
+                                           (leaf-color r))]
                                     [else
-                                     (border (group-color r)
-                                             (render--lor (group-subs r)))]))
+                                     (border (inner-color r)
+                                             (render--lor (inner-subs r)))]))
                             (define (render--lor lor)
                               (cond [(empty? lor) empty-image]
                                     [else (render--region (first lor))]))]
                       (render--region r)))
                   (define (,$F2 r)
                     (local [(define (render--region r)
-                              (cond [(single? r)
-                                     (text (single-label r)
-                                           (single-weight r)
-                                           (single-color r))]
+                              (cond [(leaf? r)
+                                     (text (leaf-label r)
+                                           (leaf-weight r)
+                                           (leaf-color r))]
                                     [else
-                                     (border (group-color r)
-                                             (render--lor (group-subs r)))]))
+                                     (border (inner-color r)
+                                             (render--lor (inner-subs r)))]))
                             (define (render--lor lor)
                               (cond [(empty? lor) empty-image]
                                     [else (render--lor (rest lor))]))]
@@ -110,13 +110,13 @@
                   (check-expect (,$F2 S1) (text "one" 20 "red"))
                   (check-expect (,$F2 G1)
                                 (local [(define (render--region r)
-                                          (cond [(single? r)
-                                                 (text (single-label r)
-                                                       (single-weight r)
-                                                       (single-color r))]
+                                          (cond [(leaf? r)
+                                                 (text (leaf-label r)
+                                                       (leaf-weight r)
+                                                       (leaf-color r))]
                                                 [else
-                                                 (border (group-color r)
-                                                         (render--lor (group-subs r)))]))
+                                                 (border (inner-color r)
+                                                         (render--lor (inner-subs r)))]))
                                         (define (render--lor lor)
                                           (cond [(empty? lor) empty-image]
                                                 [else
