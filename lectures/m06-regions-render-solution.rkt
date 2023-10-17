@@ -10,18 +10,18 @@
 ;;
 (@problem 1)
 (@htdd Region ListOfRegion)
-(define-struct single (label weight color))
-(define-struct group (color subs))
+(define-struct leaf (label weight color))
+(define-struct inner (color subs))
 ;; Region is one of:
-;;  - (make-single String Natural Color)
-;;  - (make-group Color ListOfRegion)
+;;  - (make-leaf String Natural Color)
+;;  - (make-inner Color ListOfRegion)
 ;; interp.
 ;;  an arbitrary-arity tree of regions
-;;  single regions have label, weight and color
-;;  groups have a color and a list of sub-regions
+;;  leaf regions have label, weight and color
+;;  inners have a color and a list of sub-regions
 ;;
 ;;  weight is a unitless number indicating how much weight
-;;  the given single region contributes to whole tree
+;;  the given leaf region contributes to whole tree
 
 ;; ListOfRegion is one of:
 ;;  - empty
@@ -29,17 +29,17 @@
 ;; interp. a list of regions
 
 ;; All the Ss and Gs are Regions
-(define S1 (make-single "one" 20 "red"))
-(define S2 (make-single "two" 40 "blue"))
-(define S3 (make-single "three" 60 "orange"))
-(define S4 (make-single "four" 30 "black"))
-(define S5 (make-single "five" 50 "purple"))
-(define S6 (make-single "six" 80 "yellow"))
+(define S1 (make-leaf "one" 20 "red"))
+(define S2 (make-leaf "two" 40 "blue"))
+(define S3 (make-leaf "three" 60 "orange"))
+(define S4 (make-leaf "four" 30 "black"))
+(define S5 (make-leaf "five" 50 "purple"))
+(define S6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-group "red"  (list S1 S2 S3)))
-(define G2 (make-group "blue" (list G1 S4)))
-(define G3 (make-group "orange" (list S5 S6)))
-(define G4 (make-group "black" (list G2 G3)))
+(define G1 (make-inner "red"  (list S1 S2 S3)))
+(define G2 (make-inner "blue" (list G1 S4)))
+(define G3 (make-inner "orange" (list S5 S6)))
+(define G4 (make-inner "black" (list G2 G3)))
 
 (define LORE empty)
 (define LOR123 (list S1 S2 S3))
@@ -47,13 +47,13 @@
 (@template-origin Region)
 
 (define (fn-for-region r)
-  (cond [(single? r)
-         (... (single-label r)
-              (single-weight r)
-              (single-color r))]
+  (cond [(leaf? r)
+         (... (leaf-label r)
+              (leaf-weight r)
+              (leaf-color r))]
         [else
-         (... (group-color r)
-              (fn-for-lor (group-subs r)))]))
+         (... (inner-color r)
+              (fn-for-lor (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
 
@@ -72,8 +72,8 @@
 ;; reflect the coloring, the labels and the weights.  The border function below
 ;; may be helpful to you.   Be sure to
 ;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are grouped, single purpose, tests
-;; are grouped, and each function has its own template tag.
+;; functions, the signatures are innered, leaf purpose, tests
+;; are innered, and each function has its own template tag.
 
 (@htdf render--region render--lor)
 (@signature Region -> Image)
@@ -86,19 +86,19 @@
                                            (render--region S3))) 
 
 (check-expect (render--region G1)
-              (border "red" (render--lor (group-subs G1))))
+              (border "red" (render--lor (inner-subs G1))))
 
 
 (@template-origin Region)
 
 (define (render--region r)
-  (cond [(single? r)
-         (text (single-label r)
-               (single-weight r)
-               (single-color r))]
+  (cond [(leaf? r)
+         (text (leaf-label r)
+               (leaf-weight r)
+               (leaf-color r))]
         [else  
-         (border (group-color r)
-                 (render--lor (group-subs r)))])) 
+         (border (inner-color r)
+                 (render--lor (inner-subs r)))])) 
 
 (@template-origin ListOfRegion)
 

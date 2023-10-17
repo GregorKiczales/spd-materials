@@ -10,32 +10,32 @@
 
       (define (%%region? x)
         (local [(define (fn-for-region r)
-                  (cond [(single? r)
-                         (and (string? (single-label r))
-                              (and (integer? (single-weight r)) (>= (single-weight r) 0))
-                              (string? (single-color r)))]
+                  (cond [(leaf? r)
+                         (and (string? (leaf-label r))
+                              (and (integer? (leaf-weight r)) (>= (leaf-weight r) 0))
+                              (string? (leaf-color r)))]
                         [else
-                         (and (string? (group-color r))
-                              (fn-for-lor (group-subs r)))]))
+                         (and (string? (inner-color r))
+                              (fn-for-lor (inner-subs r)))]))
 
                 (define (fn-for-lor lor)
                   (cond [(empty? lor) true]
                         [else
                          (and (fn-for-region (first lor))
                               (fn-for-lor (rest lor)))]))]
-          (and (or (single? x) (group? x))
+          (and (or (leaf? x) (inner? x))
                (fn-for-region x))))
 
       (define (%%all-with-color c r)
         (local [(define (fn-for--region r)
-                  (cond [(single? r)
-                         (if (string=? (single-color r) c)
+                  (cond [(leaf? r)
+                         (if (string=? (leaf-color r) c)
                              (list r)
                              empty)]
                         [else
-                         (if (string=? (group-color r) c)
-                             (cons r (fn-for--lor (group-subs r)))
-                             (fn-for--lor (group-subs r)))]))
+                         (if (string=? (inner-color r) c)
+                             (cons r (fn-for--lor (inner-subs r)))
+                             (fn-for--lor (inner-subs r)))]))
 
                 (define (fn-for--lor lor)
                   (cond [(empty? lor) empty]
@@ -59,19 +59,19 @@
                   (equal? r (%%all-with-color c reg)))
 
                 (grade-tests-argument-thoroughness (c reg)
-                  (single? reg)
-                  (and (group? reg)
-                       (not (empty? (group-subs reg)))
+                  (leaf? reg)
+                  (and (inner? reg)
+                       (not (empty? (inner-subs reg)))
                        (not (empty? (all-with-color--region c reg)))))
                 
                 (grade-thoroughness-by-faulty-functions 1
 
                   (define (,$F2 c reg)
                     (local [(define (all-with-color--region r)
-                              (cond [(single? r) (list r)]
-                                    [(group?  r) (if (string=? (group-color r) c)
-                                                     (cons r (all-with-color--lor (group-subs r)))
-                                                     (all-with-color--lor (group-subs r)))]))
+                              (cond [(leaf? r) (list r)]
+                                    [(inner?  r) (if (string=? (inner-color r) c)
+                                                     (cons r (all-with-color--lor (inner-subs r)))
+                                                     (all-with-color--lor (inner-subs r)))]))
                             (define (all-with-color--lor lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -81,8 +81,8 @@
 
                   (define (,$F2 c reg)
                     (local [(define (all-with-color--region r)
-                              (cond [(single? r) (if (string=? (single-color r) c) (list r) '())]
-                                    [(group?  r) (cons r (all-with-color--lor (group-subs r)))]))
+                              (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) '())]
+                                    [(inner?  r) (cons r (all-with-color--lor (inner-subs r)))]))
                             (define (all-with-color--lor lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -92,8 +92,8 @@
 
                   (define (,$F2 c reg)
                     (local [(define (all-with-color--region r)
-                              (cond [(single? r) (if (string=? (single-color r) c) (list r) '())]
-                                    [(group?  r) (all-with-color--lor (group-subs r))]))
+                              (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) '())]
+                                    [(inner?  r) (all-with-color--lor (inner-subs r))]))
                             (define (all-with-color--lor lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -103,10 +103,10 @@
 
                   (define (,$F2 c reg)
                     (local [(define (all-with-color--region r)
-                              (cond [(single? r) (if (string=? (single-color r) c) (list r) '())]
-                                    [(group?  r) (if (string=? (group-color r) c)
-                                                     (cons r (all-with-color--lor (group-subs r)))
-                                                     (all-with-color--lor (group-subs r)))]))
+                              (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) '())]
+                                    [(inner?  r) (if (string=? (inner-color r) c)
+                                                     (cons r (all-with-color--lor (inner-subs r)))
+                                                     (all-with-color--lor (inner-subs r)))]))
                             (define (all-with-color--lor lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -126,7 +126,7 @@
                   (check-expect (,$F2 "blue" S1) '())
                   (check-expect
                    (,$F2 "red"
-                         (make-group "blue"
+                         (make-inner "blue"
                                      (list G4
-                                           (make-single "X" 90 "red"))))
-                   (list G1 S1 (make-single "X" 90 "red"))))))))))))
+                                           (make-leaf "X" 90 "red"))))
+                   (list G1 S1 (make-leaf "X" 90 "red"))))))))))))

@@ -1,24 +1,29 @@
 
-1  quick intro
+ 2  quick intro
 
-   arb-arity tree, quick analysis
-   walk through DD
+ 3   arb-arity tree, quick analysis
 
-   poll questions for SR, then 2xMR
-   be sure to say can be more than 2!
+ 5   poll questions for SR and 2xMR (vary order across sections)
+     be sure to say can be more than 2!
 
-   establish the named constants
+ 3   establish the named constants
 
-   templates have SR & MR - locked together
+ 5   templates have SR & MR - locked together
 
-   total-weight
+15   total-weight (interactive)
+      paired design elements
+      combination and composition
+
+10   all-with-color (class)
+      starter has everything but tests results and template filling
+
+     find-region (interactive)
+      or false (fail)
+      try-catch
 
 
 
 
-
-
-fn naming convention        present
 @htdf, then sigs, then one  present
 then all tests - base first - or close to base  interactive
 
@@ -29,11 +34,15 @@ complete the function definition ON THE PAD
 what will the result of this S/MR call be???
 
 
+
+FUNCTION NAMING CONVENTION, COMBINED @HTDF
 (@htdf total-weight--region total-weight--lor)
+PAIRED SIGNATURES
 (@signature Region -> Natural)
 (@signature ListOfRegion -> Natural)
 ;; produce total weight of region / list of region
 
+STARTER HAS ABOVE, IS MISSING TESTS
 ** 2 wide  2 deep
 
 (check-expect (total-weight--region S1) 20)
@@ -48,17 +57,7 @@ what will the result of this S/MR call be???
 
 (@template-origin Region)
 
-;; don't keep, fill in on the pad
-(define (total-weight--region r)
-  (cond [(single? r)
-         (... (single-label r)
-              (single-weight r)
-              (single-color r))]
-        [else
-         (... (group-color r)
-              (total-weight--lor (group-subs r)))]))
-
-** use crossing out and filling in on the pad
+USE CROSSING OUT AND FILLING IN ON THE PAD
 
 (define (total-weight--region r)
   (cond [(single? r) (single-weight r)]
@@ -66,19 +65,14 @@ what will the result of this S/MR call be???
 
 (@template-origin ListOfRegion)
 
-;; don't keep, fill in on the pad
-(define (total-weight--lor lor)
-  (cond [(empty? lor) (...)]
-        [else
-         (... (total-weight--region (first lor))
-              (total-weight--lor (rest lor)))]))
+
+USE CROSSING OUT AND FILLING IN ON THE PAD
 
 (define (total-weight--lor lor)
   (cond [(empty? lor) 0]
         [else
          (+ (total-weight--region (first lor))
             (total-weight--lor (rest lor)))]))
-
 
 
 start w/ v2 starter

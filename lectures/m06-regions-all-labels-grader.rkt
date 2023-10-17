@@ -9,27 +9,27 @@
 
       (define (%%region? x)
         (local [(define (fn-for-region r)
-                  (cond [(single? r)
-                         (and (string? (single-label r))
-                              (and (integer? (single-weight r)) (>= (single-weight r) 0))
-                              (string? (single-color r)))]
+                  (cond [(leaf? r)
+                         (and (string? (leaf-label r))
+                              (and (integer? (leaf-weight r)) (>= (leaf-weight r) 0))
+                              (string? (leaf-color r)))]
                         [else
-                         (and (string? (group-color r))
-                              (fn-for-lor (group-subs r)))]))
+                         (and (string? (inner-color r))
+                              (fn-for-lor (inner-subs r)))]))
 
                 (define (fn-for-lor lor)
                   (cond [(empty? lor) true]
                         [else
                          (and (fn-for-region (first lor))
                               (fn-for-lor (rest lor)))]))]
-          (and (or (single? x) (group? x))
+          (and (or (leaf? x) (inner? x))
                (fn-for-region x))))
 
       (define (%%all-labels r)
         (local [(define (fn-for--region r)
-                  (cond [(single? r) (list (single-label r))]
+                  (cond [(leaf? r) (list (leaf-label r))]
                         [else
-                         (fn-for--lor (group-subs r))]))
+                         (fn-for--lor (inner-subs r))]))
 
                 (define (fn-for--lor lor)
                   (cond [(empty? lor) empty]
@@ -52,15 +52,15 @@
                   (equal? r (%%all-labels reg)))
 
                 (grade-tests-argument-thoroughness (reg)
-                  (single? reg)
-                  (and (group? reg) (not (empty? (group-subs reg)))))
+                  (leaf? reg)
+                  (and (inner? reg) (not (empty? (inner-subs reg)))))
 
                 (grade-thoroughness-by-faulty-functions 1
 
                   (define (,$F2 r)
                     (local [(define (all-labels--region-c r)
-                              (cond [(single? r) (list (single-label r))]
-                                    [(group?  r) (list (group-color r))]))
+                              (cond [(leaf? r) (list (leaf-label r))]
+                                    [(inner?  r) (list (inner-color r))]))
                             (define (all-labels--lor-c lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -70,8 +70,8 @@
 
                   (define (,$F2 r)
                     (local [(define (all-labels--region-c r)
-                              (cond [(single? r) empty]
-                                    [(group?  r) (all-labels--lor-c (group-subs r))]))
+                              (cond [(leaf? r) empty]
+                                    [(inner?  r) (all-labels--lor-c (inner-subs r))]))
                             (define (all-labels--lor-c lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -81,8 +81,8 @@
 
                   (define (,$F2 r)
                     (local [(define (all-labels--region-c r)
-                              (cond [(single? r) (list (single-label r))]
-                                    [(group?  r) (all-labels--lor-c (group-subs r))]))
+                              (cond [(leaf? r) (list (leaf-label r))]
+                                    [(inner?  r) (all-labels--lor-c (inner-subs r))]))
                             (define (all-labels--lor-c lor)
                               (cond [(empty? lor) empty]
                                     [else
@@ -91,8 +91,8 @@
 
                   (define (,$F2 r)
                     (local [(define (all-labels--region-c r)
-                              (cond [(single? r) (list (single-label r))]
-                                    [(group?  r) (all-labels--lor-c (group-subs r))]))
+                              (cond [(leaf? r) (list (leaf-label r))]
+                                    [(inner?  r) (all-labels--lor-c (inner-subs r))]))
                             (define (all-labels--lor-c lor)
                               empty)]
                       (all-labels--region-c r))))

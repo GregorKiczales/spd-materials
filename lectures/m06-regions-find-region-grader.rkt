@@ -11,30 +11,30 @@
 
       (define (%%region? x)
         (local [(define (fn-for-region r)
-                  (cond [(single? r)
-                         (and (string? (single-label r))
-                              (and (integer? (single-weight r)) (>= (single-weight r) 0))
-                              (string? (single-color r)))]
+                  (cond [(leaf? r)
+                         (and (string? (leaf-label r))
+                              (and (integer? (leaf-weight r)) (>= (leaf-weight r) 0))
+                              (string? (leaf-color r)))]
                         [else
-                         (and (string? (group-color r))
-                              (fn-for-lor (group-subs r)))]))
+                         (and (string? (inner-color r))
+                              (fn-for-lor (inner-subs r)))]))
 
                 (define (fn-for-lor lor)
                   (cond [(empty? lor) true]
                         [else
                          (and (fn-for-region (first lor))
                               (fn-for-lor (rest lor)))]))]
-          (and (or (single? x) (group? x))
+          (and (or (leaf? x) (inner? x))
                (fn-for-region x))))
 
       (define (%%find-region s r)
         (local [(define (fn-for--region r)
-                  (cond [(single? r)
-                         (if (string=? (single-label r) s)
+                  (cond [(leaf? r)
+                         (if (string=? (leaf-label r) s)
                              r
                              false)]
                         [else 
-                         (fn-for--lor (group-subs r))]))
+                         (fn-for--lor (inner-subs r))]))
 
                 (define (fn-for--lor lor)
                   (cond [(empty? lor) false]
@@ -59,14 +59,14 @@
                   (equal? r (%%find-region c reg)))
                 
                 (grade-tests-argument-thoroughness (c reg)
-                  (single? reg)
-                  (and (group? reg) (not (empty? (group-subs reg)))))
+                  (leaf? reg)
+                  (and (inner? reg) (not (empty? (inner-subs reg)))))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (,$F2 c r)
                     (local [(define (find-region--region l r)
-                              (cond [(single? r) (if (string=? (single-label r) l) r false)]
-                                    [(group?  r) false]))
+                              (cond [(leaf? r) (if (string=? (leaf-label r) l) r false)]
+                                    [(inner?  r) false]))
                             (define (find-region--lor l lor)
                               (cond [(empty? lor) false]
                                     [else
@@ -77,8 +77,8 @@
                   
                   (define (,$F2 c r)
                     (local [(define (find-region--region l r)
-                              (cond [(single? r) r]
-                                    [(group?  r) (find-region--lor l (group-subs r))]))
+                              (cond [(leaf? r) r]
+                                    [(inner?  r) (find-region--lor l (inner-subs r))]))
                             (define (find-region--lor l lor)
                               (cond [(empty? lor) false]
                                     [else
@@ -89,8 +89,8 @@
                   
                   (define (,$F2 c r)
                     (local [(define (find-region--region l r)
-                              (cond [(single? r) (if (string=? (single-label r) l) r false)]
-                                    [(group?  r) (find-region--lor l (group-subs r))]))
+                              (cond [(leaf? r) (if (string=? (leaf-label r) l) r false)]
+                                    [(inner?  r) (find-region--lor l (inner-subs r))]))
                             (define (find-region--lor l lor)
                               (cond [(empty? lor) false]
                                     [else (find-region--region l (first lor))]))]
@@ -98,8 +98,8 @@
                   
                   (define (,$F2 c r)
                     (local [(define (find-region--region l r)
-                              (cond [(single? r) (if (string=? (single-label r) l) r false)]
-                                    [(group?  r) (find-region--lor l (group-subs r))]))
+                              (cond [(leaf? r) (if (string=? (leaf-label r) l) r false)]
+                                    [(inner?  r) (find-region--lor l (inner-subs r))]))
                             (define (find-region--lor l lor)
                               (cond [(empty? lor) false]
                                     [else (find-region--lor l (rest lor))]))]
@@ -107,8 +107,8 @@
                   
                   (define (,$F2 c r)
                     (local [(define (find-region--region l r)
-                              (cond [(single? r) (if (string=? (single-label r) l) r false)]
-                                    [(group?  r) (find-region--lor l (group-subs r))]))
+                              (cond [(leaf? r) (if (string=? (leaf-label r) l) r false)]
+                                    [(inner?  r) (find-region--lor l (inner-subs r))]))
                             (define (find-region--lor l lor)
                               (cond [(empty? lor) false]
                                     [else
