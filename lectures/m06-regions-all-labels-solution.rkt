@@ -79,6 +79,7 @@
 ;; produce labels of all regions in region (including root)
 (check-expect (all-labels--lor empty) empty)
 (check-expect (all-labels--region L1) (list "one"))
+(check-expect (all-labels--region (make-inner "blue" empty)) empty)
 (check-expect (all-labels--lor LOR123) (list "one" "two" "three"))
 (check-expect (all-labels--region I4)
               (list "one" "two" "three"

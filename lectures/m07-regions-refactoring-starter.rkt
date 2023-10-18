@@ -28,21 +28,21 @@
 ;;  - (cons Region ListOfRegion)
 ;; interp. a list of regions
 
-;; All the Ss and Gs are Regions
-(define S1 (make-leaf "one" 20 "red"))
-(define S2 (make-leaf "two" 40 "blue"))
-(define S3 (make-leaf "three" 60 "orange"))
-(define S4 (make-leaf "four" 30 "black"))
-(define S5 (make-leaf "five" 50 "purple"))
-(define S6 (make-leaf "six" 80 "yellow"))
+;; All the Ls and Is are Regions
+(define L1 (make-leaf "one" 20 "red"))
+(define L2 (make-leaf "two" 40 "blue"))
+(define L3 (make-leaf "three" 60 "orange"))
+(define L4 (make-leaf "four" 30 "black"))
+(define L5 (make-leaf "five" 50 "purple"))
+(define L6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-inner "red"  (list S1 S2 S3)))
-(define G2 (make-inner "blue" (list G1 S4)))
-(define G3 (make-inner "orange" (list S5 S6)))
-(define G4 (make-inner "black" (list G2 G3)))
+(define I1 (make-inner "red"  (list L1 L2 L3)))
+(define I2 (make-inner "blue" (list I1 L4)))
+(define I3 (make-inner "orange" (list L5 L6)))
+(define I4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
-(define LOR123 (list S1 S2 S3))
+(define LOR123 (list L1 L2 L3))
 
 #| Leave these templates as-is for now. |#
 
@@ -78,16 +78,16 @@
 (@signature ListOfRegion -> ListOfString)
 ;; produce labels of all regions in region (including root)
 (check-expect (all-labels--lor empty) empty)
-(check-expect (all-labels--region S1) (list "one"))
+(check-expect (all-labels--region L1) (list "one"))
 (check-expect (all-labels--lor LOR123) (list "one" "two" "three"))
-(check-expect (all-labels--region G4)
+(check-expect (all-labels--region I4)
               (list "one" "two" "three"
                     "four" "five" "six"))
 
 (@template-origin Region)
 
 (define (all-labels--region r)
-  (cond [(leaf? r) (list (single-label r))]
+  (cond [(leaf? r) (list (leaf-label r))]
         [else
          (all-labels--lor (inner-subs r))]))
 
@@ -108,20 +108,20 @@
 (@signature Color ListOfRegion -> ListOfRegion)
 ;; produce all regions with given color
 (check-expect (all-with-color--lor "red" empty) empty)
-(check-expect (all-with-color--region "red" S1) (list S1))
-(check-expect (all-with-color--region "blue" S1) empty)
-(check-expect (all-with-color--lor "red" LOR123) (list S1))
+(check-expect (all-with-color--region "red" L1) (list L1))
+(check-expect (all-with-color--region "blue" L1) empty)
+(check-expect (all-with-color--lor "red" LOR123) (list L1))
 (check-expect
  (all-with-color--region "red"
                          (make-inner "blue"
-                                     (list G4
+                                     (list I4
                                            (make-leaf "X" 90 "red"))))
- (list G1 S1 (make-leaf "X" 90 "red")))
+ (list I1 L1 (make-leaf "X" 90 "red")))
 
 (@template-origin Region)
 
 (define (all-with-color--region c r)
-  (cond [(leaf? r) (if (string=? (single-color r) c) (list r) empty)]
+  (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) empty)]
         [else
          (if (string=? (inner-color r) c)
              (cons r (all-with-color--lor c (inner-subs r)))

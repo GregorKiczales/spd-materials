@@ -69,6 +69,7 @@
 (check-expect (find-region--lor "one" empty) false)
 (check-expect (find-region--region "one" L1) L1)
 (check-expect (find-region--region "one" L2) false)
+(check-expect (find-region--region "two" (make-inner "red" empty)) false)
 (check-expect (find-region--lor "two" LOR123) L2)
 (check-expect (find-region--region "three" I4) L3)
 

@@ -43,9 +43,9 @@
                 (grade-template-origin 1 (encapsulated Region ListOfRegion try-catch))
 
                 (grade-additional-tests 1
-                  (check-expect (find-region "one" S1) S1)
-                  (check-expect (find-region "one" S2) false)
-                  (check-expect (find-region "three" G4) S3))))))))))
+                  (check-expect (find-region "one" L1) L1)
+                  (check-expect (find-region "one" L2) false)
+                  (check-expect (find-region "three" I4) L3))))))))))
 
             
 

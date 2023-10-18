@@ -72,6 +72,7 @@
 (check-expect (total-weight--region L1) 20)
 (check-expect (total-weight--region L2) 40)
 (check-expect (total-weight--lor empty) 0)
+(check-expect (total-weight--region (make-inner "blue" empty)) 0)
 (check-expect (total-weight--lor (list L1 L2 L3)) (+ 20 40 60))             
 (check-expect (total-weight--region (make-inner "red" empty)) 0)
 (check-expect (total-weight--region I1) (+ 20 40 60))
