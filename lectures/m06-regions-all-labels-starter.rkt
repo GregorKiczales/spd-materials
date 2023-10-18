@@ -73,5 +73,5 @@
 ;; Design a function that consumes a region and
 ;; produces a list of all the labels in the region.  Be sure to
 ;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag.
+;; functions, the signatures are grouped, leaf purpose, tests
+;; are grouped, and each function has its own template tag.

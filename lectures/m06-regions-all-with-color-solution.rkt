@@ -71,8 +71,8 @@
 ;; and produces a list of all contained regions with the given color.
 ;; Include the root if it has that color.   Be sure to
 ;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag. 
+;; functions, the signatures are grouped, leaf purpose, tests
+;; are grouped, and each function has its own template tag. 
 
 (@htdf all-with-color--region all-with-color--lor)
 (@signature Color Region -> ListOfRegion)
