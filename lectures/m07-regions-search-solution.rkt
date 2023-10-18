@@ -30,21 +30,21 @@
 ;;  - (cons Region ListOfRegion)
 ;; interp. a list of regions
 
-;; All the Ss and Gs are Regions
-(define S1 (make-leaf "one" 20 "red"))
-(define S2 (make-leaf "two" 40 "blue"))
-(define S3 (make-leaf "three" 60 "orange"))
-(define S4 (make-leaf "four" 30 "black"))
-(define S5 (make-leaf "five" 50 "purple"))
-(define S6 (make-leaf "six" 80 "yellow"))
+;; All the Ls and Is are Regions
+(define L1 (make-leaf "one" 20 "red"))
+(define L2 (make-leaf "two" 40 "blue"))
+(define L3 (make-leaf "three" 60 "orange"))
+(define L4 (make-leaf "four" 30 "black"))
+(define L5 (make-leaf "five" 50 "purple"))
+(define L6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-inner "red"  (list S1 S2 S3)))
-(define G2 (make-inner "blue" (list G1 S4)))
-(define G3 (make-inner "orange" (list S5 S6)))
-(define G4 (make-inner "black" (list G2 G3)))
+(define I1 (make-inner "red"  (list L1 L2 L3)))
+(define I2 (make-inner "blue" (list I1 L4)))
+(define I3 (make-inner "orange" (list L5 L6)))
+(define I4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
-(define LOR123 (list S1 S2 S3))
+(define LOR123 (list L1 L2 L3))
 
 (@problem 1)
 #| Use local to encapsulate these templates. |#
@@ -86,10 +86,10 @@ Use the encapsulated templates from Problem 1 above.
 (@htdf find-region)
 (@signature String Region -> Region or false)
 ;; find region w/ given label
-(check-expect (find-region "one" S1) S1)
-(check-expect (find-region "one" S2) false)
-(check-expect (find-region "one" G4) S1)
-(check-expect (find-region "three" G4) S3)
+(check-expect (find-region "one" L1) L1)
+(check-expect (find-region "one" L2) false)
+(check-expect (find-region "one" I4) L1)
+(check-expect (find-region "three" I4) L3)
 
 (@template-origin encapsulated Region ListOfRegion try-catch)
 

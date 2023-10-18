@@ -81,6 +81,7 @@
 (check-expect (all-with-color--lor "red" empty) empty)
 (check-expect (all-with-color--region "red" L1) (list L1))
 (check-expect (all-with-color--region "blue" L1) empty)
+(check-expect (all-with-color--region "red" (make-inner "blue" empty)) empty)
 (check-expect (all-with-color--lor "red" LOR123) (list L1))
 (check-expect (all-with-color--region "red" I4) (list I1 L1))
 (check-expect (all-with-color--region "orange" I4) (list L3 I3))

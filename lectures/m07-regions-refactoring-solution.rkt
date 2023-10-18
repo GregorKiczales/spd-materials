@@ -28,21 +28,21 @@
 ;;  - (cons Region ListOfRegion)
 ;; interp. a list of regions
 
-;; All the Ss and Gs are Regions
-(define S1 (make-leaf "one" 20 "red"))
-(define S2 (make-leaf "two" 40 "blue"))
-(define S3 (make-leaf "three" 60 "orange"))
-(define S4 (make-leaf "four" 30 "black"))
-(define S5 (make-leaf "five" 50 "purple"))
-(define S6 (make-leaf "six" 80 "yellow"))
+;; All the Ls and Is are Regions
+(define L1 (make-leaf "one" 20 "red"))
+(define L2 (make-leaf "two" 40 "blue"))
+(define L3 (make-leaf "three" 60 "orange"))
+(define L4 (make-leaf "four" 30 "black"))
+(define L5 (make-leaf "five" 50 "purple"))
+(define L6 (make-leaf "six" 80 "yellow"))
 
-(define G1 (make-inner "red"  (list S1 S2 S3)))
-(define G2 (make-inner "blue" (list G1 S4)))
-(define G3 (make-inner "orange" (list S5 S6)))
-(define G4 (make-inner "black" (list G2 G3)))
+(define I1 (make-inner "red"  (list L1 L2 L3)))
+(define I2 (make-inner "blue" (list I1 L4)))
+(define I3 (make-inner "orange" (list L5 L6)))
+(define I4 (make-inner "black" (list I2 I3)))
 
 (define LORE empty)
-(define LOR123 (list S1 S2 S3))
+(define LOR123 (list L1 L2 L3))
 
 #| Leave these templates as-is for now. |#
 
@@ -75,15 +75,15 @@
 (@htdf all-labels)
 (@signature Region -> ListOfString)
 ;; produce labels of all regions in region (including root)
-(check-expect (all-labels S1) (list "one"))
-(check-expect (all-labels G4) (list "one" "two" "three" "four" "five" "six"))
+(check-expect (all-labels L1) (list "one"))
+(check-expect (all-labels I4) (list "one" "two" "three" "four" "five" "six"))
 
 (@template-origin encapsulated Region ListOfRegion)
 
 (define (all-labels r)
   (local [(define (all-labels--region r)
-            (cond [(leaf? r) (list (single-label r))]
-                  [else        (all-labels--lor (inner-subs r))]))
+            (cond [(leaf? r) (list (leaf-label r))]
+                  [else      (all-labels--lor (inner-subs r))]))
 
 
           (define (all-labels--lor lor)
@@ -102,13 +102,13 @@
 (@htdf all-with-color)
 (@signature Color Region -> ListOfRegion)
 ;; produce all regions with given color
-(check-expect (all-with-color "red" S1) (list S1))
-(check-expect (all-with-color "blue" S1) empty)
+(check-expect (all-with-color "red" L1) (list L1))
+(check-expect (all-with-color "blue" L1) empty)
 (check-expect (all-with-color "red"
                               (make-inner "blue"
-                                          (list G4
+                                          (list I4
                                                 (make-leaf "X" 90 "red"))))
-              (list G1 S1 (make-leaf "X" 90 "red")))
+              (list I1 L1 (make-leaf "X" 90 "red")))
 
 (@template-origin Region ListOfRegion encapsulated)
 

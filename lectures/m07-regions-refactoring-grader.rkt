@@ -27,8 +27,8 @@
                              "That are in mutual recursion")
 
                 (grade-additional-tests 1
-                  (check-expect (all-labels S1) (list "one"))
-                  (check-expect (all-labels G4) (list "one" "two" "three" "four" "five" "six")))))))
+                  (check-expect (all-labels L1) (list "one"))
+                  (check-expect (all-labels I4) (list "one" "two" "three" "four" "five" "six")))))))
 
         (grade-problem 2
           (grade-htdf all-with-color
@@ -47,13 +47,13 @@
                                   (member (cadr names) (free (caddr (car  locs)))))
                              "That are in mutual recursion")
                 (grade-additional-tests 1
-                  (check-expect (all-with-color "red" S1) (list S1))
-                  (check-expect (all-with-color "blue" S1) '())
+                  (check-expect (all-with-color "red" L1) (list L1))
+                  (check-expect (all-with-color "blue" L1) '())
                   (check-expect (all-with-color "red"
                                                 (make-inner "blue"
-                                                            (list G4
+                                                            (list I4
                                                                   (make-leaf "X" 90 "red"))))
-                                (list G1 S1 (make-leaf "X" 90 "red"))))))))))))
+                                (list I1 L1 (make-leaf "X" 90 "red"))))))))))))
 
             
 
