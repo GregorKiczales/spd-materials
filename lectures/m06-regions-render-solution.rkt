@@ -72,8 +72,8 @@
 ;; reflect the coloring, the labels and the weights.  The border function below
 ;; may be helpful to you.   Be sure to
 ;; follow the structure above, where the @htdf tag names both
-;; functions, the signatures are innered, leaf purpose, tests
-;; are innered, and each function has its own template tag.
+;; functions, the signatures are grouped, leaf purpose, tests
+;; are grouped, and each function has its own template tag.
 
 (@htdf render--region render--lor)
 (@signature Region -> Image)
