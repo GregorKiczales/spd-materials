@@ -26,6 +26,9 @@ save space later we are calling it LOS instead of ListOfString.
 |#
 
 ;; Data Definitions:
+;;
+;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LOS FOR ListOfString.
+;;
 
 (@htdd LOS)
 ;; LOS is one of:

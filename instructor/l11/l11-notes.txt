@@ -1,22 +1,26 @@
-Sheila E, Steve Winwood. Santana Kennedy Center Honors
-https://www.youtube.com/watch?v=ilGY_QG_lCY
-3 minutes, start at x6:55
-
-
-
-
-#|
 TIMELINE
 
+00 introduction             [present]
+   what type definitions do
 
-present prefix=?
-do table in Dr. R, have copy ready to mark up in tablet
+05 prefix=? [present]
 
-class merge
+   do table in Dr. R, have copy ready to mark up in tablet
+
+
+merge [class]
  - interruped for empty->l2 simplification
  do table in Dr R
 
 
+has-path?   [class]
+as time allows
+if 15 or so left
+ - tell them to focus on table
+ - give 5 minutes
+ - then talk through table slide
+
+2d-cond.rkt [briefly show]
 
 
 
@@ -32,7 +36,7 @@ Grounded in theory and research.
 
 Little look today at some of the kinds of things this enables in the future.
 
-Just programming vs. engineering and science.
+Just banging-on-the-keyboard vs. engineering and science.
 
 
 ** Setup
@@ -118,7 +122,9 @@ await you in other courses, grad school, and/or industry.
 
 cond questions come from type comments; answers are expressions
 
-leave has-path? entirely for home, but do establish it will be a 2x3 table
+leave has-path? mostly for home, but at least establish it will be a 2x3 table
+
+
 
 
 #|
@@ -133,3 +139,37 @@ empty
 (cons "R" Path)
 
 |#
+(@htdf has-path?)
+(@signature BinaryTree Path -> Boolean)
+;; produce true if following p through bt leads to a node, not false
+(check-expect (has-path? false empty) false)
+(check-expect (has-path? false (list "L")) false)
+(check-expect (has-path? false (list "R")) false)
+
+(check-expect (has-path? BT4 empty) true)
+
+(check-expect (has-path? BT4 P2)    true)
+(check-expect (has-path? BT4 P3) true)
+(check-expect (has-path? BT4 P4) true) 
+(check-expect (has-path? BT4 (list "L" "R" "L")) false)
+
+#|
+          bt          false            (make-node Nat Str BT BT) 
+ p
+
+empty                 false  [1]       true                      [2]
+
+(cons "L" Path)       false  [1]       (has-path? (node-l bt)    [3]
+                                                  (rest p))
+
+(cons "R" Path)       false  [1]       (has-path? (node-r bt)    [4]
+                                                  (rest p))
+|#
+
+(@template-origin 2-one-of)
+
+(define (has-path? bt p)   
+  (cond [(false? bt) false]                                           ;[1]
+        [(empty? p)  true]                                            ;[2]
+        [(string=? (first p) "L") (has-path? (node-l bt) (rest p))]   ;[3]
+        [else                     (has-path? (node-r bt) (rest p))])) ;[4]
