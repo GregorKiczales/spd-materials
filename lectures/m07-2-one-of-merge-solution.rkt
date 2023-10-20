@@ -21,6 +21,9 @@ save space later we are calling it LON instead of ListOfNumber
 |#
 
 ;; Data Definitions:
+;;
+;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LON FOR ListOfString.
+;;
 
 (@htdd LON)
 ;; LON is one of:
