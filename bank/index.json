@@ -1118,7 +1118,7 @@
           },
           
           {      
-              "module"         : "Mutual-Ref",
+              "module"         : "Local",
               "lecture"        : "all",
               "kind"           : "Lecture",
               "setNumber"      : 1,
