@@ -17,11 +17,25 @@ suggestions in some of the problems.
 
 When choosing built-in abstract functions yourselves remember:
 
- - map always produces a list of the same length as it's argument
+ - map always produces a list of the same length as it's argument.
+   In general the elememts of the result list are not the same as
+   the argument list.
+
+    (map add1 (list 1 2 3)) -> (list 2 3 4))
+   
  - filter produces a list of all, some or none of the elements in its 
-   argument
- - foldr can produce any kind of value at all
+   argument. The elements of the result list are elements of the 
+   argument list.
+
+    (filter odd? (list 1 2 3)) -> (list 1 3)
+   
+ - foldr can produce any kind of value at all. It folds a list of
+   values, one at a time, down onto a result value:
+
+    (foldr + 0 (list 1 2 3)) -> (+ 1 (+ 2 (+ 3 0))) -> 6
+
  - andmap and ormap produce boolean values
+
  - buildlist produces a list with the same number of elements as its
    argument
 
@@ -57,14 +71,13 @@ When choosing built-in abstract functions yourselves remember:
   ;;  (X Y -> Y) Y (listof X) -> Y
   ;; adapted to this case:
   ;;  (Number Number -> Number) Number (listof Number) -> Number
-  (local [;; (@signature Number Number -> Number)
+  (local [(@signature Number Number -> Number)
           ;; add odds to result of natural recursion, subtract evens
           (@template Number)
           (define (+odd/-even x y)
             (... x y))]
             
-    (foldr fn 0 loi)))
-
+    (foldr +odd/-even 0 loi)))
 
 
 (@problem 2)

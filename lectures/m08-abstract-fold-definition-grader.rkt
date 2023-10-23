@@ -16,6 +16,28 @@
 
       (define %%C7 (make-course 1 2 (list %%C5 %%C6 %%C4)))
 
+      
+        (grade-problem 3
+          (grade-htdf foldr2
+            (weights (*)
+              (grade-signature-by-constraints 1
+                ((X Y -> Y) Y (listof X) -> Y))
+              (grade-thoroughness-by-faulty-functions 1
+                (define (foldr2 fn b lox)
+                  (cond [(empty? lox) b]
+                        [else
+                         (fn (first lox)
+                             b)]))
+                (define (foldr2 fn b lox)
+                  b))
+              (grade-template-origin 1 ((listof X)))
+              (grade-submitted-tests 1 2)
+              (grade-additional-tests 1
+                (check-expect (foldr2 + 0 (list 1 2 3)) 6)
+                (check-expect (foldr2 * 1 (list 2 3 4)) 24)
+                (check-expect (foldr2 %%to-string "" (list 1 37 65))
+                              "13765")))))
+
       (grade-problem 1
         (grade-htdf fold-course
           (grade-design-abstract-fold fold-course

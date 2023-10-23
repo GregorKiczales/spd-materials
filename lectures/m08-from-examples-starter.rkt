@@ -2,7 +2,8 @@
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-intermediate-reader.ss" "lang")((modname m08-abstract-functions-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
-(@assignment lectures/m08-abstract-functions)
+(@assignment lectures/m08-from-examples)
+
 (@cwl ???) ;replace ??? with your cwl
 
 ;; 
@@ -98,10 +99,10 @@
 
 (@problem 1)
 #|
-Develop a function definition for an abstract function to simplify the 
+Develop a FUNCTION DEFINITION for an abstract function to simplify the 
 following two functions. Complete your work by re-defining the original
 functions to use the new abstract function. You do not need to do the
-signature, purpose or tests for the new abstract function.
+signature, purpose or tests for the new abstract function yet.
 |#
 
 (@htdf all-greater?)
@@ -149,37 +150,15 @@ Be sure to use the (list <Type>) form for every list type from now on.
 
 
 
+
+
+
+
+
+
+
+
 (@problem 3)
-;;
-;; Design an abstract function called foldr2 based on the (listof X) template.
-;; Work backwards through the HtDF recipe starting from the fn definition.
-;;
-
-
-
-
-
-
-
-
-
-
-(@template-origin ListOfNumber)
-
-(define (fn-for-lox lox)
-  (cond [(empty? lox) (...)]
-        [else
-         (... (first lox)
-              (fn-for-lox (rest lox)))]))
-
-
-
-
-
-
-
-
-(@problem 4)
 #|
 Complete the design of the filter2 abstract function with signature,
 purpose and tests.
@@ -228,7 +207,7 @@ purpose and tests.
 
 
 
-(@problem 5)
+(@problem 4)
 ;;
 ;; Complete the design of the map2 abstract function with signature.
 ;;
@@ -252,6 +231,7 @@ purpose and tests.
 
 (@htdf map2)
 ;; given fn and (list n0 n1 ...) produce (list (fn n0) (fn n1) ...)
+;; <SIGNATURE IS MISSING>
 (check-expect (map2 sqr empty) empty)
 (check-expect (map2 sqr (list 2 4)) (list 4 16))
 (check-expect (map2 sqrt (list 16 9)) (list 4 3))
@@ -264,4 +244,7 @@ purpose and tests.
         [else
          (cons (fn (first lon))
                (map2 fn (rest lon)))]))
+
+
+
 
