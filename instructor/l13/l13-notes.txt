@@ -17,15 +17,15 @@ Today is hard work. Second half of 110 we are going to cover more.
 All present/interactive lecture.
 
 functions-starter
-problem 1 - extract andmap2 with massaging, STUDENTS COMPLETE LATER (annotate starter)
+problem 1 - extract andmap2 with massaging
 
-problem 2 - complete filter2, given fn definition, learn type inference
+problem 2 - students complete andmap2 later (annotate starter)
 
-problem 3 - USE filter2
+problem 3 - complete filter2, given fn definition, learn type inference
 
-problem 4 - complete map2 STUDENTS DO LATER
+problem 4 - complete signature for map2
 
-problem 5 - design foldr2 from template
+
 
 
 use-bia-fns starter
