@@ -2,15 +2,10 @@
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-intermediate-reader.ss" "lang")((modname m08-abstract-functions-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
-(@assignment lectures/m08-abstract-functions)
+
+(@assignment lectures/m08-from-examples)
 
 (@problem 1)
-#|
-Develop a function definition for an abstract function to simplify the 
-following two functions. Complete your work by re-defining the original
-functions to use the new abstract function. You do not need to do the
-signature, purpose or tests for the new abstract function.
-|#
 
 (@htdf all-greater?)
 (@signature (listof Number) Number -> Boolean)
@@ -23,7 +18,7 @@ signature, purpose or tests for the new abstract function.
 
 (define (all-greater? lon x)
   ;; NOTE: >x? is a closure, a locally defined function that refers to
-  ;;       a parameter of the surrounding function
+  ;;       a parameter or local definition of the surrounding function
   (local [(define (>x? n) (> n x))]
     (andmap2 >x? lon)))
 
@@ -44,13 +39,7 @@ signature, purpose or tests for the new abstract function.
 
 
 (@problem 2)
-#|
-Now complete the design of the andmap2 abstract function.
 
-First move the definition from above below here.  Then work backwards
-through the recipe to add @template-origin, check-expects, purpose,
-@signature, and @htdf tag.  Use type inference to produce the signature.
-|#
 (@htdf andmap2)
 (@signature (X -> Boolean) (listof X) -> Boolean)
 ;; given p and (list x0 x1 ...) produce (and (p x0) (p x1) ...)
@@ -64,6 +53,7 @@ through the recipe to add @template-origin, check-expects, purpose,
 (check-expect (andmap2 false? (list true false true)) false)
 
 (@template-origin (listof X))
+
 (define (andmap2 p lox)
   (cond [(empty? lox) true]
         [else
@@ -71,38 +61,8 @@ through the recipe to add @template-origin, check-expects, purpose,
               (andmap2 p (rest lox)))]))
 
 
+
 (@problem 3)
-;;
-;; Design an abstract function called foldr2 based on the (listof X) template.
-;; Work backwards through the HtDF recipe starting from the fn definition.
-;;
-(@htdf foldr2)
-(@signature (X Y -> Y) Y (listof X) -> Y)
-;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
-(check-expect (foldr2 + 0 (list 1 2 3)) 6)
-(check-expect (foldr2 * 1 (list 2 3 4)) 24)
-(check-expect (local [(define (+to-string s y)
-                        (string-append (number->string s) y))]
-                (foldr2 +to-string "" (list 1 37 65)))
-              "13765")
-(check-expect (foldr2 string-append "" (list "foo" "bar" "baz"))
-              "foobarbaz")
-
-(@template-origin (listof X))
-
-(define (foldr2 fn b lox)
-  (cond [(empty? lox) b]
-        [else     
-         (fn (first lox)
-             (foldr2 fn b (rest lox)))]))
-
-
-
-(@problem 4)
-#|
-Complete the design of the filter2 abstract function with signature,
-purpose and tests.
-|#
 
 (@htdf positive-only)
 (@signature (listof Number) -> (listof Number))
@@ -147,7 +107,7 @@ purpose and tests.
              (filter2 p (rest lox)))]))
 
 
-(@problem 5)
+(@problem 4)
 ;;
 ;; Complete the design of the map2 abstract function with signature.
 ;;

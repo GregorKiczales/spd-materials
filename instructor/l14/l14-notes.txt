@@ -24,6 +24,10 @@ poll questions
 
 
 
+problem 5 - design foldr2 from template   MOVES TO NEXT LECTURE
+
+
+
 
 (@htdf fold-course)
 

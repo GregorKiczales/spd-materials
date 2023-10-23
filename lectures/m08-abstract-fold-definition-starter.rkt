@@ -59,6 +59,31 @@
     (fn-for-course c)))
 
 
+(@problem 1)
+;;
+;; Design an abstract function called foldr2 based on the (listof X) template.
+;; Work backwards through the HtDF recipe starting from the fn definition.
+;;
+
+
+
+
+
+
+
+
+
+
+(@template-origin ListOfNumber)
+
+(define (fn-for-lox lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (first lox)
+              (fn-for-lox (rest lox)))]))
+
+
+
 
 (@problem 1)
 #|
