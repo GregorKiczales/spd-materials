@@ -1116,20 +1116,6 @@
               "duration"       : 45,
               "difficulty"     : "Black"
           },
-          
-          {      
-              "module"         : "Local",
-              "lecture"        : "all",
-              "kind"           : "Lecture",
-              "setNumber"      : 1,
-              "name"           : "File System",
-              "codeFiles"      : ["fs-starter.rkt",
-				  "fs-v1.rkt","fs-v2.rkt","fs-v3.rkt","fs-v4.rkt"],
-              "description"    : "An implementation of a file system, as demonstrated in lecture, with all intermediate solutions.",
-              "recipe"         : ["HtDF"],
-              "duration"       : 60,
-              "difficulty"     : "Black"
-          },
 
           
           {      
@@ -1238,6 +1224,20 @@
               "recipe"         : ["HtDF"],
               "duration"       : 40,
               "difficulty"     : "Blue"
+          },
+          
+          {      
+              "module"         : "Local",
+              "lecture"        : "all",
+              "kind"           : "Lecture",
+              "setNumber"      : 1,
+              "name"           : "File System",
+              "codeFiles"      : ["fs-starter.rkt",
+				  "fs-v1.rkt","fs-v2.rkt","fs-v3.rkt","fs-v4.rkt"],
+              "description"    : "An implementation of a file system, as demonstrated in lecture, with all intermediate solutions.",
+              "recipe"         : ["HtDF"],
+              "duration"       : 60,
+              "difficulty"     : "Black"
           },
           
           {      
