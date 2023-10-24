@@ -1,11 +1,27 @@
 
 
+
+
 render-bst
 avoid duplicate recursive calls
 
 
+
+(define (render-bst t)
+  (cond [(false? t) MTTREE]
+        [else            
+         (local [(define lrnr (render-bst (node-l t)))
+                 (define rrnr (render-bst (node-r t)))]
+           (above (render-key-val (node-key t) (node-val t))
+                  (lines (image-width lrnr) (image-width rrnr))
+                  (beside lrnr rrnr)))]))
+
+
+
 all-labels
 refactor to encapsulate [present]
+
+
 
 all-with-color
 refactor to encapsulate [class]

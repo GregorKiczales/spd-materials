@@ -10,18 +10,44 @@
 (define grader
   (lambda ()
     (grade-submission
-      (weights (*)
+      (weights (.3 *)
         (grade-problem 1
-          (let* ([sexps  (problem-sexps (car (context)))])
+          (let* ([sexps (problem-sexps (car (context)))]
+                 [to    (and (>= (length sexps) 1) (car sexps))]
+                 [defn  (and (>= (length sexps) 2) (cadr sexps))]
+                 [locs  (cdr (defines defn))])
             (weights (.3 *)
               (rubric-item 'other
-                           (and (>= (length sexps) 1)
-                                (equal-sets? (car sexps) (car PROBLEM-1-SOLUTION)))
+                           (and to (equal-sets? to '(@template-origin Region ListOfRegion encapsulated)))
                            "@template-origin tag - which is there to make it easy to copy")
               (rubric-item 'other
-                           (and (>= (length sexps) 2)
-                                (equal? (cadr sexps) (cadr PROBLEM-1-SOLUTION)))
-                           "encapsulated fn-for-region"))))
+                           (and defn
+                                (fn-defn? defn)
+                                (= (length locs) 2)
+                                (equal? (car locs)
+                                        '(define (fn-for-region r)
+                                           (cond [(leaf? r)
+                                                  (... (leaf-label r)
+                                                       (leaf-weight r)
+                                                       (leaf-color r))]
+                                                 [else
+                                                  (... (inner-color r)
+                                                       (fn-for-lor (inner-subs r)))])))
+                                (equal? (cadr locs)
+                                        '(define (fn-for-lor lor)
+                                           (cond [(empty? lor) (...)]
+                                                 [else
+                                                  (... (fn-for-region (first lor))
+                                                       (fn-for-lor (rest lor)))]))))
+                           "local definitions")
+              (rubric-item 'other
+                           (and defn
+                                (fn-defn? defn)
+                                (eq? (caaddr defn) 'local)
+                                (pair? (caddr (caddr defn)))
+                                (eqv? (car (caddr (caddr defn))) 'fn-for-region)
+                                (eqv? (cadr (caddr (caddr defn))) (cadr (cadr defn))))
+                           "trampoline"))))
         
 
         ;; !!! update to state of the art
