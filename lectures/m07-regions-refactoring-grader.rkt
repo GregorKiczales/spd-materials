@@ -13,7 +13,8 @@
           (grade-htdf all-labels
             (let* ([htdf  (car (context))]
                    [defns (htdf-defns htdf)]
-                   [locs  (cdr (defines defns))]
+                   [defn  (and (pair? defns) (car defns))]
+                   [locs  (cdr (defines defn))]
                    [names (map caadr locs)])
               (weights (*)
                 (grade-submitted-tests 2)
@@ -22,8 +23,8 @@
                 (rubric-item 'other (= (length defns) 1) "Only one top-level function")
                 (rubric-item 'other (= (length locs) 2)  "With 2 locally defined functions")
                 (rubric-item 'other 
-                             (and (member (car  names) (free (caddr (cadr locs))))
-                                  (member (cadr names) (free (caddr (car  locs)))))
+                             (and (member (car  names) (called-fn-names (caddr (cadr locs))))
+                                  (member (cadr names) (called-fn-names (caddr (car  locs)))))
                              "That are in mutual recursion")
 
                 (grade-additional-tests 1
@@ -34,7 +35,8 @@
           (grade-htdf all-with-color
             (let* ([htdf  (car (context))]
                    [defns (htdf-defns htdf)]
-                   [locs  (cdr (defines defns))]
+                   [defn  (and (pair? defns) (car defns))]
+                   [locs  (cdr (defines defn))]
                    [names (map caadr locs)])
               (weights (*)
                 (grade-submitted-tests 2)

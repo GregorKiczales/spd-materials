@@ -24,21 +24,23 @@
                            "encapsulated fn-for-region"))))
         
 
+        ;; !!! update to state of the art
         (grade-problem 2
           (grade-htdf find-region
             (let* ([htdf  (car (context))]
                    [defns (htdf-defns htdf)]
-                   [locs  (filter fn-defn? (cdr (defines defns)))]
+                   [defn  (and (pair? defns) (car defns))]
+                   [locs  (filter fn-defn? (cdr (defines defn)))]
                    [names (map caadr locs)])
               (weights (*)
                 (grade-signature (String Region -> Region or false))
 
-                (rubric-item 'other (= (length defns) 1) "Only one top-level function")
-                (rubric-item 'other (= (length locs) 2)  "With 2 locally defined functions")
+                (rubric-item 'other (= (length defns) 1) "only one top-level function")
+                (rubric-item 'other (= (length locs) 2)  "with 2 locally defined functions")
                 (rubric-item 'other
                              (and (member (car  names) (free (caddr (cadr locs))))
                                   (member (cadr names) (free (caddr (car  locs)))))
-                             "That are in mutual recursion")
+                             "that are in mutual recursion")
                 
                 (grade-template-origin 1 (encapsulated Region ListOfRegion try-catch))
 

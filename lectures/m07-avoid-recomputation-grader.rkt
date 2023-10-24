@@ -11,23 +11,22 @@
       (weights (*)
         (grade-problem 1
           (grade-htdf render-bst
-            (grade-submitted-tests 2)
-            (grade-template-origin (BST))
-            (grade-template-intact t
-              (cond [(false? t) (...)]
-                    [else
-                     (... (node-key t)    ;Integer
-                          (node-val t)    ;String
-                          (fn-for-bst (node-l t))
-                          (fn-for-bst (node-r t)))]))
-
-            (let* ([htdf  (car (context))]
-                   [defns (htdf-defns htdf)]
-                   [fns   (free (caddr (car defns)))]
-                   [locs  (cdr (defines defns))])
-              (rubric 'other "Refactoring"
-                      [(= (length locs) 2) 1 "incorrect number of locally defined functions"]
-                      [(= (count (lambda (x) (eqv? x 'render-bst)) fns) 2) 1 "Correct number of calls to render-bst"]))))))))
+            (let* ([htdf (car (context))]
+                   [defn (car (htdf-defns htdf))]
+                   [fns  (called-fn-names defn)]
+                   [locs (cdr (defines defn))])
+              (weights (*)
+                (grade-submitted-tests 2)
+                (grade-template-origin (BST))
+                (grade-template-intact t
+                                       (cond [(false? t) (...)]
+                                             [else
+                                              (... (node-key t)    ;Integer
+                                                   (node-val t)    ;String
+                                                   (fn-for-bst (node-l t))
+                                                   (fn-for-bst (node-r t)))]))
+                (rubric-item 'other (= (length locs) 2) "2 locally defined constants")
+                (rubric-item 'other (= (count (lambda (x) (eqv? x 'render-bst)) fns) 2) "2 calls to render-bst")))))))))
 
             
 
