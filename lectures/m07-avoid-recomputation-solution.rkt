@@ -93,11 +93,11 @@ subnodes.
 (define (render-bst t)
   (cond [(false? t) MTTREE]
         [else            
-         (local [(define li (render-bst (node-l t)))
-                 (define ri (render-bst (node-r t)))]
+         (local [(define lrnr (render-bst (node-l t)))
+                 (define rrnr (render-bst (node-r t)))]
            (above (render-key-val (node-key t) (node-val t))
-                  (lines (image-width li) (image-width ri))
-                  (beside li ri)))]))
+                  (lines (image-width lrnr) (image-width rrnr))
+                  (beside lrnr rrnr)))]))
 
 
 (@htdf render-key-val)
@@ -143,36 +143,3 @@ subnodes.
                         cx  0 lx th "black")
               cx 0 rx th "black")))
 
-#|
-PROBLEM:
-
-Uncomment out the definitions and expressions below, and then
-construct a simple graph with the size of the tree on the
-x-axis and the time it takes to render it on the y-axis. How
-does the time it takes to render increase as a function of
-the size of the tree? If you can, improve the performance of  
-render-bst.
-
-There is also at least one other good way to use local in this 
-program. Try it.
-|#
-
-
-;; These trees are NOT legal binary SEARCH trees.
-;; But for tests on rendering speed that won't matter.
-;; Just don't try searching in them!
-
-#|
-(define BSTA (make-node 100 "A" BST10 BST10)) ;2x  BST10
-(define BSTB (make-node 101 "B" BSTA BSTA))   ;4x  BST10
-(define BSTC (make-node 102 "C" BSTB BSTB))   ;8x  BST10
-(define BSTD (make-node 103 "D" BSTC BSTC))   ;...
-(define BSTE (make-node 104 "E" BSTD BSTD))
-(define BSTF (make-node 104 "E" BSTE BSTE))
-
-(time (rest (list (render-bst BSTA))))
-(time (rest (list (render-bst BSTB))))
-(time (rest (list (render-bst BSTC))))
-(time (rest (list (render-bst BSTD))))
-(time (rest (list (render-bst BSTE))))
-|#
