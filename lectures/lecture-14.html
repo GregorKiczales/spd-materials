@@ -4,7 +4,7 @@
     <LINK href="../spd-style.css" rel="stylesheet" type="text/css">
   </HEAD>
   
-  <body>
+<body>
 
     <p>[<a href="index.html">Index of Lectures</a>]</p>
 
@@ -23,7 +23,7 @@
       <a href="lecture-11.html">L11</a>
       <a href="lecture-12.html">L12</a>
       <a href="lecture-13.html">L13</a>
-      <a href="lecture-14.html">L14</a>
+      L14
       <a href="lecture-15.html">L15</a>
       <a href="lecture-16.html">L16</a>
       <a href="lecture-17.html">L17</a>
@@ -35,59 +35,86 @@
       ]
     </p>
     
-    <h2>Lecture 01</h2>
+    <h2>Lecture 14</h2>
     
     <h3>Before Lecture</h3>
-    
-    <p>If possible, before lecture 1, please go to the Setup page, which you can access from <a href="https://cs110.students.cs.ubc.ca/admin/links.html">https://cs110.students.cs.ubc.ca/admin/links.html</a> and follow the directions for setting up DrRacket.</p>
-    
-    <h3>During Lecture</h3>
-    
-    <a>This lecture has 3 parts:</a>
-    
-    <ul>
-      <li>An overview of the course content, organization, how you will learn, policies, and how to do well.</li>
-      <li>Primitive data and operations in the Beginning Student Language. Evaluation rules.</li>
-      <li>Function definition and evaluation.</li>
-    </ul>
-      
-    <p>By the end of the lecture - including the post-lecture work - you should be able to:</p>
+
+    <p>Before lecture 14, you should:</p>
 
     <ul>
-      <li>Write expressions using primitive functions and data.</li>
-      <li>Write a simple function definition.</li>
-      <li>Write out the step-by-step evaluation of expressions and simple functions.</li>
+      <li>Use the <a href="m08-raining-eggs-refactor-starter.rkt">m08-raining-eggs-refactor-starter.rkt</a> as additional practice for use built-in abstract function problems.</li>
+
+      <li>On edX work through the Fold Functions pt. 1 unit.</li>
+
     </ul>
+
+    <p>It is crucially important that you be totally comfortable with
+    all of the Abstraction module up through Fold Functions pt. 1
+    before lecture because we will build on it significantly to make
+    much more complicated programs get much much shorter.</p>
+
+    <h3>During Lecture</h3>
+
     
     <p>The starters for this lecture are:</p>
 
     <ul>
-      <li><a href="110-intro.pdf">110-intro.pdf</a></li>
-      <li><a href="m01-primitives-starter.rkt">m01-primitives-starter.rkt</a></li>
-      <li><a href="m01-functions-starter.rkt">m01-functions-starter.rkt</a></li>
+      <li><a href="m08-abstract-fold-definition-starter.rkt">m08-abstract-fold-definition-starter.rkt</a></li>
+      <li><a href="m08-abstract-fold-usages-starter.rkt">m08-abstract-fold-usages-starter.rkt</a></li>
+      <li><a href="m08-abstract-fold-complications-starter.rkt">m08-abstract-fold-complications-starter.rkt</a></li>
     </ul>
 	
     
     <h3>After Lecture</h3>
 
-    <p>Congratulations on finishing lecture 1!  Remember to ask questions anytime something isn't clear in lecture. Forming questions is a key part of learning, so forming and asking questions in lecture is learning!</p>
+    <p>The first thing to do is feel good for working through today's
+      lecture - it is a difficult one. Feel good even if some of it
+      was confusing! We are now past where many intro programming
+      courses go. So don't be surprised if you need a couple of passes
+      through today's material for it to truly sink in.</p>
 
-    <p>To complete the lecture first review primitives-starter (the solution is below).</p>
+    <p>In terms of material we covered in module 8 it is very
+      important to distinguish the different kinds of things we have
+      done with abstract functions:</p>
 
-    <p>Then work through all the sections of Module 1A: BSL.  Once you are done you can complete the functions-starter file and work through it. Remember that reading the solution file before working hard to solve it yourself is the worst way to try and learning this material - you have to struggle through it some yourself before looking at the solution or else you spoil the learning opportunity the problem gives you.</p>
+    <ol>
+      <li>
+	We designed abstract functions, in two different ways:
+	<ul>
+	  <li>from examples (filter2, map2, andmap2)</li>
+	  <li>from a template (foldr2, fold-course)</li>
+	</ul>
 
-    <p>The solutions for this lecture are:</p>
+	<p>As part of the design of these problems we used <em>type
+	    inference</em> to infer the signature of the function based on
+	  it's definition. These functions end up having a template
+	  origin like (listof X) or Course and (listof Course) for
+	  example.</p>
+      </li>
 
-    <ul>
-      <li><a href="m01-primitives-solution.rkt">m01-primitives-solution.rkt</a></li>
-      <li><a href="m01-functions-solution.rkt">m01-functions-solution.rkt</a></li>
-    </ul>
-    
-    <p>BEFORE the next lecture be sure to go to it and do the pre-work it asks for.</p>
+      <li>
+	We used abstract functions to write the definition of other
+	functions we designed. In these cases the template origin of our
+	function is either use-abstract-fn or fn-composition and
+	use-abstract-fn.
+      </li>
+    </ol>
 
-    <p>Again, welcome to 110.  If you work hard and stay caught up we believe you will enjoy discovering programming and a knowing a systemtic approach to solving difficult design problems.</p>
-    
-    <p>Be sure to complete the before lecture section of <a href="lecture-02.html">Lecture 3</a> before that lecture.</p>
+    <p>Whenever you are working with an abstract functions problem it
+      is very important to be sure which of the two you are doing -
+      designing the abstract function, or using an abstract
+      function. Note that the last step of any abstraction from
+      examples is to rewrite the original function definition to use
+      abstract function - but that is a separate and final phase of
+      the abstraction frome examples.</p>
+
+    <p>As always, the best way to review today's material is to rework
+      all three starters.</p>
+
+    <p>Be sure to complete the before lecture section
+    of <a href="lecture-15.html">Lecture 15</a> before that
+    lecture.</p>
+
 
   </body>
 </html>
