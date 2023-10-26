@@ -1,10 +1,38 @@
 
 
 
+00 clickers
 
-render-bst
-avoid duplicate recursive calls
+10 render-bst  [present]
+   avoid duplicate recursive calls
 
+   briefly look at names for intermediate values
+
+25 all-labels
+   refactor to encapsulate [present]
+
+35 all-with-color
+   refactor to encapsulate [class]
+
+   briefly recap on ipad
+
+-30 encapsulate templates (in regions-search-starter) [present]
+
+-25 find-region                    [class]
+    using encapsulated templates
+
+-15 discuss on ipad
+    do not rename inner functions
+    no need to thread string parameter (constant to each search)
+
+
+
+eliminate duplicate RECURSIVE calls
+
+analyze on pad
+do steps on dr racket, highlight on pad
+analyze result on dr. r
+this all links up to the "how many times" clicker problem
 
 
 (define (render-bst t)
@@ -18,17 +46,98 @@ avoid duplicate recursive calls
 
 
 
-all-labels
-refactor to encapsulate [present]
+work backward through the steps
+ - bring definitions together
+ - wrap in define, local; add trampoline
+ - combine origins
+ - eliminate stranded tests
+ - rename other tests
+ - drop stranded signatures
+ - fix @htdf
+
+(@htdf all-labels)
+(@signature Region -> ListOfString)
+;; produce labels of all regions in region (including root)
+(check-expect (all-labels L1) (list "one"))
+(check-expect (all-labels I4) (list "one" "two" "three" "four" "five" "six"))
+
+(@template-origin encapsulated Region ListOfRegion)
+
+(define (all-labels r)
+  (local [(define (all-labels--region r)
+            (cond [(leaf? r) (list (leaf-label r))]
+                  [else      (all-labels--lor (inner-subs r))]))
+
+
+          (define (all-labels--lor lor)
+            (cond [(empty? lor) empty]
+                  [else
+                   (append (all-labels--region (first lor))
+                           (all-labels--lor (rest lor)))]))]
+
+    (all-labels--region r)))
 
 
 
-all-with-color
-refactor to encapsulate [class]
+(@htdf all-with-color)
+(@signature Color Region -> ListOfRegion)
+;; produce all regions with given color
+(check-expect (all-with-color "red" L1) (list L1))
+(check-expect (all-with-color "blue" L1) empty)
+(check-expect (all-with-color "red"
+                              (make-inner "blue"
+                                          (list I4
+                                                (make-leaf "X" 90 "red"))))
+              (list I1 L1 (make-leaf "X" 90 "red")))
+
+(@template-origin Region ListOfRegion encapsulated)
+
+(define (all-with-color c r)
+  (local [(define (all-with-color--region c r)
+            (cond [(leaf? r)
+                   (if (string=? (leaf-color r) c) (list r) empty)]
+                  [else
+                   (if (string=? (inner-color r) c)  
+                       (cons r (all-with-color--lor c (inner-subs r)))
+                       (all-with-color--lor c (inner-subs r)))]))
+
+          (define (all-with-color--lor c lor)
+            (cond [(empty? lor) empty]
+                  [else               
+                   (append (all-with-color--region c (first lor))
+                           (all-with-color--lor c (rest lor)))]))]
+
+    (all-with-color--region c r)))
 
 
-encapsulate templates (in regions-search-starter) [present]
 
-find-region
-using encapsulated templates [class]2
 
+
+
+(@htdf find-region)
+(@signature String Region -> Region or false)
+;; find region w/ given label
+(check-expect (find-region "one" L1) L1)
+(check-expect (find-region "one" L2) false)
+(check-expect (find-region "one" I4) L1)
+(check-expect (find-region "three" I4) L3)
+
+(@template-origin encapsulated Region ListOfRegion try-catch)
+
+(define (find-region l r)
+  (local [(define (fn-for-region r)
+            (cond [(leaf? r)     
+                   (if (string=? l (leaf-label r))
+                       r
+                       false)]
+                  [else
+                   (fn-for-lor (inner-subs r))]))
+
+          (define (fn-for-lor lor)
+            (cond [(empty? lor) false]
+                  [else      
+                   (local [(define try (fn-for-region (first lor)))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lor (rest lor))))]))]
+    (fn-for-region r)))

@@ -30,6 +30,52 @@ When choosing built-in abstract functions yourselves remember:
 (define CIRCLE (circle 10 "solid" "red"))
 
 (@problem 1)
+(@htdf circles)
+(@signature (listof Natural) -> (listof Image))
+;; produce list of solid blue circles of given radii
+(check-expect (circles (list 3))
+              (list (circle 3 "solid" "blue")))
+(check-expect (circles (list 1 2 10))
+              (list (circle 1 "solid" "blue")
+                    (circle 2 "solid" "blue")
+                    (circle 10 "solid" "blue")))
+
+;(define (circles lon) empty)
+
+(@template-origin use-abstract-fn)
+
+(define (circles lon)
+  (local [(@signature Number -> Image)
+          ;; produce one circle of given radius
+          (@template-origin Number)
+          (define (one-circle r)
+            (circle r "solid" "blue"))]
+            
+    (map one-circle lon)))
+
+
+(@problem 2)
+(@htdf keep-in-interval)
+(@signature Integer Integer (listof Integer) -> (listof Integer))
+;; produce list w/ only those numbers in [lo, hi]
+(check-expect (keep-in-interval 0 10 (list -1 0 5 10 12)) (list 0 5 10))
+(check-expect (keep-in-interval -1 1 (list 3 0 5 1 0)) (list 0 1 0))
+
+;(define (keep-in-interval lo hi lon) empty)
+
+(@template-origin use-abstract-fn)
+
+(define (keep-in-interval lo hi lon)
+  (local [(@signature Integer -> boolean)
+          ;; produce true if n is in the interval
+          (@template-origin Integer)
+          (define (in-interval? n)
+            (<= lo n hi))]
+            
+    (filter in-interval? lon)))
+
+
+(@problem 3)
 (@htdf odds-minus-evens)
 (@signature (listof Integer) -> Integer)
 (check-expect (odds-minus-evens (list 3)) 3)
@@ -49,7 +95,7 @@ When choosing built-in abstract functions yourselves remember:
 
 
 
-(@problem 2)
+(@problem 4)
 (@htdf sum-larger-than)
 (@signature Integer (listof Integer) -> Integer) 
 ;; produce sum of all elements of loi > n
@@ -65,7 +111,7 @@ When choosing built-in abstract functions yourselves remember:
     (foldr + 0 (filter >n? loi))))
 
 
-(@problem 3)
+(@problem 5)
 (@htdf boxes)
 (@signature Natural -> Image)   
 ;; produce n+1 nested boxes, the smallest is quite small
@@ -89,7 +135,7 @@ When choosing built-in abstract functions yourselves remember:
     (foldr overlay empty-image (build-list n box))))  
 
 
-(@problem 4)
+(@problem 6)
 (@htdf pyramid)
 (@signature Natural -> Image)
 ;; produce pyramid of circles n high, w n on bottom row 
