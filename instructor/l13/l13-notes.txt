@@ -13,25 +13,27 @@ Today is hard work. Second half of 110 we are going to cover more.
 
 from-examples-starter
 
-problem 1 - extract andmap2 with massaging
+problem 1 - extract andmap2 with massaging [present]
 
-problem 2 - students complete andmap2 later (annotate starter)
+problem 2 - students complete andmap2 later (annotate starter) 
 
-problem 3 - complete filter2, given fn definition, learn type inference
+problem 3 - complete filter2, given fn definition, learn type inference [present, signature interactive]
 
-problem 4 - complete signature for map2 
+problem 4 - complete signature for map2  [class]
 
-
+-40
 
 use-bia-fns starter
 
-quick survey map, filter, foldr
+quick survey map, filter, foldr [present]
 
-circles (map _ lon) [present]
+circles (map _ lon) [present step-by-step template and complete]
 
-sum-larger-than (
+sum-larger-than [present template, class]
 
-explain build-list
+explain build-list [present]
+
+
 
 
 
@@ -182,10 +184,12 @@ explain build-list
   (local [(define (>n? x) (> x n))] 
     (foldr + 0 (filter >n? loi))))
 
+
 (define (boxes n)
   (local [(define (box n)
             (square (+ (* n 10) 1) "outline" "black"))] 
     (foldr overlay empty-image (build-list n box))))
+    
 
 (define (pyramid n)
   (local [(define (one n) CIRCLE)    
