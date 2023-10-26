@@ -115,7 +115,7 @@ When choosing built-in abstract functions yourselves remember:
 (@template-origin use-abstract-fn)
 
 (define (keep-in-interval lo hi lon)
-  (local [(@signature Integer -> boolean)
+  (local [(@signature Integer -> Boolean)
           ;; produce true if n is in the interval
           (@template-origin Integer)
           (define (in-interval? n)

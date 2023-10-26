@@ -27,19 +27,33 @@
         (grade-problem 1
           (weights (*)
 
-            (grade-use-bia-fn all-greater?
-              (@signature (listof Number) Number -> Boolean)
-              [(1 (andmap2 _ _))]
-              #:additional-tests
-              (check-expect (all-greater? (list 2 -3 -4) -6) true)
-              (check-expect (all-greater? (list -2 -3 -4) -3) false))
+            (score-max
+             (grade-use-bia-fn all-greater?
+               (@signature ListOfNumber Number -> Boolean)
+               [(1 (andmap2 _ _))]
+               #:additional-tests
+               (check-expect (all-greater? (list 2 -3 -4) -6) true)
+               (check-expect (all-greater? (list -2 -3 -4) -3) false))
+             (grade-use-bia-fn all-greater?
+               (@signature (listof Number) Number -> Boolean)
+               [(1 (andmap2 _ _))]
+               #:additional-tests
+               (check-expect (all-greater? (list 2 -3 -4) -6) true)
+               (check-expect (all-greater? (list -2 -3 -4) -3) false)))
 
-            (grade-use-bia-fn all-positive?
-              (@signature (listof Number) -> Boolean)
-              [(1 (andmap2 _ _))]
-              #:additional-tests
-              (check-expect (all-positive? (list 2 3 -4)) false)
-                  (check-expect (all-positive? (list 2 3  4)) true))))
+            (score-max
+             (grade-use-bia-fn all-positive?
+               (@signature ListOfNumber -> Boolean)
+               [(1 (andmap2 _ _))]
+               #:additional-tests
+               (check-expect (all-positive? (list 2 3 -4)) false)
+               (check-expect (all-positive? (list 2 3  4)) true))
+             (grade-use-bia-fn all-positive?
+               (@signature (listof Number) -> Boolean)
+               [(1 (andmap2 _ _))]
+               #:additional-tests
+               (check-expect (all-positive? (list 2 3 -4)) false)
+               (check-expect (all-positive? (list 2 3  4)) true)))))
 
         (grade-problem 2
           (grade-htdf andmap2
