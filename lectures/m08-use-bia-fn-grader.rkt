@@ -8,9 +8,36 @@
 (define grader
   (lambda ()
     (grade-submission
-      (weights (.2 .2 #;.2 *) ;!!!
+      (weights (*) 
 
         (grade-problem 1
+          (grade-use-bia-fn circles
+            (@signature (listof Natural) -> (listof Image))
+            [(1 (map _ _))]
+            #:supplied-tests
+            (check-expect (circles (list 3))
+                          (list (circle 3 "solid" "blue")))
+            (check-expect (circles (list 1 2 10))
+                          (list (circle 1 "solid" "blue")
+                                (circle 2 "solid" "blue")
+                                (circle 10 "solid" "blue")))
+            #:additional-tests
+            (check-expect (circles (list 10 20 30))
+                          (list (circle 10 "solid" "blue")
+                                (circle 20 "solid" "blue")
+                                (circle 30 "solid" "blue")))))
+
+        (grade-problem 2
+          (grade-use-bia-fn keep-in-interval
+            (@signature Integer Integer (listof Integer) -> (listof Integer))
+            [(1 (filter _ _))]
+            #:supplied-tests
+            (check-expect (keep-in-interval 0 10 (list -1 0 5 10 12)) (list 0 5 10))
+            (check-expect (keep-in-interval -1 1 (list 3 0 5 1 0)) (list 0 1 0))
+            #:additional-tests
+            (check-expect (keep-in-interval 1 5 (list 0 1 2 3 4 5 6 7)) (list 1 2 3 4 5))))
+
+        (grade-problem 3
           (grade-use-bia-fn odds-minus-evens
             (@signature (listof Integer) -> Integer)                            
             [(1 (foldr _ _))]
@@ -21,7 +48,7 @@
             #:additional-tests
             (check-expect (odds-minus-evens (list 1 3 5  2 6)) 1)))
 
-        (grade-problem 2
+        (grade-problem 4
           (grade-use-bia-fn sum-larger-than
             (@signature Integer (listof Integer) -> Integer)
             [(1.0 (foldr _ (filter _ _)))]
@@ -33,7 +60,7 @@
             #:additional-tests
             (check-expect (sum-larger-than 5 (list 1 2 3 4 5 6 7 8 9)) (+ 6 7 8 9))))
 
-        (grade-problem 3
+        (grade-problem 5
           (grade-use-bia-fn boxes
             (@signature Natural -> Image)
             [(1 (foldr _ (build-list _ _)))
@@ -51,8 +78,7 @@
                                    (square 11 "outline" "black")
                                    (square 1 "outline" "black")))))
 
-        #; ;!!! make this work, infer-biaf-compositions isn't up to it now
-        (grade-problem 4
+        (grade-problem 6
           (grade-use-bia-fn pyramid                            
             (@signature Natural -> Image)
             [(1 (foldr _ (build-list _ (foldr _ (build-list _ _)))))]

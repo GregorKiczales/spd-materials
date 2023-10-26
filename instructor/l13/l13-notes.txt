@@ -27,10 +27,15 @@ problem 4 - complete signature for map2
 
 
 
-
 use-bia-fns starter
 
 setup concept of map/filter/fold/andmap/ asking does this fit what fn will do
+
+2 first two of the now very detailed starter
+
+stress importance of doing work after class for the midterm
+
+
 
 ----
 
