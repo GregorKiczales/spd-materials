@@ -27,42 +27,19 @@
         (grade-problem 1
           (weights (*)
 
-            (grade-htdf all-greater?
-              (weights (*)
-                (grade-signature 1 ((listof Number) Number -> Boolean))
-                (grade-tests-validity (lon n) r
-                  (list? lon)
-                  (andmap number? lon)
-                  (number? n)
-                  (equal? r (%%all-greater? lon n)))
-                (grade-argument-thoroughness 
-                  (per-args (lon n)
-                    (false? (%%all-greater? lon n))
-                    (%%all-greater? lon n)))
-                (grade-use-bia-fn all-greater?
-                  (@signature (listof Number) Number -> Boolean)
-                  [(1 (andmap2 _ _))]
-                  #:additional-tests
-                  (check-expect (all-greater? (list 2 -3 -4) -6) true)
-                  (check-expect (all-greater? (list -2 -3 -4) -3) false))))
+            (grade-use-bia-fn all-greater?
+              (@signature (listof Number) Number -> Boolean)
+              [(1 (andmap2 _ _))]
+              #:additional-tests
+              (check-expect (all-greater? (list 2 -3 -4) -6) true)
+              (check-expect (all-greater? (list -2 -3 -4) -3) false))
 
-            (grade-htdf all-positive?
-              (weights (*)
-                (grade-signature ((listof Number) -> Boolean))
-                (grade-tests-validity (lon) r
-                  (list? lon)                                      
-                  (andmap number? lon)
-                  (equal? r (%%all-positive? lon)))
-                (grade-argument-thoroughness 
-                  (per-args (lon)
-                    (false? (%%all-positive? lon))
-                    (%%all-positive? lon)))
-                (grade-use-bia-fn all-positive?
-                  (@signature (listof Number) -> Boolean)
-                  [(1 (andmap2 _ _))]
-                  #:additional-tests
-                  (check-expect (all-positive? (list 2 3 -4)) false)
-                  (check-expect (all-positive? (list 2 3  4)) true))))))
+            (grade-use-bia-fn all-positive?
+              (@signature (listof Number) -> Boolean)
+              [(1 (andmap2 _ _))]
+              #:additional-tests
+              (check-expect (all-positive? (list 2 3 -4)) false)
+                  (check-expect (all-positive? (list 2 3  4)) true))))
 
         (grade-problem 2
           (grade-htdf andmap2
