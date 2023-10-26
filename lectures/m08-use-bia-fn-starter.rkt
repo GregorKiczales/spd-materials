@@ -83,15 +83,15 @@ When choosing built-in abstract functions yourselves remember:
 
 ;;
 ;; map signature is (X -> Y) (listof X) -> (listof Y)
-;; we know that lon is (list of Number),          so X = Number
+;; we know that lon is (list of Natural),          so X = Natural
 ;; we know that we want to produce (listof Image) so Y = Image
 ;; Now we can upate template to:
 ;;
 
 (define (circles lon)
-  (local [(@signature Number -> Image)
+  (local [(@signature Natural -> Image)
           ;; produce one circle of given radius
-          (@template-origin Number)
+          (@template-origin Natural)
           (define (one-circle r)
             (... r))]
     (map one-circle lon)))

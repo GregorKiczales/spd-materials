@@ -29,8 +29,7 @@ quick survey map, filter, foldr
 
 circles (map _ lon) [present]
 
-keep-in-interval (foldr _ _ (filter _ lon))
-
+sum-larger-than (
 
 explain build-list
 

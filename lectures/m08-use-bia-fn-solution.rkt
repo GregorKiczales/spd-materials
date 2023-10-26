@@ -8,25 +8,6 @@
 
 (@cwl ???) ;replace ??? with your cwl
 
-#|
-Complete the design of each of the following functions.  You MUST use the 
-template origin provided, which is always either use-abstract-fn or
-fn-composition use-abstract-fn.  To help you learn how to write functions
-that use built-in abstract functions we  provide the template or other
-suggestions in some of the problems.
-
-When choosing built-in abstract functions yourselves remember:
-
- - map always produces a list of the same length as it's argument
- - filter produces a list of all, some or none of the elements in its 
-   argument
- - foldr can produce any kind of value at all
- - andmap and ormap produce boolean values
- - buildlist produces a list with the same number of elements as its
-   argument
-
-|#
-
 (define CIRCLE (circle 10 "solid" "red"))
 
 (@problem 1)
@@ -45,9 +26,9 @@ When choosing built-in abstract functions yourselves remember:
 (@template-origin use-abstract-fn)
 
 (define (circles lon)
-  (local [(@signature Number -> Image)
+  (local [(@signature Natural -> Image)
           ;; produce one circle of given radius
-          (@template-origin Number)
+          (@template-origin Natural)
           (define (one-circle r)
             (circle r "solid" "blue"))]
             
