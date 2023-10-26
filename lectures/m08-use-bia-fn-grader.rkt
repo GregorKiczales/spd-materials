@@ -61,6 +61,16 @@
             (check-expect (sum-larger-than 5 (list 1 2 3 4 5 6 7 8 9)) (+ 6 7 8 9))))
 
         (grade-problem 5
+          (grade-use-bia-fn fact
+            (@signature Natural -> Natural)
+            [(1.0 (foldr _ (build-list _ _)))]
+            #:supplied-tests
+            (check-expect (fact 0) 1)
+            (check-expect (fact 3) (* 3 2 1))
+            #:additional-tests
+            (check-expect (fact 5) (* 5 4 3 2 1))))
+
+        (grade-problem 6
           (grade-use-bia-fn boxes
             (@signature Natural -> Image)
             [(1 (foldr _ (build-list _ _)))
@@ -78,7 +88,7 @@
                                    (square 11 "outline" "black")
                                    (square 1 "outline" "black")))))
 
-        (grade-problem 6
+        (grade-problem 7
           (grade-use-bia-fn pyramid                            
             (@signature Natural -> Image)
             [(1 (foldr _ (build-list _ (foldr _ (build-list _ _)))))]

@@ -1,10 +1,5 @@
 
-
-clickers  D C  B
-
-goal of clickers is to clarify first class functions
-
-- can demonstrate QUICKLY ONCE with function call evaluation step
+clicker happens at beginning of map2 problem
 
 
 NOTE: Do not drop problem 1 from functions starter. We tried that it was a big mistake! It means
@@ -14,26 +9,30 @@ that students didn't see the massaging before abstraction example.
 ----
 Today is hard work. Second half of 110 we are going to cover more.
 
-All present/interactive lecture.
 
-functions-starter
+
+from-examples-starter
+
 problem 1 - extract andmap2 with massaging
 
 problem 2 - students complete andmap2 later (annotate starter)
 
 problem 3 - complete filter2, given fn definition, learn type inference
 
-problem 4 - complete signature for map2
+problem 4 - complete signature for map2 
 
 
 
 use-bia-fns starter
 
-setup concept of map/filter/fold/andmap/ asking does this fit what fn will do
+quick survey map, filter, foldr
 
-2 first two of the now very detailed starter
+circles (map _ lon) [present]
 
-stress importance of doing work after class for the midterm
+keep-in-interval (foldr _ _ (filter _ lon))
+
+
+explain build-list
 
 
 
@@ -61,8 +60,9 @@ use highlighting on pad to show what is matching / different
         [else
          (and (positive? (first lon))
               (all-positive? (rest lon)))]))
-		
 
+
+use slide for
 (define (all-greater? lon x)
   ;; NOTE: >x? is a closure, a locally defined function that refers to
   ;;       a parameter of the surrounding function
@@ -92,7 +92,6 @@ markup for @to, checks, purpose, signature
         [else
          (and (p (first lox))
               (andmap2 p (rest lox)))]))
-
 
 
 
@@ -131,60 +130,46 @@ inference
              (filter2 p (rest lox)))]))
 
 
-problem 3
-all-greater-than
-
-origin
-template (filter2 ... lon)
-<some fn that tells whether x is >n ?>
-define locally
-use in filter
-
-
-closure again
-
-
-problem 5 (interactive)
-
-type inference...
-
-@template-origin
-
-tests - these are combination and base  +,0  *,1  string-append,""
-
-;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
-nobody writes that the first time!
-
-
-
 
 ;; links -> language -> biaf list
 
-draw a map, a filter, a foldr
+using slides
+
+signatures
+
+descriptions
 
 look at what the function consumes and produces does it maych a bia-fn
 
 <stop here>
 
 
-
-
 use-bia-fn-starter
-problems 1, 2, 3
+problems 1 [present] 2 [class]  4 [present, some interactive]
 
 first figure out the fns to use, based on args and results
 
+explain build-list
 
-odds-minus-evens
+(define (circles lon)
+  (local [(@signature Number -> Image)
+          ;; produce one circle of given radius
+          (@template-origin Number)
+          (define (one-circle r)
+            (circle r "solid" "blue"))]
+            
+    (map one-circle lon)))
 
-List -> Number  ---> foldr
 
-(foldr ... loi)
+(define (keep-in-interval lo hi lon)
+  (local [(@signature Integer -> boolean)
+          ;; produce true if n is in the interval
+          (@template-origin Integer)
+          (define (in-interval? n)
+            (<= lo n hi))]
+            
+    (filter in-interval? lon)))
 
-(foldr +/- loi)
-
-(define (+/- i rnr)
-  (... i rnr))
 
 (define (odds-minus-evens loi)
   (local [(define (+/- n rnr)
@@ -194,34 +179,20 @@ List -> Number  ---> foldr
     (foldr +/- 0 loi)))
 
 
-sum-larger-than
-
-list -> sublist -> number
-
-(foldr ... ... (filter ... loi))
-
-(define (sum-larger-than n loi)
-  (local [(define (>n? x) (> x n))]	
+(define (sum-larger-than n loi)  
+  (local [(define (>n? x) (> x n))] 
     (foldr + 0 (filter >n? loi))))
-
-
-explain build-list in interactions area
-(build-list 3 sqr)
-(list (sqr 0) (sqr 1) (sqr 2))
-doesn't have to produce numbers
-
-(build-list 2 number->string)
-(list (number->string 0) (number->string 1))
-
-boxes
-
-number -> image (n overlayed images)
-
-number -> list of images -> single image
-
-(foldr ... ... (build-list n ...))
 
 (define (boxes n)
   (local [(define (box n)
-            (square (+ (* n 10) 1) "outline" "black"))]
+            (square (+ (* n 10) 1) "outline" "black"))] 
     (foldr overlay empty-image (build-list n box))))
+
+(define (pyramid n)
+  (local [(define (one n) CIRCLE)    
+          (define (row   n) (foldr beside empty-image (build-list n one)))
+          (define (stack n) (foldr above  empty-image (build-list n row)))]
+    
+    ;; the visible pyramid is one smaller than the 
+    ;; one that includes the base case empty-images
+    (stack (add1 n))))

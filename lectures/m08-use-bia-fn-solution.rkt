@@ -110,8 +110,20 @@ When choosing built-in abstract functions yourselves remember:
   (local [(define (>n? x) (> x n))] 
     (foldr + 0 (filter >n? loi))))
 
-
 (@problem 5)
+(@htdf fact)
+(@signature Natural -> Natural)
+;; produce n! (factorial)
+(check-expect (fact 0) 1)
+(check-expect (fact 3) (* 3 2 1))
+
+(@template-origin fn-composition use-abstract-fn)
+
+(define (fact n)
+  (foldr * 1 (build-list n add1)))
+
+
+(@problem 6)
 (@htdf boxes)
 (@signature Natural -> Image)   
 ;; produce n+1 nested boxes, the smallest is quite small
@@ -135,7 +147,7 @@ When choosing built-in abstract functions yourselves remember:
     (foldr overlay empty-image (build-list n box))))  
 
 
-(@problem 6)
+(@problem 7)
 (@htdf pyramid)
 (@signature Natural -> Image)
 ;; produce pyramid of circles n high, w n on bottom row 

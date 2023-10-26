@@ -60,7 +60,33 @@ When choosing built-in abstract functions yourselves remember:
 ;; Produces list of same length as argument; Every element of result
 ;; list is a function of corresponding element of argument list.
 ;; use map
+;;
 (@template-origin use-abstract-fn)
+
+;;
+;; First stage of templating produces this:
+;;
+#;
+(define (circles lon)
+  (map one-circle lon))
+
+;;
+;; But then we realize that the helper to go in ... probably does not
+;; already exist in the help desk.  So we will have to design a local
+;; helper.  Update the template to:
+;;
+#;
+(define (circles lon)
+  (local [(define (one-circle r)
+            (... r))]
+    (map one-circle lon)))
+
+;;
+;; map signature is (X -> Y) (listof X) -> (listof Y)
+;; we know that lon is (list of Number),          so X = Number
+;; we know that we want to produce (listof Image) so Y = Image
+;; Now we can upate template to:
+;;
 
 (define (circles lon)
   (local [(@signature Number -> Image)
@@ -68,9 +94,11 @@ When choosing built-in abstract functions yourselves remember:
           (@template-origin Number)
           (define (one-circle r)
             (... r))]
-            
-    (map one-circle lon))) ;since we are using map we know
-;;                         ;signature the helper has to have
+    (map one-circle lon)))
+
+;;
+;; Just need to fill in body of one-circle!
+;;
 
 
 (@problem 2)
@@ -94,9 +122,6 @@ When choosing built-in abstract functions yourselves remember:
             (... n))]
             
     (filter in-interval? lon)))
-
-
-
 
 
 (@problem 3)
@@ -139,6 +164,21 @@ When choosing built-in abstract functions yourselves remember:
 
 
 (@problem 5)
+(@htdf fact)
+(@signature Natural -> Natural)
+;; produce n! (factorial)
+(check-expect (fact 0) 1)
+(check-expect (fact 3) (* 3 2 1))
+
+(@template-origin fn-composition use-abstract-fn)
+
+(define (fact n)
+  (foldr ... ... (build-list n ...)))
+
+
+
+
+(@problem 6)
 (@htdf boxes)
 (@signature Natural -> Image)
 ;; produce n+1 nested boxes, the smallest is quite small
@@ -184,7 +224,7 @@ When choosing built-in abstract functions yourselves remember:
   (foldr ... ... (build-list n ...)))
 
 
-(@problem 6)
+(@problem 7)
 (@htdf pyramid)
 (@signature Natural -> Image)
 ;; produce pyramid of circles n high, w n on bottom row
