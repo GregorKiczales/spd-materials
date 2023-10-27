@@ -16,7 +16,8 @@
 ;; (list "a" "b" ... "x" "y" ...)
 ;;
 ;; You are basically going to design the function append using a cross product 
-;; of type comments table. Be sure to simplify your design as much as possible. 
+;; of type comments table. Be sure to simplify your design as much as possible.
+;; You MUST NOT USE append in your solution!
 ;;
 ;; Hint: Think carefully about the values of both lists. You might see a way to 
 ;; change a cell's content so that 2 cells have the same value.
