@@ -80,13 +80,13 @@
             (check-expect (boxes 0) empty-image)
             (check-expect (boxes 1) (square 1 "outline" "black"))
             (check-expect (boxes 2)
-                          (overlay (square 11 "outline" "black")
-                                   (square 1 "outline" "black")))
+                          (overlay (square  1 "outline" "black")
+                                   (square 11 "outline" "black")))
             #:additional-tests
             (check-expect (boxes 3)
-                          (overlay (square 21 "outline" "black")
+                          (overlay (square  1 "outline" "black")
                                    (square 11 "outline" "black")
-                                   (square 1 "outline" "black")))))
+                                   (square 21 "outline" "black")))))
 
         (grade-problem 7
           (grade-use-bia-fn pyramid                            

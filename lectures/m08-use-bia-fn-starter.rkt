@@ -202,9 +202,9 @@ When choosing built-in abstract functions yourselves remember:
 ;;      (list (square 1 "outline" "black")
 ;;            (square 11 "outline" "black")
 ;;            (square 21 "outline" "black")) ->
-;;      (overlay (square 21 "outline" "black")
+;;      (overlay (square  1 "outline" "black")
 ;;               (square 11 "outline" "black")
-;;               (square  1 "outline" "black"))
+;;               (square 21 "outline" "black"))
 ;;
 ;; which is (foldr (map ... (map ... (build-list n ...))))
 ;;
@@ -212,9 +212,9 @@ When choosing built-in abstract functions yourselves remember:
 ;; 3 -> (list (square 1 "outline" "black")
 ;;            (square 11 "outline" "black")
 ;;            (square 21 "outline" "black")) ->
-;;      (overlay (square 21 "outline" "black")
+;;      (overlay (square  1 "outline" "black")
 ;;               (square 11 "outline" "black")
-;;               (square  1 "outline" "black"))
+;;               (square 21 "outline" "black"))
 ;;
 ;; which is (foldr ... ... (build-list n ...))
 ;;
