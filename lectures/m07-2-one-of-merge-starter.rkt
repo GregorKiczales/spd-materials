@@ -19,14 +19,12 @@ and the correspondence between table cells and cond cases.
 For example:
 
   (merge (list 2 3 5) (list 1 4 6)) --> (list 1 2 3 4 5 6) 
-  
-As a reminder, here is a data definition for a list of numbers To 
-save space later we are calling it LON instead of ListOfNumber
+
 |#
 
 ;; Data Definitions:
 ;;
-;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LON FOR ListOfString.
+;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LON FOR ListOfNumber.
 ;;
 
 (@htdd LON)
