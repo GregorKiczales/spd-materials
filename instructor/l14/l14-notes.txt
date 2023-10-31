@@ -4,21 +4,21 @@ intro slide
 
 Clickers during lecture.
 
-  foldr [present fn-defn, tests]
-  foldr [interactive signature]
+     foldr [present fn-defn, tests]
+     foldr [interactive signature]
 
-  clicker 1 freebee
-  clicker 2
-  clicker 3
+     clicker 1 freebee
+     clicker 2
+     clicker 3
 
-  fold-course
-    fn-defn   [present]
-    copy      [interactive, use slide]
-    count     [interactive, use slide]
-    signature [interactive]
-    purpose   [present]
+:25  fold-course
+     fn-defn   [present]
+     copy      [interactive, use slide]
+     count     [interactive, use slide]
+     signature [interactive]
+     purpose   [present]
 
-  all-course-numbers [class]
+:45  all-course-numbers [class]
 
   clicker 4
 
