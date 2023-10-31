@@ -116,13 +116,13 @@
 ;; fail.
 ;;
 
-(@htdf find-credits)
+(@htdf find-w-credits)
 (@signature Course Natural -> Natural or false)
-;; produce credits of first course w/ given number of credits; or fail
-(check-expect (find-credits C189 189) 1)
-(check-expect (find-credits C189 210) false)
-(check-expect (find-credits C110 310) 4)
-(check-expect (find-credits C110 349) false)
+;; produce course number of first course w/ given number of credits; or fail
+(check-expect (find-w-credits C189 1) 189)
+(check-expect (find-w-credits C189 4) false)
+(check-expect (find-w-credits C110 3) 203)
+(check-expect (find-w-credits C110 5) false)
 
 
 ;;
@@ -131,10 +131,10 @@
 ;;
 (@template-origin use-abstract-fn)
 
-(define (find-credits c0 n)
+(define (find-w-credits c0 n)
   (local [(define (c1 num creds rmr)
-            (if (= num n)
-                creds
+            (if (= creds n)
+                num
                 rmr))
           (define (c2 rmr rnr)
             (if (not (false? rmr))

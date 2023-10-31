@@ -115,13 +115,13 @@
 (define (courses-w-credits c0 n)
   (local [(define (c1 number credits rmr)
             (if (>= credits n)
-                (cons <<course>> rmr)      ;<<<don't have the course to put here!
+                (cons <<course>> rmr)    ;<<<don't have the course to put here!
                 rmr))
           (define c2 append)
           (define b1 empty)]
     (fold-course c1 c2 b1 c0)))
 
-;; Instead we have templates with the original encapsulated type templates
+;; Instead we use the original encapsulated type templates
 |#
 
 (@template-origin Course (listof Course) encapsulated)
@@ -153,13 +153,13 @@
 ;; solutions that order the design this way.
 ;;
 (@problem 2)
-(@htdf find-credits)
+(@htdf find-w-credits)
 (@signature Course Natural -> Natural or false)
 ;; search tree for course w/ given number; if found produce credits
-(check-expect (find-credits C189 189) 1)
-(check-expect (find-credits C189 210) false)
-(check-expect (find-credits C110 310) 4)
-(check-expect (find-credits C110 349) false)
+(check-expect (find-w-credits C189 1) 189)
+(check-expect (find-w-credits C189 4) false)
+(check-expect (find-w-credits C110 3) 203)
+(check-expect (find-w-credits C110 5) false)
 
 
 #|
@@ -167,15 +167,15 @@
 ;; This searches the entire tree every time! It does not stop at the first
 ;; course found.
 ;;
-;; So we should use the templates instead.
+;; So we should use the original encapsulated templates instead.
 ;;
 
 (@template-origin use-abstract-fn)
 
-(define (find-credits c0 n)
+(define (find-w-credits c0 n)
   (local [(define (c1 num creds rmr)
-            (if (= num n)
-                creds
+            (if (= creds n)
+                num
                 rmr))
           (define (c2 rmr rnr)
             (if (not (false? rmr))
@@ -187,10 +187,10 @@
 
 (@template-origin Course (listof Course) try-catch encapsulated)
 
-(define (find-credits c0 n)
+(define (find-w-credits c0 n)
   (local [(define (fn-for-course c)
-            (if (= (course-number c) n) 
-                (course-credits c)  
+            (if (= (course-credits c) n) 
+                (course-number c)
                 (fn-for-loc (course-dependents c))))
 
           (define (fn-for-loc loc)
