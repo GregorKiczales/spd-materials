@@ -1,7 +1,4 @@
 
-3:10, start at x6:50
-
-
 intro slide
 
 
@@ -24,50 +21,49 @@ poll questions
 
 
 
-problem 5 - design foldr2 from template   MOVES TO NEXT LECTURE
+(@htdf foldr2)
+(@signature (X Y -> Y) Y (listof X) -> Y)
+;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
+(check-expect (foldr2 cons empty (list 1 2 3)) (list 1 2 3))
+(check-expect (foldr2 cons
+                      empty
+                      (cons 1 (cons 2 (cons 3 empty))))
+              (cons 1 (cons 2 (cons 3 empty))))
 
+(check-expect (foldr2 + 0 (list 1 2 3)) 6)
+(check-expect (foldr2 * 1 (list 2 3 4)) 24)
+(check-expect (foldr2 string-append "" (list "foo" "bar" "baz"))
+              "foobarbaz")
+(check-expect (local [(define (+to-string s y)
+                        (string-append (number->string s) y))]
+                (foldr2 +to-string "" (list 1 37 65)))
+              "13765")
+
+(@template-origin (listof X))
+
+(define (foldr2 fn b lox)
+  (cond [(empty? lox) b]
+        [else     
+         (fn (first lox)
+             (foldr2 fn b (rest lox)))]))
 
 
 
 (@htdf fold-course)
-
-PRESENT QUICKLY
-
-(@template-origin Course (listof Course) encapsulated)
-
-
-(define (fold-course c1 c2 b1 c0)
-  (local [(define (fn-for-course c)  ;--> X
-            (c1 (course-number c)
-                (course-credits c)
-                (fn-for-loc (course-dependents c))))
-
-          (define (fn-for-loc loc)   ;--> Y
-            (cond [(empty? loc) b1]
-                  [else
-                   (c2 (fn-for-course (first loc))
-                       (fn-for-loc (rest loc)))]))]
-
-    (fn-for-course c0)))
-
-
-
-
-
-
-PRESENT
-
+(@signature (Natural Natural Y -> X) (X Y -> Y) Y Course -> X) 
 ;; abstract fold for Course
-;; copy test
 (check-expect (fold-course make-course cons empty C110) C110)
-;; count test
-;; sketch out using template as scratch paper
 (check-expect (local [(define (c1 n cr rmr) (add1 rmr))
                       (define (c2 rmr rnr) (+ rmr rnr))
                       (define b1 0)]
                 (fold-course c1 c2 b1 C110))
               20)
 
+
+
+
+
+PRESENT
 
 INTERACTIVE (show adding X and Y, start with first line)
 (@signature _ _ _ _ -> _)
@@ -101,6 +97,7 @@ CLASS (set them up to use template first)
     (fold-course c1 append empty c)))
 
 
+sketch up on slide, finish
 LATER
 
 (@htdf total-credits)
@@ -120,7 +117,7 @@ LATER
 
 
 
-CLASS at up through markup templates
+CLASS up through markup templates
 then present what to use for course ???
 --> can't use fold fn to get original compound data values
 

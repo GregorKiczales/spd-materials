@@ -88,8 +88,9 @@
 (@problem 1)
 #|
 
-The first step in designing an abstract fold function is always the same.
-Copy the encapsulated templates, and add one parameter for each set of ...
+The first step in designing an abstract fold function is always the same -
+copy the encapsulated templates, and add one parameter for each set of ...
+
 By convention the parameters that stand for functions go first, the parameters
 that stand for base values go after that, and the data always goes last. We
 have done this first step for you below.
@@ -105,7 +106,6 @@ function definition and the two following check-expects:
 
 
 |#
-
 
 (@htdf fold-course)
 

@@ -17,8 +17,8 @@ suggestions in some of the problems.
 
 When choosing built-in abstract functions yourselves remember:
 
- - map always produces a list of the same length as it's argument.
-   In general the elememts of the result list are not the same as
+ - map always produces a list of the same length as its argument.
+   In general the elements of the result list are not the same as
    the argument list.
 
     (map add1 (list 1 2 3)) -> (list 2 3 4))
@@ -68,7 +68,7 @@ When choosing built-in abstract functions yourselves remember:
 ;;
 #;
 (define (circles lon)
-  (map one-circle lon))
+  (map ... lon))
 
 ;;
 ;; But then we realize that the helper to go in ... probably does not

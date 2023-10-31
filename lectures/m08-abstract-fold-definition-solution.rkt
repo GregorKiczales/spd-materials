@@ -63,14 +63,20 @@
 (@htdf foldr2)
 (@signature (X Y -> Y) Y (listof X) -> Y)
 ;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
+(check-expect (foldr2 cons empty (list 1 2 3)) (list 1 2 3))
+(check-expect (foldr2 cons
+                      empty
+                      (cons 1 (cons 2 (cons 3 empty))))
+              (cons 1 (cons 2 (cons 3 empty))))
+
 (check-expect (foldr2 + 0 (list 1 2 3)) 6)
 (check-expect (foldr2 * 1 (list 2 3 4)) 24)
+(check-expect (foldr2 string-append "" (list "foo" "bar" "baz"))
+              "foobarbaz")
 (check-expect (local [(define (+to-string s y)
                         (string-append (number->string s) y))]
                 (foldr2 +to-string "" (list 1 37 65)))
               "13765")
-(check-expect (foldr2 string-append "" (list "foo" "bar" "baz"))
-              "foobarbaz")
 
 (@template-origin (listof X))
 
