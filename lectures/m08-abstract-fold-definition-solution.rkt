@@ -59,7 +59,7 @@
     (fn-for-course c0)))
 
 
-(@problem 3)
+(@problem 1)
 (@htdf foldr2)
 (@signature (X Y -> Y) Y (listof X) -> Y)
 ;; from fn b (list x0 x1...) produce (fn x0 (fn x1 ... b))
@@ -87,7 +87,7 @@
              (foldr2 fn b (rest lox)))]))
 
 
-(@problem 1)
+(@problem 2)
 (@htdf fold-course)
 (@signature (Natural Natural Y -> X) (X Y -> Y) Y Course -> X) 
 ;; abstract fold for Course

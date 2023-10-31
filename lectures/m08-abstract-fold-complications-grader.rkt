@@ -24,21 +24,6 @@
                                                              C322 C310 C319 C311 C312 C302 C303))))
                      (weights (*)
                        (grade-submitted-tests 1 4)
-                       (grade-template-origin 1 (Course (listof Course) encapsulated)))))))
-        (grade-problem 2
-          (let* ([htdf   (car (context))]
-                 [defns  (htdf-defns htdf)]
-                 [called (called-fn-names (caddr (car defns)))])
-            (begin (ensure (not (ormap (lambda (f) (member f '(foldr foldl fold-course))) called))
-                           "must not call abstract functions in the body of defined function")
-                   (ensure-unchanged '((@signature Course Natural -> Natural or false)
-                                       (check-expect (find-course C189 189) 1)
-                                       (check-expect (find-course C189 210) false)
-                                       (check-expect (find-course C110 310) 4)
-                                       (check-expect (find-course C110 349) false)))
-                   (grade-htdf find-course
-                     (weights (*)
-                      (grade-submitted-tests 1 4)
-                      (grade-template-origin (Course (listof Course) encapsulated try-catch)))))))))))
+                       (grade-template-origin 1 (Course (listof Course) encapsulated)))))))))))
           
             

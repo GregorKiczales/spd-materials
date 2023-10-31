@@ -2,23 +2,31 @@
 intro slide
 
 
-:03
+Clickers during lecture.
 
-poll questions
+  foldr [present fn-defn, tests]
+  foldr [interactive signature]
 
-1 C.  can't be a or be, number of args to fn, or B order of args to c2
+  clicker 1 freebee
+  clicker 2
+  clicker 3
 
-2 A.
+  fold-course
+    fn-defn   [present]
+    copy      [interactive, use slide]
+    count     [interactive, use slide]
+    signature [interactive]
+    purpose   [present]
 
-3 C.  classic fold (use paper analogy)
+  all-course-numbers [class]
 
-4 C
+  clicker 4
 
-5 D
+  total-credits [later]
 
+  courses-w-credits [interactive, present]
 
-:15
-
+  find-course [interactive, present]
 
 
 (@htdf foldr2)
@@ -46,6 +54,9 @@ poll questions
         [else     
          (fn (first lox)
              (foldr2 fn b (rest lox)))]))
+
+
+
 
 
 

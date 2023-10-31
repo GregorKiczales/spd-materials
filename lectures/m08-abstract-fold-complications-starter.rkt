@@ -116,12 +116,29 @@
 ;; fail.
 ;;
 
-(@htdf find-course)
+(@htdf find-credits)
 (@signature Course Natural -> Natural or false)
-;; search tree for course w/ given number; if found produce credits
-(check-expect (find-course C189 189) 1)
-(check-expect (find-course C189 210) false)
-(check-expect (find-course C110 310) 4)
-(check-expect (find-course C110 349) false)
+;; produce credits of first course w/ given number of credits; or fail
+(check-expect (find-credits C189 189) 1)
+(check-expect (find-credits C189 210) false)
+(check-expect (find-credits C110 310) 4)
+(check-expect (find-credits C110 349) false)
 
-(define (find-course c n) c)
+
+;;
+;; This approach produces the correct answer with the fold function, but
+;; does it really meet the purpose of the function?
+;;
+(@template-origin use-abstract-fn)
+
+(define (find-credits c0 n)
+  (local [(define (c1 num creds rmr)
+            (if (= num n)
+                creds
+                rmr))
+          (define (c2 rmr rnr)
+            (if (not (false? rmr))
+                rmr
+                rnr))]
+
+    (fold-course c1 c2 false c0)))

@@ -153,23 +153,26 @@
 ;; solutions that order the design this way.
 ;;
 (@problem 2)
-(@htdf find-course)
+(@htdf find-credits)
 (@signature Course Natural -> Natural or false)
 ;; search tree for course w/ given number; if found produce credits
-(check-expect (find-course C189 189) 1)
-(check-expect (find-course C189 210) false)
-(check-expect (find-course C110 310) 4)
-(check-expect (find-course C110 349) false)
+(check-expect (find-credits C189 189) 1)
+(check-expect (find-credits C189 210) false)
+(check-expect (find-credits C110 310) 4)
+(check-expect (find-credits C110 349) false)
 
 
 #|
-;; this produces the correct answer with the fold function, but it
-;; searches the entire tree every time, rather than stopping when it
-;; gets to the result it wants to find. So we should use the templates.
+;; 
+;; This searches the entire tree every time! It does not stop at the first
+;; course found.
+;;
+;; So we should use the templates instead.
+;;
 
 (@template-origin use-abstract-fn)
 
-(define (find-course c0 n)
+(define (find-credits c0 n)
   (local [(define (c1 num creds rmr)
             (if (= num n)
                 creds
@@ -184,7 +187,7 @@
 
 (@template-origin Course (listof Course) try-catch encapsulated)
 
-(define (find-course c0 n)
+(define (find-credits c0 n)
   (local [(define (fn-for-course c)
             (if (= (course-number c) n) 
                 (course-credits c)  
