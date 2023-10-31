@@ -74,7 +74,7 @@
 
 
 
-(@template-origin ListOfNumber)
+(@template-origin (listof X))
 
 (define (fn-for-lox lox)
   (cond [(empty? lox) (...)]
@@ -85,7 +85,7 @@
 
 
 
-(@problem 1)
+(@problem 2)
 #|
 
 The first step in designing an abstract fold function is always the same -
