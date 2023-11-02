@@ -4,7 +4,7 @@ Intro -
 done learning SR w/ NR - will move on to genrec
 will continue to use SR all the time
 
-difference between sr (natural recursion) and genrec
+brief difference between sr (natural recursion) and genrec
 
 
 setup qsort by walking through picture
@@ -46,18 +46,30 @@ interrupt to setup that it's two filters
 
 (@template-origin genrec use-abstract-fn)
 
+
 (define (qsort lon)
-  (cond [(empty? lon) empty]
-        [else
+  ;; Base case: empty
+  ;; Reduction: strict subset (at least one element removed) from lon
+  ;; Argument: repeated strict subset of list always reaches empty
+  (cond [(empty? lon) empty]    
+        [else     
          (local [(define p (first lon))
-                 (define (<p? x) (< x p))
+                 (define (<p? x) (< x p))    
                  (define (>p? x) (> x p))]
            
-           (append (qsort (filter <p? lon))
-                   (list p)
-                   (qsort (filter >p? lon))))]))
+           (append (qsort (filter <p? (rest lon)))
+                   (list p)     
+                   (qsort (filter >p? (rest lon)))))]))
 
 
+Now discuss genrec again
+  show that they are new lists
+  but form a strict subset because of first/rest
+  do the argument
+
+  ;; Base case: empty
+  ;; Reduction: strict subset (at least one element removed) from lon
+  ;; Argument: repeated strict subset of list always reaches empty
 
 clickers, all sections same problems
 
@@ -65,10 +77,6 @@ A, C, C
 
 C, ???
 
-
-  ;; Base case: empty
-  ;; Reduction: strict subset (at least one element removed) from lon
-  ;; Argument: repeated strict subset of list always reaches empty
 
 
 
@@ -142,3 +150,8 @@ after a couple of minutes slowly start marking up image
            (above top
                   gap
                   (beside l&r spc l&r)))]))
+
+
+Arrange to discuss that in case of cutoff result must have size w, not size CUTOFF
+If there's time just try it, so that can see what that kind of problem looks like,
+and also to teach just trying it.

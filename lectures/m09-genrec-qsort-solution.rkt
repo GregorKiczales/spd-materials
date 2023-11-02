@@ -31,9 +31,9 @@
                  (define (<p? x) (< x p))    
                  (define (>p? x) (> x p))]
            
-           (append (qsort (filter <p? lon))
+           (append (qsort (filter <p? (rest lon)))
                    (list p)     
-                   (qsort (filter >p? lon))))]))
+                   (qsort (filter >p? (rest lon)))))]))
 
 #;  ;this version uses lambda
 (define (qsort lon)
@@ -43,9 +43,9 @@
   (cond [(empty? lon) empty]    
         [else   
          (local [(define p (first lon))]
-           (append (qsort (filter (lambda (x) (< x p)) lon))
+           (append (qsort (filter (lambda (x) (< x p)) (rest lon)))
                    (list p)      
-                   (qsort (filter (lambda (x) (> x p))  lon))))]))
+                   (qsort (filter (lambda (x) (> x p)) (rest lon)))))]))
 
 
 
