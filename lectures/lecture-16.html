@@ -25,7 +25,7 @@
       <a href="lecture-13.html">L13</a>
       <a href="lecture-14.html">L14</a>
       <a href="lecture-15.html">L15</a>
-      <a href="lecture-16.html">L16</a>
+      L16
       <a href="lecture-17.html">L17</a>
       <a href="lecture-18.html">L18</a>
       <a href="lecture-19.html">L19</a>
@@ -35,11 +35,12 @@
       ]
     </p>
     
-    <h2>Lecture 01</h2>
+    <h2>Lecture 06 &ndash; Search Problems</h2>
     
     <h3>Before Lecture</h3>
     
-    <p>If possible, before lecture 1, please go to the Setup page, which you can access from <a href="https://cs110.students.cs.ubc.ca/admin/links.html">https://cs110.students.cs.ubc.ca/admin/links.html</a> and follow the directions for setting up DrRacket.</p>
+    <p>There is no pre-lecture work for this lecture.  It will be a
+    fun and challenging lecture, so please show up with bells on.</p>
     
     <h3>During Lecture</h3>
     
@@ -61,33 +62,92 @@
     
     <p>The starters for this lecture are:</p>
 
+    The starters for this lecture are:
+
     <ul>
-      <li><a href="110-intro.pdf">110-intro.pdf</a></li>
-      <li><a href="m01-primitives-starter.rkt">m01-primitives-starter.rkt</a></li>
-      <li><a href="m01-functions-starter.rkt">m01-functions-starter.rkt</a></li>
+      <li><a href="m09-search-maze-2w-overview.rkt">m09-search-maze-2w-overview.rkt</a></li>
+      <li><a href="m09-search-maze-2w-starter.rkt">m09-search-maze-2w-starter.rkt</a></li>
+      <li><a href="m09-search-maze-2w-v1.rkt">m09-search-maze-2w-v1.rkt</a></li>
+      <li><a href="m09-search-maze-2w-v2.rkt">m09-search-maze-2w-v2.rkt</a></li>
     </ul>
 	
     
     <h3>After Lecture</h3>
 
-    <p>Congratulations on finishing lecture 1!  Remember to ask questions anytime something isn't clear in lecture. Forming questions is a key part of learning, so forming and asking questions in lecture is learning!</p>
+    <p>Today's program had everything. Representing information,
+      generative search, template blending, simple templating, using
+      built-in abstract list functions. Pretty much everything we've
+      done. It was also a great example of how what we have learned
+      breaks big problems into a lot of much smaller problems. As just
+      one example, when we are coding valid-next-positions, and we
+      realize "ok, some of the positions are valid and I want to do just
+      those, then using what we know about templating we can very
+      quickly write this:<p>
 
-    <p>To complete the lecture first review primitives-starter (the solution is below).</p>
+      <pre>
+(@template-origin use-abstract-fn)      
 
-    <p>Then work through all the sections of Module 1A: BSL.  Once you are done you can complete the functions-starter file and work through it. Remember that reading the solution file before working hard to solve it yourself is the worst way to try and learning this material - you have to struggle through it some yourself before looking at the solution or else you spoil the learning opportunity the problem gives you.</p>
+(define (next-valid-positions p)
+  (filter valid? (list ...)))</pre>
 
-    <p>The solutions for this lecture are:</p>
+      <p>Then we create the wish list entry for valid? and then go on to complete the design of valid?.</p>
+
+      <p>The big idea today was the remarkable insight that we can
+	solve a problem like finding our way through a maze by
+	generating a tree of possible routes and searching that tree for
+	a solution.  It's not a tree that existed when we started, it is
+	a tree we <em>generate</em> as we go &ndash; thus it is a
+	generative recursion.</p>
+
+    <p>A key step of the design was to form a template that blends:</p>
 
     <ul>
-      <li><a href="m01-primitives-solution.rkt">m01-primitives-solution.rkt</a></li>
-      <li><a href="m01-functions-solution.rkt">m01-functions-solution.rkt</a></li>
+      <li>arbitrary arity tree</li>
+      <li>generative recursion</li>
+      <li>try-catch</li>
     </ul>
-    
-    <p>BEFORE the next lecture be sure to go to it and do the pre-work it asks for.</p>
 
-    <p>Again, welcome to 110.  If you work hard and stay caught up we believe you will enjoy discovering programming and a knowing a systemtic approach to solving difficult design problems.</p>
-    
-    <p>Be sure to complete the before lecture section of <a href="lecture-02.html">Lecture 3</a> before that lecture.</p>
+    <p>Which set us up for doing a backtracking search over a
+    generated arbitrary-arity tree.</p>
+      
+    <p>Once we had our solve function in place, all that was left to
+    do was HTDF to complete the wishlist entries.</p>
+
+    <p>To review today's material we recommend you rework the key steps of the problem:</p>
+
+    <ul>
+
+      <li>Be sure you are comfortable with the domain analysis
+      picture, the tree, the changing information and how next states
+      in the tree are generated.</li>
+
+      <li>Redo the template blending of arbitrary arity tree and
+	generative recursion and try-catch from scratch and write out the
+	wishlist entries.</li>
+
+      <li>Review the code for the wish list functions.</li>
+
+      <li>Re-write the terminationa argument for solve.</li>
+      
+      </ul>
+
+    <p>You can also review this material by working slowly through the
+      Sudoku videos on edX (all of them). They are long, but that is
+      because they develop the example in full. Doing this will be
+      another excellent practice for long problems, which you want to
+      get as much practice as you can with at this point in the term.</p>
+
+    <p>The solution for this lecture is:</p>
+
+    <ul>
+      <li><a href="m09-search-maze-2w-solution.rkt">m09-search-maze-2w-solution.rkt</a></li>
+    </ul>
+
+
+    <p>Be sure to complete the before lecture section
+      of <a href="lecture-17.html">Lecture 17</a> before that
+      lecture.</p>
+
 
   </body>
 </html>
