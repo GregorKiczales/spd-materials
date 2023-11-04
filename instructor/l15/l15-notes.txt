@@ -1,4 +1,24 @@
 
+
+
+intro slides up through marked up call/return tree [present]
+
+12:00 class starts on first starter         [class]
+20:00 interrupt to give check-expects       [present]
+25:00 class keeps working                   [class]
+30:00 take over function, slowly develop it [present]
+
+clickers
+
+lambda [present]
+
+
+-20:00 show cantor picture
+       design cantor
+-35:00 take over cantor, paste parts in and discuss
+
+
+
 Intro -
 
 done learning SR w/ NR - will move on to genrec
@@ -29,12 +49,16 @@ interrupt to setup that it's two filters
 ;;           /  |  \
 ;;        empty 2 empty
 
+
+12:00
 ;; Please design a function that does quicksort
 (@problem 1)
 (@htdf qsort)
 (@signature (listof Number) -> (listof Number))
 ;; use quicksort to produce list of numbers in ascending order
 ;; CONSTRAINT there are no duplicates
+
+20:00 interrupt to give check-expects
 (check-expect (qsort (list)) (list))
 (check-expect (qsort (list 2)) (list 2))
 (check-expect (qsort (list 5 4 6)) (list 4 5 6))
@@ -56,6 +80,9 @@ interrupt to setup that it's two filters
          (local [(define p (first lon))
                  (define (<p? x) (< x p))    
                  (define (>p? x) (> x p))]
+
+           WRITE w/o REST AT FIRST, CHHANGE AS PART OF TA
+
            
            (append (qsort (filter <p? (rest lon)))
                    (list p)     
