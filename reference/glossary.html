@@ -102,8 +102,8 @@
 (define (outer x n)
   (local [(define (one x) 2)
           (define (two f) (build-list x f))
-          (define three (two one))
-          (define four (foldr * 1 three))
+          (define (three x) (two x))
+          (define four (foldr * 1 (three one)))
           (define five (< n four))]
     (cond [five x]
           [else (outer (add1 x) n)])))
@@ -111,6 +111,7 @@
     <ul>
       <li>One is a locally defined function, but its body references no variable or function names at all. It is not a closure.</li>
       <li>Two is a locally defined function, its body references build-list, x and f; x is defined in the enclosing function. Two is a closure.</li>
+      <li>Three is a locally defined function, its body references two and x; two is a locally defined function. Three is a closure.
       <li>Three, four, and five are not even functions. They cannot be closures.</li>
     </ul>
 </dd></dl>
