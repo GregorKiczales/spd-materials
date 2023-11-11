@@ -1,4 +1,7 @@
 
+Clickers right out of the gate
+
+
 challening topic, but you can all follow this (with struggle)
 
 mazes
@@ -15,23 +18,24 @@ mazes
   - tell when done
 
 - jump to w2, if you have time over weekend start from -starter
-- represent changing
-- genrec ?? try-catch
+- walk through what is there, skip render for now
+- represent changing information
+- genrec arb-tree try-catch  << identify as the basic strategy
 - blend
    find the join points:
         (genrec (next-problem d))
-        (fn-for-lop (pos-subs p))
+        (fn-for-lop (POS-SUBS p))
 
 	(define try <option 1>)
 	(fn-for-p (first lop))
 
 - wish lists
 
-start class on completing solved? by -35
+start class on completing solved? by -40
 
 paste and discuss solution
 
-start class on completing valid-next-positions by -20
+start class on completing valid-next-positions by -30
 
 paste and discuss solution
 
@@ -39,7 +43,63 @@ paste and discuss solution
 - done
 
 
+(define (solvable? m)              ;encapsulated
+  (local []
+
+    (... (make-pos 0 0))))
+
+(define (solvable? m)              ;+arb-tree
+  (local [(define (fn-for-pos p)
+            (... (pos-x p)
+                 (pos-y p)
+                 (fn-for-lop (POS-SUBS p)))) ;this selector doesn't exist
+
+          (define (fn-for-lop lop)
+            (cond [(empty? lop) (...)]
+                  [else
+                   (... (fn-for-pos (first lop))
+                        (fn-for-lop (rest lop)))]))]
+
+    (... (make-pos 0 0))))
+
+
+(define (solvable? m)              ;+genrec
+  ;; trivial:
+  ;; reduction:
+  ;; argument:
+  (local [(define (fn-for-pos p)
+            (if (solved? p)
+                true
+                (fn-for-lop (valid-next-positions p)))) ;join point w/ arb-tree
+
+
+          (define (fn-for-lop lop)
+            (cond [(empty? lop) (...)]
+                  [else
+                   (... (fn-for-pos (first lop))
+                        (fn-for-lop (rest lop)))]))]
+
+    (... (make-pos 0 0))))
+
 (define (solvable? m)            ;+try-catch
+  ;; trivial:   reaches lower right
+  ;; reduction: moves down and right when possible
+  ;; argument:  maze is finite, so moving will eventually
+  ;;            reach trivial case or run out of moves
+  (local [(define (fn-for-pos p)
+            (if (solved? p)
+                true
+                (fn-for-lop (valid-next-positions p))))
+          (define (fn-for-lop lop)
+            (cond [(empty? lop) false] ;can add false now or later
+                  [else
+                   (local [(define try (fn-for-pos (first lop)))]
+                     (if (not (false? try))
+                         try		       
+                         (fn-for-lop (rest lop))))]))
+
+
+(define (solvable? m)
   ;; trivial:   reaches lower right
   ;; reduction: moves down and right when possible
   ;; argument:  maze is finite, so moving will eventually
@@ -71,7 +131,7 @@ paste and discuss solution
           (@template-origin fn-composition use-abstract-fn)
           (define (valid-next-positions p)
             (filter valid? (all-next-positions p)))
-
+	    	 
           (@signature Position -> (listof Position))
           (@template-origin Position)
           ;; (anp <0,0>) --> (list <0,1> <1,0>)
@@ -88,5 +148,5 @@ paste and discuss solution
             (and (<= 0 (pos-x p) MAX-X/Y)
                  (<= 0 (pos-y p) MAX-X/Y)
                  (mref m p)))]
-
+		 
     (fn-for-pos (make-pos 0 0))))

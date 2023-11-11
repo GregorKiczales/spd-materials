@@ -14,8 +14,8 @@ V3 has complete solve, sig/purp/tests for solved? and next-boards
 
 careful analysis:
   - board geometry not changing
-  - potential moves not change
-  - board w/ pegs changing
+  - potential moves not changing
+  - contents of board cells changing
 
 walk through v2
 
@@ -35,8 +35,21 @@ let class work solved, including coming up with the full wish list entry
 then paste in solution and discuss take questions
 
 
-setup signature and purose for next-boards
+- 40:00
+quicklty setup signature and purose for next-boards
 class works on
+
+- 25:00
+point out  36 jumps -> n valid jumps -> n valid boards
+
+sa1 you deliberately waited to point this out because that's how design is, you don't realize everything right away
+
+- 15:00
+  (local []
+    
+    (map do-jump (filter valid? JUMPS)))
+
+
 then paste in solution and discuss take questions
 
 
@@ -81,7 +94,7 @@ summarize whole thing starting from beginning of tree
 (@template-origin use-abstract-fn)
 
 (define (solved? bd)
-  (= 1 (length (filter identity bd))))
+(= 1 (length (filter identity bd))))
 
 ;(@template-origin fn-composition use-abstract-fn)
 ;

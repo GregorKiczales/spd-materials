@@ -1,6 +1,11 @@
 
 
-instructors/lxx folder copied to ipad, clickers.pdf and pad.pdf tested
+instructors/lxx folder copied to ipad, lxx-pad.pdf tested
+
+clickers/lxx-clickers.pdf copied to ipad, tested
+
+starters downloaded
+
 
 browser window setup with tabs for:
   lecture page, links, recipes, recipe checklist, Piazza ...
@@ -8,17 +13,17 @@ browser window setup with tabs for:
 
 Dr. R open, 24pt font
   starters open in it
+  
 
 Quicktime open, showing pad
 
-music youtube queued up, know what start time is
 
-lecture notes open in emacs on other screen
 
-pad .ppt open on other screen
+instructors/lxx-notes.txt open in emacs on other screen (or printed)
+
 
 start zoom
-  turn off: share screen, chat, unmute, start video, share whiteboards
+  turn off: share screen, chat, start video, share whiteboards, request recording
 
   share laptop screen, turn on share sound
 
@@ -28,8 +33,10 @@ start zoom
   open participants
 
   open chat (used during work periods)
-  
+
+
 let TA know plan on slack
-  polls?
+  clickers?
   HtDF?
   leave slack open to lecture ta channel
+  
