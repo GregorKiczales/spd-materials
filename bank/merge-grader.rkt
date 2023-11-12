@@ -20,7 +20,7 @@
 
       (grade-problem 1
         (grade-htdf merge            
-          (weights (.05   .1 .1 .05   .1 *)
+          (weights (.05   .15   .15 .05  .30  0 *)
                      
             (grade-signature (LON LON -> LON))
 
