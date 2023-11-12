@@ -103,7 +103,10 @@
                                      (make-node 14 "olp" false false) 
                                      false))) -2)
 
-(@template-origin BST)
+(@template-origin Number) ;It feels like a fn-composition, but it isn't
+;;                        ;really a composition of two calls to height.
+;;                        ;So this template origin says we are treating
+;;                        ;the BST as atomic data.
 
 (define (balance-factor bst) 
   (- (height (node-l bst))
