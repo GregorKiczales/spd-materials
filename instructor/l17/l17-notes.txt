@@ -94,7 +94,7 @@ summarize whole thing starting from beginning of tree
 (@template-origin use-abstract-fn)
 
 (define (solved? bd)
-(= 1 (length (filter identity bd))))
+  (= 1 (length (filter identity bd))))
 
 ;(@template-origin fn-composition use-abstract-fn)
 ;
