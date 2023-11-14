@@ -1454,19 +1454,6 @@
               "duration"       : 60,
               "difficulty"     : "Blue"
           },
-          // {      
-          //     "module"         : "Abstraction",
-          //     "lecture"        : "fold",
-          //     "kind"           : "Practice",
-          //     "setNumber"      : 8,
-          //     "name"           : "Fold tree with branches",
-          //     "codeFiles"      : ["fold-daf-1-starter.rkt",
-	  // 			  "fold-daf-1-solution.rkt"],
-          //     "description"    : "Design an abstract fold function for an arb-arity tree with tree and branch elements.",
-          //     "recipe"         : ["HtDF"],
-          //     "duration"       : 60,
-          //     "difficulty"     : "Blue"
-          // },
           {      
               "module"         : "Abstraction",
               "lecture"        : "from-ex-3",
