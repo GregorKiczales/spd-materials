@@ -50,7 +50,7 @@
 (@htdf find-path)
 
 (@signature Tree String -> (listof String) or false)
-;; produce path to node w/ given name (or fail)
+;; produce names of nodes from t0 to node w/ given name (or fail)
 (check-expect (find-path L1 "L1") (list "L1"))
 (check-expect (find-path L1 "L2") false)
 (check-expect (find-path L2 "L2") (list "L2"))
@@ -59,7 +59,7 @@
 
 (@template-origin encapsulated Tree (listof Tree) try-catch accumulator)
 
-(define (find-path t n)
+(define (find-path t0 n)
   ;; path is ???;
   
   (local [(define (fn-for-t t path)
