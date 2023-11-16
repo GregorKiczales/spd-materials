@@ -38,7 +38,7 @@
 (@htdf find-path)
 
 (@signature Tree String -> (listof String) or false)
-;; produce path to node w/ given name (or fail)
+;; produce names of nodes from t0 to node w/ given name (or fail)
 (check-expect (find-path L1 "L1") (list "L1"))
 (check-expect (find-path L1 "L2") false)      
 (check-expect (find-path L2 "L2") (list "L2"))
@@ -47,13 +47,13 @@
 
 (@template-origin encapsulated Tree (listof Tree) try-catch accumulator)
 
-(define (find-path t n)
+(define (find-path t0 n)
   ;; path is (listof String); names of ... grandparent, parent trees to here
   ;;                          (builds along recursive  calls)
   (local [(define (fn-for-t t path)      
             (local [(define name (node-name t))
-                    (define subs (node-subs t))    
-                    (define npath (append path (list name)))]
+                    (define subs (node-subs t))
+                    (define npath (append path (list name)))] ;including t
               (if (string=? name n)
 		  npath
                   (fn-for-lot subs npath))))
@@ -66,6 +66,6 @@
                          try          
                          (fn-for-lot (rest lot) path)))]))]
     
-    (fn-for-t t empty)))
+    (fn-for-t0 t empty)))
 
 
