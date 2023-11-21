@@ -90,15 +90,15 @@
 
 (@template-origin BinaryTree accumulator)
 
-(define (bst? bt0)    
+(define (bst? bt0)
   ;; lower is Integer
   ;;   lower bound of key at current node
   ;;   initially -inf.0 is reset on recursions down a right branch
   ;; upper is Integer
   ;;   upper bound of key at current node
   ;;   initially +inf.0 is reset on recursions down a left branch
-  ;;
   ;; 
+  ;; <see diagram for example progression>
   (local [(define (bst? bt lower upper)
             (cond [(false? bt) true]     
                   [else        
@@ -107,5 +107,5 @@
                         (bst? (node-r bt)  (node-k bt)  upper))]))]  ;preserve
     
     (bst? bt0 -inf.0 +inf.0)));                                      ;initialize
-;                             ;NOTE that we would never expect you to have
-;                             ;     already known about these two constants!
+;;                            ;NOTE that we would never expect you to have
+;;                            ;     already known about these two constants!

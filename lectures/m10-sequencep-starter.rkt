@@ -6,14 +6,19 @@
 (@cwl ???) ;replace ??? with your cwl
 
 (@problem 1)
-;;
-;; PROBLEM:
-;;
-;; Design a function called sequence? that consumes a list of natural numbers
-;; and produces true if the list is a sequence, meaning each number is 1 larger
-;; than the number before it.  Be sure to make (sequence? empty) produce true.
-;; So:
-;;    (sequence? (list))        ==> true
-;;    (sequence? (list 2 3 4))  ==> true
-;;    (sequence? (list 3 5 6))  ==> false
-;;
+#|
+ PROBLEM:
+
+ Design a function called sequence? that consumes a list of natural numbers
+ and produces true if the list is a sequence, meaning each number is 1 larger
+ than the number before it.  Be sure to make (sequence? empty) produce true.
+
+ For example:
+    (sequence? (list))        ==> true
+    (sequence? (list 2 3 4))  ==> true
+    (sequence? (list 3 5 6))  ==> false
+|#
+
+(@htdf sequence?)
+
+(define (sequence? lon) false) ;delete when you reach the template stage

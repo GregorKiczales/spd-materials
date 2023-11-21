@@ -1,6 +1,8 @@
 #lang racket
-(require spd-grader/grader)
-(require spd-grader/walker)
+(require spd-grader/grader
+         spd-grader/templates
+         spd-grader/accumulator)
+
 (provide grader)
 
 
@@ -48,34 +50,17 @@
               (>= (%%height (node-r bt)) 1)
               (%%bst? bt)
               (not (%%bst? bt)))
-              
-            (grade-thoroughness-by-faulty-functions 1
-              (define (bst? bt0)
-                (local [(define (bst? bt lower upper)
-                          (cond [(false? bt) false]
-                                [else
-                                 (and (< lower (node-k bt) upper)                 
-                                      (bst? (node-l bt)  lower        (node-k bt))
-                                      (bst? (node-r bt)  (node-k bt)  upper))]))]
-                  (bst? bt0 -inf.0 +inf.0)))
-              (define (bst? bt0)
-                (local [(define (bst? bt lower upper)
-                          (cond [(false? bt) true]
-                                [else
-                                 (and (> lower (node-k bt) upper)                 
-                                      (bst? (node-l bt)  lower        (node-k bt))
-                                      (bst? (node-r bt)  (node-k bt)  upper))]))]
-                  (bst? bt0 -inf.0 +inf.0)))
-              (define (bst? bt0)
-                (local [(define (bst? bt lower upper)
-                          (cond [(false? bt) true]
-                                [else
-                                 (and (< lower (node-k bt) upper)                 
-                                      (bst? (node-l bt)  lower        (node-k bt))
-                                      (bst? (node-r bt)  (node-k bt)  upper))]))]
-                  (bst? bt0 -5 +5))))
 
             (grade-template-origin (BinaryTree accumulator))
+
+            (grade-accumulator-template bst? 2)
+
+            (grade-encapsulated-template-fns (bst?)
+                                           
+              (weights (*)
+                (grade-questions-intact bst? [(false? bt) ...] [else ...])
+                (grade-nr-intact        bst?)))
+            
             (grade-submitted-tests 1)
             (grade-additional-tests 1
               (check-expect (bst? BT1) true)
@@ -83,10 +68,3 @@
               (check-expect (bst? BT3) false)
               (check-expect (bst? BT4) false)
               (check-expect (bst? BT5) false))))))))
-
-
-
-
-
-
-
