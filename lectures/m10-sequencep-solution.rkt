@@ -10,26 +10,27 @@
 (@htdf sequence?)
 
 (@signature (listof Natural) -> Boolean)
-;; produces true if the list is a strict sequence
+;; produces true if every element of lon is 1 greater than prior element
 (check-expect (sequence? (list))       true)
 (check-expect (sequence? (list 2))     true)
 (check-expect (sequence? (list 2 3 4)) true)
 (check-expect (sequence? (list 3 5 6)) false)
+(check-expect (sequence? (list 2 3 4 7 5)) false)
 
 (@template-origin (listof Natural) accumulator)
 
 (define (sequence? lon0)
   ;; prev is  Natural
   ;; invariant: the element of lon0 immediately before (first lon)
-  ;; (sequence? (list 2 3 4 5 6))      
+  ;; (sequence? (list 2 3 4 7 5))
   
-  ;; (sequence? (list   3 4 5 6) 2)  
-  ;; (sequence? (list     4 5 6) 3)
-  ;; (sequence? (list       5 6) 4)
+  ;; (sequence? (list   3 4 7 5) 2)  
+  ;; (sequence? (list     4 7 5) 3)
+  ;; (sequence? (list       7 5) 4) ==> false
   (local [(define (sequence? lon prev)
             (cond [(empty? lon) true]     
                   [else           
-                   (if (= (first lon) (+ 1 prev)) ;exploit
+                   (if (= (first lon) (+ 1 prev)) ;exploit (use)
                        (sequence? (rest lon)
                                   (first lon))    ;preserve
                        false)]))]

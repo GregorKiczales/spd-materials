@@ -1,4 +1,7 @@
 
+clickers
+
+
 where we are in the course
 
 accumulator overview - will understand all these words more soon
@@ -20,32 +23,36 @@ context preserving accumulator
 (@htdf sequence?)
 
 (@signature (listof Natural) -> Boolean)
-;; produces true if the list is a strict sequence
-;; CONSTRAINT: the list has at least one element.   <<DROP THIS
+;; produces true if every element of lon is 1 greater than prior element
+(check-expect (sequence? (list))       true)
 (check-expect (sequence? (list 2))     true)
 (check-expect (sequence? (list 2 3 4)) true)
 (check-expect (sequence? (list 3 5 6)) false)
+(check-expect (sequence? (list 2 3 4 7 5)) false)
 
 (@template-origin (listof Natural) accumulator)
 
 (define (sequence? lon0)
-  ;; acc is  Natural
+  ;; prev is  Natural
   ;; invariant: the element of lon0 immediately before (first lon)
-  ;; (sequence? (list 2 3 4 5 6))
+  ;; (sequence? (list 2 3 4 7 5))
   
-  ;; (sequence? (list   3 4 5 6) 2)  
-  ;; (sequence? (list     4 5 6) 3)
-  ;; (sequence? (list       5 6) 4)
-  (local [(define (sequence? lon acc)
-            (cond [(empty? lon) true]
-                  [else
-                   (if (= (first lon) (+ 1 acc)) ;exploit
+  ;; (sequence? (list   3 4 7 5) 2)  
+  ;; (sequence? (list     4 7 5) 3)
+  ;; (sequence? (list       7 5) 4) ==> false
+  (local [(define (sequence? lon prev)
+            (cond [(empty? lon) true]     
+                  [else           
+                   (if (= (first lon) (+ 1 prev)) ;exploit (use)
                        (sequence? (rest lon)
-                                  (first lon))   ;preserve
+                                  (first lon))    ;preserve
                        false)]))]
-    
-    (sequence? (rest lon0)
-               (first lon0))))                   ;initialize
+
+    (if (empty? lon0)                ;if original list is empty, we can't
+        true                         ;initialize accumulator, so special case
+        (sequence? (rest lon0)     
+                   (first lon0)))))  ;initialize
+
 
 
 
@@ -61,8 +68,14 @@ interruptions:
 
 
 (define (bst? bt0)
-  ;; lower is Integer, lower bound of key at this node (based on parents)
-  ;; upper is Integer, upper bound of key at this node (based on parents)
+  ;; lower is Integer
+  ;;   lower bound of key at current node
+  ;;   initially -inf.0 is reset on recursions down a right branch
+  ;; upper is Integer
+  ;;   upper bound of key at current node
+  ;;   initially +inf.0 is reset on recursions down a left branch
+  ;; 
+  ;; <see diagram for example progression>
   (local [(define (bst? bt lower upper)
             (cond [(false? bt) true]
                   [else
@@ -71,7 +84,7 @@ interruptions:
                         (bst? (node-r bt)  (node-k bt)  upper))]))]  ;preserve
     
     (bst? bt0 -inf.0 +inf.0)));                                      ;initialize
-;                             ;NOTE that we would never expect you to have
-;                             ;     already known about these two constants!
+;;                            ;NOTE that we would never expect you to have
+;;                            ;     already known about these two constants!
 
 
