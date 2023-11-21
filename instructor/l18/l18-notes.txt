@@ -68,6 +68,7 @@ interruptions:
 
 
 (define (bst? bt0)
+  
   ;; lower is Integer
   ;;   lower bound of key at current node
   ;;   initially -inf.0 is reset on recursions down a right branch
