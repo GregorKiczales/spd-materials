@@ -55,8 +55,15 @@
     (fn-for-lox lox0 ...)))
 
 
-;;
-;; foldl is a tail recursive fold over the list
-;;
+
 (check-expect (foldr cons empty (list 1 2 3)) (list 1 2 3))
+
+;recursive call is (cons 1 (foldr cons empty (list 2 3))
+
 (check-expect (foldl cons empty (list 1 2 3)) (list 3 2 1))
+
+;recursive call is (foldl cons (cons 1 empty) (list 2 3))
+
+;foldl is tail recursive fold, fn operates on leftmost value first
+
+

@@ -128,9 +128,27 @@
 
 ;;
 ;; YOUR SOLUTION MUST BE TAIL RECURSIVE
+;; Use the provided template and add additional accumulators if you
+;; need them.
 ;;
 
 (define (count-nodes t0) 0)
+
+#;
+(define (count-nodes t0)
+  ;; t-wl is (listof Tree); worklist of Trees to visit
+  ;;                        unvisited direct subs of visited trees
+  (local [(define (fn-for-t t t-wl)
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs (node-subs t))]     ;for convenience
+              (fn-for-lot (append subs t-wl) ...)))
+          
+          (define (fn-for-lot t-wl)
+            (cond [(empty? t-wl) (...)]
+                  [else
+                   (fn-for-t (first t-wl) (rest t-wl) ...)]))]
+    
+    (fn-for-t t0 empty ...)))
 
 
 (@problem 4)
@@ -153,6 +171,21 @@
 
 (define (all-numbers t0) empty)
 
+#;
+(define (all-numbers t0)
+  ;; t-wl is (listof Tree); worklist of Trees to visit
+  ;;                        unvisited direct subs of visited trees
+  (local [(define (fn-for-t t t-wl)
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs (node-subs t))]     ;for convenience
+              (fn-for-lot (append subs t-wl) ...)))
+          
+          (define (fn-for-lot t-wl)
+            (cond [(empty? t-wl) (...)]
+                  [else
+                   (fn-for-t (first t-wl) (rest t-wl) ...)]))]
+    
+    (fn-for-t t0 empty ...)))
 
 (@problem 5)
 
@@ -173,3 +206,19 @@
 ;;
 
 (define (all-leaves t0) empty)
+
+#;
+(define (all-leaves t0)
+  ;; t-wl is (listof Tree); worklist of Trees to visit
+  ;;                        unvisited direct subs of visited trees
+  (local [(define (fn-for-t t t-wl)
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs (node-subs t))]     ;for convenience
+              (fn-for-lot (append subs t-wl) ...)))
+          
+          (define (fn-for-lot t-wl)
+            (cond [(empty? t-wl) (...)]
+                  [else
+                   (fn-for-t (first t-wl) (rest t-wl) ...)]))]
+    
+    (fn-for-t t0 empty ...)))

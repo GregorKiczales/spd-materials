@@ -1,18 +1,41 @@
 
 
 
-IN 2023W1, DON'T DO THE TREE-WL SLIDES HERE, INSTEAD DO THE 3 ACC PROBLEMS
+NO: IN 2023W1, DON'T DO THE TREE-WL SLIDES HERE, INSTEAD DO THE 3 ACC PROBLEMS
 
-THEN L20 IS ALL ABOUT THE PATH, WL, AND PATH-WL ACCUMULATORS
+NO: THEN L20 IS ALL ABOUT THE PATH, WL, AND PATH-WL ACCUMULATORS
 
 
 acc overview slide, what we have done
 
 plan for 4 lectures slide
 
+explain TR
+
+do clickers together
 
 warm up questions
 	identify tail pos, tail recursion
+
+
+derive rev by starting with copy and forcing it to be tail recursive
+then do type and invariant
+
+mention explain foldr and foldr
+
+explain tree dd, example data
+
+what if we want to know if a tree is top-to-bottom sorted
+  when we get here we need to know what???
+
+maybe give 5 minutes if time
+
+show on call picture, make clear it can't do l->r sorted
+
+
+do a TR function,
+
+derive progression on picture
 
 
 ; start w/ fn-for-lox template
@@ -75,7 +98,7 @@ warm up questions
   ;; (fn-for-lox (list     3) (list 2 1))
   ;; (fn-for-lox (list      ) (list 3 2 1))
   (local [(define (fn-for-lox lox rsf)
-            (cond [(empty? lox) empty]
+            (cond [(empty? lox) rsf]
                   [else
                    (fn-for-lox (rest lox)
                                (cons (first lox)      ;combination moves 
@@ -83,7 +106,52 @@ warm up questions
     (fn-for-lox lox0 empty)))
 
 
+do accumulator progression and design on picture first
 
+
+(define (top->bot-sorted? t0)
+  ;; pnum is Integer; immediate parent node's number
+  ;; **parent means the parent in the tree **
+  (local [(define (fn-for-t t pnum)
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs (node-subs t))]     ;for convenience
+
+              ;; what do we need when we get here??? 
+
+              (if (> number pnum)
+                  (fn-for-lot subs number)
+                  false)))
+          
+          (define (fn-for-lot lot pnum)
+            (cond [(empty? lot) true]
+                  [else
+                   (and (fn-for-t (first lot) pnum)
+                        (fn-for-lot (rest lot) pnum))]))]
+    
+    (fn-for-lot (node-subs t0) (node-number t0))))
+
+
+just do the TR. 
+
+(define (top/left->bot/right-sorted? t0)
+  ;; t-wl is (listof Tree); worklist of Trees to visit
+  ;;                        unvisited direct subs of visited trees
+  ;; vnum is Integer; node number of most recently VISITED node
+  ;; ** visited means in the dynamic flow of the tail recursion **
+  ;; ** not in the static structure of the tree                 **
+  (local [(define (fn-for-t t t-wl vnum)
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs (node-subs t))]     ;for convenience
+              (if (> number vnum)
+                  (fn-for-lot (append subs t-wl) number)
+                  false)))
+          
+          (define (fn-for-lot t-wl vnum)
+            (cond [(empty? t-wl) true]
+                  [else
+                   (fn-for-t (first t-wl) (rest t-wl) vnum)]))]
+    
+    (fn-for-t t0 empty (sub1 (node-number t0)))))
 
 
 find-tree/sr
