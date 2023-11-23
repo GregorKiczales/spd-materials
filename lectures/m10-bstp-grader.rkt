@@ -1,7 +1,6 @@
 #lang racket
 (require spd-grader/grader
-         spd-grader/templates
-         spd-grader/accumulator)
+         spd-grader/templates)
 
 (provide grader)
 
@@ -53,13 +52,12 @@
 
             (grade-template-origin (BinaryTree accumulator))
 
-            (grade-accumulator-template bst? 2)
+            (grade-accumulator-intact bst? 2)
 
             (grade-encapsulated-template-fns (bst?)
-                                           
               (weights (*)
                 (grade-questions-intact bst? [(false? bt) ...] [else ...])
-                (grade-nr-intact        bst?)))
+                (grade-nr-intact        bst? 2)))
             
             (grade-submitted-tests 1)
             (grade-additional-tests 1

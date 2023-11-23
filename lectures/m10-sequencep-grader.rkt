@@ -1,7 +1,6 @@
 #lang racket
 (require spd-grader/grader
-         spd-grader/templates
-         spd-grader/accumulator)
+         spd-grader/templates)
 
 (provide grader)
 
@@ -57,7 +56,7 @@
 
             (grade-template-origin ((listof Natural) accumulator))
 
-            (grade-accumulator-template sequence? 1)
+            (grade-accumulator-intact sequence? 1)
 
             (grade-encapsulated-template-fns (sequence?)
                                            
