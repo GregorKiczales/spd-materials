@@ -10,16 +10,18 @@ acc overview slide, what we have done
 
 plan for 4 lectures slide
 
+observe that sequence? is TR
+
 explain TR
 
 do clickers together
-
-warm up questions
 	identify tail pos, tail recursion
 
 
 derive rev by starting with copy and forcing it to be tail recursive
 then do type and invariant
+
+called rev because default in TR is...
 
 mention explain foldr and foldr
 
