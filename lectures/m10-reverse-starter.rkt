@@ -9,35 +9,54 @@
 (@problem 1)
 
 ;;
-;; Complete the design of the rev function below with a function definition.
-;; NOTE: We are calling it rev because there is a built-in function called 
-;;       reverse that does this same thing, so we can't use that name.
+;; Consider this silly little function - all it does is to copy its argument.
 ;;
-;; Your function definition MUST BE TAIL RECURSIVE.
+(@signature (listof X) -> (listof X))
+
+(check-expect (copy (list 1 2 3)) (list 1 2 3))
+
+(@template-origin (listof X))
+
+(define (copy lox)
+  (cond [(empty? lox) empty]                ;base is empty
+        [else
+         (cons (first lox)                  ;combination is cons
+               (copy (rest lox)))]))
+
 ;;
-;; To save you a little time we have already done the first step of the
-;; accumulator template recipe below.
+;; Is it tail recursive?
+;;
+;; Let's try to make it tail recursive by adding an rsf accummulator
+;; and pushing the combination into an argument to the function.
+;;
+;; We'll call it rev, for reasons that will become apparent.
+;;
 ;;
 ;; You MUST NOT rename the locally defined template function.
 ;;
 (@htdf rev)
 
 (@signature (listof X) -> (listof X))
-;; produce list of same elements in the opposite order
-(check-expect (rev empty) empty)
-(check-expect (rev (list 1)) (list 1))
+
 (check-expect (rev (list "a" "b" "c")) (list "c" "b" "a"))
 
-(@template-origin encapsulated (listof X)
-           accumulator)
+(@template-origin (listof X) accumulator)
 
 (define (rev lox0)
   ;; don't forget the accumulator type and invariant as well
   ;; as examples here!
-  (local [(define (fn-for-lox lox)
-            (cond [(empty? lox) (... )]
+  (local [(define (fn-for-lox lox rsf)
+            (cond [(empty? lox) (... rsf)]
                   [else
-                   (... (first lox)
-                        (fn-for-lox (rest lox)))]))]
+                   (... rsf
+                        (first lox)
+                        (fn-for-lox (rest lox) ...rsf))]))]
     
-    (fn-for-lox lox0)))
+    (fn-for-lox lox0 ...)))
+
+
+;;
+;; foldl is a tail recursive fold over the list
+;;
+(check-expect (foldr cons empty (list 1 2 3)) (list 1 2 3))
+(check-expect (foldl cons empty (list 1 2 3)) (list 3 2 1))
