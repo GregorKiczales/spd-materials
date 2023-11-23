@@ -17,8 +17,8 @@
 
 (define (fn-for-tree t)  
   (local [(define (fn-for-t t)
-            (local [(define num  (node-number t))  ;unpack the fields
-                    (define subs (node-subs t))]   ;for convenience
+            (local [(define number (node-number t))  ;unpack the fields
+                    (define subs   (node-subs t))]   ;for convenience
               
               (... number (fn-for-lot subs))))
           
@@ -182,8 +182,8 @@
   ;; ** visited means in the dynamic flow of the tail recursion **
   ;; ** not in the static structure of the tree                 **
   (local [(define (fn-for-t t t-wl rsf)
-            (local [(define num (node-number t))
-                    (define subs (node-subs t))]
+            (local [(define number (node-number t))
+                    (define subs   (node-subs t))]
               (fn-for-lot (append subs t-wl) (cons num rsf))))
           
           (define (fn-for-lot t-wl rsf)
