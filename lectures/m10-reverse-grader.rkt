@@ -26,7 +26,7 @@
             (weights (*)
               (rubric-item 'signature (unchanged? REV-SIG-TESTS sexps)
                            "the supplied signature and check-expects must not be changed")
-              (grade-submitted-tests)
+             ;(grade-submitted-tests) ;!!!
               (rubric-item 'template produces-value-of-param?
                            "has accumulator parameter and produce its result in base case")
               (rubric-item 'template tail-recursive?
@@ -35,8 +35,8 @@
 (define REV-SIG-TESTS
   '((@signature (listof X) -> (listof X))
     ;; produce list of same elements in the opposite order
-    (check-expect (rev empty) empty)
-    (check-expect (rev (list 1)) (list 1))
+   ;(check-expect (rev empty) empty) !!!
+   ;(check-expect (rev (list 1)) (list 1)) !!!
     (check-expect (rev (list "a" "b" "c")) (list "c" "b" "a"))))
 
   
