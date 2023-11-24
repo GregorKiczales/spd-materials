@@ -184,7 +184,7 @@
   (local [(define (fn-for-t t t-wl rsf)
             (local [(define number (node-number t))
                     (define subs   (node-subs t))]
-              (fn-for-lot (append subs t-wl) (cons num rsf))))
+              (fn-for-lot (append subs t-wl) (cons number rsf))))
           
           (define (fn-for-lot t-wl rsf)
             (cond [(empty? t-wl) (reverse rsf)]
@@ -226,3 +226,4 @@
                    (fn-for-t (first t-wl) (rest t-wl) rsf)]))]
     
     (fn-for-t t0 empty empty)))
+
