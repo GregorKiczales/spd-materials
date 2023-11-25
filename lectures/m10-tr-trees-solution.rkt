@@ -86,7 +86,7 @@
 (@htdf top/left->bot/right-sorted?)
 
 (@signature Tree -> Boolean)
-;; produce tree w/ given number (or fail)
+;; produce true if every number in t0 is > any number above or to the left of it
 (check-expect (top/left->bot/right-sorted? L1) true)
 (check-expect (top/left->bot/right-sorted? M1) true)
 (check-expect (top/left->bot/right-sorted? TOP1) true)
@@ -113,7 +113,7 @@
                   [else
                    (fn-for-t (first t-wl) (rest t-wl) vnum)]))]
     
-    (fn-for-t t0 empty (sub1 (node-number t0)))))
+    (fn-for-lot (node-subs t0) (node-number t0))))
 
 
 
