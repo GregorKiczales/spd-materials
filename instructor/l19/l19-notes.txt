@@ -1,10 +1,6 @@
 
 
 
-NO: IN 2023W1, DON'T DO THE TREE-WL SLIDES HERE, INSTEAD DO THE 3 ACC PROBLEMS
-
-NO: THEN L20 IS ALL ABOUT THE PATH, WL, AND PATH-WL ACCUMULATORS
-
 
 acc overview slide, what we have done
 
@@ -17,27 +13,33 @@ explain TR
 do clickers together
 	identify tail pos, tail recursion
 
-
 derive rev by starting with copy and forcing it to be tail recursive
 then do type and invariant
 
 called rev because default in TR is...
 
-mention explain foldr and foldr
+
+mention foldr and foldr
+
+
 
 explain tree dd, example data
 
 what if we want to know if a tree is top-to-bottom sorted
-  when we get here we need to know what???
+when we get here we need to know what???
 
-maybe give 5 minutes if time
+interactive develop of top-to-bottom
 
-show on call picture, make clear it can't do l->r sorted
+
+show on call return picture, make clear it can't do l->r sorted
 
 
 do a TR function,
 
-derive progression on picture
+derive worklist progression on picture
+
+
+----------
 
 
 ; start w/ fn-for-lox template
