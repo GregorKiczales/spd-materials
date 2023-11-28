@@ -39,55 +39,53 @@
     
     <h3>Before Lecture</h3>
     
-    <p>If possible, before lecture 1, please go to the Setup page, which you can access from <a href="https://cs110.students.cs.ubc.ca/admin/links.html">https://cs110.students.cs.ubc.ca/admin/links.html</a> and follow the directions for setting up DrRacket.</p>
+    <p>Be sure to carefully review the material from
+      <a href="lecture-19.html">Lecture 19</a>.  Expect lecture 20 to
+      build on that material and expect clicker questions based on
+      that material.</p>
     
     <h3>During Lecture</h3>
-    
-    <a>This lecture has 3 parts:</a>
-    
-    <ul>
-      <li>An overview of the course content, organization, how you will learn, policies, and how to do well.</li>
-      <li>Primitive data and operations in the Beginning Student Language. Evaluation rules.</li>
-      <li>Function definition and evaluation.</li>
-    </ul>
-      
-    <p>By the end of the lecture - including the post-lecture work - you should be able to:</p>
 
-    <ul>
-      <li>Write expressions using primitive functions and data.</li>
-      <li>Write a simple function definition.</li>
-      <li>Write out the step-by-step evaluation of expressions and simple functions.</li>
-    </ul>
+    <p>The first part of this lecture does not use a starter file. For
+      the second part of the lecture the starter file is:</p>
     
-    <p>The starters for this lecture are:</p>
-
     <ul>
-      <li><a href="110-intro.pdf">110-intro.pdf</a></li>
-      <li><a href="m01-primitives-starter.rkt">m01-primitives-starter.rkt</a></li>
-      <li><a href="m01-functions-starter.rkt">m01-functions-starter.rkt</a></li>
+      <li><a href="m11-maze-4-way-find-path-starter.rkt">m11-maze-4-way-find-path-starter.rkt</a></li>
     </ul>
 	
     
     <h3>After Lecture</h3>
 
-    <p>Congratulations on finishing lecture 1!  Remember to ask questions anytime something isn't clear in lecture. Forming questions is a key part of learning, so forming and asking questions in lecture is learning!</p>
+    <p>In this lecture we built on the expert thinking skills you have
+    been developing throughout the course. We saw how to read a
+    complex function, and use our knowledge of the templates and how
+    accumulators work to slice it up into different aspects of its
+    behaviour (colors). We reconstructed the accumulator types and
+    invariants and used that to understand the behaviour of 2
+    functions.</p>
 
-    <p>To complete the lecture first review primitives-starter (the solution is below).</p>
+    <p>One function traversed the tree using standard recursion; the
+    other uses tail recursion.  Both functions maintained an
+    accumulator that was consed onto in each recursive call.  But
+    because of the difference in how the two kinds of recursion
+    traverse the graph, the two accumulators accumulate different
+    values event though the update code for both looks the same. It is
+    important to understand the different values these accumulators
+    take on, and is important to follow our naming convention: We call
+    it path in the ordinary recursion, and visited in the tail
+    recursion.</p>
 
-    <p>Then work through all the sections of Module 1A: BSL.  Once you are done you can complete the functions-starter file and work through it. Remember that reading the solution file before working hard to solve it yourself is the worst way to try and learning this material - you have to struggle through it some yourself before looking at the solution or else you spoil the learning opportunity the problem gives you.</p>
 
-    <p>The solutions for this lecture are:</p>
-
-    <ul>
-      <li><a href="m01-primitives-solution.rkt">m01-primitives-solution.rkt</a></li>
-      <li><a href="m01-functions-solution.rkt">m01-functions-solution.rkt</a></li>
-    </ul>
-    
-    <p>BEFORE the next lecture be sure to go to it and do the pre-work it asks for.</p>
-
-    <p>Again, welcome to 110.  If you work hard and stay caught up we believe you will enjoy discovering programming and a knowing a systemtic approach to solving difficult design problems.</p>
-    
-    <p>Be sure to complete the before lecture section of <a href="lecture-02.html">Lecture 3</a> before that lecture.</p>
+    <p>We then moved on to module 11 and jumped into the maze solver
+      again.  We updated the program to be able to move in all four
+      directions but found that it ran forever. That happens because
+      the program is now traversing a directed graph, not a tree, and
+      directed graphs can have cycles, which can lead our solver to go
+      around and around in circles forever.<p>
+          
+    <p>Be sure to complete the before lecture section
+    of <a href="lecture-21.html">Lecture 21</a> before that
+    lecture.</p>
 
   </body>
 </html>

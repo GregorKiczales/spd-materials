@@ -3,7 +3,6 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-path-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 (@assignment lectures/m11-maze-4-way-path)
-(@problem 1)
 
 ;; Solve simple square mazes
 
@@ -102,11 +101,92 @@
 
 ;; Functions
 
+
+
+
+(@problem 1)
+
 (@htdf solve)
+(@signature Maze -> Boolean)
+;; produce true if maze is solvable, false otherwise
+;; CONSTRAINT maze has a true at least in the upper left
+(check-expect (solve M1) #t)
+(check-expect (solve M2) #t)
+(check-expect (solve M3) #t) 
+(check-expect (solve M4) #t)
+(check-expect (solve M5) #f)
+(check-expect (solve M6) #t)
+(check-expect (solve M7) #t)
+
+
+(@template-origin encapsulated try-catch genrec arb-tree accumulator)
+
+(define (solve m)
+  (local [(define R (sqrt (length m)))	  
+
+          ;; trivial:   reach bottom right corner, or previously traversed pos
+          ;; reduction: valid positions among up, down, left, right
+          ;; argument:  maze is finite, so pursuing valid moves will reach
+          ;;            walls, edges, cycles or solution if it exists
+
+          ;; path is (listof Pos)
+          ;; traversed positions from (0, 0) to current p in reverse order
+          
+          (define (solve/p p path)
+            (cond [(solved? p)     true]
+                  [(member p path) false]
+                  [else
+                   (solve/lop (next-ps p) (cons p path))]))
+
+          (define (solve/lop lop path)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try (solve/p (first lop) path))]
+                     (if (not (false? try))
+                         try
+                         (solve/lop (rest lop) path)))]))
+          
+          
+          ;; Pos -> Boolean          
+          ;; produce true if pos is at the lower right
+          (define (solved? p)
+            (and (= (pos-x p) (sub1 R))
+                 (= (pos-y p) (sub1 R))))
+
+
+          ;; Pos -> (listof Pos)
+          ;; produce next possible positions based on maze geometry
+          (define (next-ps p)
+            (local [(define x (pos-x p))
+                    (define y (pos-y p))]
+              (filter (lambda (p1)
+                        (and (<= 0 (pos-x p1) (sub1 R))  ;legal x
+                             (<= 0 (pos-y p1) (sub1 R))  ;legal y
+                             (open? (maze-ref m p1))))   ;open?
+                      (list (make-pos x (sub1 y))        ;up
+                            (make-pos x (add1 y))        ;down
+                            (make-pos (sub1 x) y)        ;left
+                            (make-pos (add1 x) y)))))    ;right
+
+          ;; Maze Pos -> Boolean
+          ;; produce contents of maze at location p
+          ;; assume p is within bounds of maze
+          (define (maze-ref m p)
+            (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
+    
+    (solve/p (make-pos 0 0) empty)))
+
+
+
+(@problem 2)
+
+
+
+(@htdf find-path)
 (@signature Maze -> (listof Pos) or false)
 ;; produce FIRST PATH FOUND if maze is solvable, false otherwise
 ;; CONSTRAINT maze has a true at least in the upper left
-(check-expect (solve M1) (list (make-pos 0 0)
+(check-expect (find-path M1) (list (make-pos 0 0)
                                (make-pos 0 1)
                                (make-pos 1 1)
                                (make-pos 1 2)
@@ -115,7 +195,7 @@
                                (make-pos 2 4)
                                (make-pos 3 4)
                                (make-pos 4 4)))
-(check-expect (solve M2) (list (make-pos 0 0)
+(check-expect (find-path M2) (list (make-pos 0 0)
                                (make-pos 1 0)
                                (make-pos 2 0)
                                (make-pos 3 0)
@@ -124,7 +204,7 @@
                                (make-pos 4 2)
                                (make-pos 4 3)
                                (make-pos 4 4)))
-(check-expect (solve M3) (list (make-pos 0 0)
+(check-expect (find-path M3) (list (make-pos 0 0)
                                (make-pos 0 1)
                                (make-pos 0 2)
                                (make-pos 0 3)
@@ -133,7 +213,7 @@
                                (make-pos 2 4)
                                (make-pos 3 4)
                                (make-pos 4 4))) 
-(check-expect (solve M4) (list (make-pos 0 0)
+(check-expect (find-path M4) (list (make-pos 0 0)
                                (make-pos 1 0)
                                (make-pos 2 0)
                                (make-pos 3 0)
@@ -146,8 +226,8 @@
                                (make-pos 2 4)
                                (make-pos 3 4)
                                (make-pos 4 4)))
-(check-expect (solve M5) #f)
-(check-expect (solve M6) (list (make-pos 0 0)
+(check-expect (find-path M5) #f)
+(check-expect (find-path M6) (list (make-pos 0 0)
                                (make-pos 1 0)
                                (make-pos 2 0)
                                (make-pos 2 1)
@@ -188,7 +268,7 @@
                                (make-pos 8 8)
                                (make-pos 9 8)
                                (make-pos 9 9)))
-(check-expect (solve M7) (list
+(check-expect (find-path M7) (list
                           (make-pos 0 0)
                           (make-pos 1 0)
                           (make-pos 2 0)
@@ -220,7 +300,7 @@
 
 (@template-origin genrec arb-tree try-catch accumulator)
 
-(define (solve m)
+(define (find-path m)
   (local [(define R (sqrt (length m)))
 
           ;; trivial:   reaches lower right, previously seen position
@@ -230,27 +310,27 @@
           
           ;; path is (listof Pos); positions before p on this path through data
           ;;                       in reverse order
-          (define (solve/p p path)
-            (cond [(solved? p) (reverse (cons p path))]
+          (define (find-path/p p path)
+            (cond [(find-pathd? p) (reverse (cons p path))]
                   [(member p path) false]
                   [else
-                   (solve/lop (next-ps p)
+                   (find-path/lop (next-ps p)
                               (cons p path))]))
 
-          (define (solve/lop lop path)
+          (define (find-path/lop lop path)
             (cond [(empty? lop) false]
                   [else
-                   (local [(define try (solve/p (first lop) path))]
+                   (local [(define try (find-path/p (first lop) path))]
                      (if (not (false? try))
                          try
-                         (solve/lop (rest lop) path)))]))
+                         (find-path/lop (rest lop) path)))]))
           
 
           ;; Helpers for both versions
           
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
-          (define (solved? p)
+          (define (find-pathd? p)
             (and (= (pos-x p) (sub1 R))
                  (= (pos-y p) (sub1 R))))
 
@@ -275,7 +355,7 @@
           (define (maze-ref m p)
             (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
     
-    (solve/p (make-pos 0 0) empty)))
+    (find-path/p (make-pos 0 0) empty)))
 
 (require 2htdp/image)
 

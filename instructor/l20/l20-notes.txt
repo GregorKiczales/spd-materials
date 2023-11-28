@@ -1,6 +1,42 @@
-Jerry, Greek, w/ Bonnie Raitt. Knockin.  8-30-1987 (BDAY!)
-https://youtu.be/1cbUPHVAY9Q
-1:15:31 1:22:55 = 7:24  start at x2:35
+
+
+class starts working one of two problems
+
+give quite a lot of time
+
+then work them w/ class
+
+use coloring to identify aspects of behaviour
+
+identify what the function returns...  (list <num> (reverse (cons <num> <acc>)))
+
+So what is the acc - construct type and invariant
+
+Do it for other fun
+
+path vs. visited terms
+
+
+
+Switch to maze... it runs forever...  so does this one...
+
+think about why and how to fix this for next time
+
+
+
+L21
+path,     shortest path, cycle points
+visited,  cycle/join points,
+
+
+L22
+
+path accumulation with join detection (tandem wls)
+
+
+L23
+
+
 
 
 
