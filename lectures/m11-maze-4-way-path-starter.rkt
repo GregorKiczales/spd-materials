@@ -5,12 +5,14 @@
 (@assignment lectures/m11-maze-4-way-path)
 (@cwl ???) ;replace ??? with your cwl
 
-(@problem 1)
-;;
-;; Convert this function to produce a path (list of positions)
-;; from upper left to lower right, if possible.  If there is
-;; more than one possible path produce the first one.
-;; Do not use tail recursion.
+
+#|
+
+ This program is almost exactly like the one we saw a couple of weeks
+ ago.  Jump down to problem 1 for more details.
+
+|#
+
 
 ;; Solve simple square mazes
 
@@ -107,11 +109,30 @@
 (define P2 (make-pos 0 4)) ;lower left
 (define P3 (make-pos 4 4)) ;lower right
 
-;; Functions
+
+(@problem 1)
+
+#|
+
+The following version of the solve function has been updated so that the next
+positions functions tries moves that are up, down, left, and right from
+the current position.
+
+But... something is wrong with it. Fix it to make it actually work.  You 
+should ONLY CHANGE:
+
+ - solve/p
+ - solve/lop
+ - add a termination argument
+
+Do not change other helpers inside of solve.
+
+|#
+
 
 (@htdf solve)
-;(@signature Maze -> ???)
-;; produce ??? if maze is solvable, false otherwise
+(@signature Maze -> Boolean)
+;; produce true if maze is solvable, false otherwise
 ;; CONSTRAINT maze has a true at least in the upper left
 (check-expect (solve M1) #t)
 (check-expect (solve M2) #t)
@@ -127,29 +148,23 @@
 (define (solve m)
   (local [(define R (sqrt (length m)))	  
 
-          ;; trivial:   reaches lower right, previously seen position
-          ;; reduction: move up, down, left, right if possible
-          ;; argument:  maze is finite, so moving will eventually
-          ;;            reach trivial case or run out of moves
+          ;; trivial:   
+          ;; reduction: 
+          ;; argument:
           
-          ;; path is (listof Pos); positions before p on this path through data
-          ;;                       in reverse order
-          (define (solve/p p path)
+          (define (solve/p p)
             (cond [(solved? p)     true]
-                  [(member p path) false]
                   [else
-                   (solve/lop (next-ps p)
-                              (cons p path))]))
+                   (solve/lop (next-ps p))]))
 
-          (define (solve/lop lop path)
+          (define (solve/lop lop)
             (cond [(empty? lop) false]
                   [else
-                   (local [(define try (solve/p (first lop) path))]
+                   (local [(define try (solve/p (first lop)))]
                      (if (not (false? try))
                          try
-                         (solve/lop (rest lop) path)))]))
+                         (solve/lop (rest lop))))]))
           
-
           
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
@@ -179,6 +194,22 @@
             (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
     
     (solve/p (make-pos 0 0) empty)))
+
+
+(@problem 2)
+
+#|
+
+Once the function above works, copy it to the below and update the
+COMPLETE DESIGN to get a new function called find-path that produces
+the list of positions from 0,0 to lower right if a maze is solvable;
+or fails if the maze is not solvable.  If there is more than one path
+your function should just produce the first one it finds.
+
+|#
+
+
+
 
 (require 2htdp/image)
 

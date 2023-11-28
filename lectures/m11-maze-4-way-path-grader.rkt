@@ -1,24 +1,74 @@
 #lang racket
-(require spd-grader/grader)
+
+(require spd-grader/grader
+         spd-grader/templates)
+
 (provide grader)
 
 
 (define grader
   (lambda ()
     (grade-submission
+      
       (grade-problem 1
         (grade-htdf solve
-	  (let* ([htdf (car (context))]
-		 [tests (htdf-checks htdf)])
-            (weights (.02 .1 .03 .2 *)
+          (weights (*)
+
+            (ensure-unchanged
+             '((@signature Maze -> Boolean)
+               ;; produce true if maze is solvable, false otherwise
+               ;; CONSTRAINT maze has a true at least in the upper left
+               (check-expect (solve M1) #t)
+               (check-expect (solve M2) #t)
+               (check-expect (solve M3) #t) 
+               (check-expect (solve M4) #t)
+               (check-expect (solve M5) #f)
+               (check-expect (solve M6) #t)
+               (check-expect (solve M7) #t)))
+
+            (grade-accumulator-intact solve? 1)
+
+            (grade-encapsulated-template-fns (solve/p solve/lop)
+              (weights (*)
+                (grade-questions-intact solve/p [(solved? p) ...] [(member p path) ...] [else ...])
+                (grade-mr-intact        solve/p solve/lop)
+                
+                (grade-questions-intact solve/lop [(empty? lop) ...] [else ...])
+                (grade-mr-intact        solve/lop solve/p)))
+            
+            (grade-submitted-tests 1))))
+
+
+      (grade-problem 2
+        (grade-htdf find-path
+          (let* ([htdf (car (context))]
+                 [tests (htdf-checks htdf)])
+            
+            (weights (*)
+            
               (grade-signature (Maze -> (listof Pos) or false))
-              (rubric-item 'signature (andmap (curryr member '(M1 M2 M3 M4 M5 M6 M7))
-                                              (map cadr (map cadr tests)))
+
+              (rubric-item 'submitted-tests
+                           (andmap (curryr member '(M1 M2 M3 M4 M5 M6 M7))
+                                   (map cadr (map cadr tests)))
                            "Should have tests for all 7 of M1...M7")
+              
               (grade-template-origin (genrec arb-tree try-catch accumulator))
+
+              (grade-accumulator-intact solve? 1)
+
+              (grade-encapsulated-template-fns (find-path/p find-path/lop)
+                
+              (weights (*)
+                (grade-questions-intact find-path/p [(find-pathd? p) ...] [(member p path) ...] [else ...])
+                (grade-mr-intact        find-path/p find-path/lop)
+                
+                (grade-questions-intact find-path/lop [(empty? lop) ...] [else ...])
+                (grade-mr-intact        find-path/lop find-path/p)))
+              
               (grade-submitted-tests 1)
               (grade-additional-tests 1
-                (check-expect (solve M1) (list (make-pos 0 0)
+                (check-expect (find-path M1) (list (make-pos 0 0)
                                                (make-pos 0 1)
                                                (make-pos 1 1)
                                                (make-pos 1 2)
@@ -27,7 +77,7 @@
                                                (make-pos 2 4)
                                                (make-pos 3 4)
                                                (make-pos 4 4)))
-                (check-expect (solve M2) (list (make-pos 0 0)
+                (check-expect (find-path M2) (list (make-pos 0 0)
                                                (make-pos 1 0)
                                                (make-pos 2 0)
                                                (make-pos 3 0)
@@ -36,7 +86,7 @@
                                                (make-pos 4 2)
                                                (make-pos 4 3)
                                                (make-pos 4 4)))
-                (check-expect (solve M3) (list (make-pos 0 0)
+                (check-expect (find-path M3) (list (make-pos 0 0)
                                                (make-pos 0 1)
                                                (make-pos 0 2)
                                                (make-pos 0 3)
@@ -45,7 +95,7 @@
                                                (make-pos 2 4)
                                                (make-pos 3 4)
                                                (make-pos 4 4))) 
-                (check-expect (solve M4) (list (make-pos 0 0)
+                (check-expect (find-path M4) (list (make-pos 0 0)
                                                (make-pos 1 0)
                                                (make-pos 2 0)
                                                (make-pos 3 0)
@@ -58,8 +108,8 @@
                                                (make-pos 2 4)
                                                (make-pos 3 4)
                                                (make-pos 4 4)))
-                (check-expect (solve M5) #f)
-                (check-expect (solve M6) (list (make-pos 0 0)
+                (check-expect (find-path M5) #f)
+                (check-expect (find-path M6) (list (make-pos 0 0)
                                                (make-pos 1 0)
                                                (make-pos 2 0)
                                                (make-pos 2 1)
@@ -100,7 +150,7 @@
                                                (make-pos 8 8)
                                                (make-pos 9 8)
                                                (make-pos 9 9)))
-                (check-expect (solve M7) (list
+                (check-expect (find-path M7) (list
                                           (make-pos 0 0)
                                           (make-pos 1 0)
                                           (make-pos 2 0)
@@ -128,4 +178,3 @@
                                           (make-pos 8 8)
                                           (make-pos 9 8)
                                           (make-pos 9 9)))))))))))
-  
