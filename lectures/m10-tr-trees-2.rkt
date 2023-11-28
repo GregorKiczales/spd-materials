@@ -153,19 +153,21 @@
   ;; t-wl is (listof Tree); worklist of Trees to visit
   ;;                        unvisited direct subs of visited trees
   ;; visited is ???
-  (local [(define (fn-for-t t t-wl visited)
+  ;; rsf is ???
+  (local [(define (fn-for-t t t-wl visited rsf)
             (local [(define number (node-number t))  ;unpack the fields
                     (define subs (node-subs t))]     ;for convenience
-              (cons (list number (reverse (cons number visited)))
-                    (fn-for-lot (append subs t-wl)
-                                (cons number visited)))))
+              (fn-for-lot (append subs t-wl)
+                          (cons number visited)
+                          (cons (list number (reverse (cons number visited)))
+                                rsf))))
           
-          (define (fn-for-lot t-wl visited)
-            (cond [(empty? t-wl) empty]
+          (define (fn-for-lot t-wl visited rsf)
+            (cond [(empty? t-wl) (reverse rsf)]
                   [else
-                   (fn-for-t (first t-wl) (rest t-wl) visited)]))]
+                   (fn-for-t (first t-wl) (rest t-wl) visited rsf)]))]
     
-    (fn-for-t t0 empty empty)))
+    (fn-for-t t0 empty empty empty)))
 
 
 
