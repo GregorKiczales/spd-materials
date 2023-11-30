@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-distance-from-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
-(@assignment lectures/m11-maze-4-way-solveable-no-revisits)
+(@assignment lectures/m11-maze-4-way-distance-from)
 
 (@cwl ???) ;replace ??? with your cwl
 
@@ -134,9 +134,7 @@
           ;; trivial:   
           ;; reduction: 
           ;; argument:
-
-          
-          
+           
           (define (fn-for-p p path dist)
             (cond [(equal? p end)   (distance-add1 dist)]
                  ;[(solved? p)      false]

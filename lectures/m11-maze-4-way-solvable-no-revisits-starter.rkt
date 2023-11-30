@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-path-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
-(@assignment lectures/m11-maze-4-way-solveable-no-revisits)
+(@assignment lectures/m11-maze-4-way-solvable-no-revisits)
 
 (@cwl ???) ;replace ??? with your cwl
 
@@ -138,22 +138,22 @@ and delete or comment out the others.
 |#
 
 
-(@htdf solveable-no-revisits?)
+(@htdf solvable-no-revisits?)
 (@signature Maze -> Boolean)
 ;; produce true if maze is solvable, false otherwise
 ;; CONSTRAINT maze has a true at least in the upper left
-(check-expect (solveable-no-revisits? M1) #t)
-(check-expect (solveable-no-revisits? M2) #t)
-(check-expect (solveable-no-revisits? M3) #t) 
-(check-expect (solveable-no-revisits? M4) #t)
-(check-expect (solveable-no-revisits? M5) #f)
-(check-expect (solveable-no-revisits? M6) #t)
-(check-expect (solveable-no-revisits? M7) #t)
+(check-expect (solvable-no-revisits? M1) #t)
+(check-expect (solvable-no-revisits? M2) #t)
+(check-expect (solvable-no-revisits? M3) #t) 
+(check-expect (solvable-no-revisits? M4) #t)
+(check-expect (solvable-no-revisits? M5) #f)
+(check-expect (solvable-no-revisits? M6) #t)
+(check-expect (solvable-no-revisits? M7) #t)
 
 
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
-(define (solveable-no-revisits? m)
+(define (solvable-no-revisits? m)
   (local [(define R (sqrt (length m)))	  
 
           ;; trivial:   
@@ -178,15 +178,15 @@ and delete or comment out the others.
           ;; reduction: 
           ;; argument:
           
-          (define (fn-for-p p t-wl)
+          (define (fn-for-p p p-wl)
             (cond [(solved? p) true]
                   [else
-                   (fn-for-lop (append (next-ps p) t-wl))]))
+                   (fn-for-lop (append (next-ps p) p-wl))]))
 
-          (define (fn-for-lop t-wl)
-            (cond [(empty? t-wl) false]
+          (define (fn-for-lop p-wl)
+            (cond [(empty? p-wl) false]
                   [else
-                   (fn-for-p (first t-wl) (rest t-wl))]))
+                   (fn-for-p (first p-wl) (rest p-wl))]))
           
           
           ;; Pos -> Boolean          

@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-solvable-no-revisits-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
-(@assignment lectures/m11-maze-4-way-solveable-no-revisits)
+(@assignment lectures/m11-maze-4-way-solvable-no-revisits)
 
 (@cwl ???) ;replace ??? with your cwl
 
@@ -120,9 +120,9 @@ In the following partially complete function design:
  - The next-ps function has been updated so to produce all valid
    moves chosen from up, down, left, and right of the given position.
 
- - ONE set of templates for fn-for-p and solve/lop use ordinary recursion.
+ - ONE set of templates for fn-for-p and fn-for-lop use ordinary recursion.
 
- - ONE set of templates for fn-for-p and solve/lop use tail recursion.
+ - ONE set of templates for fn-for-p and fn-for-lop use tail recursion.
 
  - Neither set of templates have accumulators to prevent cycling.
 
@@ -138,38 +138,38 @@ and delete or comment out the others.
 |#
 
 
-(@htdf solveable-no-revisits?)
+(@htdf solvable-no-revisits?)
 (@signature Maze -> Boolean)
 ;; produce true if maze is solvable, false otherwise
 ;; CONSTRAINT maze has a true at least in the upper left
-(check-expect (solveable-no-revisits? M1) #t)
-(check-expect (solveable-no-revisits? M2) #t)
-(check-expect (solveable-no-revisits? M3) #t) 
-(check-expect (solveable-no-revisits? M4) #t)
-(check-expect (solveable-no-revisits? M5) #f)
-(check-expect (solveable-no-revisits? M6) #t)
-(check-expect (solveable-no-revisits? M7) #t)
+(check-expect (solvable-no-revisits? M1) #t)
+(check-expect (solvable-no-revisits? M2) #t)
+(check-expect (solvable-no-revisits? M3) #t) 
+(check-expect (solvable-no-revisits? M4) #t)
+(check-expect (solvable-no-revisits? M5) #f)
+(check-expect (solvable-no-revisits? M6) #t)
+(check-expect (solvable-no-revisits? M7) #t)
 
 
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
-(define (solveable-no-revisits? m)
+(define (solvable-no-revisits? m)
   (local [(define R (sqrt (length m)))
 
-          ;; trivial:   
+          ;; trivial:    
           ;; reduction: 
           ;; argument:
           
-          (define (fn-for-p p t-wl visited)
+          (define (fn-for-p p p-wl visited)
             (cond [(solved? p) true]
-                  [(member? p visited) (solve/lop t-wl visited)]
+                  [(member? p visited) (fn-for-lop p-wl visited)]
                   [else
-                   (solve/lop (append (next-ps p) t-wl) (cons p visited))]))
+                   (fn-for-lop (append (next-ps p) p-wl) (cons p visited))]))
 
-          (define (solve/lop t-wl visited)
-            (cond [(empty? t-wl) false]
+          (define (fn-for-lop p-wl visited)
+            (cond [(empty? p-wl) false]
                   [else
-                   (fn-for-p (first t-wl) (rest t-wl) visited)]))
+                   (fn-for-p (first p-wl) (rest p-wl) visited)]))
           
           
           ;; Pos -> Boolean          
