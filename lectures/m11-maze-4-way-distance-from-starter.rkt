@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-path-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
-(@assignment lectures/m11-maze-4-way-solveable-no-revisits)
+(@assignment lectures/m11-maze-4-way-distance-from)
 
 (@cwl ???) ;replace ??? with your cwl
 
@@ -144,7 +144,7 @@ CALLED distance-add1 in for you.
 
 (@htdf distance-from)
 (@signature Maze Pos Pos -> Boolean)
-;; if path exists from start to end produce distance between
+;; if can start at 0,0, reach start, and then end, produce distance between them
 ;; CONSTRAINT maze has a true at least in the upper left
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 4 1)) #f)
@@ -182,15 +182,15 @@ CALLED distance-add1 in for you.
           ;; reduction: 
           ;; argument:
           
-          (define (fn-for-p p t-wl)
+          (define (fn-for-p p p-wl)
             (cond [(solved? p) true]
                   [else
-                   (fn-for-lop (append (next-ps p) t-wl))]))
+                   (fn-for-lop (append (next-ps p) p-wl))]))
 
-          (define (fn-for-lop t-wl)
-            (cond [(empty? t-wl) false]
+          (define (fn-for-lop p-wl)
+            (cond [(empty? p-wl) false]
                   [else
-                   (fn-for-p (first t-wl) (rest t-wl))]))
+                   (fn-for-p (first p-wl) (rest p-wl))]))
 
           
 

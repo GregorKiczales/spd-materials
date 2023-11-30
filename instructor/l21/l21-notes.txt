@@ -1,6 +1,65 @@
 
 intro (3 slides)
 
+
+2 problems today
+
+we will work fairly slowly, these use everything we did last time
+
+
+
+
+(define (solvable-no-revisits? m)
+  (local [(define R (sqrt (length m)))
+
+          ;; trivial:   
+          ;; reduction: 
+          ;; argument:
+          
+          (define (fn-for-p p p-wl visited)
+            (cond [(solved? p) true]
+                  [(member? p visited) (fn-for-lop p-wl visited)]
+                  [else
+                   (fn-for-lop (append (next-ps p) p-wl) (cons p visited))]))
+
+          (define (fn-for-lop p-wl visited)
+            (cond [(empty? p-wl) false]
+                  [else
+                   (fn-for-p (first p-wl) (rest p-wl) visited)]))
+          
+
+
+
+
+(define (distance-from m start end)
+  (local [(define R (sqrt (length m)))	  
+
+          ;; trivial:   
+          ;; reduction: 
+          ;; argument:
+
+          
+          
+          (define (fn-for-p p path dist)
+            (cond [(equal? p end)   (distance-add1 dist)]
+                 ;[(solved? p)      false]
+                  [(member? p path) false]
+                  [else
+                   (if (equal? p start)
+                       (fn-for-lop (next-ps p) (cons p path) 0)
+                       (fn-for-lop (next-ps p)
+                                          (cons p path)
+                                          (distance-add1 dist)))]))
+
+          (define (fn-for-lop lop path dist)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try (fn-for-p (first lop) path dist))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lop (rest lop) path dist)))]))
+
+
 - start adding path
   - motivate with M4
   - add up, left, demo that it hangs, ask why
