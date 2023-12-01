@@ -6,21 +6,18 @@ intro (3 slides)
 
 we will work fairly slowly, these use everything we did last time
 
-
+start with 2 clickers
 
 
 (define (solvable-no-revisits? m)
   (local [(define R (sqrt (length m)))
 
-          ;; trivial:   
-          ;; reduction: 
-          ;; argument:
+          ;; trivial: reach lower right, or previously visited position   
+          ;; reduction: valid moves from up, down, left and right
+          ;; argument: maze has finite size, 
           
           (define (fn-for-p p p-wl visited)
             (cond [(solved? p) true]
-		  ;; THERE'S NO TRY CATCH WAITING FOR THIS BRANCH TO FAIL
-		  ;; SO IT CAN TRY THE NEXT ONE. IF THIS BRANCH WANTS TO FAIL
-		  ;; IT HAS TO TRY THE NEXT ONE
                   [(member? p visited) (fn-for-lop p-wl visited)]
                   [else
                    (fn-for-lop (append (next-ps p) p-wl) (cons p visited))]))
@@ -61,3 +58,80 @@ we will work fairly slowly, these use everything we did last time
                      (if (not (false? try))
                          try
                          (fn-for-lop (rest lop) path dist)))]))
+
+
+- start adding path
+  - motivate with M4
+  - add up, left, demo that it hangs, ask why
+  - develop idea of adding path (3 slides)
+  - add [(member p path) false]
+  - then class works on adding rest <10 mins
+
+- come back and take contributions to do:
+  - type and invariant, add param, initialize, preserve, already exploited
+  - termination argument
+  - other tests
+
+- discuss (1 slide)
+  - lots of questions come up here ~ 10 minutes
+
+
+          ;; ----
+          ;; structural recursion, with path accumulator
+
+          ;; trivial:   reaches lower right, previously seen position
+          ;; reduction: move up, down, left, right if possible
+          ;; argument:  maze is finite, so moving will eventually
+          ;;            reach trivial case or run out of moves
+	  
+          ;; path is (listof Pos); positions on this path through data
+          (define (solve/p p path)
+            (cond [(solved? p) true]
+                  [(member p path) false]
+                  [else
+                   (solve/lop (next-ps p)
+                              (cons p path))]))
+
+          (define (solve/lop lop path)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try (solve/p (first lop) path))]
+                     (if (not (false? try))
+                         try
+                         (solve/lop (rest lop) path)))]))
+
+
+use slides to review what it does do, but then ask what happens at the first join
+
+graph picture
+
+do we want to go this way? how might we stop?
+
+ - requires visited --> requires tail recursive (that order)
+
+
+          ;; tail recursion, with visited accumulator
+
+          ;; trivial:   reaches lower right, previously seen position
+          ;; reduction: move up, down, left, right if possible
+
+	  ;; argument:  maze is finite, so moving will eventually
+          ;;            reach trivial case or run out of moves
+	  
+          ;; p-wl is    (listof Pos); worklist
+          ;; visited is (listof Pos); every position ever visited
+          (define (solve/p p p-wl visited)
+            (cond [(solved? p) true]
+                  [(member p visited) (solve/lop p-wl visited)]
+                  [else
+                   (solve/lop (append (next-ps p) p-wl)
+                              (cons p visited))]))
+
+          (define (solve/lop p-wl visited)
+            (cond [(empty? p-wl) false]
+                  [else
+                   (solve/p (first p-wl) (rest p-wl) visited)]))
+
+
+- discuss/questions
+

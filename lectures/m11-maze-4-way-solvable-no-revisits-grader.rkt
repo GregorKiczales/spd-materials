@@ -27,6 +27,8 @@
                (check-expect (solvable-no-revisits? M7) #t)))
             
             (grade-accumulator-intact solvable-no-revisits? 2)
+
+            (grade-tail-recursive 1 '(fn-for-p fn-for-lop))
             
             (grade-encapsulated-template-fns (fn-for-p fn-for-lop)
               (weights (*)

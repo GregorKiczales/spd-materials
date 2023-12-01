@@ -60,7 +60,7 @@
               (grade-encapsulated-template-fns (find-path/p find-path/lop)
                 
               (weights (*)
-                (grade-questions-intact find-path/p [(find-pathd? p) ...] [(member? p path) ...] [else ...])
+                (grade-questions-intact find-path/p [(solved? p) ...] [(member? p path) ...] [else ...])
                 (grade-mr-intact        find-path/p find-path/lop)
                 
                 (grade-questions-intact find-path/lop [(empty? lop) ...] [else ...])
