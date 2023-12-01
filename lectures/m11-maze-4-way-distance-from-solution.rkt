@@ -114,7 +114,7 @@
 (@problem 1)
 
 (@htdf distance-from)
-(@signature Maze Pos Pos -> Boolean)
+(@signature Maze Pos Pos -> Natural or false)
 ;; if path exists from start to end produce distance between
 ;; CONSTRAINT maze has a true at least in the upper left
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)

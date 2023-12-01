@@ -134,7 +134,7 @@
           
           (define (solve/p p path)
             (cond [(solved? p)     true]
-                  [(member p path) false]
+                  [(member? p path) false]
                   [else
                    (solve/lop (next-ps p) (cons p path))]))
 
@@ -311,8 +311,8 @@
           ;; path is (listof Pos); positions before p on this path through data
           ;;                       in reverse order
           (define (find-path/p p path)
-            (cond [(find-pathd? p) (reverse (cons p path))]
-                  [(member p path) false]
+            (cond [(solved? p) (reverse (cons p path))]
+                  [(member? p path) false]
                   [else
                    (find-path/lop (next-ps p)
                               (cons p path))]))
@@ -330,7 +330,7 @@
           
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
-          (define (find-pathd? p)
+          (define (solved? p)
             (and (= (pos-x p) (sub1 R))
                  (= (pos-y p) (sub1 R))))
 

@@ -151,7 +151,7 @@ and delete or comment out the others.
 (check-expect (solvable-no-revisits? M7) #t)
 
 
-(@template-origin encapsulated try-catch genrec arb-tree accumulator)
+(@template-origin encapsulated genrec arb-tree accumulator)
 
 (define (solvable-no-revisits? m)
   (local [(define R (sqrt (length m)))
