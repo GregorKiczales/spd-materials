@@ -5,7 +5,4 @@ compiled/
 *.bak
 \#*
 .\#*
-instructor/l01/~$110-intro.pptx
-lectures/~$m12-wrap.pptx
-instructor/l18/~$l18-pad.pptx
-instructor/l19/~$l19-20-pad.pptx
+~$*.pptx
