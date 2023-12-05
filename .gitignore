@@ -3,6 +3,5 @@ compiled/
 /doc/
 *~
 *.bak
-\#*
-.\#*
+#*
 ~$*.pptx
