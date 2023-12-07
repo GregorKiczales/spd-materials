@@ -47,7 +47,9 @@
 
 (define (first-out-of-order map num0)
   ;; nn-wl is (listof Natural);   worklist of node numbers
-  ;; visited is (listof Natural); numbers of nodes already visited in the tr
+  ;; visited is (listof Natural)
+  ;; Numbers of nodes already visited in the tr. (first visited) is always
+  ;; the previous node's number which implies visited is never empty
   (local [(define (fn-for-node n nn-wl visited)
             (local [(define num (node-number n))
                     (define nexts (node-nexts n))
@@ -63,7 +65,7 @@
                    (fn-for-node (generate-node map (first nn-wl))
                                 (rest nn-wl)
                                 visited)]))]
-    
+    ;; must start at fn-for-lonn to satisfy visited invariant
     (fn-for-lonn (node-nexts (generate-node map num0))
                  (list num0))))
 
@@ -82,11 +84,13 @@
 
 (define (first-out-of-order-path map num0)
   
-  ;; nn-wl is (listof Natural); worklist of node numbers
-  ;; p-wl is (listof (listof Natural)); tandem worklist of paths
-  ;; visited is (listof Natural); numbers of nodes already visited in the tr
+  ;; nn-wl   is (listof Natural);          worklist of node numbers
+  ;; path-wl is (listof (listof Natural)); tandem worklist of paths
+  ;; visited is (listof Natural)
+  ;; Numbers of nodes already visited in the tr. (first visited) is always
+  ;; the previous node's number which implies visited is never empty
   
-  (local [(define (fn-for-node n path  nn-wl path-wl  visited)
+  (local [(define (fn-for-node n path nn-wl path-wl  visited)
             (local [(define num      (node-number n))
                     (define nexts    (node-nexts n))
                     (define npath    (cons num path))
@@ -109,6 +113,7 @@
                                 (rest path-wl)
                                 visited)]))]
     
+    ;; must start at fn-for-lonn to satisfy visited invariant
     (fn-for-lonn (node-nexts (generate-node map num0))
                  (make-list (length (node-nexts (generate-node map num0)))
                             (list num0))
