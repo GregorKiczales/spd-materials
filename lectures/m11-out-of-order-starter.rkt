@@ -129,59 +129,6 @@
 
 
 
-;; Design a function that consumes a list of elements lox and a natural number
-;; n and produces the list formed by including the first element of lox, then 
-;; skipping the next n elements, including an element, skipping the next n 
-;; and so on.
-;;
-;;  (skipn (list "a" "b" "c" "d" "e" "f") 2) should produce (list "a" "d")
-
-
-(@htdf skip-nth-tr-order)
-(@signature Map Natural Natural -> Natural)
-;; in TR traversal of graph from start, produce first node num, skip n, repeat
-
-(check-expect (skip-nth-tr-order MAP   1 2) (list 1 3 5 8))
-(check-expect (skip-nth-tr-order MAP   1 3) (list 1 4 8))
-(check-expect (skip-nth-tr-order MAP  11 2) (list 11 13 15 17))
-(check-expect (skip-nth-tr-order MAP  11 3) (list 11 14 17))
-(check-expect (skip-nth-tr-order MAP 101 2) (list 101 103 105 108))
-(check-expect (skip-nth-tr-order MAP 101 3) (list 101 104 108))
-
-(@template-origin genrec arb-tree accumulator)
-
-(define (skip-nth-tr-order map start count)
-  ;; nn-wl is (listof Natural);   worklist of node numbers
-  ;; visited is (listof Natural); numbers of nodes already visited in the tr
-  ;; pick is Natural; number till next pick
-  ;; rsf
-  (local [(define (fn-for-node n nn-wl visited pick rsf)
-            (cond [(member (node-number n) visited)
-                   (fn-for-lonn nn-wl visited pick rsf)]
-                  [(zero? pick)
-                   (fn-for-lonn (append (node-nexts n) nn-wl)
-                                (cons (node-number n) visited)
-                                (sub1 count)
-                                (cons (node-number n) rsf))]
-                  [else
-                   (fn-for-lonn (append (node-nexts n) nn-wl) 
-                                (cons (node-number n) visited)
-                                (sub1 pick)
-                                rsf)]))
-          
-          (define (fn-for-lonn nn-wl visited pick rsf)
-            (cond [(empty? nn-wl) (reverse rsf)] 
-                  [else
-                   (fn-for-node (generate-node map (first nn-wl))
-                                (rest nn-wl)
-                                visited
-                                pick
-                                rsf)]))]
-    (fn-for-lonn (node-nexts (generate-node map start))
-                 (list start)
-                 (sub1 count)
-                 (list start))))
-
 
 ;;
 ;; generate-node is a primitive described-above.

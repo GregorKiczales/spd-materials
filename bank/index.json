@@ -1880,6 +1880,18 @@
               "recipe"         : ["HtDF"],
               "duration"       : 120,
               "difficulty"     : "Black"
+          },
+          {      
+              "module"         : "Graphs",
+              "lecture"        : "cyclic-data, templating, reachable",
+              "kind"           : "Lecture",
+              "setNumber"      : 2,
+              "name"           : "Graphs",
+              "codeFiles"      : ["skipn-tr-order-starter.rkt", "skipn-tr-order-solution.rkt"],
+              "description"    : "Design a tail-recursive function with additional accumulators that operates on a simple graph.",
+              "recipe"         : ["HtDF"],
+              "duration"       : 60,
+              "difficulty"     : "Blue"
           }
 
           
