@@ -21,7 +21,7 @@
 ;;         then  (sqr N) is the number of positions on the board
 ;;         so    this number should be in [0, (- (sqr N) 1)]
 (define P1 0)        ;upper left corner of board
-(define P2 (- 16 1)) ;lower left corner of 4x4 board
+(define P2 (- 16 1)) ;lower right corner of 4x4 board
 
 
 (@htdd Board)
