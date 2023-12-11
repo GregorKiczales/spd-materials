@@ -66,6 +66,6 @@
                          try          
                          (fn-for-lot (rest lot) path)))]))]
     
-    (fn-for-t0 t empty)))
+    (fn-for-t t0 empty)))
 
 

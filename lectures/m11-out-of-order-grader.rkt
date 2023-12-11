@@ -26,7 +26,7 @@
 
 
             
-            ;(grade-accumulator-intact first-out-of-order 1) ;!!!
+            (grade-accumulator-intact first-out-of-order (fn-for-node fn-for-lonn) 2 2)
 
             (grade-tail-recursive 1 '(fn-for-node fn-for-lonn))
 
@@ -53,7 +53,7 @@
                
                (@template-origin genrec arb-tree accumulator)))
             
-            ;(grade-accumulator-intact first-out-of-order 2) ;!!!
+            (grade-accumulator-intact first-out-of-order (fn-for-node fn-for-lonn) 3 3) ;!!!
 
             (grade-tail-recursive 1 '(fn-for-node fn-for-lonn))
 

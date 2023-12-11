@@ -52,7 +52,7 @@
 
             (grade-template-origin (BinaryTree accumulator))
 
-            (grade-accumulator-intact bst? 2)
+            (grade-accumulator-intact bst? (*) 2 2)
 
             (grade-encapsulated-template-fns (bst?)
               (weights (*)
