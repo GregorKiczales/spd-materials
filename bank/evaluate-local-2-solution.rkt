@@ -1,9 +1,9 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname evaluate-boo-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname evaluate-boo-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
-(@assignment bank/evaluate-boo)
+(@assignment bank/evaluate-local-2)
 (@cwl ???)
 
 (check-expect (+ 1 2) 3) ;this just here so that the default autograder
@@ -28,7 +28,7 @@
 ;; questions right.
 
 
-
+(list 12 21)
 
 
 (@problem 2)
@@ -36,7 +36,7 @@
 ;; expression in part A.
 
 
-
+3
 
 
 (@problem 3)
@@ -44,5 +44,7 @@
 ;; definitions. 
 
 
-
+(define (addx_0 n) (+ n 2))
+(define (addx_1 n) (+ n 1))
+(define (addx_2 n) (+ n 0))
 

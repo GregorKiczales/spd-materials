@@ -1224,8 +1224,7 @@
               "recipe"         : ["HtDF"],
               "duration"       : 40,
               "difficulty"     : "Blue"
-          },
-          
+          },          
           {      
               "module"         : "Local",
               "lecture"        : "all",
@@ -1238,8 +1237,7 @@
               "recipe"         : ["HtDF"],
               "duration"       : 60,
               "difficulty"     : "Black"
-          },
-          
+          },          
           {      
               "module"         : "Local",
               "lecture"        : "encap, recomp",
@@ -1265,25 +1263,50 @@
               "recipe"         : ["HtDF"],
               "duration"       : 30,
               "difficulty"     : "Blue"
-          },
-          
+          },          
 	  {      
               "module"         : "Local",
               "lecture"        : "eval",
               "kind"           : "Practice",
               "setNumber"      : 3,
               "name"           : "Evaluate local",
-              "codeFiles"      : ["local-evaluation-starter.rkt",
-				  "local-evaluation-solution.rkt"],
+              "codeFiles"      : ["evaluate-local-1-starter.rkt",
+				  "evaluate-local-1-solution.rkt"],
               "description"    : "Step by step evaluation of code including local expressions.",
-              "duration"       : 30,
-              "difficulty"     : "Blue"
+              "duration"       : 10,
+              "difficulty"     : "Green"
           },
+	  {      
+              "module"         : "Local",
+              "lecture"        : "eval",
+              "kind"           : "Practice",
+              "setNumber"      : 4,
+              "name"           : "Evaluate local 2",
+              "codeFiles"      : ["evaluate-local-2-starter.rkt",
+				  "evaluate-local-2-solution.rkt"],
+              "description"    : "Evaluation of code including local expressions.",
+              "duration"       : 10,
+              "difficulty"     : "Green"
+          },
+
+	  {      
+              "module"         : "Local",
+              "lecture"        : "eval",
+              "kind"           : "Practice",
+              "setNumber"      : 4,
+              "name"           : "Evaluate local 3",
+              "codeFiles"      : ["evaluate-local-3-starter.rkt",
+				  "evaluate-local-3-solution.rkt"],
+              "description"    : "Evaluation of code including local expressions.",
+              "duration"       : 10,
+              "difficulty"     : "Green"
+          },
+	  
           {      
               "module"         : "Local",
               "lecture"        : "encap",
               "kind"           : "Practice",
-              "setNumber"      : 4,
+              "setNumber"      : 5,
               "name"           : "Encapsulate total area",
               "codeFiles"      : ["encapsulate-total-area-starter.rkt",
 				  "encapsulate-total-area-solution.rkt"],
@@ -1296,7 +1319,7 @@
               "module"         : "Local",
               "lecture"        : "encap, avoid-recomp",
               "kind"           : "Practice",
-              "setNumber"      : 5,
+              "setNumber"      : 6,
               "name"           : "Championship Bracket Improved",
               "codeFiles"      : ["championship-bracket-improved-starter.rkt",
 				  "championship-bracket-improved-solution.rkt"],
