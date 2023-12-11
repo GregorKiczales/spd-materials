@@ -26,7 +26,7 @@
                (check-expect (distance-from M7 (make-pos 2 2) (make-pos 3 3)) 2)
                (check-expect (distance-from M7 (make-pos 2 0) (make-pos 7 2)) 11)))
 
-           ;(grade-accumulator-intact solve? 2)
+           (grade-accumulator-intact distance-from (fn-for-p fn-for-lop) 2 2)
 
             (grade-encapsulated-template-fns (fn-for-p fn-for-lop)
               (weights (*)

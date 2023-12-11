@@ -56,7 +56,7 @@
 
             (grade-template-origin ((listof Natural) accumulator))
 
-            (grade-accumulator-intact sequence? 1)
+            (grade-accumulator-intact sequence? (*) 1 1)
 
             (grade-encapsulated-template-fns (sequence?)
                                            

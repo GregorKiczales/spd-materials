@@ -1,7 +1,7 @@
 #lang racket
 
 (require spd-grader/grader
-         spd-grader/walker)
+         spd-grader/2-one-of)
 
 (provide grader)
 
@@ -87,7 +87,7 @@
                                   [else (prefix=? (rest lst1) (rest lst2))]))]
                     (prefix=? los1 los2))))
 
-              (grade-2-one-of (lst1 lst2)
+              (grade-2-one-of 1 (lst1 lst2)
                 (cond [(empty? lst1) true]   ;[1]    
                       [(empty? lst2) false]  ;[2]      
                       [else                  ;[3]  

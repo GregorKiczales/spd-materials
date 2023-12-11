@@ -26,7 +26,7 @@
                (check-expect (solve M6) #t)
                (check-expect (solve M7) #t)))
 
-            (grade-accumulator-intact solve? 1)
+            (grade-accumulator-intact solve? (solve/p solve/lop) 1 1)
 
             (grade-encapsulated-template-fns (solve/p solve/lop)
               (weights (*)
@@ -55,7 +55,7 @@
               
               (grade-template-origin (genrec arb-tree try-catch accumulator))
 
-              (grade-accumulator-intact solve? 1)
+              (grade-accumulator-intact find-path (find-path/p find-path/lop) 1 1)
 
               (grade-encapsulated-template-fns (find-path/p find-path/lop)
                 
