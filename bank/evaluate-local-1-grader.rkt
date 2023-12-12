@@ -13,7 +13,7 @@
         (grade-lifted-definitions
          
          (define (foo n)
-           (local [(define x (* 3 n))]
+           (local [(define x (* 2 n))]
              (if (even? x)
                  n
                  (+ n (foo (sub1 n))))))

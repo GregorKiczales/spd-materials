@@ -13,7 +13,7 @@
 ;;
 
 (define (foo n)
-  (local [(define (bar x) (* 3 n))]
+  (local [(define (bar x) (* 2 n))]
     (if (even? n)
         n
         (+ n (foo (bar n))))))
