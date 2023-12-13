@@ -3,9 +3,10 @@
 #reader(lib "htdp-intermediate-reader.ss" "lang")((modname average-tr-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
-(@assignment bank/accumulators-p4)
+(@assignment bank/average-tr)
 (@cwl ???)
 
 (@problem 1)
 ;; Design a function called average that consumes (listof Number) and produces
-;; the average of the numbers in the list.
+;; the average of the numbers in the list.  Your function MUST NOT CALL the
+;; built-in length function, and it MUST TRAVERSE THE LIST ONE TIME ONLY.
