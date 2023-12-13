@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-reader.ss" "lang")((modname average-tr-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
-(@assignment bank/accumulators-p4)
+(@assignment bank/average-tr)
 (@cwl ???)
 
 (@problem 1)
@@ -15,9 +15,10 @@
 (@signature (listof Number) -> Number) 
 ;; Produce the average of a list of numbers
 ;; ASSUME: lon contains at least 1 element
+(check-expect (average (list 5)) 5)
 (check-expect (average (list 2 3 4)) 3) 
 
-(@template-origin (listof Number) accumulator)
+(@template-origin (listof X) accumulator)
 
 (define (average lon)
   ;; cnt: Number; how many numbers so far 
