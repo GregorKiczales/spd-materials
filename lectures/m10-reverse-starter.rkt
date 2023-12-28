@@ -13,6 +13,8 @@
 ;;
 (@signature (listof X) -> (listof X))
 
+(check-expect (rev empty) empty)
+(check-expect (rev (list 1)) (list 1))
 (check-expect (copy (list 1 2 3)) (list 1 2 3))
 
 (@template-origin (listof X))
