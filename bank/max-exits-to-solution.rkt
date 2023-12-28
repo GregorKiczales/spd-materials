@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-advanced-reader.ss" "lang")((modname max-exits-to-gen-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f () #f)))
+#reader(lib "htdp-advanced-reader.ss" "lang")((modname max-exits-to-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f () #f)))
 (require spd/tags)
 
 (@assignment bank/graphs-p5)
@@ -127,8 +127,8 @@
           ;; todo is (listof Room); a worklist accumulator
           ;; visited is (listof String); context preserving accumulator, names
           ;;                             of rooms already visited
-          ;; rsf is (listof RoomNExitsTo); the number of exits leading to rooms so
-          ;;                               far
+          ;; rsf is (listof RoomNExitsTo); the number of exits leading to rooms
+          ;;                               so far
           (define (fn-for-room r todo visited rsf) 
             (if (member (room-name r) visited)
                 (fn-for-lor todo visited rsf)
@@ -166,4 +166,6 @@
                     (first rsf)
                     (rest rsf))))]
     ;; function composition
-    (pick-max (fn-for-room r0 empty empty empty))))
+    (pick-max (fn-for-lor (room-exists r0)
+                          (list (room-name r0))
+                          (merge-exit r0 empty)))))
