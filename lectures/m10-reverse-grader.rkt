@@ -19,24 +19,19 @@
                  [produces-value-of-param? (and (rest params)
                                                 (symbol? (cadr (cadr  cond-exp)))            ;(cond [... rsf
                                                 (member  (cadr (cadr  cond-exp))
-                                                         (remove 'lox params)))]
-                 [tail-recursive?          (and (list?   (cadr (caddr cond-exp)))            ;      [... (fn-for-lox
-                                                         (eqv? (car (cadr (caddr cond-exp)))
-                                                               'fn-for-lox))])
+                                                         (remove 'lox params)))])
             (weights (*)
               (rubric-item 'signature (unchanged? REV-SIG-TESTS sexps)
                            "the supplied signature and check-expects must not be changed")
-             ;(grade-submitted-tests) ;!!!
               (rubric-item 'template produces-value-of-param?
                            "has accumulator parameter and produce its result in base case")
-              (rubric-item 'template tail-recursive?
-                           "is tail recursive in non base case"))))))))
+              (grade-tail-recursive))))))))
 
 (define REV-SIG-TESTS
   '((@signature (listof X) -> (listof X))
     ;; produce list of same elements in the opposite order
-   ;(check-expect (rev empty) empty) !!!
-   ;(check-expect (rev (list 1)) (list 1)) !!!
+    (check-expect (rev empty) empty)
+    (check-expect (rev (list 1)) (list 1))
     (check-expect (rev (list "a" "b" "c")) (list "c" "b" "a"))))
 
   
