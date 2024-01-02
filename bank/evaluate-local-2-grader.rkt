@@ -11,12 +11,12 @@
     (grade-submission
      
       (grade-problem 1
-        (grade-problem-sexps "Value"
-                             ((list 12 21))))
+        (grade-sexps "Value"
+                     ((list 12 21))))
      
       (grade-problem 2
-        (grade-problem-sexps "Value" 
-                             (3)))
+        (grade-sexps "Value" 
+                     (3)))
      
       (grade-problem 3
         (grade-lifted-definitions
