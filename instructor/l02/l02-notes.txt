@@ -1,30 +1,26 @@
 
 
-poll questions
+clicker questions
 
-intro
+htdf recipe intro
 
 topple
-
-checkbox-line
 
 tall?
 
 image>
 
 
-
-go right into first poll, like 15 seconds after start
+go right into first iclicker, like 15 seconds after start
 
 check-in on prework...
-  questions, as zoom polls
-  anonymous, but answer
-  learning comes from answering
+  questions, as iclickers
+  answering helps produce learning
 
 [skipped contract because was in intro slides, remove from intro, do here]
 
 Evaluation rules are essential
-  need rules when debugging
+  need them when debugging
   the program isn't doing what it is supposed to
   so you need to work out what it actually is doing
 
@@ -41,13 +37,14 @@ HtDF
 Present, with questions as we go
   topple
     setup recipe page (read later)
-    checklist on screen (it's a CHECKLIST)
+    recipe checklist on screen (it's a CHECKLIST, not explanation)
     metadata (about the program, checkable, used by top companies)
     post dev markup for review
 
 
 class
   tall?
+  interrupt to discuss each of the following
   yes/no question means produce Boolean
   produce Boolean means name ends in ?
   what's the boundary?
@@ -55,7 +52,7 @@ class
   aha there's an ambiguity - resolve and document and test
 
 
-home
+at home
   image>? (note new name)
-  
+  because they do it at home we provide them with htdf tag, signature, stub, template-origin, and template
 
