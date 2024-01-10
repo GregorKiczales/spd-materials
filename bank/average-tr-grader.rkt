@@ -34,7 +34,7 @@
                        (andmap number? lon)
                        (equal? r (%%average lon)))]
                 
-                [.25 (grade-argument-thoroughness
+                [.25 (grade-argument-thoroughness ()
                        (per-args (lon)
                          (= (length lon) 1)
                          (> (length lon) 1)))]

@@ -45,7 +45,7 @@
 
 (@problem 2)
 ;;
-;; Design a function, that consumes an image and determines whether it is tall.
+;; Design a function that consumes an image and determines whether it is tall.
 ;;
 
 
@@ -54,20 +54,18 @@
 ;;
 ;; Design a function, called image>?, that takes two images and determines 
 ;; whether the first is larger than the second.
-;; For this function we are giving you the htdf tag, signature, template-origin
-;; and template below.
+
+;; For this function we are providing you with the htdf tag, signature, stub,
+;; template-origin, and template.
 ;;
 
-;(@htdf image>?) ;UNCOMMENT THIS LINE WHEN YOU START THIS PROBLEM
+(@htdf image>?)
 (@signature Image Image -> Boolean)
+
+(define (image>? i1 i2) false) ;stub
 
 (@template-origin Image)
 
 (@template
  (define (image>? i1 i2)
    (... i1 i2)))
-
-
-
-
-

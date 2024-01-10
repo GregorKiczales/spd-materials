@@ -23,6 +23,16 @@ Timeline:
 
 [need to keep slides to 20]
 
+It is critical to use these slides and make all the points in
+them. Otherwise students may be surprised about how assignments and
+exams are graded.
+
+A few points are especially critical:
+ - code that works properly is not nearly enough
+ - expected to show up at class having done the pre-work
+ - we will work on hard problems in lecture, you will find
+   it confusing and it will take work; that is called learning
+
 After slides...
 
 [need to keep this to just showing what's there, not explaining it]
@@ -31,7 +41,8 @@ Setup in tabs: links.html, edX Course page, Piazza, edX Lectures page
 
 Walk through QUICKLY showing what is there, the goal here is for students
 to know there is a lot there and that they need to go through it after
-class. The goal is not for them to remember everything that is there.
+class. The goal is not for them to remember everything that is there
+based on the lecture. We don't "read the syllabus" in lecture.
 
 admin pages in links are admin material
 reference pages in links are course content reference material
@@ -149,7 +160,7 @@ BSL has functions too
 
 ;fn name
 ; parameter stands for varying quantity
-;body with non-varying expressions and using parameter
+;body with non-varying expressions and that use parameter
 
 (define (bulb c)
   (circle 40 "solid" c))
@@ -159,10 +170,11 @@ BSL has functions too
        (bulb "green"))
 
 A function call is evaluated by:
-  - first reducing operands to values, the values are the arguments
+  - first reducing operands to values, the values are called arguments
   - replace the call to the function by the body of the function
     in which each parameter is replaced by the corresponding argument
 
-At that point the function call is gone.  [don't say, but no stack in this model]
+At that point the function call is gone.
+  [don't say, but no stack in this model, remember we never use terms that only some students will know]
 
 tell students to carefully watch edx videos, and practice w/ stepper

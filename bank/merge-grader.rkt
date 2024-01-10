@@ -28,7 +28,7 @@
               (and (list? lon1) (andmap number? lon1))
               (and (list? lon2) (andmap number? lon2))
               (equal? r (%%merge lon1 lon2)))
-            (grade-argument-thoroughness
+            (grade-argument-thoroughness ()
               (per-args (lon1 lon2)
                 (and (empty? lon1) (empty? lon2))
                 (and (not (empty? lon1)) (empty? lon2))

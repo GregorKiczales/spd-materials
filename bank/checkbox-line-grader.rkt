@@ -28,7 +28,7 @@
               (grade-tests-validity (s) r
                 (image? r)
                 (string? s))
-              (grade-argument-thoroughness
+              (grade-argument-thoroughness ()
                 (per-args (str)
                   (string=? str "") 
                   (not (string=? str ""))))

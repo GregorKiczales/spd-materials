@@ -43,7 +43,7 @@
               (andmap %%natural? lon)
               (equal? r (%%sequence? lon)))
             
-            (grade-argument-thoroughness
+            (grade-argument-thoroughness ()
               (per-args (lon)
                 (= (length lon) 0)
                 (>= (length lon) 2)

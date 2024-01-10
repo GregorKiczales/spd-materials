@@ -28,7 +28,7 @@
               (grade-tests-validity (img) r
                 (image? img)
                 (equal? r (%%topple img)))
-              (grade-argument-thoroughness
+              (grade-argument-thoroughness ()
                 (per-args (img)
                   (not (= (image-width img) (image-height img)))))
               #; ;too early for this
@@ -51,7 +51,7 @@
               (grade-tests-validity (img) r
                 (image? img)
                 (equal? r (%%tall? img)))
-              (grade-argument-thoroughness
+              (grade-argument-thoroughness ()
                 (per-args (img)
                   (< (image-height img) (image-width img))
                   (> (image-height img) (image-width img))
@@ -80,7 +80,7 @@
                 (image? i1)
                 (image? i2)
                 (equal? r (%%image>? i1 i2)))
-              (grade-argument-thoroughness
+              (grade-argument-thoroughness ()
                 (per-args (i1 i2)
                   (not (= (image-height i1) (image-width i1)))
                   (not (= (image-height i2) (image-width i2)))
