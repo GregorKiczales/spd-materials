@@ -44,11 +44,12 @@
 ;; 
 ;;   c = sqrt ( a^2  +  b ^2) 
 ;; 
-;; Write an expression to compute the length of side c when a is 3
-;; and b is 4.  The name of the primitive that computes the square
-;; root of a number is sqrt.  We want an expression that makes it
-;; clear how the result was computed from 3 and 4 using the
-;; equation above.  Do not just put 5.
+;; Write an expression to compute the length of side c when a is 3 and b is 4.
+;; The name of the primitive that computes the square root of a number is sqrt.
+;; The name of the primitive that computes the square is sqr.
+;;
+;; We want an expression that clearly mirrors the equation, it is not ok to
+;; just put 5.
 ;;
 
 
