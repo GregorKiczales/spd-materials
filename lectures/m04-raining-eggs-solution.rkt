@@ -222,8 +222,8 @@
 ;; add and egg at x, y with rotation 0 when the mouse is clicked
 (check-expect (handle-mouse empty 10 40 "button-down")
               (cons (make-egg 10 40 0) empty))
-
-(check-expect (handle-mouse empty 90 100 "drag") empty)
+(check-expect (handle-mouse (cons (make-egg 3 4 5) empty) 90 100 "drag")
+              (cons (make-egg 3 4 5) empty))
 
 ;(define (handle-mouse loe x y me) loe) ;stub
 
