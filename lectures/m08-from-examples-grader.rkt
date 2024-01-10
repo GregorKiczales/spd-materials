@@ -63,7 +63,7 @@
               (grade-signature-by-constraints 1
                 ((X -> Boolean) (listof X) -> Boolean))
 
-              (grade-argument-thoroughness 
+              (grade-argument-thoroughness () 
                 (per-args (p lox)
                   (andmap p lox)
                   (not (andmap p lox))
@@ -98,7 +98,7 @@
                 (list? lox)
                 (equal? r (filter p lox)))
 
-              (grade-argument-thoroughness 
+              (grade-argument-thoroughness () 
                 (per-args (p lox)
                   (empty? lox)
                   (> (length lox) 1)
@@ -147,7 +147,7 @@
                 (list? lox)
                 (equal? r (map p lox)))
 
-              (grade-argument-thoroughness 
+              (grade-argument-thoroughness () 
                 (per-args (p lox)
                   (empty? lox)
                   (> (length lox) 1)

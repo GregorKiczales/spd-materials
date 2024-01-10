@@ -27,7 +27,7 @@
               (and (list? los2) (andmap string? los2))
               (equal? r (%%prefix=? los1 los2)))
             
-            (grade-argument-thoroughness
+            (grade-argument-thoroughness ()
               (per-args (los1 los2)
                 (and (empty? los1) (empty? los2))
                 (and (not (empty? los1)) (empty? los2))

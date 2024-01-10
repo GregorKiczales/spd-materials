@@ -29,7 +29,7 @@
                      (andmap check p)))
               (equal? r (%%has-path? t p)))
             
-            (grade-argument-thoroughness
+            (grade-argument-thoroughness ()
               (per-args (t p)
                 (and (empty? p) (false? t))
                 (and (not (empty? p)) (false? t))
