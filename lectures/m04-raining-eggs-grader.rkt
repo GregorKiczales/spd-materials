@@ -166,17 +166,17 @@
                     (grade-template-intact ListOfEgg)                    
                     (grade-submitted-tests)
                     (grade-additional-tests 1
-                      (check-expect (check-expect (,(draw-handler) empty) MTS)
-                                    (check-expect (,(draw-handler) (cons (make-egg 10 20 30)
-                                                                         empty))
-                                                  (place-image (rotate 30 YOSHI-EGG) 10 20
-                                                               MTS))
-                                    (check-expect (,(draw-handler) (cons (make-egg 110 120 130)
-                                                                         (cons (make-egg 10 20 30)
-                                                                               empty)))
-                                                  (place-image (rotate 130 YOSHI-EGG) 110 120
-                                                               (place-image (rotate 30 YOSHI-EGG) 10 20
-                                                                            MTS)))))))))
+                      (check-expect (,(draw-handler) empty) MTS)
+                      (check-expect (,(draw-handler) (cons (make-egg 10 20 30)
+                                                           empty))
+                                    (place-image (rotate 30 YOSHI-EGG) 10 20
+                                                 MTS))
+                      (check-expect (,(draw-handler) (cons (make-egg 110 120 130)
+                                                           (cons (make-egg 10 20 30)
+                                                                 empty)))
+                                    (place-image (rotate 130 YOSHI-EGG) 110 120
+                                                 (place-image (rotate 30 YOSHI-EGG) 10 20
+                                                              MTS))))))))
           
           (grade-htdf place-egg
             (weights (*)
