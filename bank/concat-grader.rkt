@@ -69,5 +69,6 @@
                 
                 (grade-submitted-tests) 
                 (grade-additional-tests 1
-                  (check-expect (concat '("a" "c" "d" "e") '("b" "f")) '("a" "c" "d" "e" "b" "f")))))))))))
+                  (check-expect (concat '("a" "c" "d" "e") '("b" "f")) '("a" "c" "d" "e" "b" "f"))
+                  (check-expect (concat '("a" "d") '("b" "e" "c" "f")) '("a" "d" "b" "e" "c" "f")))))))))))
 
