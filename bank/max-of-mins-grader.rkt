@@ -22,6 +22,9 @@
                         10)
           
           #:additional-tests
+          (check-expect (max-of-mins (list (list 4 3 6)
+                                           (list 20 19 18 10)))
+                        10)
           (check-expect (max-of-mins (list (list 2 3 6)
                                            (list 20 19 18 17)
                                            (list 3 30 10)

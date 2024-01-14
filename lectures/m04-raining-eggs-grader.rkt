@@ -123,7 +123,9 @@
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (next-egg (make-egg 10 20 30))
-                              (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED))))))
+                              (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED)))
+                (check-expect (next-egg (make-egg 1 2 3))
+                              (make-egg 1 (+ 2 FALL-SPEED)(+ 3 SPIN-SPEED))))))
           
           (if (false? (draw-handler))
               (rubric-item 'signature #f "to-draw/on-draw option to big-bang exists")

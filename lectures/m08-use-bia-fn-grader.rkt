@@ -22,6 +22,8 @@
                                 (circle 2 "solid" "blue")
                                 (circle 10 "solid" "blue")))
             #:additional-tests
+            (check-expect (circles (list 30))
+                          (list (circle 30 "solid" "blue")))
             (check-expect (circles (list 10 20 30))
                           (list (circle 10 "solid" "blue")
                                 (circle 20 "solid" "blue")
@@ -35,6 +37,7 @@
             (check-expect (keep-in-interval 0 10 (list -1 0 5 10 12)) (list 0 5 10))
             (check-expect (keep-in-interval -1 1 (list 3 0 5 1 0)) (list 0 1 0))
             #:additional-tests
+            (check-expect (keep-in-interval 0 6 (list -1 0 5 10 12)) (list 0 5))
             (check-expect (keep-in-interval 1 5 (list 0 1 2 3 4 5 6 7)) (list 1 2 3 4 5))))
 
         (grade-problem 3
@@ -46,6 +49,7 @@
             (check-expect (odds-minus-evens (list 2)) -2)
             (check-expect (odds-minus-evens (list 1 4 5 2)) 0)
             #:additional-tests
+            (check-expect (odds-minus-evens (list -3)) -3)
             (check-expect (odds-minus-evens (list 1 3 5  2 6)) 1)))
 
         (grade-problem 4
@@ -58,6 +62,7 @@
             (check-expect (sum-larger-than 6 (list 6)) 0)
             (check-expect (sum-larger-than 3 (list 1 2 3 4 5)) 9)
             #:additional-tests
+            (check-expect (sum-larger-than 6 (list 7)) 7)
             (check-expect (sum-larger-than 5 (list 1 2 3 4 5 6 7 8 9)) (+ 6 7 8 9))))
 
         (grade-problem 5
@@ -68,6 +73,7 @@
             (check-expect (fact 0) 1)
             (check-expect (fact 3) (* 3 2 1))
             #:additional-tests
+            (check-expect (fact 1) 1)
             (check-expect (fact 5) (* 5 4 3 2 1))))
 
         (grade-problem 6
@@ -87,6 +93,7 @@
                                    (square 11 "outline" "black")
                                    (square  1 "outline" "black")))
             #:additional-tests
+            (check-expect (boxes 0) empty-image)
             (check-expect (boxes 3)
                           (overlay (square  1 "outline" "black")
                                    (square 11 "outline" "black")
@@ -107,26 +114,10 @@
                                  (beside CIRCLE CIRCLE)
                                  (beside CIRCLE CIRCLE CIRCLE)))
             #:additional-tests
+            (check-expect (pyramid 0) empty-image)
             (check-expect (pyramid 4)
                           (above CIRCLE
                                  (beside CIRCLE CIRCLE)
                                  (beside CIRCLE CIRCLE CIRCLE)
                                  (beside CIRCLE CIRCLE CIRCLE CIRCLE)))))))))
-
-            #;
-              (let* ([htdf   (car (context))]
-                     [defns  (htdf-defns htdf)]
-                     [defn   (and (pair? defns) (car defns))]
-                     [called (and defn (called-fn-names (caddr (car defns))))]
-                     [correct? (and called
-                                    (= (length (filter (curry eqv? 'foldr) called))
-                                       (length (filter (curry eqv? 'build-list) called))))])
-                (weights (*)
-                  (rubric-item 'template correct? "must call both foldr and build-list twice")
-                  (grade-additional-tests 1
-                                          (check-expect (pyramid 4)
-                                                        (above CIRCLE
-                                                               (beside CIRCLE CIRCLE)
-                                         (beside CIRCLE CIRCLE CIRCLE)
-                                         (beside CIRCLE CIRCLE CIRCLE CIRCLE))))))
   

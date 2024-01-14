@@ -44,4 +44,6 @@
             (grade-submitted-tests) 
             (grade-additional-tests 1
               (check-expect (zip (build-list 10 add1) (build-list 10 sqr))
-                            (map make-entry (build-list 10 add1) (build-list 10 sqr))))))))))
+                            (map make-entry (build-list 10 add1) (build-list 10 sqr)))
+              (check-expect (zip (build-list 10 sqr) (build-list 10 add1))
+                            (map make-entry (build-list 10 sqr) (build-list 10 add1))))))))))
