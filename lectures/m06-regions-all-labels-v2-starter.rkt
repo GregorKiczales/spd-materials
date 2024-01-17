@@ -88,7 +88,7 @@
 (define (all-labels--lor lor) empty)
 
 (@template-origin Region)
-
+#;
 (define (fn-for-region r)
   (cond [(leaf? r)
          (... (leaf-label r)
@@ -99,7 +99,7 @@
               (fn-for-lor (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
-
+#;
 (define (fn-for-lor lor)
   (cond [(empty? lor) (...)]
         [else

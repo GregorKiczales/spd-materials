@@ -56,7 +56,7 @@
 
 
 (define (all-names t) empty)
-
+#;
 (define (fn-for-tree-tr t)
   ;; acc is ...
   ;; t-wl is ...
@@ -93,7 +93,7 @@
 (check-expect (count-nodes TOP) 6)
 
 (define (count-nodes t) 0)    ;stub
-
+#;
 (define (fn-for-tree-tr t)
   ;; acc is ...
   ;; t-wl is ...
@@ -129,7 +129,7 @@
 (check-expect (all-leaves TOP) (list "L1" "L2" "L3"))
 
 (define (all-leaves t) empty) ; stub
-
+#;
 (define (fn-for-tree-tr t)
   ;; acc is ...
   ;; t-wl is ...

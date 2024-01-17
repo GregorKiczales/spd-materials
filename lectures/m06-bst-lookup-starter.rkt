@@ -66,3 +66,5 @@ more about it later.
 
 (@htdf lookup)
 (@signature BST Integer -> String or false)
+
+(define (lookup bst n) false)
