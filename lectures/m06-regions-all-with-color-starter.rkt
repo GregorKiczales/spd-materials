@@ -91,8 +91,8 @@
 (check-expect (all-with-color--region "red" L1) (list L1))
 (check-expect (all-with-color--region "blue" L1) empty)
 (check-expect (all-with-color--lor "red" LOR123) (list L1))
-(check-expect (all-with-color--region "red" I4) (list <<FILL THIS IN>>))
-(check-expect (all-with-color--region "orange" I4) (list <<FILL THIS IN>>))
+(check-expect (all-with-color--region "red" I4) (list "<<FILL-THIS-IN>>"))
+(check-expect (all-with-color--region "orange" I4) (list "<<FILL-THIS-IN>>"))
 
 (define (all-with-color--region c r) empty)
 (define (all-with-color--lor c r) empty)
