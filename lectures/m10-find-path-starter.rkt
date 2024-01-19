@@ -75,6 +75,6 @@
                         (fn-for-t (first lot) (... path))
                         (fn-for-lot (rest lot) (... path)))]))]
     
-    (fn-for-t t ...)))
+    (fn-for-t t0 ...)))
 
 

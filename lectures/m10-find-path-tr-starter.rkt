@@ -194,7 +194,9 @@
 
 
 (@template-origin Tree (listof Tree)
-           accumulator)        ;t-wl p-wl visited
+                  accumulator)        ;t-wl p-wl visited
+
+#;
 
 ;; Tail recursion with tandem worklists - tree worklist and path worklist. 
 (define (find-path t n)

@@ -154,9 +154,11 @@ CALLED distance-add1 in for you.
 (check-expect (distance-from M7 (make-pos 2 2) (make-pos 3 3)) 2)
 (check-expect (distance-from M7 (make-pos 2 0) (make-pos 7 2)) 11)
 
+(define (distance-from m start end) false) ;stub
 
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
+#;
 (define (distance-from m start end)
   (local [(define R (sqrt (length m)))	  
 

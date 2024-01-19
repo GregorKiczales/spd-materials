@@ -89,11 +89,11 @@
                                            (make-leaf "X" 90 "red"))))
  (list I1 L1 (make-leaf "X" 90 "red")))
 
-;(define (all-with-color--region c r) empty)
-;(define (all-with-color--lor c lor) empty)
+(define (all-with-color--region c r) empty) ;stub
+(define (all-with-color--lor c lor) empty)  ;stub
 
 (@template-origin Region)
-
+#;
 (define (fn-for-region r)
   (cond [(leaf? r)
          (... (leaf-label r)
@@ -104,7 +104,7 @@
               (fn-for-lor (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
-
+#;
 (define (fn-for-lor lor)
   (cond [(empty? lor) (...)]
         [else
