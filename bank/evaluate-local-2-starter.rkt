@@ -4,11 +4,10 @@
 (require spd/tags)
 
 (@assignment bank/evaluate-local-2)
+
 (@cwl ???)
 
-(check-expect (+ 1 2) 3) ;this just here so that the default autograder
-                         ;likes this file
-
+;;
 ;; Given the following function definition:
 ;;
 ;; (define (boo x lon)
@@ -16,7 +15,8 @@
 ;;     (if (zero? x)
 ;;         empty
 ;;         (cons (addx (first lon))
-;;               (boo (sub1 x) (rest lon)))))) 
+;;               (boo (sub1 x) (rest lon))))))
+;;
 
 (@problem 1)
 ;; What is the value of the following expression:
