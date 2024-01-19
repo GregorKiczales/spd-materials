@@ -95,12 +95,12 @@
 (check-expect (find-region--lor "two" LOR123) L2)
 (check-expect (find-region--region "three" I4) L3)
 
-(define (find-region--region label r) false)
-(define (find-region--lor label lor) false)
+(define (find-region--region label r) false) ;stub
+(define (find-region--lor label lor) false)  ;stub
 
 
 (@template-origin Region)
-
+#;
 (define (fn-for-region r)
   (cond [(leaf? r)
          (... (leaf-label r)
@@ -111,7 +111,7 @@
               (fn-for-lor (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
-
+#;
 (define (fn-for-lor lor)
   (cond [(empty? lor) (...)]
         [else

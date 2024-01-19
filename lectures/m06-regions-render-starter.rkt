@@ -98,7 +98,8 @@
 (check-expect (render--region I1)
               (border "red" (render--lor (inner-subs I1))))
 
-
+(define (render--region r) empty-image) ;stub
+(define (render--lor lor) empty-image)  ;stub
 
 
 

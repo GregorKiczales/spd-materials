@@ -58,5 +58,6 @@ Argument that repeated application of reduction step will eventually
 reach the base case: 
 |#
 
+(define (qsort lon) empty) ;stub
 
 (@template-origin genrec)

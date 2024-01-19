@@ -59,9 +59,10 @@
 (check-expect (find-tree M1 "L1") L1)
 (check-expect (find-tree TOP "L3") L3)
 
+(define (find-tree t name) false) ;stub
+
 (@template-origin encapsulated Tree (listof Tree) try-catch)
 
-(define (find-tree t name) false) ;delete this when you start
 #;
 (define (fn-for-tree t)  
   (local [(define (fn-for-t t)
@@ -104,9 +105,9 @@
 (check-expect (find-tree/tr M1 "L1") L1)
 (check-expect (find-tree/tr TOP "L3") L3)
 
-(@template-origin encapsulated Tree (listof Tree) try-catch)
+(define (find-tree/tr t tn) false) ;stub
 
-(define (find-tree/tr t tn) false) ;delete this when you start
+(@template-origin encapsulated Tree (listof Tree) try-catch)
 
 ;;
 ;; THE FOLLOWING PROBLEMS ARE FOR ADDITIONAL PRACTICE. THE LECTURE AUTOGRADER
@@ -172,13 +173,13 @@
 (@template-origin encapsulated Tree (listof Tree))
 
 ;;
-;; The following is a templated filled in with JUST a worklist
+;; The following is a template filled in with JUST a worklist
 ;; accumulator.  So as it is it traverses the entire tree and
 ;; then always produces empty.  Start your work by designing an
 ;; rsf accumulator for this function. Then add it to the code.
 ;;
 
-(define (count-nodes t0)
+(define (all-names t0)
   ;; t-wl is (listof Tree); worklist of trees to visit
   ;; the unvisited direct subs of all the visited trees
   ;; aka the upper left fringe of the unvisited part of original tree
@@ -207,13 +208,13 @@
 (check-expect (all-leaves M2) (list L2 L3))
 (check-expect (all-leaves TOP) (list L1 L2 L3))
 
+(define (all-leaves t) empty) ;stub
+
 (@template-origin encapsulated Tree (listof Tree))
 
-(define (all-leaves t) empty)
-
 ;;
-;; In this case we are giving you just the raw data driven
-;; non-tail recursive templates.  Work in 2 steps:
+;; In this case we are giving you just the raw natural
+;; recursion templates.  Work in 2 steps:
 ;;  - make these templates produce the correct answer
 ;;    but NOT using tail recursiion
 ;;  - then convert the code to be tail recursive
