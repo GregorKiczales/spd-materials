@@ -3,9 +3,10 @@
 Poll questions
 
 1-   cheating is not a victimless crime
-2- D terminology, constructors combine, selectors take apart
-3- A compound data are values like any other values
-4- D if we move as much as we should is it too far
+2-   never give someone your CWL
+3- D terminology, constructors combine, selectors take apart
+4- A compound data are values like any other values
+5- D if we move as much as we should is it too far
      if so stop at boundary
      otherwise move as much as we should
 

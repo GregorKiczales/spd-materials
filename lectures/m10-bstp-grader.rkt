@@ -56,7 +56,7 @@
 
             (grade-encapsulated-template-fns (bst?)
               (weights (*)
-                (grade-questions-intact bst? [(false? bt) ...] [else ...])
+                (grade-questions-intact bst? (bt) [(false? bt) ...] [else ...])
                 (grade-nr-intact        bst? 2)))
             
             (grade-submitted-tests 1)

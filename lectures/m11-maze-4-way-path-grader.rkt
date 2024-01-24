@@ -30,10 +30,10 @@
 
             (grade-encapsulated-template-fns (solve/p solve/lop)
               (weights (*)
-                (grade-questions-intact solve/p [(solved? p) ...] [(member? p path) ...] [else ...])
+                (grade-questions-intact solve/p (p) [(solved? p) ...] [(member? p path) ...] [else ...])
                 (grade-mr-intact        solve/p solve/lop)
                 
-                (grade-questions-intact solve/lop [(empty? lop) ...] [else ...])
+                (grade-questions-intact solve/lop (lop) [(empty? lop) ...] [else ...])
                 (grade-mr-intact        solve/lop solve/p)))
             
             (grade-submitted-tests 1))))
@@ -60,10 +60,10 @@
               (grade-encapsulated-template-fns (find-path/p find-path/lop)
                 
               (weights (*)
-                (grade-questions-intact find-path/p [(solved? p) ...] [(member? p path) ...] [else ...])
+                (grade-questions-intact find-path/p (p) [(solved? p) ...] [(member? p path) ...] [else ...])
                 (grade-mr-intact        find-path/p find-path/lop)
                 
-                (grade-questions-intact find-path/lop [(empty? lop) ...] [else ...])
+                (grade-questions-intact find-path/lop (lop) [(empty? lop) ...] [else ...])
                 (grade-mr-intact        find-path/lop find-path/p)))
               
               (grade-submitted-tests 1)
