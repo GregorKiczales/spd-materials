@@ -145,7 +145,7 @@
                         s))
                     
                     (grade-template-origin (KeyEvent Spider))
-                    (grade-template-intact 1 ke
+                    (grade-template-intact (ke)
                       (cond [(key=? ke " ") (... ke)]
                             [else (... ke)]))
                     (grade-submitted-tests)

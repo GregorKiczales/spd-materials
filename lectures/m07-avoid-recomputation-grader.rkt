@@ -15,7 +15,7 @@
               (weights (*)
                 (grade-submitted-tests 2)
                 (grade-template-origin (BST))
-                (grade-questions-intact render-bst (t) [(false? t) ...] [else ...])
+                (grade-questions-intact render-bst (t) (cond [(false? t) ...] [else ...]))
                 (grade-nr-intact render-bst 2)
                 (rubric-item 'other (= (length locs) 2) "render-bst - 2 locally defined constants")))))))))
 
