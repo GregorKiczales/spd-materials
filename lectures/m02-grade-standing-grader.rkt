@@ -60,7 +60,7 @@
                   (check-expect (excellent? "P") false)
                   (check-expect (excellent? "F") false)
                   (check-expect (excellent? "T") false))))))
-
+#;
         (grade-problem 2
           (grade-htdf grade->string
             (weights (*)
