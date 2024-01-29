@@ -243,7 +243,7 @@
                               [else loe])))
                     
                     (grade-template-origin (MouseEvent))
-                    (grade-template-intact 1 me
+                    (grade-template-intact (me)
                       (cond [(mouse=? me "button-down") (... me)]
                             [else (... me)]))
                     (grade-submitted-tests)
@@ -275,7 +275,7 @@
                         empty))
                     
                     (grade-template-origin (KeyEvent))
-                    (grade-template-intact 1 ke
+                    (grade-template-intact (ke)
                       (cond [(key=? ke " ") (... ke)]
                             [else (... ke)]))
                     (grade-submitted-tests)

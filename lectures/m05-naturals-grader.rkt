@@ -61,7 +61,7 @@
                                     (boxes (sub1 n))))])))
 
               (grade-template-origin (Natural))
-              (grade-template-intact n
+              (grade-template-intact (n)
                 (cond [(zero? n) (...)]
                       [else
                        (... n            
@@ -100,7 +100,7 @@
                          (+ n 
                             (fact (sub1 n))))])))
             (grade-template-origin (Natural))
-            (grade-template-intact n
+            (grade-template-intact (n)
               (cond [(zero? n) (...)]
                     [else
                      (... n            
@@ -137,7 +137,7 @@
                                                 (cons (- n 1) empty))]))]
                          (blist n))])))
             (grade-template-origin (Natural))
-            (grade-template-intact n
+            (grade-template-intact (n)
               (cond [(zero? n) (...)]
                     [else
                      (... n            
