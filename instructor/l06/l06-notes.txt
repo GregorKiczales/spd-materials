@@ -19,11 +19,11 @@ do midterm clicker
 	in particular learning to work with templates based on
 	recursive type theory - really pays off today, making
 	programs that might otherwise be difficult actually be
-	simple to write
+	simple to write. 
+	
+
 
 15	ListOfString		present
-
-
 
 15 	contains-canucks?	do/interactive
 
@@ -43,8 +43,7 @@ do midterm clicker
 
 10	 sum	      	    	 class
 
-5        sum			 interactive
-
+5        sum			 interactive  (can move product here if plenty of time)
 
 5	 count/product
           just a couple of points build out using the table
@@ -52,7 +51,7 @@ do midterm clicker
 	  Natural
 	  1 not first
 
-5 sumarize recipe pointns
+5 summarize recipe points
 
 
 
@@ -69,9 +68,9 @@ they match the type comment
 
 delete compound and self-ref parts of template and re-do to explain
 
-say little about NR now
+say little or nothing about NR now
 
-just to function 
+jump to function 
 
 
 (@htdf contains-canucks?)
@@ -91,7 +90,7 @@ then just do the 2 long tests
 
 (@template-origin ListOfString)  
 
-rename the natural recursion, will see why later
+rename the natural recursion during template copy, will see why later
 
 (@template
  (define (contains-canucks? los)
@@ -116,12 +115,14 @@ Just add if and string=? and true.
              true      
              (contains-canucks? (rest los)))]))
 
+Can TRUST RNR if...
+so work by assuming RNR is correct and working with it the RESULT
+
 put up 2 slides summarizing how the recipe has changed
 
 talk about how the theory says that if we get base and combination right then RNR will be right and function will be right.
 
-talk about how this declartive understanding is more powerful than stepwise evaluation, and will be essntial for problems later in the term
-
+talk about how this declarative understanding is more powerful than stepwise evaluation, and will be essntial for problems later in the term
 
 
 ;; poll at about 4
