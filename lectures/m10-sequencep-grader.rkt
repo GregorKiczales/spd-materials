@@ -61,7 +61,7 @@
             (grade-encapsulated-template-fns (sequence?)
                                            
               (weights (*)
-                (grade-questions-intact sequence? (lon) [(empty? lon) ...] [else ...])
+                (grade-questions-intact sequence? (lon) (cond [(empty? lon) ...] [else ...]))
                 (grade-nr-intact        sequence?)))
 
             (grade-submitted-tests 1)

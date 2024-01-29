@@ -32,10 +32,10 @@
             
             (grade-encapsulated-template-fns (fn-for-p fn-for-lop)
               (weights (*)
-                (grade-questions-intact fn-for-p (p) [(solved? p) ...] [(member? p visited) ...] [else ...])
+                (grade-questions-intact fn-for-p (p) (cond [(solved? p) ...] [(member? p visited) ...] [else ...]))
                 (grade-mr-intact        fn-for-p fn-for-lop)
                 
-                (grade-questions-intact fn-for-lop (p-wl) [(empty? p-wl) ...] [else ...])
+                (grade-questions-intact fn-for-lop (p-wl) (cond [(empty? p-wl) ...] [else ...]))
                 (grade-mr-intact        fn-for-lop fn-for-p)))
             
             (grade-submitted-tests 1)))))))

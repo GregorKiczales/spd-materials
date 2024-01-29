@@ -34,7 +34,7 @@
               (weights (*)
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn (nn-wl) [(empty? nn-wl) ...] [else ...])
+                (grade-questions-intact fn-for-lonn (nn-wl) (cond [(empty? nn-wl) ...] [else ...]))
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))
@@ -61,7 +61,7 @@
               (weights (*)
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn (nn-wl) [(empty? nn-wl) ...] [else ...])
+                (grade-questions-intact fn-for-lonn (nn-wl) (cond [(empty? nn-wl) ...] [else ...]))
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))
