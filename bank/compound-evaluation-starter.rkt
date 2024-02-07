@@ -3,7 +3,7 @@
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname compound-evaluation-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
-(@assignment bank/compound-evaluation
+(@assignment bank/compound-evaluation)
 (@cwl ???)
 
 (@problem 1)
