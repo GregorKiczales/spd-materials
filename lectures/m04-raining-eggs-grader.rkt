@@ -1,14 +1,11 @@
 #lang racket
-(require spd-grader/check-template)
-(require spd-grader/grader)
-(require racket/function)
-(require syntax/stx)
+(require spd-grader/grader
+         spd-grader/check-template
+         racket/function
+         syntax/stx)
+
 (provide grader)
 
-(define draw-handler  (make-parameter #f))
-(define tick-handler  (make-parameter #f))
-(define mouse-handler (make-parameter #f))
-(define key-handler   (make-parameter #f))
 
 (define grader
   (lambda ()
@@ -32,7 +29,7 @@
       (define (%%handle-key loe ke)
         (cond [(key=? ke " ") empty]
               [else loe]))
-    
+      
       (grade-problem 1
         (weights (*)
 
@@ -48,58 +45,46 @@
                                                            (first rest)))))
 
           (grade-htdf main
-            (with-handlers ([void (λ (exn) (score #f 1 1 '() (list (message #f "found main function"))))])
-              (let* ([htdf (car (context))]
-                     [defn (car (htdf-defns htdf))]
-                     [options (cddr (caddr defn))])
-                (weights (*)
-                  (draw-handler  (ass '(on-draw to-draw) options))
-                  (tick-handler  (ass '(on-tick) options))
-                  (mouse-handler (ass '(on-mouse) options))
-                  (key-handler   (ass '(on-key) options))
-                  (grade-signature (ListOfEgg -> ListOfEgg))))))
+            (grade-signature (ListOfEgg -> ListOfEgg)))
 
-          (if (false? (tick-handler))
-              (rubric-item 'signature #f "on-tick option to big-bang exists")
-              (grade-htdf* (tick-handler)
-                           (lambda ()
-                             (weights (*)
-                                      
-                   (grade-signature (ListOfEgg -> ListOfEgg))
+          (grade-bb-handler (on-tick tick-handler)
+            (weights (*)
+              
+              (grade-signature (ListOfEgg -> ListOfEgg))
 
-                   (grade-tests-validity (loe) r
-                     (list? loe)
-                     (andmap egg? loe)
-                     (equal? r (map %%next-egg loe)))
-                    
-                   (grade-tests-argument-thoroughness (loe)
-                     (empty? loe)
-                     (> (length loe) 1))
+              (grade-tests-validity (loe) r
+                (list? loe)
+                (andmap egg? loe)
+                (equal? r (map %%next-egg loe)))
+              
+              (grade-tests-argument-thoroughness (loe)
+                                                 (empty? loe)
+                                                 (> (length loe) 1))
 
-                   (grade-thoroughness-by-faulty-functions 1
-                     (define (,(tick-handler) loe)
-                       (cond [(empty? loe) empty]
-                             [else
-                              (cons (next-egg (first loe)) empty)]))
-                     (define (,(tick-handler) loe)
-                       (local [(define (toc loe)
-                                 (cond [(empty? loe) empty]
-                                       [else
-                                        (cons (first loe)
-                                              (toc (rest loe)))]))]
-                         (toc loe))))
-                    
-                   (grade-template-origin (ListOfEgg))
-                   (grade-template 1 (loe) (one-of empty
-                                                   (compound ((ref fn-for-egg) (self-ref fn-for-loe))
-                                                             cons cons?
-                                                             (first rest))))
-                   (grade-template-intact ListOfEgg)
-                   (grade-submitted-tests)
-                   (grade-additional-tests 1
-                     (check-expect (,(tick-handler) empty) empty)
-                     (check-expect (,(tick-handler) (cons (make-egg 10 20 30) empty))
-                                   (cons (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED)) empty)))))))
+              (grade-thoroughness-by-faulty-functions 1
+                (define (,tick-handler loe)
+                  (cond [(empty? loe) empty]
+                        [else
+                         (cons (next-egg (first loe)) empty)]))
+                (define (,tick-handler loe)
+                  (local [(define (toc loe)
+                            (cond [(empty? loe) empty]
+                                  [else
+                                   (cons (first loe)
+                                         (toc (rest loe)))]))]
+                    (toc loe))))
+              
+              (grade-template-origin (ListOfEgg))
+              (grade-template 1 (loe) (one-of empty
+                                              (compound ((ref fn-for-egg) (self-ref fn-for-loe))
+                                                        cons cons?
+                                                        (first rest))))
+              (grade-template-intact ListOfEgg)
+              (grade-submitted-tests)
+              (grade-additional-tests 1
+                (check-expect (,tick-handler empty) empty)
+                (check-expect (,tick-handler (cons (make-egg 10 20 30) empty))
+                              (cons (make-egg 10 (+ 20 FALL-SPEED)(+ 30 SPIN-SPEED)) empty)))))
           
           (grade-htdf next-egg
             (weights (*)
@@ -127,58 +112,55 @@
                 (check-expect (next-egg (make-egg 1 2 3))
                               (make-egg 1 (+ 2 FALL-SPEED)(+ 3 SPIN-SPEED))))))
           
-          (if (false? (draw-handler))
-              (rubric-item 'signature #f "to-draw/on-draw option to big-bang exists")
-              (grade-htdf* (draw-handler)
-                           (lambda ()
-                             (weights (*)
-                                      
-                    (grade-signature (ListOfEgg -> Image))
+          (grade-bb-handler (to-draw draw-handler)
+            (weights (*)
+              
+              (grade-signature (ListOfEgg -> Image))
 
-                    (grade-tests-validity (loe) r
-                      (list? loe)
-                      (andmap egg? loe)
-                      (equal? r (foldr %%place-egg MTS loe)))
+              (grade-tests-validity (loe) r
+                (list? loe)
+                (andmap egg? loe)
+                (equal? r (foldr %%place-egg MTS loe)))
 
-                    
-                    (grade-tests-argument-thoroughness (loe)
-                      (empty? loe)
-                      (> (length loe) 1))
-                    
-                    (grade-thoroughness-by-faulty-functions 1
-                      #; ;!!! solution fails at this???
-                      (define (,(draw-handler) loe)
-                        (cond [(empty? loe) MTS]
-                              [else
-                               (%%place-egg (first loe) MTS)]))
-                      
-                      (define (,(draw-handler) loe)
-                        (local [(define (rend loe)
-                                  (cond [(empty? loe) empty-image]
-                                        [else
-                                         (%%place-egg (first loe)
-                                                      (rend (rest loe)))]))]
-                          (rend loe))))
-                    
-                    (grade-template-origin (ListOfEgg))
-                    (grade-template 1 (loe) (one-of empty
-                                                    (compound ((ref fn-for-egg) (self-ref fn-for-loe))
-                                                              cons cons?
-                                                              (first rest))))
-                    (grade-template-intact ListOfEgg)                    
-                    (grade-submitted-tests)
-                    (grade-additional-tests 1
-                      (check-expect (,(draw-handler) empty) MTS)
-                      (check-expect (,(draw-handler) (cons (make-egg 10 20 30)
-                                                           empty))
-                                    (place-image (rotate 30 YOSHI-EGG) 10 20
-                                                 MTS))
-                      (check-expect (,(draw-handler) (cons (make-egg 110 120 130)
-                                                           (cons (make-egg 10 20 30)
-                                                                 empty)))
-                                    (place-image (rotate 130 YOSHI-EGG) 110 120
-                                                 (place-image (rotate 30 YOSHI-EGG) 10 20
-                                                              MTS))))))))
+              
+              (grade-tests-argument-thoroughness (loe)
+                                                 (empty? loe)
+                                                 (> (length loe) 1))
+              
+              (grade-thoroughness-by-faulty-functions 1
+                #; ;!!! solution fails at this???
+                (define (,draw-handler loe)
+                  (cond [(empty? loe) MTS]
+                        [else
+                         (%%place-egg (first loe) MTS)]))
+                
+                (define (,draw-handler loe)
+                  (local [(define (rend loe)
+                            (cond [(empty? loe) empty-image]
+                                  [else
+                                   (%%place-egg (first loe)
+                                                (rend (rest loe)))]))]
+                    (rend loe))))
+              
+              (grade-template-origin (ListOfEgg))
+              (grade-template 1 (loe) (one-of empty
+                                              (compound ((ref fn-for-egg) (self-ref fn-for-loe))
+                                                        cons cons?
+                                                        (first rest))))
+              (grade-template-intact ListOfEgg)                    
+              (grade-submitted-tests)
+              (grade-additional-tests 1
+                (check-expect (,draw-handler empty) MTS)
+                (check-expect (,draw-handler (cons (make-egg 10 20 30)
+                                                   empty))
+                              (place-image (rotate 30 YOSHI-EGG) 10 20
+                                           MTS))
+                (check-expect (,draw-handler (cons (make-egg 110 120 130)
+                                                   (cons (make-egg 10 20 30)
+                                                         empty)))
+                              (place-image (rotate 130 YOSHI-EGG) 110 120
+                                           (place-image (rotate 30 YOSHI-EGG) 10 20
+                                                        MTS))))))
           
           (grade-htdf place-egg
             (weights (*)
@@ -190,10 +172,10 @@
                 (equal? r (%%place-egg e img)))
 
               (grade-tests-argument-thoroughness (e img)
-                (and (egg? e) (not (or (= (egg-x e) (egg-y e))
-                                       (= (egg-x e) (egg-r e))
-                                       (= (egg-y e) (egg-r e)))))
-                (not (equal? img MTS)))
+                                                 (and (egg? e) (not (or (= (egg-x e) (egg-y e))
+                                                                        (= (egg-x e) (egg-r e))
+                                                                        (= (egg-y e) (egg-r e)))))
+                                                 (not (equal? img MTS)))
 
               #; ;!!!
               (grade-thoroughness-by-faulty-functions 1
@@ -216,76 +198,68 @@
                 (check-expect (place-egg (make-egg 110 120 130) MTS)
                               (place-image (rotate  130 YOSHI-EGG) 110 120 MTS)))))
 
-        
-          (if (false? (mouse-handler))
-              (rubric-item 'signature #f "on-mouse option to big-bang exists")
-              (grade-htdf* (mouse-handler)
-                           (lambda ()
-                             (weights (*)
-                                      
-                    (grade-signature (ListOfEgg Integer Integer MouseEvent -> ListOfEgg))
+          
+          (grade-bb-handler (on-mouse mouse-handler)
 
-                    (grade-tests-validity (loe i1 i2 me) r
-                      (number? i1)
-                      (number? i2)
-                      (>= (length r) (length loe)))
+            (weights (*)
+              
+              (grade-signature (ListOfEgg Integer Integer MouseEvent -> ListOfEgg))
 
-                    (grade-tests-argument-thoroughness (loe i1 i2 me)
-                      (mouse=? me "button-down")
-                      (not (mouse=? me "button-down")))
+              (grade-tests-validity (loe i1 i2 me) r
+                (number? i1)
+                (number? i2)
+                (>= (length r) (length loe)))
 
-                    (grade-thoroughness-by-faulty-functions 1
-                      (define (,(mouse-handler) loe x y me)
-                        (cond [(mouse=? me "drag") (cons (make-egg x y 0) loe)]
-                              [else loe]))
-                      (define (,(mouse-handler) loe x y me)
-                        (cond [(mouse=? me "button-down") empty]
-                              [else loe])))
-                    
-                    (grade-template-origin (MouseEvent))
-                    (grade-template-intact (me)
-                      (cond [(mouse=? me "button-down") (... me)]
-                            [else (... me)]))
-                    (grade-submitted-tests)
-                    (grade-additional-tests 1
-                      (check-expect (,(mouse-handler) empty 10 40 "button-down")
-                                    (cons (make-egg 10 40 0) empty))
-                      (check-expect (,(mouse-handler) empty 90 100 "drag") empty))))))
+              (grade-tests-argument-thoroughness (loe i1 i2 me)
+                                                 (mouse=? me "button-down")
+                                                 (not (mouse=? me "button-down")))
+
+              (grade-thoroughness-by-faulty-functions 1
+                (define (,mouse-handler loe x y me)
+                  (cond [(mouse=? me "drag") (cons (make-egg x y 0) loe)]
+                        [else loe]))
+                (define (,mouse-handler loe x y me)
+                  (cond [(mouse=? me "button-down") empty]
+                        [else loe])))
+              
+              (grade-template-origin (MouseEvent))
+              (grade-template-intact (me)
+                                     (cond [(mouse=? me "button-down") (... me)]
+                                           [else (... me)]))
+              (grade-submitted-tests)
+              (grade-additional-tests 1
+                (check-expect (,mouse-handler empty 10 40 "button-down")
+                              (cons (make-egg 10 40 0) empty))
+                (check-expect (,mouse-handler empty 90 100 "drag") empty))))
           
 
-          (if (false? (key-handler))
-              (rubric-item 'signature #f "on-key option to big-bang exists")
-              (grade-htdf* (key-handler)
-                           (lambda ()
-                             (weights (*)
-                                      
-                    (grade-signature (ListOfEgg KeyEvent -> ListOfEgg))
+          (grade-bb-handler (on-key key-handler)
 
-                    (grade-tests-validity (loe ke) r
-                      (list? loe)
-                      (andmap egg? loe)
-                      (equal? r (%%handle-key loe ke)))
+            (weights (*)
+              
+              (grade-signature (ListOfEgg KeyEvent -> ListOfEgg))
 
-                    (grade-tests-argument-thoroughness (loe ke)
-                      (and (key=? ke " ") (not (empty? loe)))
-                      (not (key=? ke " ")))
+              (grade-tests-validity (loe ke) r
+                (list? loe)
+                (andmap egg? loe)
+                (equal? r (%%handle-key loe ke)))
 
-                    (grade-thoroughness-by-faulty-functions 1
-                      (define (,(key-handler) loe ke)
-                        empty))
-                    
-                    (grade-template-origin (KeyEvent))
-                    (grade-template-intact (ke)
-                      (cond [(key=? ke " ") (... ke)]
-                            [else (... ke)]))
-                    (grade-submitted-tests)
-                    (grade-additional-tests 1
-                      (check-expect (,(key-handler) (cons E1 (cons E2 empty)) " ") empty)
-                      (check-expect (,(key-handler) (cons E1 empty) "a") (cons E1 empty))))))))))))
+              (grade-tests-argument-thoroughness (loe ke)
+                                                 (and (key=? ke " ") (not (empty? loe)))
+                                                 (not (key=? ke " ")))
+
+              (grade-thoroughness-by-faulty-functions 1
+                (define (,key-handler loe ke)
+                  empty))
+              
+              (grade-template-origin (KeyEvent))
+              (grade-template-intact (ke)
+                                     (cond [(key=? ke " ") (... ke)]
+                                           [else (... ke)]))
+              (grade-submitted-tests)
+              (grade-additional-tests 1
+                (check-expect (,key-handler (cons E1 (cons E2 empty)) " ") empty)
+                (check-expect (,key-handler (cons E1 empty) "a") (cons E1 empty))))))))))
 
 
-(define (ass lok alist)
-  (ormap (lambda (k)
-           (and (assq k alist)
-                (cadr (assq k alist))))
-         lok))
+

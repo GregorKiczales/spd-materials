@@ -102,9 +102,9 @@
 
 (define (all-with-color--region c r)
   (cond [(leaf? r) (if (string=? (leaf-color r) c) (list r) empty)]
-        [else        (if (string=? (inner-color r) c)       
-                         (cons r (all-with-color--lor c (inner-subs r)))
-                         (all-with-color--lor c (inner-subs r)))]))
+        [else      (if (string=? (inner-color r) c)       
+                       (cons r (all-with-color--lor c (inner-subs r)))
+                       (all-with-color--lor c (inner-subs r)))]))
 
 (@template-origin ListOfRegion)
 
