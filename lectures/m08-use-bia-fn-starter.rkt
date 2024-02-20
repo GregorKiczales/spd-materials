@@ -15,7 +15,7 @@ fn-composition use-abstract-fn.  To help you learn how to write functions
 that use built-in abstract functions we  provide the template or other
 suggestions in some of the problems.
 
-When choosing built-in abstract functions yourselves remember:
+When choosing built-in abstract functions remember that:
 
  - map always produces a list of the same length as its argument.
    In general the elements of the result list are not the same as
@@ -37,7 +37,7 @@ When choosing built-in abstract functions yourselves remember:
  - andmap and ormap produce boolean values
 
  - buildlist produces a list with the same number of elements as its
-   argument
+   first argument
 
 |#
 
@@ -70,10 +70,11 @@ When choosing built-in abstract functions yourselves remember:
 (define (circles lon)
   (map ... lon))
 
+
 ;;
-;; But then we realize that the helper to go in ... probably does not
-;; already exist in the help desk.  So we will have to design a local
-;; helper.  Update the template to:
+;; But then we realize that the helper we need to put in the ... probably does
+;; not already exist in the help desk.  So we will have to design a new local 
+;; helper for ourselves. So, we update the template to:
 ;;
 #;
 (define (circles lon)
@@ -82,10 +83,11 @@ When choosing built-in abstract functions yourselves remember:
     (map one-circle lon)))
 
 ;;
-;; map signature is (X -> Y) (listof X) -> (listof Y)
-;; we know that lon is (list of Natural),          so X = Natural
+;; The signature of map is (X -> Y) (listof X) -> (listof Y)
+;; we know that lon is (list of Natural),         so X = Natural
 ;; we know that we want to produce (listof Image) so Y = Image
-;; Now we can upate template to:
+;; That tells us the signature our helper has to have and so we
+;; can upate the template to:
 ;;
 
 (define (circles lon)
@@ -97,7 +99,7 @@ When choosing built-in abstract functions yourselves remember:
     (map one-circle lon)))
 
 ;;
-;; Just need to fill in body of one-circle!
+;; Now you just need to fill in body of one-circle!
 ;;
 
 
@@ -152,8 +154,15 @@ When choosing built-in abstract functions yourselves remember:
 
 (define (sum-larger-than n loi) 0)
 
-;; Assume n is 3
-;; (list 1 5 2 6) -> (list 5 6) -> 11
+;;
+;; Sometimes it produces more clear result code to use a composition of built-in
+;; abstract functions.  In cases like that it can help to first think in terms
+;; of the succession of values that will flow between those functions. This is
+;; such a case. If we assume n is 3, then start with the given list:
+;;
+;; (list 1 5 2 6) use filter ->
+;; (list 5 6) use foldr ->
+;; 11
 ;;
 ;; first filter, then foldr
 
@@ -174,6 +183,9 @@ When choosing built-in abstract functions yourselves remember:
 
 (define (fact n)
   (foldr ... ... (build-list n ...)))
+
+;; This case uses build-list and foldr.  If it seems unclear first
+;; write the intermediate values for (fact 3).
 
 
 
@@ -196,25 +208,40 @@ When choosing built-in abstract functions yourselves remember:
 
 (@template-origin fn-composition use-abstract-fn)
 
+;; 
+;; Some cases can be handled several different ways:
 ;;
-;; 3 ->
-;; (list 0 1 2) ->
-;; (list 1 11 21) ->
+;; 3 use build-list -> 
+;; (list 0 1 2) use map ->
+;; (list 1 11 21) use map ->
 ;; (list (square 1 "outline" "black")
 ;;       (square 11 "outline" "black")
-;;       (square 21 "outline" "black")) ->
+;;       (square 21 "outline" "black")) use foldr ->
 ;; (overlay (square  1 "outline" "black")
 ;;          (square 11 "outline" "black")
 ;;          (square 21 "outline" "black"))
 ;;
 ;; which is (foldr ... ... (map ... (map ... (build-list n ...))))
 ;;
+;; But note that the composition of map with map can be replaced by a single
+;; map in which the map functions are composed.  Similarly the composition of
+;; map with build list can be replaced by a single build-list in which the two
+;; map functions are composed. So:
+;;
+;; (map fn1 (map fn2 (build-list n fn3)))
+;;
+;; Can be replaced by:
+;;
+;; (build-list n <a fn that composes (fn1 (fn2 (fn3 ...)))>)
+;;
+;; Which leads to a series of values as follows:
+;;
 ;; OR
 ;;
-;; 3 ->
+;; 3 use build-list ->
 ;; (list (square 1 "outline" "black")
 ;;       (square 11 "outline" "black")
-;;       (square 21 "outline" "black")) ->
+;;       (square 21 "outline" "black")) use foldr ->
 ;; (overlay (square  1 "outline" "black")
 ;;          (square 11 "outline" "black")
 ;;          (square 21 "outline" "black"))
