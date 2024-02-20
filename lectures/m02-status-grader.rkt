@@ -5,6 +5,7 @@
 
 (provide grader)
 
+(define Status '(one-of "minor" "adult"))
 
 (define grader
   (lambda ()
@@ -12,7 +13,7 @@
       (grade-problem 1
         (weights (*)
           (grade-htdd Status
-            (grade-dd-rules-and-template 1 (one-of "minor" "adult")))
+            (grade-dd-rules-and-template ,Status))
           (grade-htdf can-vote?
             (weights (*)
               (grade-signature (Status -> Boolean))
@@ -24,7 +25,7 @@
                 (string=? s "minor")
                 (string=? s "adult"))
               (grade-template-origin (Status))
-              (grade-template (s) (one-of "minor" "adult"))
+              (grade-template        ,Status)
               (grade-template-intact Status)
               (grade-submitted-tests)
               (grade-additional-tests 1

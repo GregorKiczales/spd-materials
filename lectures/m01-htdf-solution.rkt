@@ -42,6 +42,7 @@
 (@signature Image -> Boolean)
 ;; produce true if image is tall (height > width)
 (check-expect (tall? (rectangle 10 20 "outline" "black")) true)
+(check-expect (tall? (rectangle 10  9 "outline" "black")) false)
 (check-expect (tall? (rectangle 10 10 "outline" "black")) false)
 (check-expect (tall? (rectangle 10 11 "outline" "black")) true)
 (check-expect (tall? (rectangle 30 20 "outline" "black")) false)

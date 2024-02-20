@@ -34,7 +34,7 @@
                   (not (string=? str ""))))
               
               (grade-template-origin (String))
-              (grade-template 1 (str) String)
+              (grade-template String)
               
               (grade-submitted-tests))))))))
                 

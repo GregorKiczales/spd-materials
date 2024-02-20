@@ -5,6 +5,11 @@
 
 (provide grader)
 
+(define ListOfNumber
+  '(one-of empty
+           (compound (Number (self-ref fn-for-lon))
+                     cons cons?
+                     (first rest))))
 
 (define grader
   (lambda ()
@@ -21,10 +26,7 @@
           (grade-htdd ListOfNumber  ; weight is 0 because it is in starter, but we grade it so that
             ;;                      ; students can see grading report for correct self-referential
             ;;                      ; type definition
-            (grade-dd-rules-and-template (one-of empty
-                                                 (compound (Number (self-ref fn-for-lon))
-                                                           cons cons?
-                                                           (first rest)))))
+            (grade-dd-rules-and-template ,ListOfNumber))
 
           (grade-htdf sum
             (weights (*)
@@ -60,11 +62,9 @@
                          (first lon)])))            ;no NR
               
               (grade-template-origin (ListOfNumber))
-              (grade-template 1 (lon) (one-of empty
-                                              (compound (Number (self-ref fn-for-lon))
-                                                        cons cons?
-                                                        (first rest))))
+              (grade-template        ,ListOfNumber)
               (grade-template-intact ListOfNumber)
+              
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (sum empty) 0)
@@ -106,11 +106,9 @@
                           (first lon)])))
 
                (grade-template-origin (ListOfNumber))
-               (grade-template 1 (lon) (one-of empty
-                                              (compound (Number (self-ref fn-for-lon))
-                                                        cons cons?
-                                                        (first rest))))
+               (grade-template        ,ListOfNumber)
                (grade-template-intact ListOfNumber)
+
                (grade-submitted-tests)
                (grade-additional-tests 1
                  (check-expect (product empty) 1)
@@ -135,11 +133,9 @@
                 (define (count lon) (foldr + 0 lon)))
 
               (grade-template-origin (ListOfNumber))
-              (grade-template 1 (lon) (one-of empty
-                                              (compound (Number (self-ref fn-for-lon))
-                                                        cons cons?
-                                                        (first rest))))
+              (grade-template        ,ListOfNumber)
               (grade-template-intact ListOfNumber)
+
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (count empty) 0)
@@ -167,11 +163,9 @@
                          (cons (* 2 (first lon)) empty)])))
               
               (grade-template-origin (ListOfNumber))
-              (grade-template 1 (lon) (one-of empty
-                                              (compound (Number (self-ref fn-for-lon))
-                                                        cons cons?
-                                                        (first rest))))
+              (grade-template        ,ListOfNumber)
               (grade-template-intact ListOfNumber)
+
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (doubles empty) empty)
@@ -179,4 +173,5 @@
                               (cons 2 (cons 4 (cons 6 empty)))))))))))
 
               
+
 

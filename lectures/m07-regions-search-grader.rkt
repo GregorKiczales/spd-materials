@@ -48,7 +48,7 @@
                                 (eqv? (car (caddr (caddr defn))) 'fn-for-region)
                                 (eqv? (cadr (caddr (caddr defn))) (cadr (cadr defn))))
                            "trampoline"))))
-        
+
 
         ;; !!! update to state of the art
         (grade-problem 2

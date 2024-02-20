@@ -1,8 +1,17 @@
 #lang racket
 
-(require spd-grader/grader)
+(require spd-grader/grader
+         spd-grader/templates)
+
 (provide grader)
+
 (require 2htdp/image)
+
+(define BST
+  '(one-of false
+           (compound (Integer String (self-ref fn-for-bst) (self-ref fn-for-bst))
+                     make-node node?
+                     (node-key node-val node-l node-r))))
 
 (define-struct node (key val l r))
 (define grader
@@ -59,9 +68,15 @@
                   empty-image))
 
               (grade-template-origin (BST))
+              (grade-questions-intact render-bst (t)
+                (cond [(false? t) (...)]
+                      [else  
+                       (... (node-key t) 
+                            (node-val t)     
+                            (fn-for-bst (node-l t))
+                            (fn-for-bst (node-r t)))]))
 
               (grade-submitted-tests)
-
               (grade-additional-tests 1
                 (check-expect (render-bst false) empty-image)
                 (check-expect (render-bst (make-node 1 "abc" false false))

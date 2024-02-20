@@ -1,7 +1,7 @@
 #lang racket
-(require spd-grader/grader spd-grader/check-template)
-(require racket/function)
-(require 2htdp/image)
+(require spd-grader/grader
+         spd-grader/check-template
+         spd-grader/templates)
 
 (provide grader)
 
@@ -25,7 +25,7 @@
       (grade-problem 1
         (weights (*)
 
-; check-template can't deal with the type hack that is self-referential Natural                 
+; check-template can't deal with the type hack that is self-referential Natural
 ;         (grade-htdd Natural       ; weight is 0 because it is in starter, but we grade it so that
 ;           ;;                      ; students can see grading report for correct self-referential
 ;           ;;                      ; type definition
@@ -59,13 +59,20 @@
                                                    (boxes (sub1 n)))]))]
                            (overlay (square (+ 1 (* n 10)) "outline" "black")
                                     (boxes (sub1 n))))])))
-
+              
               (grade-template-origin (Natural))
-              (grade-template-intact (n)
+              (grade-template (n)
+                  (cond [(zero? n) (...)]
+                        [else
+                         (... n            
+                              (boxes (sub1 n)))]))
+              
+              (grade-questions-intact boxes (n)
                 (cond [(zero? n) (...)]
                       [else
                        (... n            
                             (fn-for-natural (sub1 n)))]))
+              
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (boxes 0) (square 1 "outline" "black"))
@@ -81,6 +88,7 @@
         (grade-htdf fact
           (weights (*)
             (grade-signature (Natural -> Natural))
+
             (grade-tests-validity (n) r
               (and (number? n) (>= n 0))
               (equal? r (foldr * 1 (build-list n add1))))
@@ -99,12 +107,21 @@
                                      (+ i (fact (sub1 i)))))]
                          (+ n 
                             (fact (sub1 n))))])))
-            (grade-template-origin (Natural))
-            (grade-template-intact (n)
-              (cond [(zero? n) (...)]
-                    [else
-                     (... n            
-                          (fn-for-natural (sub1 n)))]))
+
+            
+              (grade-template-origin (Natural))
+              (grade-template (n)
+                  (cond [(zero? n) (...)]
+                        [else
+                         (... n            
+                              (fact (sub1 n)))]))
+              
+              (grade-questions-intact fact (n)
+                (cond [(zero? n) (...)]
+                      [else
+                       (... n            
+                            (fn-for-natural (sub1 n)))]))
+              
             (grade-submitted-tests)
             (grade-additional-tests 1
               (check-expect (fact 0) 1)
@@ -114,6 +131,7 @@
         (grade-htdf blist
           (weights (*)
             (grade-signature (Natural -> ListOfNatural))
+
             (grade-tests-validity (n) r
               (and (number? n) (>= n 0))
               (equal? r (%%blist n)))
@@ -136,12 +154,21 @@
                                         (append (blist (sub1 n))
                                                 (cons (- n 1) empty))]))]
                          (blist n))])))
-            (grade-template-origin (Natural))
-            (grade-template-intact (n)
-              (cond [(zero? n) (...)]
-                    [else
-                     (... n            
-                          (fn-for-natural (sub1 n)))]))
+
+            
+              (grade-template-origin (Natural))
+              (grade-template (n)
+                  (cond [(zero? n) (...)]
+                        [else
+                         (... n            
+                              (blist (sub1 n)))]))
+              
+              (grade-questions-intact blist (n)
+                (cond [(zero? n) (...)]
+                      [else
+                       (... n            
+                            (fn-for-natural (sub1 n)))]))
+
             (grade-submitted-tests)
             (grade-additional-tests 1
               (check-expect (blist 0) empty)

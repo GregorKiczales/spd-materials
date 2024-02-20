@@ -5,6 +5,8 @@
 
 (provide grader)
 
+(define GradeStanding '(one-of Natural "H" "P" "F" "T"))
+
 (define grader
   (lambda ()
     (grade-submission
@@ -31,7 +33,7 @@
         (grade-problem 1
           (weights (*)
             (grade-htdd GradeStanding
-              (grade-dd-rules-and-template (one-of Natural "H" "P" "F" "T")))
+              (grade-dd-rules-and-template ,GradeStanding))
             (grade-htdf excellent?                      
               (weights (*)
                 (grade-signature (GradeStanding -> Boolean))
@@ -48,8 +50,8 @@
                   (and (string? gs) (string=? gs "T")))
 
                 (grade-template-origin (GradeStanding))
-                (grade-template (gs) (one-of Natural "H" "P" "F" "T"))
-                (grade-template-intact GradeStanding)
+                (grade-template        ,GradeStanding)
+                (grade-template-intact  GradeStanding)
                 (grade-submitted-tests)
                 (grade-additional-tests 1 
                   (check-expect (excellent? 88) false)  
@@ -76,8 +78,8 @@
                 (and (string? gs) (string=? gs "T")))
 
               (grade-template-origin (GradeStanding))
-              (grade-template (gs) (one-of Natural "H" "P" "F" "T"))
-              (grade-template-intact GradeStanding)
+              (grade-template        ,GradeStanding)
+              (grade-template-intact  GradeStanding)
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (grade->string 90) "90%")
