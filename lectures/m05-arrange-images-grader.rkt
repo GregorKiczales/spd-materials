@@ -5,6 +5,12 @@
 (require 2htdp/image)
 (provide grader)
 
+(define ListOfImage
+  '(one-of empty
+           (compound (Image (self-ref fn-for-loe))
+                     cons cons?
+                     (first rest))))
+
 (define grader
   (lambda ()
     (grade-submission
@@ -48,12 +54,13 @@
                   (list? loi)
                   (andmap image? loi)
                   (equal? r (%%arrange-images loi)))
-                (grade-tests-argument-thoroughness (loi)
-                 ;(empty? loi) ;not needed in fn composition
-                  (> (length loi) 1)
-                  ;(%%smaller-then-larger loi)  ;!!!
-                  ;(%%larger-then-smaller loi)  ;!!!
-                  )
+
+                (grade-argument-thoroughness ()
+                  (per-args (loi)
+                    (> (length loi) 1)
+                    ;(%%smaller-then-larger loi)  ;!!!
+                    ;(%%larger-then-smaller loi)  ;!!!
+                    ))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (arrange-images loi) empty-image)
@@ -61,6 +68,7 @@
                   (define (arrange-images loi) (foldr beside empty-image (reverse loi))))
                 
                 (grade-template-origin (fn-composition))
+
                 (grade-submitted-tests)
                 (grade-additional-tests 1
                   (check-expect (arrange-images (cons I1 (cons I2 empty)))
@@ -83,6 +91,7 @@
                   (define (layout-images loi) (if (empty? loi) empty-image (first loi))))
 
                 (grade-template-origin (ListOfImage))
+                (grade-template        ,ListOfImage)
                 
                 (grade-submitted-tests)
                 (grade-additional-tests 1
@@ -108,6 +117,7 @@
                   (define (sort-images loi) (reverse loi)))
 
                 (grade-template-origin (ListOfImage))
+                (grade-template        ,ListOfImage)
                 
                 (grade-submitted-tests)
                 (grade-additional-tests 1
@@ -123,20 +133,24 @@
             (grade-htdf insert
               (weights (*)
                 (grade-signature (Image ListOfImage -> ListOfImage))
-                #;
+
                 (grade-tests-validity (img loi) r
                   (image? img)
                   (list? loi)
                   (andmap image? loi)
                   (equal? r (%%insert img loi)))
-                (grade-tests-argument-thoroughness (img loi)
-                  (empty? loi)
-                  (> (length loi) 1))
+                
+                (grade-argument-thoroughness ()
+                  (per-args (img loi)
+                    (empty? loi)
+                    (> (length loi) 1)))
+                
                 (grade-thoroughness-by-faulty-functions 1
                   (define (insert img loi) (cons img loi))
                   (define (insert img loi) (append loi (list img))))
 
                 (grade-template-origin (ListOfImage))
+                (grade-template         Image ,ListOfImage)
                 
                 (grade-submitted-tests)
                 
@@ -153,22 +167,23 @@
                   (and (image? img1)
                        (image? img2))
                   (equal? r (%%larger? img1 img2)))
-                (grade-tests-argument-thoroughness (img1 img2)
-                  (not (= (image-width  img1) (image-width  img2)))
-                  (not (= (image-width  img1) (image-height img1)))
-                  (not (= (image-width  img1) (image-height img2)))
-                  
-                  (not (= (image-width  img2) (image-height img1)))
-                  (not (= (image-width  img2) (image-height img2)))
+                (grade-argument-thoroughness ()
+                  (per-args (img1 img2)
+                    (not (= (image-width  img1) (image-width  img2)))
+                    (not (= (image-width  img1) (image-height img1)))
+                    (not (= (image-width  img1) (image-height img2)))
+                    
+                    (not (= (image-width  img2) (image-height img1)))
+                    (not (= (image-width  img2) (image-height img2)))
 
-                  (not (= (image-height img1) (image-height img2)))
+                    (not (= (image-height img1) (image-height img2)))
 
-                  (> (* (image-width img1) (image-height img1))
-                     (* (image-width img2) (image-height img2)))
-                  (< (* (image-width img1) (image-height img1))
-                     (* (image-width img2) (image-height img2)))
-                  (= (* (image-width img1) (image-height img1))
-                     (* (image-width img2) (image-height img2))))
+                    (> (* (image-width img1) (image-height img1))
+                       (* (image-width img2) (image-height img2)))
+                    (< (* (image-width img1) (image-height img1))
+                       (* (image-width img2) (image-height img2)))
+                    (= (* (image-width img1) (image-height img1))
+                       (* (image-width img2) (image-height img2)))))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (larger? img1 img2)
@@ -182,6 +197,7 @@
                        (* (image-width img2) (image-height img2)))))
 
                 (grade-template-origin (Image))
+                (grade-template         Image Image)
                 
                 (grade-submitted-tests)
                 (grade-additional-tests 1

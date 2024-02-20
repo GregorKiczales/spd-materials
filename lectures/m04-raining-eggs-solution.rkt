@@ -202,10 +202,10 @@
 
 (@template
  (define (place-egg e img)
-   (... (egg-x e)
+   (... img
+        (egg-x e)
         (egg-y e)
-        (egg-r e)
-        img)))
+        (egg-r e))))
 
 (define (place-egg e img)
   (place-image (rotate  (egg-r e) YOSHI-EGG)

@@ -197,24 +197,27 @@ When choosing built-in abstract functions yourselves remember:
 (@template-origin fn-composition use-abstract-fn)
 
 ;;
-;; 3 -> (list 0 1 2) ->
-;;      (list 1 11 21) ->
-;;      (list (square 1 "outline" "black")
-;;            (square 11 "outline" "black")
-;;            (square 21 "outline" "black")) ->
-;;      (overlay (square  1 "outline" "black")
-;;               (square 11 "outline" "black")
-;;               (square 21 "outline" "black"))
+;; 3 ->
+;; (list 0 1 2) ->
+;; (list 1 11 21) ->
+;; (list (square 1 "outline" "black")
+;;       (square 11 "outline" "black")
+;;       (square 21 "outline" "black")) ->
+;; (overlay (square  1 "outline" "black")
+;;          (square 11 "outline" "black")
+;;          (square 21 "outline" "black"))
 ;;
-;; which is (foldr (map ... (map ... (build-list n ...))))
+;; which is (foldr ... ... (map ... (map ... (build-list n ...))))
 ;;
 ;; OR
-;; 3 -> (list (square 1 "outline" "black")
-;;            (square 11 "outline" "black")
-;;            (square 21 "outline" "black")) ->
-;;      (overlay (square  1 "outline" "black")
-;;               (square 11 "outline" "black")
-;;               (square 21 "outline" "black"))
+;;
+;; 3 ->
+;; (list (square 1 "outline" "black")
+;;       (square 11 "outline" "black")
+;;       (square 21 "outline" "black")) ->
+;; (overlay (square  1 "outline" "black")
+;;          (square 11 "outline" "black")
+;;          (square 21 "outline" "black"))
 ;;
 ;; which is (foldr ... ... (build-list n ...))
 ;;

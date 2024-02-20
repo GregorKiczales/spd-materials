@@ -1,8 +1,15 @@
 #lang racket
 
-(require spd-grader/grader)
+(require spd-grader/grader
+         spd-grader/templates)
+
 (provide grader)
 
+(define BST
+  '(one-of false
+           (compound (Integer String (self-ref fn-for-bst) (self-ref fn-for-bst))
+                     make-node node?
+                     (node-key node-val node-l node-r))))
 (define grader
   (lambda ()
     (grade-submission
@@ -73,6 +80,14 @@
                             (count-odds (node-r t)))])))
               
               (grade-template-origin (BST))
+              (grade-questions-intact count-odds (t) ;!!! would love to put the type here
+                (cond [(false? t) (...)]
+                      [else  
+                       (... (node-key t) 
+                            (node-val t)     
+                            (fn-for-bst (node-l t))
+                            (fn-for-bst (node-r t)))]))
+              
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (count-odds BST0) 0)

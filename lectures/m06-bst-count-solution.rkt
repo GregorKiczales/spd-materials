@@ -77,6 +77,7 @@ nodes in the tree.
 (check-expect (count BST10) 9)
 
 (@template-origin BST)
+
 (define (count t)
   (cond [(false? t) 0]
         [else   

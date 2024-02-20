@@ -1,7 +1,15 @@
 #lang racket
 
-(require spd-grader/grader)
+(require spd-grader/grader
+         spd-grader/templates)
+
 (provide grader)
+
+(define BST
+  '(one-of false
+           (compound (Integer String (self-ref fn-for-bst) (self-ref fn-for-bst))
+                     make-node node?
+                     (node-key node-val node-l node-r))))
 
 (define grader
   (lambda ()
@@ -69,6 +77,15 @@
                                [else (lookup (node-l t) k)])])))
 
               (grade-template-origin (BST))
+              (grade-questions-intact lookup (t k) ;!!! would love to put the type here
+                (cond [(false? t) (... k)]
+                      [else  
+                       (... k
+                            (node-key t) 
+                            (node-val t)     
+                            (fn-for-bst (node-l t))
+                            (fn-for-bst (node-r t)))]))
+              
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (lookup BST1   1) "abc")
