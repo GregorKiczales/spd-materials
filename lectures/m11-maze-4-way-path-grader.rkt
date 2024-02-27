@@ -5,6 +5,17 @@
 
 (provide grader)
 
+(define Pos
+  '(compound (Integer Integer)
+             make-pos pos?
+             (pos-x pos-y)))
+
+(define ListOfPos
+  '(one-of empty
+           (compound ((ref fn-for-p) (self-ref fn-for-lop))
+                     cons cons?
+                     (first rest))))
+
 
 (define grader
   (lambda ()
@@ -30,10 +41,16 @@
 
             (grade-encapsulated-template-fns (solve/p solve/lop)
               (weights (*)
-                (grade-questions-intact solve/p (p) (cond [(solved? p) ...] [(member? p path) ...] [else ...]))
+                
+                (grade-questions-intact solve/p (p path)
+                  (cond [(solved? p) ...]
+                        [(member? p path) ...]
+                        [else ...]))
+                
                 (grade-mr-intact        solve/p solve/lop)
                 
-                (grade-questions-intact solve/lop (lop) (cond [(empty? lop) ...] [else ...]))
+                (grade-questions-intact solve/lop ,ListOfPos Number)
+                
                 (grade-mr-intact        solve/lop solve/p)))
             
             (grade-submitted-tests 1))))
@@ -59,12 +76,18 @@
 
               (grade-encapsulated-template-fns (find-path/p find-path/lop)
                 
-              (weights (*)
-                (grade-questions-intact find-path/p (p) (cond [(solved? p) ...] [(member? p path) ...] [else ...]))
-                (grade-mr-intact        find-path/p find-path/lop)
+                (weights (*)
+                  
+                  (grade-questions-intact find-path/p (p path)
+                    (cond [(solved? p) ...]
+                          [(member? p path) ...] [else ...]))
                 
-                (grade-questions-intact find-path/lop (lop) (cond [(empty? lop) ...] [else ...]))
-                (grade-mr-intact        find-path/lop find-path/p)))
+                  (grade-mr-intact        find-path/p find-path/lop)
+                
+                  (grade-questions-intact find-path/lop ,ListOfPos Number)
+
+                    
+                  (grade-mr-intact        find-path/lop find-path/p)))
               
               (grade-submitted-tests 1)
               (grade-additional-tests 1

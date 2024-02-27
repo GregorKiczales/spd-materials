@@ -4,6 +4,12 @@
 
 (provide grader)
 
+(define ListOfNumber
+  '(one-of empty
+           (compound (Number (self-ref fn-for-lon))
+                     cons cons?
+                     (first rest))))
+
 
 (define grader
   (lambda ()
@@ -61,7 +67,7 @@
             (grade-encapsulated-template-fns (sequence?)
                                            
               (weights (*)
-                (grade-questions-intact sequence? (lon) (cond [(empty? lon) ...] [else ...]))
+                (grade-questions-intact sequence? ,ListOfNumber Number)
                 (grade-nr-intact        sequence?)))
 
             (grade-submitted-tests 1)

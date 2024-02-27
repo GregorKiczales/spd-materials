@@ -5,6 +5,11 @@
 
 (provide grader)
 
+(define ListOfNN
+  '(one-of empty
+           (compound (String (self-ref fn-for-nn))
+                     cons cons?
+                     (first rest))))
 
 (define grader
   (lambda ()
@@ -32,9 +37,10 @@
 
             (grade-encapsulated-template-fns (fn-for-node fn-for-lonn)
               (weights (*)
+
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn (nn-wl) (cond [(empty? nn-wl) ...] [else ...]))
+                (grade-questions-intact fn-for-lonn ,ListOfNN Number);treat visited as atomic
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))
@@ -61,7 +67,7 @@
               (weights (*)
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn (nn-wl) (cond [(empty? nn-wl) ...] [else ...]))
+                (grade-questions-intact fn-for-lonn ,ListOfNN Number Number) ;treat path-wl and visited as atomic
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))

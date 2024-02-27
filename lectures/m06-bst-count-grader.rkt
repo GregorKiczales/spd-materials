@@ -73,15 +73,8 @@
                          (+ 1 
                             (count (node-l t)))])))
               
-              (grade-template-origin (BST))
-              (grade-questions-intact count (t) ;!!! would love to put the type here
-                (cond [(false? t) (...)]
-                      [else  
-                       (... (node-key t) 
-                            (node-val t)     
-                            (fn-for-bst (node-l t))
-                            (fn-for-bst (node-r t)))]))
-
+              (grade-template-origin        (BST))
+              (grade-questions-intact count ,BST)
                
               (grade-submitted-tests)
               (grade-additional-tests 1
