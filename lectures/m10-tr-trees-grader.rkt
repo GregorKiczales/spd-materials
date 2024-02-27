@@ -5,6 +5,17 @@
 
 (provide grader)
 
+(define Tree
+  '(compound (Number (listof Tree))
+             make-node node?
+             (node-number node-subs)))
+
+(define ListOfTree
+  '(one-of empty
+           (compound ((ref fn-for-tree) (self-ref fn-for-lot))
+                     cons cons?
+                     (first rest))))
+
 (define grader
   (lambda ()
     (grade-submission
@@ -78,7 +89,7 @@
     (grade-encapsulated-template-fns (fn-for-t fn-for-lot)
       (weights (*)        
         (grade-mr-intact        fn-for-t fn-for-lot)        
-        (grade-questions-intact fn-for-lot (lot) (cond [(empty? lot) ....] [else ....]))
+        (grade-questions-intact fn-for-lot ,ListOfTree Number)
         (grade-mr-intact        fn-for-lot fn-for-t)
         (grade-nr-intact        fn-for-lot)))    
     (grade-submitted-tests)))
@@ -90,7 +101,7 @@
     (grade-encapsulated-template-fns (fn-for-t fn-for-lot)
       (weights (*)        
         (grade-mr-intact        fn-for-t fn-for-lot)
-        (grade-questions-intact fn-for-lot (t-wl) (cond [(empty? t-wl) ....] [else ....]))
+        (grade-questions-intact fn-for-lot ,ListOfTree Number)
         (grade-mr-intact        fn-for-lot fn-for-t)))
     (grade-tail-recursive)
     (grade-submitted-tests)))

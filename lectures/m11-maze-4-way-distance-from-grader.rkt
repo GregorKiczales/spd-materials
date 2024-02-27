@@ -5,6 +5,17 @@
 
 (provide grader)
 
+(define Pos
+  '(compound (Integer Integer)
+             make-pos pos?
+             (pos-x pos-y)))
+
+(define ListOfPos
+  '(one-of empty
+           (compound ((ref fn-for-p) (self-ref fn-for-lop))
+                     cons cons?
+                     (first rest))))
+
 
 (define grader
   (lambda ()
@@ -30,10 +41,16 @@
 
             (grade-encapsulated-template-fns (fn-for-p fn-for-lop)
               (weights (*)
-                (grade-questions-intact fn-for-p (p) (cond [(equal? p end) ...] #;[(solved? p) ...] [(member? p path) ...] [else ...]))
-                (grade-mr-intact        fn-for-p fn-for-lop)
                 
-                (grade-questions-intact fn-for-lop (lop) (cond [(empty? lop) ...] [else ...]))
+                (grade-questions-intact fn-for-p (p path dist)
+                  (cond [(equal? p end) ...]
+                        #;[(solved? p) ...]
+                        [(member? p path) ...] [else ...]))
+
+                (grade-mr-intact        fn-for-p fn-for-lop)
+
+                (grade-questions-intact fn-for-lop ,ListOfPos Number Number)
+                
                 (grade-mr-intact        fn-for-lop fn-for-p)))
 
             (grade-submitted-tests 1)))))))

@@ -67,11 +67,7 @@
                          (... n            
                               (boxes (sub1 n)))]))
               
-              (grade-questions-intact boxes (n)
-                (cond [(zero? n) (...)]
-                      [else
-                       (... n            
-                            (fn-for-natural (sub1 n)))]))
+              (grade-questions-intact boxes (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
               
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -116,11 +112,7 @@
                          (... n            
                               (fact (sub1 n)))]))
               
-              (grade-questions-intact fact (n)
-                (cond [(zero? n) (...)]
-                      [else
-                       (... n            
-                            (fn-for-natural (sub1 n)))]))
+              (grade-questions-intact fact (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
               
             (grade-submitted-tests)
             (grade-additional-tests 1
@@ -163,14 +155,10 @@
                          (... n            
                               (blist (sub1 n)))]))
               
-              (grade-questions-intact blist (n)
-                (cond [(zero? n) (...)]
-                      [else
-                       (... n            
-                            (fn-for-natural (sub1 n)))]))
+              (grade-questions-intact blist (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
 
-            (grade-submitted-tests)
-            (grade-additional-tests 1
-              (check-expect (blist 0) empty)
-              (check-expect (blist 3) (cons 1 (cons 2 (cons 3 empty)))))))))))
+              (grade-submitted-tests)
+              (grade-additional-tests 1
+                (check-expect (blist 0) empty)
+                (check-expect (blist 3) (cons 1 (cons 2 (cons 3 empty)))))))))))
                                                  

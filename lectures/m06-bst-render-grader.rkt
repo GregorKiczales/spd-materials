@@ -68,13 +68,7 @@
                   empty-image))
 
               (grade-template-origin (BST))
-              (grade-questions-intact render-bst (t)
-                (cond [(false? t) (...)]
-                      [else  
-                       (... (node-key t) 
-                            (node-val t)     
-                            (fn-for-bst (node-l t))
-                            (fn-for-bst (node-r t)))]))
+              (grade-questions-intact render-bst ,BST)
 
               (grade-submitted-tests)
               (grade-additional-tests 1

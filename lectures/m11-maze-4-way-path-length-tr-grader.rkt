@@ -3,6 +3,17 @@
 (require spd-grader/walker)
 (provide grader)
 
+(define Pos
+  '(compound (Integer Integer)
+             make-pos pos?
+             (pos-x pos-y)))
+
+(define ListOfPos
+  '(one-of empty
+           (compound ((ref fn-for-p) (self-ref fn-for-lop))
+                     cons cons?
+                     (first rest))))
+
 (define grader
   (lambda ()
     (grade-submission

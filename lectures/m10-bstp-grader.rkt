@@ -4,6 +4,12 @@
 
 (provide grader)
 
+(define BST
+  '(one-of false
+           (compound (Integer String (self-ref fn-for-bst) (self-ref fn-for-bst))
+                     make-node node?
+                     (node-key node-val node-l node-r))))
+
 
 (define grader
   (lambda ()
@@ -56,7 +62,7 @@
 
             (grade-encapsulated-template-fns (bst?)
               (weights (*)
-                (grade-questions-intact bst? (bt) (cond [(false? bt) ...] [else ...]))
+                (grade-questions-intact bst? ,BST Integer Integer)
                 (grade-nr-intact        bst? 2)))
             
             (grade-submitted-tests 1)

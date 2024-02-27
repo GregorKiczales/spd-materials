@@ -77,14 +77,7 @@
                                [else (lookup (node-l t) k)])])))
 
               (grade-template-origin (BST))
-              (grade-questions-intact lookup (t k) ;!!! would love to put the type here
-                (cond [(false? t) (... k)]
-                      [else  
-                       (... k
-                            (node-key t) 
-                            (node-val t)     
-                            (fn-for-bst (node-l t))
-                            (fn-for-bst (node-r t)))]))
+              (grade-questions-intact lookup ,BST Integer)
               
               (grade-submitted-tests)
               (grade-additional-tests 1
