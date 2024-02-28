@@ -49,7 +49,7 @@
 
                 (grade-mr-intact        fn-for-p fn-for-lop)
 
-                (grade-questions-intact fn-for-lop ,ListOfPos Number Number)
+                (grade-questions-intact fn-for-lop ,ListOfPos)
                 
                 (grade-mr-intact        fn-for-lop fn-for-p)))
 
