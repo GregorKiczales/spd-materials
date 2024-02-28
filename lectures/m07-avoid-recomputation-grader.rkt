@@ -23,7 +23,7 @@
                 (grade-submitted-tests 2)
                 (grade-template-origin (BST))
                 (grade-questions-intact render-bst ,BST)
-                (grade-nr-intact render-bst 2)
+                (grade-nr-intact render-bst 1)
                 (rubric-item 'other (= (length locs) 2) "render-bst - 2 locally defined constants")))))))))
 
             

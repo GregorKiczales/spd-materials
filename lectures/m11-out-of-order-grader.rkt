@@ -40,7 +40,7 @@
 
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn ,ListOfNN Number);treat visited as atomic
+                (grade-questions-intact fn-for-lonn ,ListOfNN)
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))
@@ -67,7 +67,7 @@
               (weights (*)
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn ,ListOfNN Number Number) ;treat path-wl and visited as atomic
+                (grade-questions-intact fn-for-lonn ,ListOfNN)
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))

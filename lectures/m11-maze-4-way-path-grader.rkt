@@ -49,7 +49,7 @@
                 
                 (grade-mr-intact        solve/p solve/lop)
                 
-                (grade-questions-intact solve/lop ,ListOfPos Number)
+                (grade-questions-intact solve/lop ,ListOfPos)
                 
                 (grade-mr-intact        solve/lop solve/p)))
             
@@ -84,7 +84,7 @@
                 
                   (grade-mr-intact        find-path/p find-path/lop)
                 
-                  (grade-questions-intact find-path/lop ,ListOfPos Number)
+                  (grade-questions-intact find-path/lop ,ListOfPos)
 
                     
                   (grade-mr-intact        find-path/lop find-path/p)))
