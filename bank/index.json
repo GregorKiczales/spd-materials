@@ -1211,19 +1211,6 @@
               "recipe"         : ["HtDF"],
               "duration"       : 40,
               "difficulty"     : "Blue"
-          },   
-          {      
-              "module"         : "2-One-Of",
-              "lecture"        : "code",
-              "kind"           : "Practice",
-              "setNumber"      : 5,
-              "name"           : "Championship Bracket",
-              "codeFiles"      : ["championship-bracket-starter.rkt",
-				  "championship-bracket-solution.rkt"],
-              "description"    : "Represent and operate on information about USA Ultimate championship bracket.",
-              "recipe"         : ["HtDF"],
-              "duration"       : 40,
-              "difficulty"     : "Blue"
           },          
           {      
               "module"         : "Local",
