@@ -1,15 +1,12 @@
 #lang racket
 
 (require spd-grader/grader
+         spd-grader/check-template
          spd-grader/templates)
 
 (provide grader)
 
-(define ListOfNN
-  '(one-of empty
-           (compound (String (self-ref fn-for-nn))
-                     cons cons?
-                     (first rest))))
+(define ListOfNN (make-listof-type 'ListOfNN 'fn-for-lonn 'String 'fn-for-nn))
 
 (define grader
   (lambda ()
@@ -40,7 +37,7 @@
 
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn ,ListOfNN)
+                (grade-questions-intact fn-for-lonn ListOfNN)
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))
@@ -67,7 +64,7 @@
               (weights (*)
                 (grade-mr-intact        fn-for-node fn-for-lonn )
                 
-                (grade-questions-intact fn-for-lonn ,ListOfNN)
+                (grade-questions-intact fn-for-lonn ListOfNN)
                 (grade-mr-intact        fn-for-lonn fn-for-node)))
             
             (grade-submitted-tests 1))))

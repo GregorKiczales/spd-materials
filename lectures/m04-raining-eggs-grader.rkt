@@ -5,16 +5,12 @@
 
 (provide grader)
 
-(define ListOfEgg
-  '(one-of empty
-           (compound ((ref fn-for-egg) (self-ref fn-for-loe))
-                     cons cons?
-                     (first rest))))
-
 (define Egg
-  '(compound (Number Number Number)
-             make-egg egg?
-             (egg-x egg-y egg-r)))
+  (compound (Number Number Number)
+            make-egg egg?
+            (egg-x egg-y egg-r)))
+
+(define ListOfEgg (make-listof-type 'ListOfEgg 'fn-for-loe 'Egg 'fn-for-egg))
 
 
 (define grader
@@ -44,10 +40,10 @@
         (weights (*)
 
           (grade-htdd Egg
-            (grade-dd-rules-and-template ,Egg))
+            (grade-dd-rules-and-template Egg))
 
           (grade-htdd ListOfEgg
-            (grade-dd-rules-and-template ,ListOfEgg))
+            (grade-dd-rules-and-template ListOfEgg))
 
           (grade-htdf main
             (grade-signature (ListOfEgg -> ListOfEgg)))
@@ -81,8 +77,8 @@
                     (toc loe))))
               
               (grade-template-origin (ListOfEgg))
-              (grade-template        ,ListOfEgg)
-              (grade-template-intact ListOfEgg);!!!
+              (grade-template         ListOfEgg)
+              (grade-template-intact  ListOfEgg)
 
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -106,7 +102,7 @@
                             (egg-r e))))
 
               (grade-template-origin (Egg))
-              (grade-template        ,Egg)
+              (grade-template         Egg)
 
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -148,8 +144,8 @@
                     (rend loe))))
               
               (grade-template-origin (ListOfEgg))
-              (grade-template        ,ListOfEgg)
-              (grade-template-intact ListOfEgg);!!!
+              (grade-template         ListOfEgg)
+              (grade-template-intact  ListOfEgg);!!!
 
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -190,7 +186,7 @@
                                img)))
 
               (grade-template-origin (Egg))
-              (grade-template        ,Egg Image)
+              (grade-template         Egg Image)
 
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -225,11 +221,11 @@
                         [else loe])))
               
               (grade-template-origin (MouseEvent))
-              (grade-template (ws x y me)
+              (grade-template/body (ws x y me)
                 (cond [(mouse=? me "button-down") (... ws x y)]
                       [else (... ws x y)]))
 
-              (grade-questions-intact mouse-handler-defn (ws x y me)
+              (grade-questions-intact/body mouse-handler-defn (ws x y me)
                 (cond [(mouse=? me "button-down") (... ws x y)]
                       [else (... ws x y)]))
               
@@ -261,11 +257,11 @@
                 (define (,key-handler-name loe ke) loe))
               
               (grade-template-origin (KeyEvent))
-              (grade-template (ws ke)
+              (grade-template/body (ws ke)
                 (cond [(key=? ke " ") (... ws)]
                       [else (... ws)]))
               
-              (grade-questions-intact key-handler-defn (ke)
+              (grade-questions-intact/body key-handler-defn (ke)
                 (cond [(key=? ke " ") (... ke)]
                       [else (... ke)]))
               

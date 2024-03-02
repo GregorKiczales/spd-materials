@@ -30,9 +30,9 @@
 ;           ;;                      ; students can see grading report for correct self-referential
 ;           ;;                      ; type definition
 ;           (grade-dd-rules-and-template (one-of 0
-;                                                (compound ((self-ref fn-for-natural))
+;                                                (compound ((sref Natural fn-for-natural))
 ;                                                          add1 identity
-;                                                           (sub1)))))
+;                                                          (sub1)))))
 
           (grade-htdf boxes
             (weights (*)
@@ -61,13 +61,13 @@
                                     (boxes (sub1 n))))])))
               
               (grade-template-origin (Natural))
-              (grade-template (n)
+              (grade-template/body (n)
                   (cond [(zero? n) (...)]
                         [else
                          (... n            
                               (boxes (sub1 n)))]))
               
-              (grade-questions-intact boxes (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
+              (grade-questions-intact/body boxes (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
               
               (grade-submitted-tests)
               (grade-additional-tests 1
@@ -106,13 +106,13 @@
 
             
               (grade-template-origin (Natural))
-              (grade-template (n)
+              (grade-template/body (n)
                   (cond [(zero? n) (...)]
                         [else
                          (... n            
                               (fact (sub1 n)))]))
               
-              (grade-questions-intact fact (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
+              (grade-questions-intact/body fact (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
               
             (grade-submitted-tests)
             (grade-additional-tests 1
@@ -149,13 +149,13 @@
 
             
               (grade-template-origin (Natural))
-              (grade-template (n)
+              (grade-template/body (n)
                   (cond [(zero? n) (...)]
                         [else
                          (... n            
                               (blist (sub1 n)))]))
               
-              (grade-questions-intact blist (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
+              (grade-questions-intact/body blist (n) (cond [(zero? n) (...)] [else (... n (boxes (sub1 n)))]))
 
               (grade-submitted-tests)
               (grade-additional-tests 1

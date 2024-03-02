@@ -1,14 +1,10 @@
 #lang racket
+
 (require spd-grader/grader
+         spd-grader/check-template
          spd-grader/templates)
 
 (provide grader)
-
-(define ListOfNumber
-  '(one-of empty
-           (compound (Number (self-ref fn-for-lon))
-                     cons cons?
-                     (first rest))))
 
 
 (define grader
@@ -67,7 +63,7 @@
             (grade-encapsulated-template-fns (sequence?)
                                            
               (weights (*)
-                (grade-questions-intact sequence? ,ListOfNumber)
+                (grade-questions-intact sequence? ListOfNumber)
                 (grade-nr-intact        sequence?)))
 
             (grade-submitted-tests 1)

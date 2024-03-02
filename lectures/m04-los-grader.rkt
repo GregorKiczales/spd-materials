@@ -5,12 +5,6 @@
 
 (provide grader)
 
-(define ListOfString
-  '(one-of empty
-           (compound (String (self-ref fn-for-los))
-                     cons cons?
-                     (first rest))))
-
 (define grader
   (lambda ()
     (grade-submission
@@ -27,7 +21,7 @@
           (grade-htdd ListOfString  ; weight is 0 because it is in starter, but we grade it so that
             ;;                      ; students can see grading report for correct self-referential
             ;;                      ; type definition
-            (grade-dd-rules-and-template ,ListOfString))
+            (grade-dd-rules-and-template ListOfString))
 
           (grade-htdf contains-canucks?
             (weights (*)
@@ -62,8 +56,8 @@
                     (contains-canuks? los))))
               
               (grade-template-origin (ListOfString))
-              (grade-template        ,ListOfString)
-              (grade-template-intact ListOfString)
+              (grade-template         ListOfString)
+              (grade-template-intact  ListOfString)
 
               (grade-submitted-tests)
               (grade-additional-tests 1

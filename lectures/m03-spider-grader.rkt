@@ -4,7 +4,7 @@
 
 (provide grader)
 
-(define Spider 'Number)
+(define Spider Number)
 
 (define grader
   (lambda ()
@@ -26,7 +26,7 @@
         (weights (*)
 
           (grade-htdd Spider
-            (grade-dd-rules-and-template 1 Number))
+            (grade-dd-rules-and-template 1 Spider))
 
           (grade-htdf main
             (rubric-item 'template-intact #t "main function design exists"))
@@ -54,7 +54,7 @@
                     (+ s SPEED))))
             
             (grade-template-origin (Spider))
-            (grade-template        ,Spider)
+            (grade-template         Spider)
             
             (grade-submitted-tests)
             (grade-additional-tests 1
@@ -77,7 +77,7 @@
                 (place-image SPIDER-IMAGE s CTR-X MTS)))
             
             (grade-template-origin (Spider))
-            (grade-template        ,Spider)
+            (grade-template         Spider)
             
             (grade-submitted-tests)
             (grade-additional-tests 1

@@ -1,20 +1,17 @@
 #lang racket
 
 (require spd-grader/grader
+         spd-grader/check-template
          spd-grader/templates)
 
 (provide grader)
 
 (define Pos
-  '(compound (Integer Integer)
-             make-pos pos?
-             (pos-x pos-y)))
+  (compound (Integer Integer)
+            make-pos pos?
+            (pos-x pos-y)))
 
-(define ListOfPos
-  '(one-of empty
-           (compound ((ref fn-for-p) (self-ref fn-for-lop))
-                     cons cons?
-                     (first rest))))
+(define ListOfPos (make-listof-type 'ListOfPos 'fn-for-lop 'Pos 'fn-for-p))
 
 
 (define grader
@@ -42,14 +39,14 @@
             (grade-encapsulated-template-fns (solve/p solve/lop)
               (weights (*)
                 
-                (grade-questions-intact solve/p (p path)
+                (grade-questions-intact/body solve/p (p path)
                   (cond [(solved? p) ...]
                         [(member? p path) ...]
                         [else ...]))
                 
                 (grade-mr-intact        solve/p solve/lop)
                 
-                (grade-questions-intact solve/lop ,ListOfPos)
+                (grade-questions-intact solve/lop ListOfPos)
                 
                 (grade-mr-intact        solve/lop solve/p)))
             
@@ -78,13 +75,13 @@
                 
                 (weights (*)
                   
-                  (grade-questions-intact find-path/p (p path)
+                  (grade-questions-intact/body find-path/p (p path)
                     (cond [(solved? p) ...]
                           [(member? p path) ...] [else ...]))
                 
                   (grade-mr-intact        find-path/p find-path/lop)
                 
-                  (grade-questions-intact find-path/lop ,ListOfPos)
+                  (grade-questions-intact find-path/lop ListOfPos)
 
                     
                   (grade-mr-intact        find-path/lop find-path/p)))
