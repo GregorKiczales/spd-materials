@@ -1,20 +1,18 @@
 #lang racket
+
 (require spd-grader/grader
          spd-grader/walker
+         spd-grader/check-template
          spd-grader/templates)
 
 (provide grader)
 
 (define Tree
-  '(compound (Number (listof Tree))
-             make-node node?
-             (node-number node-subs)))
+  (compound (Number (mref ListOfTree fn-for-lot))
+            make-node node?
+            (node-number node-subs)))
 
-(define ListOfTree
-  '(one-of empty
-           (compound ((ref fn-for-tree) (self-ref fn-for-lot))
-                     cons cons?
-                     (first rest))))
+(define ListOfTree (make-listof-type 'ListOfTree 'fn-for-lot 'Tree 'fn-for-tree))
 
 (define grader
   (lambda ()
@@ -89,7 +87,7 @@
     (grade-encapsulated-template-fns (fn-for-t fn-for-lot)
       (weights (*)        
         (grade-mr-intact        fn-for-t fn-for-lot)        
-        (grade-questions-intact fn-for-lot ,ListOfTree)
+        (grade-questions-intact fn-for-lot ListOfTree)
         (grade-mr-intact        fn-for-lot fn-for-t)
         (grade-nr-intact        fn-for-lot)))    
     (grade-submitted-tests)))
@@ -101,7 +99,7 @@
     (grade-encapsulated-template-fns (fn-for-t fn-for-lot)
       (weights (*)        
         (grade-mr-intact        fn-for-t fn-for-lot)
-        (grade-questions-intact fn-for-lot ,ListOfTree)
+        (grade-questions-intact fn-for-lot ListOfTree)
         (grade-mr-intact        fn-for-lot fn-for-t)))
     (grade-tail-recursive)
     (grade-submitted-tests)))

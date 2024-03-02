@@ -1,15 +1,10 @@
 #lang racket
 
-(require spd-grader/grader)
-(require spd-grader/check-template)
-(require 2htdp/image)
-(provide grader)
+(require 2htdp/image
+         spd-grader/grader
+         spd-grader/check-template)
 
-(define ListOfImage
-  '(one-of empty
-           (compound (Image (self-ref fn-for-loe))
-                     cons cons?
-                     (first rest))))
+(provide grader)
 
 (define grader
   (lambda ()
@@ -91,7 +86,7 @@
                   (define (layout-images loi) (if (empty? loi) empty-image (first loi))))
 
                 (grade-template-origin (ListOfImage))
-                (grade-template        ,ListOfImage)
+                (grade-template         ListOfImage)
                 
                 (grade-submitted-tests)
                 (grade-additional-tests 1
@@ -117,7 +112,7 @@
                   (define (sort-images loi) (reverse loi)))
 
                 (grade-template-origin (ListOfImage))
-                (grade-template        ,ListOfImage)
+                (grade-template         ListOfImage)
                 
                 (grade-submitted-tests)
                 (grade-additional-tests 1
@@ -150,7 +145,7 @@
                   (define (insert img loi) (append loi (list img))))
 
                 (grade-template-origin (ListOfImage))
-                (grade-template         Image ,ListOfImage)
+                (grade-template         Image ListOfImage)
                 
                 (grade-submitted-tests)
                 

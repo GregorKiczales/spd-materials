@@ -5,7 +5,7 @@
 
 (provide grader)
 
-(define Spider '(compound (Number Number) make-spider spider? (spider-y spider-dy)))
+(define Spider (compound (Number Number) make-spider spider? (spider-y spider-dy)))
 
 (define grader  
   (lambda ()
@@ -33,11 +33,7 @@
       (grade-problem 1
         (weights (*)
           (grade-htdd Spider
-            (grade-dd-rules-and-template 1
-                                         (compound (Number Number)
-                                                   make-spider
-                                                   spider?
-                                                   (spider-y spider-dy))))
+            (grade-dd-rules-and-template 1 Spider))
           (grade-htdf main                
             (grade-signature (Spider -> Spider)))
 
@@ -82,7 +78,7 @@
                                       (spider-dy s))])))
               
               (grade-template-origin (Spider))
-              (grade-template        ,Spider)
+              (grade-template         Spider)
               (grade-submitted-tests)
               (grade-additional-tests 1
                 (check-expect (,tick-handler-name (make-spider   %%MID    3)) (%%tock (make-spider   %%MID    3)))
@@ -98,7 +94,7 @@
             (weights (*)
               (grade-signature (Spider -> Image))
               (grade-template-origin (Spider))
-              (grade-template        ,Spider)
+              (grade-template         Spider)
               (grade-submitted-tests)))
 
           (grade-bb-handler (on-key key-handler-name key-handler-defn)
@@ -123,11 +119,11 @@
                   s))
               
               (grade-template-origin (KeyEvent Spider))
-              (grade-template (s ke)
+              (grade-template/body (s ke)
                   (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
                         [else (... (spider-y s) (spider-dy s))]))
 
-              (grade-questions-intact key-handler-defn (s ke)
+              (grade-questions-intact/body key-handler-defn (s ke)
                   (cond [(key=? ke " ") (...)]
                         [else (...)]))
               

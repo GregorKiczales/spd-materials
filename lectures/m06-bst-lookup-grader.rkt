@@ -1,15 +1,16 @@
 #lang racket
 
 (require spd-grader/grader
+         spd-grader/check-template
          spd-grader/templates)
 
 (provide grader)
 
 (define BST
-  '(one-of false
-           (compound (Integer String (self-ref fn-for-bst) (self-ref fn-for-bst))
-                     make-node node?
-                     (node-key node-val node-l node-r))))
+  (one-of false
+          (compound (Integer String (sref BST fn-for-bst) (sref BST fn-for-bst))
+                    make-node node?
+                    (node-key node-val node-l node-r))))
 
 (define grader
   (lambda ()
@@ -77,7 +78,7 @@
                                [else (lookup (node-l t) k)])])))
 
               (grade-template-origin (BST))
-              (grade-questions-intact lookup ,BST)
+              (grade-questions-intact lookup BST)
               
               (grade-submitted-tests)
               (grade-additional-tests 1
