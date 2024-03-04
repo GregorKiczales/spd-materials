@@ -93,8 +93,9 @@
 ;;
 ;; Complete the design of the following function.
 ;;
-;; NOTE: you are going to run into a problem doing it with the use-abstract-fn
-;;       try to do that anyways so we can talk about the problem
+;; NOTE: You are going to run into a problem doing it with the use-abstract-fn
+;;       approach. Try to do that anyways so we can talk about the problem.
+
 ;;
 (@htdf courses-w-credits)
 (@signature Course Natural -> (listof Course))
@@ -111,9 +112,7 @@
 
 (@problem 2)
 ;;
-;; Design a function that takes two arguments: a Course and a Natural, in that
-;; order. If found produce the number of credits that course has. Otherwise
-;; fail.
+;; Complete the design of the following function.
 ;;
 
 (@htdf find-w-credits)
