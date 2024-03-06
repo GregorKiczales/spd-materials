@@ -98,7 +98,7 @@
 
 <p><br /><a name="Closure"></a></p>
 
-<dl><dt>Closure</dt><dd>A closure is a locally defined function, in which the body of the function uses either a parameter of the enclosing function  definition or a locally defined function or variable. The closure can be defined with local or lambda, but it must be defined inside of another function. Consider the following example:</p>
+<dl><dt>Closure</dt><dd>A closure is a function f, that is defined inside another function and/or local expression, and in which the body of f uses either a parameter of the enclosing function  definition or a locally defined function or variable. The closure itself can be defined with local or lambda. Consider the following example:</p>
     <pre>
 (define (outer x n)
   (local [(define (one x) 2)
