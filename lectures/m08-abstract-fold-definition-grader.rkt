@@ -45,26 +45,25 @@
                             "13765")))))
       
       (grade-problem 2
-        (grade-htdf fold-course
-          (grade-design-abstract-fold fold-course
+        (grade-design-abstract-fold fold-course
 
-            (@signature (Natural Natural Y -> X) (X Y -> Y) Y Course -> X)
+          (@signature (Natural Natural Y -> X) (X Y -> Y) Y Course -> X)
 
-            (#:copy-test  C110    %%C7)
-            (#:count-test C110 20 %%C7 7)
-            
-            (@template-origin Course (listof Course) encapsulated)
+          (#:copy-test  C110    %%C7)
+          (#:count-test C110 20 %%C7 7)
+          
+          (@template-origin Course (listof Course) encapsulated)
 
-            (define (fold-course c1 c2 b1 c0)
-              (local [(define (fn-for-course c)
-                        (c1 (course-number c)
-                            (course-credits c)
-                            (fn-for-loc (course-dependents c))))
-                      
-                      (define (fn-for-loc loc)
-                        (cond [(empty? loc) b1]
-                              [else
-                               (c2 (fn-for-course (first loc))
-                                   (fn-for-loc (rest loc)))]))]
-                
-                (fn-for-course c0)))))))))
+          (define (fold-course c1 c2 b1 c0)
+            (local [(define (fn-for-course c)
+                      (c1 (course-number c)
+                          (course-credits c)
+                          (fn-for-loc (course-dependents c))))
+                    
+                    (define (fn-for-loc loc)
+                      (cond [(empty? loc) b1]
+                            [else
+                             (c2 (fn-for-course (first loc))
+                                 (fn-for-loc (rest loc)))]))]
+              
+              (fn-for-course c0))))))))
