@@ -193,7 +193,7 @@ When choosing built-in abstract functions remember that:
 (@problem 6)
 (@htdf boxes)
 (@signature Natural -> Image)
-;; produce n+1 nested boxes, the smallest is quite small
+;; produce n nested boxes, the smallest is quite small
 (check-expect (boxes 0) empty-image)
 (check-expect (boxes 1) (square 1 "outline" "black"))
 (check-expect (boxes 2)
