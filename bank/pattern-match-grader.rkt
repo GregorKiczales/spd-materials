@@ -83,7 +83,7 @@
                     [(string=? (first pat) "A")                    ;(3) 
                      (and (alphabetic? (first lo1s))
                           (pattern-match? (rest pat) (rest lo1s)))]
-                    [(string=? (first pat) "N")                    ;(4)
+                    [else                                          ;(4)
                      (and (numeric? (first lo1s))
                           (pattern-match? (rest pat) (rest lo1s)))]))
             

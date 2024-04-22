@@ -34,6 +34,6 @@
                      (ensure (member 'fold-course called)
                              "must call fold-course")
                      (weights (*)
-                       (grade-submitted-tests 1 3)
+                       (grade-submitted-tests 1)
                        (grade-template-origin 1 (use-abstract-fn)))))))))))
           
