@@ -1611,19 +1611,6 @@
               "duration"       : 360,
               "difficulty"     : "Black"
           },
-
-	  {      
-              "module"         : "Search",
-              "lecture"        : "sudoku",
-              "kind"           : "Practice",
-              "setNumber"      : 4,
-              "name"           : "Programming Contest",
-              "codeFiles"      : ["programming-contest-starter.rkt","programming-contest-v1.rkt","programming-contest-solution.rkt"],
-              "description"    : "Design a program to help your team plan what problems to solve in a programming contest.",
-              "recipe"         : ["HtDF"],
-              "duration"       : 180,
-              "difficulty"     : "Black"
-          },
           
 
           {      
