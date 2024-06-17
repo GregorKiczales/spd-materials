@@ -1383,7 +1383,7 @@ Note that once we have local, this gets re-written as:
          (... (first lox)
               (skip1 (rest lox)))]))</code></pre>
 <p>The next step is to encapsulate that function in an outer function and local. As part of this step give the outer function parameter a different name than the inner function parameter. Note that if you are working with multiple mutually recursive functions they all get wrapped in a single outer function.</p>
-<pre><code>(@template (listof X) accumulator)
+<pre><code>(@template-origin (listof X) accumulator)
 
 (define (skip1 lox0)
   (local [(define (skip1 lox)
@@ -1394,7 +1394,7 @@ Note that once we have local, this gets re-written as:
     
     (skip1 lox0)))</code></pre>
 <p>Now add the accumulator parameter to the inner function. In addition, add ... or more substantial template expressions in each place that calls the inner function. During this step treat the accumulator parameter as atomic.</p>
-<pre><code>(@template (listof X) accumulator)
+<pre><code>(@template-origin (listof X) accumulator)
 
 (define (skip1 lox0)
   (local [(define (skip1 lox acc)
