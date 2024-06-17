@@ -1382,7 +1382,7 @@ Note that once we have local, this gets re-written as:
         [else
          (... (first lox)
               (skip1 (rest lox)))]))</code></pre>
-<p>The next step is to encapsulate that function in an outer function and local. As part of this step give the outer function parameter a different name than the inner function parameter. Note that if you are working with multiple mutually recursive functions they call get wrapped in a single outer function.</p>
+<p>The next step is to encapsulate that function in an outer function and local. As part of this step give the outer function parameter a different name than the inner function parameter. Note that if you are working with multiple mutually recursive functions they all get wrapped in a single outer function.</p>
 <pre><code>(@template (listof X) accumulator)
 
 (define (skip1 lox0)
