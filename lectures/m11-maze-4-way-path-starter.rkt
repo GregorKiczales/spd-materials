@@ -193,7 +193,7 @@ Do not change other helpers inside of solve.
           (define (maze-ref m p)
             (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
     
-    (solve/p (make-pos 0 0) empty)))
+    (solve/p (make-pos 0 0))))
 
 
 (@problem 2)
