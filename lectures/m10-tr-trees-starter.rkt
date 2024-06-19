@@ -157,7 +157,7 @@
 
 (@htdf all-numbers)
 
-(@signature Tree -> (listof String))
+(@signature Tree -> (listof Integer))
 ;; produce list of numbers of all nodes in the given tree
 (check-expect (all-numbers L1) (list 30))
 (check-expect (all-numbers M1) (list 20 30))
