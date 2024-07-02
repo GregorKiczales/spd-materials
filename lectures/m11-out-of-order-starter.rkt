@@ -58,7 +58,7 @@
           (define (fn-for-lonn lonn)
             (cond [(empty? lonn) (...)]
                   [else
-                   (... (first lonn)
+                   (... (fn-for-node (first lonn))
                         (fn-for-node (generate-node map (first lonn))))]))]
     
     (fn-for-? ...num0))) 
@@ -75,7 +75,7 @@
                     [else
                      (fn-for-lonn (append nexts nn-wl))])))
           
-          (define (fn-for-lonn nn-wl visited)
+          (define (fn-for-lonn nn-wl)
             (cond [(empty? nn-wl) (...)] 
                   [else
                    (fn-for-node (generate-node map (first nn-wl))
