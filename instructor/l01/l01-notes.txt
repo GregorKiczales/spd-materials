@@ -10,7 +10,7 @@ Timeline:
    4	Dr Racket
    6	numbers
    5 	exercise (most will not be setup to handin)
-   4    show handback
+   4    show handback (OR DEFER TO L02)
    8	images
    	(no exercise)
 
@@ -93,7 +93,7 @@ evaluation is left to right, inside to outside
 do step-by-step reduction of (* (+ 1 2) (/ 4 2))
 
 detailed evaluation rules are critical, need them to debug, need them to do well on exams
-they are covered in edX numbered videos
+they are covered in edX numbered videos. That kind of detail will usually not be in lecture.
 
 (sqr 9)
 (sqrt 4)   explain #i
@@ -175,6 +175,7 @@ A function call is evaluated by:
     in which each parameter is replaced by the corresponding argument
 
 At that point the function call is gone.
-  [don't say, but no stack in this model, remember we never use terms that only some students will know]
+  [don't say, but no stack or environment in this model         ]
+  [remember to never use terms that only some students will know]
 
 tell students to carefully watch edx videos, and practice w/ stepper
