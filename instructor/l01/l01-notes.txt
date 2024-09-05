@@ -46,7 +46,6 @@ based on the lecture. We don't "read the syllabus" in lecture.
 
 admin pages in links are admin material
 reference pages in links are course content reference material
-edX Lectures/Labs/ProblemSets is "the course"
 edX numbered sections are "the textbook"
     like many courses in schools that try to advance the state of the
     art, the course is ahead of the textbook - DIFFS describes that
