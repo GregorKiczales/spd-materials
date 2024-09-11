@@ -7,17 +7,10 @@
 (@cwl ???)
 
 (@problem 1)
-;; (@htdf pluralize)
-;; (@signature String -> String)
-;; ;; pluralizes str by appending "s" to the end 
+(@htdf pluralize)
+(@signature String -> String)
+;; pluralizes str by appending "s" to the end 
 
 
+(define (pluralize str) "")
 
-;(define (pluralize str)
-;  str)
-;
-;(define (pluralize str)
-;  "x")
-;
-;(define (pluralize str)
-;  "")

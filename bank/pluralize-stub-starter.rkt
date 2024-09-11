@@ -10,9 +10,9 @@
 ;; You are working on designing a function and have completed your signature
 ;; and purpose. 
 ;;
-;; Write three stubs with different bodies that are consistent with the
-;; signature and purpose below. Comment out the three stubs.
+;; Write a stub that is consistent with the signature and purpose below.
 
-;; (@htdf pluralize)
-;; (@signature String -> String)
-;; ;; pluralizes str by appending "s" to the end 
+
+(@htdf pluralize)
+(@signature String -> String)
+;; pluralizes str by appending "s" to the end 
