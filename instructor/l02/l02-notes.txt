@@ -30,7 +30,7 @@ HtDF
   core of the course, will use 100s of times
   will learn a little more about it each time
   crawl, walk... run
-  recipe pages (must read, this is the reference text)
+  recipe pages (must study carefully, this is the reference text)
   checklist (a reminder of the steps, not an understanding of them)
 
 
@@ -38,8 +38,34 @@ Present, with questions as we go
   topple
     setup recipe page (read later)
     recipe checklist on screen (it's a CHECKLIST, not explanation)
-    metadata (about the program, checkable, used by top companies)
+    annotate markup page with
+      metadata (about the program, checkable, used by top companies)
+      @signature Consume ... -> Produce
+      at least two tests
+      @template-origin source of template | gets more interesting next week
+      @template copy of template
+      
     post dev markup for review
+
+(@htdf topple)
+(@signature Image -> Image)
+;; produce image rotated by 90 degrees
+(check-expect (topple (rectangle 10 20 "solid" "red"))
+              (rectangle 20 10 "solid" "red"))
+(check-expect (topple (triangle 20 "solid" "red"))
+              (rotate 90 (triangle 20 "solid" "red")))
+
+;(define (topple img) empty-image) ;stub
+
+(@template-origin Image)
+
+(@template
+ (define (topple img)
+   (... img)))
+
+(define (topple img)
+  (rotate 90 img))
+
 
 
 class
@@ -50,6 +76,26 @@ class
   what's the boundary?
   vary both x and y
   aha there's an ambiguity - resolve and document and test
+
+(@htdf tall?)
+(@signature Image -> Boolean)
+;; produce true if image is tall (height > width)
+(check-expect (tall? (rectangle 10 20 "outline" "black")) true)
+(check-expect (tall? (rectangle 10  9 "outline" "black")) false)
+(check-expect (tall? (rectangle 10 10 "outline" "black")) false)
+(check-expect (tall? (rectangle 10 11 "outline" "black")) true)
+(check-expect (tall? (rectangle 30 20 "outline" "black")) false)
+
+;(define (tall? i) false) ;stub
+
+(@template-origin Image)
+
+(@template
+ (define (tall? i)
+   (... i)))
+
+(define (tall? i)
+  (> (image-height i) (image-width i)))
 
 
 at home
