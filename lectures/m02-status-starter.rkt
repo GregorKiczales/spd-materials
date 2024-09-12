@@ -59,3 +59,18 @@
 
 ;; redesign the can-vote function from above:
 
+
+
+
+
+
+
+
+
+;; if the template is a cond, from a one-of type you MUST NOT:
+;;  - delete the cond
+;;  - reorder the QA pairs
+;;  - edit the questions
+;;  - delete any QA pair
+;;  - add any QA pair
+;; basically just edit the ...
