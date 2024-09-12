@@ -64,6 +64,16 @@
    (cond [(string=? s "minor") (...)]
          [(string=? s "adult") (...)])))
 
+
+;; if the template is a cond, from a one-of type you MUST NOT:
+;;  - delete the cond
+;;  - reorder the QA pairs
+;;  - edit the questions
+;;  - delete any QA pair
+;;  - add any QA pair
+;; basically just edit the ...
+
+
 (define (can-vote? s)
   (cond [(string=? s "minor") false]
         [(string=? s "adult") true]))
