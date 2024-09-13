@@ -13,7 +13,7 @@
 
         DD is in starter [talk through it]  (was not in starter last term)
 
-        can-vote? function redesign  [interactive]
+        can-vote? function redesign  [fast interactive]
 	  - type comment drives check-expects
 	  - templating
 	     first origin
@@ -21,13 +21,7 @@
 	     then copy out to top-level
 	  - focus on the ...
 
-;; if the template is a cond, from a one-of type you MUST NOT:
-;;  - delete the cond
-;;  - reorder the QA pairs
-;;  - edit the questions
-;;  - delete any QA pair
-;;  - add any QA pair
-;; basically just edit the ...
+
 
 
 2 structure from info slide
@@ -79,6 +73,22 @@ Be clear about what information data represents.
    (cond [(string=? s "minor") (...)]
          [(string=? s "adult") (...)])))
 
+;; if the template is a cond, from a one-of type you MUST NOT:
+;;  - delete the cond
+;;  - reorder the QA pairs
+;;  - edit the questions
+;;  - delete any QA pair
+;;  - add any QA pair
+;; basically just edit the ...
+
+the template rules come from recursive type theory, they
+produce code that is type safe, which we can't explain fully
+in 110, but we will see later that it is important
+
+working systematically means taking advantage of theory to
+make code simpler and better.
+
+
 (define (can-vote? s)
   (cond [(string=? s "minor") false]
         [(string=? s "adult") true]))
@@ -107,28 +117,30 @@ Be clear about what information data represents.
                     atomic-distinct      ;"T"
                     atomic-distinct)     ;"F"
 
-;; initial template, w/ all guarding
-;(define (fn-for-grade-standing gs)
-;  (cond;[                  (<= 0 gs 100)  (... gs)] ;NO!
-;       ;[(and (number? gs) (<= 0 gs 100)) (... gs)] ;OK, not needed this term
-;        [     (number? gs)                (... gs)] ;can be simpler like this
-;        [(and (string? gs) (string=? gs "H")) (...)]
-;        [(and (string? gs) (string=? gs "P")) (...)]
-;        [(and (string? gs) (string=? gs "T")) (...)]
-;        [else (...)])) 
+DO IT WITH GUARDING ONLY
 
-;; with guard simplification
+;; initial template, w/ all guarding
 (define (fn-for-grade-standing gs)
-  (cond [(number? gs) (... gs)] 
-        [(string=? gs "H") (...)]
-        [(string=? gs "P") (...)]
-        [(string=? gs "F") (...)]
-        [else (...)]))            ;template rules page asks for else as the
-;                                 ;last question in an itemization.  You
-;                                 ;might be tempted to use (string=? gs "F")
-;                                 ;in this case since the last four subclasses
-;                                 ;of the itemization look like they form
-;                                 ;an enumeration
+  (cond;[                  (<= 0 gs 100)  (... gs)] ;NO!
+       ;[(and (number? gs) (<= 0 gs 100)) (... gs)] ;OK, not needed this term
+        [     (number? gs)                (... gs)] ;can be simpler like this
+        [(and (string? gs) (string=? gs "H")) (...)]
+        [(and (string? gs) (string=? gs "P")) (...)]
+        [(and (string? gs) (string=? gs "T")) (...)]
+        [else (...)])) 
+
+;; with guard simplification, only in post lecture questions
+(define (fn-for-grade-standing gs)
+;  (cond [(number? gs) (... gs)] 
+;        [(string=? gs "H") (...)]
+;        [(string=? gs "P") (...)]
+;        [(string=? gs "F") (...)]
+;        [else (...)]))            ;template rules page asks for else as the
+;                                  ;last question in an itemization.  You
+;                                  ;might be tempted to use (string=? gs "F")
+;                                  ;in this case since the last four subclasses
+;                                  ;of the itemization look like they form
+;                                  ;an enumeration
 
 
 (@htdf excellent?)

@@ -29,7 +29,7 @@
               [(string=? gs "F") "F"]
               [else "T"]))
       
-      (weights (1 0)
+      (weights (*)
         (grade-problem 1
           (weights (*)
             

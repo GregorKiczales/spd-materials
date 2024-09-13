@@ -31,29 +31,36 @@
 ; In a mixed-data itemization, you must guard any predicates
 ; that can be called with a different kind of data. This means
 ; you do not need to guard the last kind of data in the one of.
+; So the simplest thing to do in this case is to guard all the
+; calls to string=? as follows:
+;
+(define (fn-for-grade-standing gs)
+  (cond [(number? gs) (... gs)] 
+        [(and (string? gs) (string=? gs "H")) (...)]
+        [(and (string? gs) (string=? gs "P")) (...)]
+        [(and (string? gs) (string=? gs "F")) (...)]
+        [else (...)]))
+
+;
+; We will accept dd templates like that with FULL GUARDING
+; because they are safe. They will work on any valid GradeStanding.
+;
+; BUT...
 ;
 ; In this case, the string=? do NOT NEED TO BE GUARDED because
 ; the four strings ("H" "P" "F" "T") come at the end of the
 ; one of.  There is no other type of data afterwards (like a
-; boolean, or an image or something).
-;
-(define (fn-for-grade-standing gs)
-  (cond [(number? gs) (... gs)] 
-        [(string=? gs "H") (...)]
-        [(string=? gs "P") (...)]
-        [(string=? gs "F") (...)]
-        [else (...)]))
-
-;
-; If you want to do all the guarding, even though it isn't needed,
-; then it would look like this:
+; boolean, or an image or something). So the guards could be 
+; removed to get this template. We say this template is SIMPLIFIED.
+; You are free to simplify templates but it is not required.
 ;
 ;(define (fn-for-grade-standing gs)
-;  (cond [(number? gs)      (... gs)]
-;        [(and (string? gs) (string=? gs "H")) (...)]
-;        [(and (string? gs) (string=? gs "P")) (...)]
-;        [else              (...)]
-;
+;  (cond [(number? gs) (... gs)] 
+;        [(string=? gs "H") (...)]
+;        [(string=? gs "P") (...)]
+;        [(string=? gs "F") (...)]
+;        [else (...)]))
+
 
 (@htdf excellent?)
 (@signature GradeStanding -> Boolean)
@@ -75,11 +82,11 @@
 
 (@template
  (define (excellent? gs)
-   (cond [(number? gs) (... gs)] 
-         [(string=? gs "H") (...)]
-         [(string=? gs "P") (...)]
-         [(string=? gs "F") (...)]
-         [else (...)])))
+  (cond [(number? gs) (... gs)] 
+        [(and (string? gs) (string=? gs "H")) (...)]
+        [(and (string? gs) (string=? gs "P")) (...)]
+        [(and (string? gs) (string=? gs "F")) (...)]
+        [else (...)])))
 
 ;;
 ;; when working with a template that has a cond from a one-of type
@@ -91,11 +98,12 @@
 ;;  - edit the questions
 ;; you just edit the answers
 ;;
+
 (define (excellent? gs)
   (cond [(number? gs) (>= gs 90)] 
-        [(string=? gs "H") false]
-        [(string=? gs "P") false]
-        [(string=? gs "F") false]
+        [(and (string? gs) (string=? gs "H")) false]
+        [(and (string? gs) (string=? gs "P")) false]
+        [(and (string? gs) (string=? gs "F")) false]
         [else false]))
 
 ;; Here's a good example of the danger of editing the cond questions
@@ -103,13 +111,13 @@
 ;; the code is no longer type safe -- that means it can call primitive
 ;; operations on the wrong kind of data.
 ;(define (excellent? gs)
-;  (cond [(and (number? gs) (>= gs 90)) true]
-;        [(string=? gs "H") false]
-;        [(string=? gs "P") false]
-;        [(string=? gs "F") false]
+;  (cond [(and (number? gs) (>= gs 90)) true] 
+;        [(and (string? gs) (string=? gs "H")) false]
+;        [(and (string? gs) (string=? gs "P")) false]
+;        [(and (string? gs) (string=? gs "F")) false]
 ;        [else false]))
 
-;; This runs properly but is not allowed.
+;; This runs properly but is also not allowed.
 ;(define (excellent? gs)
 ;  (cond [(number? gs) (>= gs 90)]
 ;        [else false]))
@@ -137,14 +145,15 @@
 (@template
  (define (grade->string gs)
    (cond [(number? gs) (... gs)] 
-         [(string=? gs "H") (...)]
-         [(string=? gs "P") (...)]
-         [(string=? gs "F") (...)]
+         [(and (string? gs) (string=? gs "H")) (...)]
+         [(and (string? gs) (string=? gs "P")) (...)]
+         [(and (string? gs) (string=? gs "F")) (...)]
          [else (...)]))) 
+
 
 (define (grade->string gs)
   (cond [(number? gs) (string-append (number->string gs) "%")] 
-        [(string=? gs "H") "H"]
-        [(string=? gs "P") "P"]
-        [(string=? gs "F") "F"]
+        [(and (string? gs) (string=? gs "H")) "H"]
+        [(and (string? gs) (string=? gs "P")) "P"]
+        [(and (string? gs) (string=? gs "F")) "F"]
         [else "T"]))
