@@ -73,7 +73,7 @@
 
 <p><br /><a name="Argument"></a></p>
 
-<dl><dt>Argument</dt><dd>An argument is a value that passed to a function or a primitive operation when it is called. The arguments are the values that result from evaluating the operands in the function or primitive call. See <a href="#Parameter" title="Link: #Parameter">parameter</a> for a discussion of the differences between operands, arguments and parameters.</dd></dl>
+<dl><dt>Argument</dt><dd>An argument is a value that passed to a function when it is called. The arguments are the values that result from evaluating the operands in the function call. See <a href="#Parameter" title="Link: #Parameter">parameter</a> for a discussion of the differences between operands, arguments and parameters.</dd></dl>
 
 
 <p><br /><a name="Atomic Data"></a></p>
@@ -234,7 +234,7 @@
 
 <p><br /><a name="Operand"></a></p>
 
-<dl><dt>Operand</dt><dd>The expressions following the function name in a function call expression (or the operator name in a primitive call expression) are called operands. [See <a href="#Parameter">Parameter</a>.]</dd></dl>
+<dl><dt>Operand</dt><dd>The expressions following the function name in a function call expression are called operands. [See <a href="#Parameter">Parameter</a>.]</dd></dl>
 
 
 <p><br /><a name="Operator"></a></p>
@@ -247,8 +247,8 @@
 <dl><dt>Parameter</dt><dd>A parameter is an identifier (or name) used in a function declaration that represents the changing value, or the variable. The parameter(s) appear in parentheses just after the function name. Within the body of the function the parameters stand for the arguments each time the function is called. <br />
 <pre>(define (bulb c)                  ;In this function definition, c
   (color 40 "solid" c))           ;is the only parameter of the function.
-                                  ;The body of the function is itself a primitive call
-                                  ;to the primitive operator color. The call has 3 operands.
+                                  ;The body of the function is itself a function call to
+                                  ;the primitive function color. The call has 3 operands.
   
 (bulb (string-append "r" "ed"))   ;In this function call expression 
                                   ;(string-append "r" "ed") is the operand
