@@ -1,4 +1,21 @@
 
+Ada Lovelace Day? (second Tuesday in October)
+
+People make a lot of the first programmer being a woman.  That's insulting - why couldn't a woman be the first programmer.
+
+The real thing that's amazing is when it happened.
+
+Turing worked in the late 30s to his death in 54
+Shannon lived much longer, so 30s to 2001.
+They were brilliant, no doubt.
+
+But Babbage started working on his ideas a hundred years earlier.  It
+was too early to build the real machine and have it work, so his work
+on it was on paper, and Lovelaces ideas about programming it were
+theoretical.  Brass gears are not an easy way to build a computer.
+
+But its incredible how far ahead they were.
+
 
 
 5  MT1 results

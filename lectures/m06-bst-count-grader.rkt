@@ -43,15 +43,14 @@
                 (or (node? t) (false? t))
                 (equal? r (%%count t)))
 
-              (grade-tests-argument-thoroughness (bst)
-                (false? bst)
-                (and (not (false? bst))
-                     (false? (node-l bst))
-                     (false? (node-r bst)))
-                (and (not (false? bst))
-                     (>= (%%height (node-l bst)) 2))
-                (and (not (false? bst))
-                     (>= (%%height (node-r bst)) 2)))
+              (grade-argument-thoroughness
+                  (per-args (bst)
+                    (false? bst)
+                    (and (not (false? bst))
+                         (false? (node-l bst))
+                         (false? (node-r bst)))
+                    (>= (%%height (node-l bst)) 2)
+                    (>= (%%height (node-r bst)) 2)))
             
               (grade-thoroughness-by-faulty-functions 1
                 (define (count t)

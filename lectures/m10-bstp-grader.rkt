@@ -49,13 +49,15 @@
               (%%bt? bt)
               (equal? r (%%bst? bt)))
 
-            (grade-tests-argument-thoroughness (bt)
-              (and (not (false? bt)) (not (false? (node-l bt))))
-              (and (not (false? bt)) (not (false? (node-r bt))))
-              (>= (%%height (node-l bt)) 1)
-              (>= (%%height (node-r bt)) 1)
-              (%%bst? bt)
-              (not (%%bst? bt)))
+
+            (grade-argument-thoroughness
+                (per-args (bst)
+                  (false? bst)
+                  (and (not (false? bst))
+                       (false? (node-l bst))
+                       (false? (node-r bst)))
+                  (>= (%%height (node-l bst)) 2)
+                  (>= (%%height (node-r bst)) 2)))
 
             (grade-template-origin (BinaryTree accumulator))
 

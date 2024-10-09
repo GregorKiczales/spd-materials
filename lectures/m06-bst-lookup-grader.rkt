@@ -40,21 +40,22 @@
                 (integer? k)
                 (equal? r (%%lookup t k)))
 
-              (grade-tests-argument-thoroughness (t int)
+              (grade-argument-thoroughness
+                  (per-args (t int)
 
-                (and (not (false? t)) (false? (node-l t)) (false? (node-r t)))
+                    (false? t)
 
-                (and (not (false? t))
-                     (>= (%%height (node-l t)) 2)
-                     (or (not (false? (%%lookup (node-r (node-l t)) int)))
-                         (not (false? (%%lookup (node-l (node-l t)) int)))))
+                    (and (not (false? t)) (false? (node-l t)) (false? (node-r t)))
 
-                (and (not (false? t))
-                     (>= (%%height (node-r t)) 2)
-                     (or (not (false? (%%lookup (node-r (node-r t)) int)))
-                         (not (false? (%%lookup (node-l (node-r t)) int)))))
-                
-                (and (not (false? t)) (false? (%%lookup t int))))
+                    (and (>= (%%height (node-l t)) 2)
+                         (or (not (false? (%%lookup (node-r (node-l t)) int)))
+                             (not (false? (%%lookup (node-l (node-l t)) int)))))
+
+                    (and (>= (%%height (node-r t)) 2)
+                         (or (not (false? (%%lookup (node-r (node-r t)) int)))
+                             (not (false? (%%lookup (node-l (node-r t)) int)))))
+                    
+                    (and (not (false? t)) (false? (%%lookup t int)))))
 
               (grade-thoroughness-by-faulty-functions 1
 

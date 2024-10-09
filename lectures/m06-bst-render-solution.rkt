@@ -92,6 +92,10 @@ for example.
               (above (text "27:wit" TEXT-SIZE TEXT-COLOR)
                      (beside (render-bst (make-node 14 "olp" false false))
                              (render-bst false))))
+(check-expect (render-bst BST3)
+              (above (text "3:ilk" TEXT-SIZE TEXT-COLOR)
+                     (beside (render-bst BST1)
+                             (render-bst BST4))))
 
 (@template-origin BST)
 
