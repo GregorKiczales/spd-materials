@@ -27,6 +27,13 @@
                             TEXT-COLOR)
                       (beside (%%render-bst (node-l t))
                               (%%render-bst (node-r t))))]))
+
+      (define (%%height t)
+        (cond [(false? t) 0]
+              [else
+               (max (add1 (%%height (node-l t)))
+                    (add1 (%%height (node-r t))))]))
+      
       (weights (*)
         (grade-problem 1
           (grade-htdf render-bst
@@ -37,10 +44,14 @@
                 (or (false? t) (node? t))
                 (equal? r (%%render-bst t)))
 
-              (grade-tests-argument-thoroughness (t)
-                (false? t)
-                (and (not (false? t)) (false? (node-l t)))
-                (and (not (false? t)) (false? (node-r t))))
+              (grade-argument-thoroughness
+                  (per-args (bst)
+                    (false? bst)
+                    (and (not (false? bst))
+                         (false? (node-l bst))
+                         (false? (node-r bst)))
+                    (>= (%%height (node-l bst)) 2)
+                    (>= (%%height (node-r bst)) 2)))
               
               (grade-thoroughness-by-faulty-functions 1
                 (define (render-bst t)

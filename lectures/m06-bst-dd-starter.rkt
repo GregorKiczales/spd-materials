@@ -3,7 +3,6 @@
 #reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m06-bst-dd-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require 2htdp/image)
 (require spd/tags)
-;; bst-starter.rkt
 
 (@assignment lectures/m06-bst-dd)
 
