@@ -1,12 +1,23 @@
 
 
-Ada Lovelace Day? (October)
+Ada Lovelace Day? (second Tuesday in October)
 
 exam clicker...
 
 Do 2 or three arrows: fn-for-cat, ListOfCat, Cat
 End up with 2 pairs of colored arrows
 
+One of the things we learn in university is how to look at the same
+situation from different perspectives. The ability to do that calmy
+and learn from each perspective is fundamental to achieving higher
+education. That's definitely true in science and engineering.
+
+Consider building images like this.  There's lots of ways to look at
+it, but one perspective is to say we are trying to build an ARBITRARY
+number of nested boxes... which leads us to saying ok, let's use a
+well-formed self-referential data definition for Natural, that should
+set us up for building something of size n for any arbitrary value of
+n.
 
 Complete boxes quickly.
  - show examples, recursive structure of examples
@@ -169,6 +180,6 @@ go to v3, has layout- done and wish-list for sort
    (... img1 img2)))
 
 (define (larger? img1 img2)   
-	  (> (* (image-width img1) (image-height img1)) 
+  (> (* (image-width img1) (image-height img1)) 
      (* (image-width img2) (image-height img2))))
   
