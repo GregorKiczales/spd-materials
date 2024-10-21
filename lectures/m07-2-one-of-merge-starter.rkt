@@ -12,7 +12,10 @@
 #|
 Design a function that consumes two lists of numbers. Each list
 is already sorted in increasing order. The function should produce
-the merged list sorted in increasing order.
+the merged list sorted in increasing order. There can be duplicate
+elements in each list and between the lists. All occurrences of a
+number should appear in the result.
+
 Show the cross product of type comments table, the simplification,
 and the correspondence between table cells and cond cases.
 
@@ -35,5 +38,11 @@ For example:
 (define LON1 empty)
 (define LONA (list 2 3 5))
 (define LONB (list 1 4 6))
+
+(define (fn-for-lon lon)
+  (cond [(empty? lon) (...)]
+        [else
+         (... (first lon)
+              (fn-for-lon (rest lon)))]))
 
 ;; Function:

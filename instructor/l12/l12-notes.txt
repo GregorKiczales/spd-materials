@@ -20,6 +20,7 @@
 
 -25 find-region                    [class]
     using encapsulated templates
+    new try-catch template
 
 -15 discuss on ipad
     do not rename inner functions
@@ -64,11 +65,12 @@ work backward through the steps
 (@template-origin encapsulated Region ListOfRegion)
 
 (define (all-labels r)
-  (local [(define (all-labels--region r)
+  (local [(@template-origin Region)
+          (define (all-labels--region r)
             (cond [(leaf? r) (list (leaf-label r))]
                   [else      (all-labels--lor (inner-subs r))]))
 
-
+          (@template-origin ListOfRegion)
           (define (all-labels--lor lor)
             (cond [(empty? lor) empty]
                   [else
@@ -93,14 +95,15 @@ work backward through the steps
 (@template-origin Region ListOfRegion encapsulated)
 
 (define (all-with-color c r)
-  (local [(define (all-with-color--region c r)
+  (local [(@template-origin Region)
+          (define (all-with-color--region c r)
             (cond [(leaf? r)
                    (if (string=? (leaf-color r) c) (list r) empty)]
                   [else
                    (if (string=? (inner-color r) c)  
                        (cons r (all-with-color--lor c (inner-subs r)))
                        (all-with-color--lor c (inner-subs r)))]))
-
+          (@template-origin ListOfRegion)
           (define (all-with-color--lor c lor)
             (cond [(empty? lor) empty]
                   [else               

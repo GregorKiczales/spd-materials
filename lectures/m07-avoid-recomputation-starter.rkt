@@ -8,7 +8,6 @@
 (@cwl ???) ;replace ??? with your cwl
 
 (@problem 1)
-;; render-bst-w-lines-faster-starter.rkt
 
 
 

@@ -1280,7 +1280,7 @@
               "module"         : "Local",
               "lecture"        : "eval",
               "kind"           : "Practice",
-              "setNumber"      : 4,
+              "setNumber"      : 5,
               "name"           : "Evaluate local 3",
               "codeFiles"      : ["evaluate-local-3-starter.rkt",
 				  "evaluate-local-3-solution.rkt"],
@@ -1293,7 +1293,7 @@
               "module"         : "Local",
               "lecture"        : "encap",
               "kind"           : "Practice",
-              "setNumber"      : 5,
+              "setNumber"      : 6,
               "name"           : "Encapsulate total area",
               "codeFiles"      : ["encapsulate-total-area-starter.rkt",
 				  "encapsulate-total-area-solution.rkt"],
@@ -1302,21 +1302,6 @@
               "duration"       : 25,
               "difficulty"     : "Green"
           },
-          {      
-              "module"         : "Local",
-              "lecture"        : "encap, avoid-recomp",
-              "kind"           : "Practice",
-              "setNumber"      : 6,
-              "name"           : "Championship Bracket Improved",
-              "codeFiles"      : ["championship-bracket-improved-starter.rkt",
-				  "championship-bracket-improved-solution.rkt"],
-              "description"    : "Improve a function that determines which team knocked a given team out of the tournament.",
-              "recipe"         : ["HtDF"],
-              "duration"       : 30,
-              "difficulty"     : "Blue"
-          },
-
-
 
 
           {      

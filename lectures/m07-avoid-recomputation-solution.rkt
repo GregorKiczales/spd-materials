@@ -4,13 +4,12 @@
 (require 2htdp/image)
 (require spd/tags)
 (@assignment lectures/m07-avoid-recomputation)
-;(@cwl )
+
+
+
 (@problem 1)
 
-;; render-bst-w-lines-faster-solution.rkt
 
-
-#| PROBLEM STATEMENT IS AT THE END OF THIS FILE. |#
 
 ;; Constants
 

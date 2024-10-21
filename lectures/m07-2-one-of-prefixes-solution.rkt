@@ -36,6 +36,12 @@ save space later we are calling it LOS instead of ListOfString.
 (define LOS1 empty)
 (define LOS2 (cons "a" (cons "b" empty)))
 
+(define (fn-for-los los)
+  (cond [(empty? los) (...)]
+        [else
+         (... (first los)
+              (fn-for-los (rest los)))]))
+
 ;; Function:
 
 (@htdf prefix=?)
