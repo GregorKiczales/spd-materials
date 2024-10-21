@@ -34,6 +34,12 @@ save space later we are calling it LON instead of ListOfNumber
 (define LONA (list 2 3 5))
 (define LONB (list 1 4 6))
 
+(define (fn-for-lon lon)
+  (cond [(empty? lon) (...)]
+        [else
+         (... (first lon)
+              (fn-for-lon (rest lon)))]))
+
 ;; Function:
 
 (@htdf merge)

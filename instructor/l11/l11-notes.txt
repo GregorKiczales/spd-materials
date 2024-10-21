@@ -4,12 +4,12 @@ TIMELINE
    what type definitions do
 
 05 prefix=? [present]
-
-   do table in Dr. R, have copy ready to mark up in tablet
-
+   show syntax of table slide
+   do table in Dr. R, 
+   use filled in table slide for markup
 
 merge [class]
- - interruped for empty->l2 simplification
+ - interrupt for empty->l2 simplification
  do table in Dr R
 
 
@@ -37,6 +37,10 @@ Grounded in theory and research.
 Little look today at some of the kinds of things this enables in the future.
 
 Just banging-on-the-keyboard vs. engineering and science.
+
+semi-automatic code generation has always been the future of SD
+with more/less automatic in waves
+ LLMs -> "generative" -> actually higher-level > higher-level > assembly > machine code >
 
 
 ** Setup
@@ -122,6 +126,46 @@ await you in other courses, grad school, and/or industry.
 
 cond questions come from type comments; answers are expressions
 
+
+(@htdf merge)
+(@signature LON LON -> LON)
+;; merge two lists of sorted numbers into ascending order; preserves duplicates
+;; CONSTRAINT: both lists must be already sorted in ascending order
+(check-expect (merge empty empty) empty)
+(check-expect (merge empty (list 2 3 5)) (list 2 3 5))
+(check-expect (merge (list 1 4 6) empty) (list 1 4 6))
+(check-expect (merge (list 1 4 6) (list 2 3 5)) (list 1 2 3 4 5 6))
+(check-expect (merge (list 2 3 5) (list 1 4 6)) (list 1 2 3 4 5 6))
+(check-expect (merge (list 1 2 3) (list 4 5 6)) (list 1 2 3 4 5 6))
+(check-expect (merge (list 1 2 3) (list 1 2 3)) (list 1 1 2 2 3 3))
+
+#|
+l2                empty                   (cons N LON)  
+l1
+
+empty             l2 (was empty) [1]      l2                               [1]
+
+(cons N LON)      l1             [2]      (if (< (first l1) (first l2))    [3]
+                                              (cons (first l1)
+                                                    (merge (rest l1) l2))
+                                              (cons (first l2)
+                                                    (merge l1 (rest l2))))
+|#
+
+(@template-origin 2-one-of)
+
+(define (merge l1 l2)  
+  (cond [(empty? l1) l2]               ;[1]
+        [(empty? l2) l1]               ;[2]
+        [else                          ;[3]
+         (if (< (first l1) (first l2))
+             (cons (first l1)
+                   (merge (rest l1) l2))
+             (cons (first l2)        
+                   (merge l1 (rest l2))))]))
+
+
+
 leave has-path? mostly for home, but at least establish it will be a 2x3 table
 
 
@@ -173,3 +217,5 @@ empty                 false  [1]       true                      [2]
         [(empty? p)  true]                                            ;[2]
         [(string=? (first p) "L") (has-path? (node-l bt) (rest p))]   ;[3]
         [else                     (has-path? (node-r bt) (rest p))])) ;[4]
+
+

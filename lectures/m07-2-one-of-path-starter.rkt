@@ -30,6 +30,14 @@
                                   (make-node 3 "c" false false))
                        (make-node 5 "e" false false)))
 
+(define (fn-for-bt bt)
+  (cond [(false? bt) (...)]
+        [else
+         (... (bt-k bt)
+              (bt-v bt)
+              (fn-for-bt (bt-l bt))
+              (fn-for-bt (bt-r bt)))]))
+
 (@htdd Path)
 ;; Path is one of:
 ;; - empty
@@ -45,6 +53,11 @@
 (define P2 (list "L"))
 (define P3 (list "R"))
 (define P4 (list "L" "R"))
+
+(define (fn-for-path p)
+  (cond [(empty? p) (...)]
+        [(string=? (first p) "L") (... (fn-for-path (rest p)))]
+        [else                     (... (fn-for-path (rest p)))]))
 
 
 #|

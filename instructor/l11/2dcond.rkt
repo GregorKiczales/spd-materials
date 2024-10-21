@@ -1,13 +1,14 @@
-#lang unstable/2d racket
+#lang 2d racket
 
-(require unstable/2d/cond)
+(require 2d/cond)
 (require test-engine/racket-tests)
+(require spd/tags)
 
 ;; =================================================================
 ;; =================================================================
 ;; Data definitions:
 
-
+(@htdd BinaryTree)
 (define-struct node (k v l r))
 ;; BinaryTree is one of:
 ;;  - false
@@ -22,7 +23,7 @@
                                   (make-node 3 "c" false false))
                        (make-node 7 "g" false false)))
 
-#;
+#; ;lang 2d doesn't allow ...
 (define (fn-for-bt bt)
   (cond [(false? bt) (...)]
         [else
@@ -31,7 +32,7 @@
               (fn-for-bt (node-l bt))
               (fn-for-bt (node-r bt)))]))
 
-
+(@htdd Path)
 ;; Path is one of:
 ;; - empty
 ;; - (cons "L" Path)
@@ -44,17 +45,29 @@
 (define P1 empty)
 (define P2 (list "L" "R"))
 
-#;
+#; ;lang 2d doesn't allow ...
 (define (fn-for-path p)
   (cond [(empty? p) (...)]
         [(string=? (first p) "L") (... (fn-for-path (rest p)))]
         [(string=? (first p) "R") (... (fn-for-path (rest p)))]))
 
 
-
-;; BinaryTree Path -> Boolean
+(@htdf has-path?)
+(@signature BinaryTree Path -> Boolean)
 ;; determine whether bt has the path p.
- 
+(check-expect (has-path? false empty)  false)
+(check-expect (has-path? false (cons "L" empty)) false)
+(check-expect (has-path? false (cons "L" (cons "R" empty))) false)
+(check-expect (has-path? false (cons "R" empty)) false)
+(check-expect (has-path? BT3  empty) true)
+(check-expect (has-path? BT2  empty) true)
+(check-expect (has-path? BT3 (cons "L" empty)) true)
+(check-expect (has-path? BT3 (cons "L" empty)) true)
+(check-expect (has-path? BT2 (cons "R" empty)) false)
+(check-expect (has-path? BT3 (cons "L" (cons "R" empty))) true)
+(check-expect (has-path? BT2 (cons "L" (cons "R" empty))) false)
+
+;(define (has-path? bt p) false) ; stub
 (define (has-path? bt p)
  #2dcond
  ╔════════════════════╦════════════════════╦══════════════════════════════════╗
@@ -79,21 +92,6 @@
  ║                    ║                    ║                                  ║
  ╚════════════════════╩════════════════════╩══════════════════════════════════╝
 )
-
-(check-expect (has-path? false empty)  false)
-(check-expect (has-path? false (cons "L" empty)) false)
-(check-expect (has-path? false (cons "L" (cons "R" empty))) false)
-(check-expect (has-path? false (cons "R" empty)) false)
-(check-expect (has-path? BT3  empty) true)
-(check-expect (has-path? BT2  empty) true)
-(check-expect (has-path? BT3 (cons "L" empty)) true)
-(check-expect (has-path? BT3 (cons "L" empty)) true)
-(check-expect (has-path? BT2 (cons "R" empty)) false)
-(check-expect (has-path? BT3 (cons "L" (cons "R" empty))) true)
-(check-expect (has-path? BT2 (cons "L" (cons "R" empty))) false)
-
-;(define (has-path? bt p) false) ; stub
-
 #;
 (define (has-path? bt p)
   (cond [(false? bt) false]

@@ -2,9 +2,7 @@
 
 instructors/lxx folder copied to ipad, lxx-pad.pdf tested
 
-clickers/lxx-clickers.pdf copied to ipad, tested
-
-starters downloaded
+clickers/lxx-clickers.pdf on ipad or laptop, tested
 
 
 browser window setup with tabs for:
@@ -13,6 +11,7 @@ browser window setup with tabs for:
 
 Dr. R open, 24pt font
   starters open in it
+  blank tab open
   
 
 Quicktime open, showing pad
