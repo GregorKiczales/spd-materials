@@ -267,7 +267,7 @@ true              ;so entire or produces true</pre>
 ;; produces (list (f 0) ... (f (- n 1)))
 (define (build-list n f) ...)
 
-(@signature (X -&gt; boolean) (listof X) -&gt; (listof X))
+(@signature (X -&gt; Boolean) (listof X) -&gt; (listof X))
 ;; produce a list from all those items on lox for which p holds
 (define (filter p lox) ...)
 
@@ -276,11 +276,11 @@ true              ;so entire or produces true</pre>
 ;; that is, (map f (list x-1 ... x-n)) = (list (f x-1) ... (f x-n))
 (define (map f lox) ...)
 
-(@signature (X -&gt; boolean) (listof X) -&gt; Boolean)
+(@signature (X -&gt; Boolean) (listof X) -&gt; Boolean)
 ;; produce true if p produces true for every element of lox
 (define (andmap p lox) ...)
 
-(@signature (X -&gt; boolean) (listof X) -&gt; Boolean)
+(@signature (X -&gt; Boolean) (listof X) -&gt; Boolean)
 ;; produce true if p produces true for some element of lox
 (define (ormap p lox) ...)
 
