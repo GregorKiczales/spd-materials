@@ -15,6 +15,8 @@ from-examples-starter
 
 problem 1 - extract andmap2 with massaging [present]
 
+CLICKERS
+
 problem 2 - students complete andmap2 later (annotate starter) 
 
 problem 3 - complete filter2, given fn definition, learn type inference [present, signature interactive]
@@ -41,13 +43,15 @@ explain build-list [present]
 
 massage all-greater to make part of its body match all-positive
 
+first do it in DrR then
+
 use highlighting on pad to show what is matching / different
 
 (define (all-greater? lon x)
   (cond [(empty? lon) true] 
         [else	  
-         (and (> (first lon) x)                 ;try to make this one arg fn
-               (all-greater? (rest lon) x))]))) ;ignore recursive call
+         (and (> (first lon) x)                ;try to make this one arg fn
+              (all-greater? (rest lon) x))]))) ;ignore recursive call
 
 (define (all-greater? lon x)
   (local [(define (>x? n) (> n x))]
