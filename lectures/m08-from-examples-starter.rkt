@@ -221,7 +221,7 @@ purpose and tests.
 (define (squares lon) (map2 sqr lon))
 
 (@htdf square-roots)
-(@signature (listof Number) ->(listof Number))
+(@signature (listof Number) -> (listof Number))
 ;; produce list of sqrt of every number in lon
 (check-expect (square-roots empty) empty)
 (check-expect (square-roots (list 9 16)) (list 3 4))
@@ -230,8 +230,8 @@ purpose and tests.
 
 
 (@htdf map2)
-;; given fn and (list n0 n1 ...) produce (list (fn n0) (fn n1) ...)
 ;; <SIGNATURE IS MISSING>
+;; given fn and (list n0 n1 ...) produce (list (fn n0) (fn n1) ...)
 (check-expect (map2 sqr empty) empty)
 (check-expect (map2 sqr (list 2 4)) (list 4 16))
 (check-expect (map2 sqrt (list 16 9)) (list 4 3))
