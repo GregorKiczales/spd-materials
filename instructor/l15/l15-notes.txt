@@ -15,16 +15,16 @@ lambda [present]
 
 -20:00 show cantor picture
        design cantor
--35:00 take over cantor, paste parts in and discuss
+-15:00 take over cantor, paste parts in and discuss
 
 
 
 Intro -
 
-done learning SR w/ NR - will move on to genrec
-will continue to use SR all the time
+done learning NR - will move on to genrec
+will continue to use NR all the time
 
-brief difference between sr (natural recursion) and genrec
+brief difference between  natural recursion (SR) and genrec
 
 
 setup qsort by walking through picture
@@ -70,6 +70,15 @@ interrupt to setup that it's two filters
 
 (@template-origin genrec use-abstract-fn)
 
+What's the trivial test? Trivial result?
+
+Is there just one recursive call? ...
+
+call this the pivot (p)
+
+what's the argument to this recursive call?   (filter <p? (wish))
+what's the argument to this recursive call?   (filter >p? (wish))
+
 
 (define (qsort lon)
   ;; Base case: empty
@@ -81,7 +90,7 @@ interrupt to setup that it's two filters
                  (define (<p? x) (< x p))    
                  (define (>p? x) (> x p))]
 
-           WRITE w/o REST AT FIRST, CHHANGE AS PART OF TA
+           WRITE w/o REST AT FIRST, CHANGE AS PART OF TA
 
            
            (append (qsort (filter <p? (rest lon)))

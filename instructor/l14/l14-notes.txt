@@ -61,7 +61,7 @@ Clickers during lecture.
 
 
 (@htdf fold-course)
-(@signature (Natural Natural Y -> X) (X Y -> Y) Y Course -> X) 
+
 ;; abstract fold for Course
 (check-expect (fold-course make-course cons empty C110) C110)
 (check-expect (local [(define (c1 n cr rmr) (add1 rmr))

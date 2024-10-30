@@ -3,7 +3,7 @@
 #reader(lib "htdp-intermediate-reader.ss" "lang")((modname accounts-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
-(@assignment bank/abstraction-p9)
+(@assignment bank/accounts)
 (@cwl ???)
 
 
