@@ -75,7 +75,7 @@
              false))
 (define BST10 (make-node 10 "why" BST3 BST42))
 
-#;
+
 (define (fn-for-bst t)
   (cond [(false? t) (...)]
         [else
@@ -90,7 +90,7 @@
 ;; Functions:
 
 (@htdf balance-factor)
-(@signature BST -> Natural)
+(@signature BST -> Integer)
 ;; consumes a BST and produces its balance factor
 (check-expect (balance-factor BST1) 0)
 (check-expect (balance-factor BST3) -1)
