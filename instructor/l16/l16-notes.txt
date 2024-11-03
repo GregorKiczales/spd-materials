@@ -1,6 +1,6 @@
 
 Clickers right out of the gate
-
+	 
 
 challening topic, but you can all follow this (with struggle)
 
@@ -17,7 +17,7 @@ mazes
   - generate next
   - tell when done
 
-- jump to w2, if you have time over weekend start from -starter
+- jump to v2, if you have time over weekend start from -starter
 - walk through what is there, skip render for now
 - represent changing information
 - genrec arb-tree try-catch  << identify as the basic strategy
