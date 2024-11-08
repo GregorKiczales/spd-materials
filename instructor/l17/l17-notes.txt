@@ -42,7 +42,7 @@ class works on
 - 25:00
 point out  36 jumps -> n valid jumps -> n valid boards
 
-sa1 you deliberately waited to point this out because that's how design is, you don't realize everything right away
+say you deliberately waited to point this out because that's how design is, you don't realize everything right away
 
 - 15:00
   (local []
@@ -115,7 +115,7 @@ summarize whole thing starting from beginning of tree
 (@template-origin fn-composition use-abstract-fn)
 
 (define (next-boards bd)
-  (local [;; Jump -> Board
+  (local [(@signature Jump -> Board)
           (@template-origin Jump)
           (define (do-jump j)
             (local [(define from (jump-from j))
@@ -127,7 +127,7 @@ summarize whole thing starting from beginning of tree
                                   over false)
                         from false)))
           
-          ;; Jump -> Boolean
+          (@signature Jump -> Boolean)
           (@template-origin Jump)
           (define (valid? j)
             (and (get-cell bd (jump-from j))        ;from is full
