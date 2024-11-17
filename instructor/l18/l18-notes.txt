@@ -8,7 +8,8 @@ accumulator overview - will understand all these words more soon
 
 sequence?  present
 
- work up to wanting to fill in <previous>
+ template as (listof X)
+ work up to wanting to fill in <previous> (and (= (first lox) (add1 <previous>))
  put accumulator design slide up
  note acc refactoring will be on video
  stress example progression
