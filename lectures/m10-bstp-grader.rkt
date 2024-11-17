@@ -63,10 +63,16 @@
 
             (grade-accumulator-intact bst? (*) 2 2)
 
-            (grade-encapsulated-template-fns (bst?)
-              (weights (*)
-                (grade-questions-intact bst? BST)
-                (grade-nr-intact        bst? 2)))
+            (score-max 
+             (grade-encapsulated-template-fns (fn-for-bt)
+               (weights (*)
+                 (grade-questions-intact fn-for-bt BST)
+                 (grade-nr-intact        fn-for-bt 2)))
+             
+             (grade-encapsulated-template-fns (bst?)
+               (weights (*)
+                 (grade-questions-intact bst? BST)
+                 (grade-nr-intact        bst? 2))))
             
             (grade-submitted-tests 1)
             (grade-additional-tests 1
