@@ -10,13 +10,13 @@ observe that sequence? is TR
 
 explain TR
 
-do clickers together
+do clickers together [FIX SLIDES TO PUT THIS EARLIER]
 	identify tail pos, tail recursion
 
 derive rev by starting with copy and forcing it to be tail recursive
 then do type and invariant
 
-called rev because default in TR is...
+called rev because TR reverses list that regular R copies
 
 
 mention foldr and foldr
@@ -111,7 +111,6 @@ derive worklist progression on picture
 
 
 do accumulator progression and design on picture first
-
 
 (define (top->bot-sorted? t0)
   ;; pnum is Integer; immediate parent node's number
