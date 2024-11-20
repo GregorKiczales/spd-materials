@@ -19,7 +19,7 @@
                                                 (member  (cadr (cadr  cond-exp))
                                                          (remove 'lox params)))])
             (ensure-unchanged SIG)
-            (ensure-unchanged TESTS)
+            ;(ensure-unchanged TESTS) !!! put this back and truly synch the files
             (weights (*)
               (rubric-item 'template produces-value-of-param?
                            "Has accumulator parameter and produce its result in base case")

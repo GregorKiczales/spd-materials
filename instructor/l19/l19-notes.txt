@@ -1,5 +1,10 @@
 
 
+!!! this lecture should just do lists, normal rec and tr, and talk about how the
+!!! tr doesn't change the order of traversal but does change the order of combination calls
+!!! then the next lecture would do the same for trees
+!!! CWLs are lecture 22 and optional
+
 
 
 acc overview slide, what we have done
