@@ -11,10 +11,11 @@
 ;;
 ;; Consider this silly little function - all it does is to copy its argument.
 ;;
+(@htdf copy)
 (@signature (listof X) -> (listof X))
 
-(check-expect (rev empty) empty)
-(check-expect (rev (list 1)) (list 1))
+(check-expect (copy empty) empty)
+(check-expect (copy (list 1)) (list 1))
 (check-expect (copy (list 1 2 3)) (list 1 2 3))
 
 (@template-origin (listof X))
@@ -40,6 +41,8 @@
 
 (@signature (listof X) -> (listof X))
 
+(check-expect (rev empty) empty)
+(check-expect (rev (list 1)) (list 1))
 (check-expect (rev (list "a" "b" "c")) (list "c" "b" "a"))
 
 (@template-origin (listof X) accumulator)
