@@ -24,6 +24,11 @@ Do it for other fun
 
 path vs. visited terms
 
+ancestors in tree (data)
+
+ancestors in total execution of function
+
+
 
 
 Switch to maze... it runs forever...  so does this one...
@@ -96,6 +101,7 @@ start with tr version of find-tree; add rsf path (but call it ???)
     (fn-for-t t empty)))
 
 
+;; STOP HERE FOR L20???
 
 
 ;;
