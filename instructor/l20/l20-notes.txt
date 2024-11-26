@@ -1,28 +1,41 @@
 
 PSet 9
 
-learn from solution
+learn from our solution
 but know that it is our nth draft, no way yours was going to look this good
 we designed it, and then gradually improved it
 
 
 
+m10-tr-trees-2-starter.rkt
 
-class starts working one of two problems
+This is an exercise in reasoning about accumulator invariants. Students analyze
+the code to discover the invariant and use that to work out value progression -
+or they can use the code to work out value progression and then discover the
+invariant. But the key is once they have the invariant they can reason about
+the rest of the code using the invariant, the don't have to keep working out
+the accumulator values.
 
-give quite a lot of time
 
-then work them w/ class
+class starts working one foo, decorate picture, write invariant
+
+talk about that some, markup picture some, edit code in starter
 
 use coloring to identify aspects of behaviour
 
-identify what the function returns...  (list <num> (reverse (cons <num> <acc>)))
+do the same for bar
 
-So what is the acc - construct type and invariant
-
-Do it for other fun
+use coloring to identify aspects of behaviour
 
 path vs. visited terms
+
+do the clickers
+
+return to picture with all three accs for bar, talk about what
+worklist is - unvisited direct subs of visited nodes
+
+
+
 
 ancestors in tree (data)
 

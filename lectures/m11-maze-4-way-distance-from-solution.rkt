@@ -135,16 +135,14 @@
           ;; reduction: 
           ;; argument:
            
-          (define (fn-for-p p path dist)
-            (cond [(equal? p end)   (distance-add1 dist)]
+          (define (fn-for-p p path passed-start?)
+            (cond [(equal? p end)   (add1 (position-of start path))]
                  ;[(solved? p)      false]
                   [(member? p path) false]
                   [else
                    (if (equal? p start)
-                       (fn-for-lop (next-ps p) (cons p path) 0)
-                       (fn-for-lop (next-ps p)
-                                          (cons p path)
-                                          (distance-add1 dist)))]))
+                       (fn-for-lop (next-ps p) (cons p path) true)                       
+                       (fn-for-lop (next-ps p) (cons p path) passed-start?))]))
 
           (define (fn-for-lop lop path dist)
             (cond [(empty? lop) false]
@@ -154,16 +152,13 @@
                          try
                          (fn-for-lop (rest lop) path dist)))]))
 
-          
-          ;; Distance is one of:
-          ;;  - false   (have not yet passed start)
-          ;;  - Natural (distance from start including start)
-          
-          (define (distance-add1 dist)
-            (cond [(false? dist) false]
-                  [else (add1 dist)]))
-          
-          
+          ;; CONSTRAINT: p is in lop
+          (define (position-of p lop)
+            (cond [(empty? p) (error "p was not in lop")]
+                  [else
+                   (if (equal? p (first lop))
+                       0
+                       (add1 (position-of p (rest lop))))]))
           
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right

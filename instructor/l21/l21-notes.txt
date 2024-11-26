@@ -6,108 +6,25 @@ intro (3 slides)
 
 we will work fairly slowly, these use everything we did last time
 
-start with 2 clickers
-
-
-(define (solvable-no-revisits? m)
-  (local [(define R (sqrt (length m)))
-
-          ;; trivial: reach lower right, or previously visited position   
-          ;; reduction: valid moves from up, down, left and right
-          ;; argument: maze has finite size, 
-          
-          (define (fn-for-p p p-wl visited)
-            (cond [(solved? p) true]
-                  [(member? p visited) (fn-for-lop p-wl visited)]
-                  [else
-                   (fn-for-lop (append (next-ps p) p-wl) (cons p visited))]))
-
-          (define (fn-for-lop p-wl visited)
-            (cond [(empty? p-wl) false]
-                  [else
-                   (fn-for-p (first p-wl) (rest p-wl) visited)]))
-          
+start with 2 clickers, participation, to prime peoples thinking
 
 
 
 
-(define (distance-from m start end)
-  (local [(define R (sqrt (length m)))	  
-
-          ;; trivial:   
-          ;; reduction: 
-          ;; argument:
-
-          
-          
-          (define (fn-for-p p path dist)
-            (cond [(equal? p end)   (distance-add1 dist)]
-                 ;[(solved? p)      false]
-                  [(member? p path) false]
-                  [else
-                   (if (equal? p start)
-                       (fn-for-lop (next-ps p) (cons p path) 0)
-                       (fn-for-lop (next-ps p)
-                                          (cons p path)
-                                          (distance-add1 dist)))]))
-
-          (define (fn-for-lop lop path dist)
-            (cond [(empty? lop) false]
-                  [else
-                   (local [(define try (fn-for-p (first lop) path dist))]
-                     (if (not (false? try))
-                         try
-                         (fn-for-lop (rest lop) path dist)))]))
-
-
-- start adding path
-  - motivate with M4
-  - add up, left, demo that it hangs, ask why
-  - develop idea of adding path (3 slides)
-  - add [(member p path) false]
-  - then class works on adding rest <10 mins
-
-- come back and take contributions to do:
-  - type and invariant, add param, initialize, preserve, already exploited
-  - termination argument
-  - other tests
-
-- discuss (1 slide)
-  - lots of questions come up here ~ 10 minutes
-
-
-          ;; ----
-          ;; structural recursion, with path accumulator
-
-          ;; trivial:   reaches lower right, previously seen position
-          ;; reduction: move up, down, left, right if possible
-          ;; argument:  maze is finite, so moving will eventually
-          ;;            reach trivial case or run out of moves
-	  
-          ;; path is (listof Pos); positions on this path through data
-          (define (solve/p p path)
-            (cond [(solved? p) true]
-                  [(member p path) false]
-                  [else
-                   (solve/lop (next-ps p)
-                              (cons p path))]))
-
-          (define (solve/lop lop path)
-            (cond [(empty? lop) false]
-                  [else
-                   (local [(define try (solve/p (first lop) path))]
-                     (if (not (false? try))
-                         try
-                         (solve/lop (rest lop) path)))]))
-
+solvable-no-revisits
 
 use slides to review what it does do, but then ask what happens at the first join
 
 graph picture
 
-do we want to go this way? how might we stop?
+at the cycle - do we want to go this way? how might we stop?
+
+at the join  - do we want to go this way? how might we stop?
 
  - requires visited --> requires tail recursive (that order)
+
+first make it TR w/ worklist
+then add visited
 
 
           ;; tail recursion, with visited accumulator
@@ -120,6 +37,7 @@ do we want to go this way? how might we stop?
 	  
           ;; p-wl is    (listof Pos); worklist
           ;; visited is (listof Pos); every position ever visited
+	  
           (define (solve/p p p-wl visited)
             (cond [(solved? p) true]
                   [(member p visited) (solve/lop p-wl visited)]
@@ -135,3 +53,57 @@ do we want to go this way? how might we stop?
 
 - discuss/questions
 
+
+- start adding path
+  - add [(member p path) false]
+
+- but then we need distance
+  - take out [(solved? p) ...]
+  - couple ways to do it
+     - compute it from the path
+     - a separate accumulator
+
+- come back and take contributions to do:
+  - type and invariant, add param, initialize, preserve, already exploited
+  - termination argument
+  - other tests
+
+- discuss (1 slide)
+  - lots of questions come up here ~ 10 minutes
+
+
+(define (distance-from m start end)
+  (local [(define R (sqrt (length m)))	  
+
+          ;; trivial:   
+          ;; reduction: 
+          ;; argument:
+           
+          (define (fn-for-p p path dist)
+            (cond [(equal? p end)   (distance-add1 dist)]
+                 ;[(solved? p)      false]
+                  [(member? p path) false]
+                  [else
+                   (if (equal? p start)
+                       (fn-for-lop (next-ps p) (cons p path) 0)
+                       (fn-for-lop (next-ps p)
+                           	   (cons p path)
+                                   (distance-add1 dist)))]))
+
+          (define (fn-for-lop lop path dist)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try (fn-for-p (first lop) path dist))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lop (rest lop) path dist)))]))
+
+          
+          ;; Distance is one of:
+          ;;  - false   (have not yet passed start)
+          ;;  - Natural (distance from start including start)
+          
+          (define (distance-add1 dist)
+            (cond [(false? dist) false]
+                  [else (add1 dist)]))
+          

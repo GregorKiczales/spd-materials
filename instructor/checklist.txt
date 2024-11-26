@@ -1,8 +1,7 @@
 
-
 instructors/lxx folder copied to ipad, lxx-pad.pdf tested
 
-clickers/lxx-clickers.pdf on ipad or laptop, tested
+clickers/lxx-clickers.rkt|pdf on laptop or ipad, tested
 
 
 browser window setup with tabs for:
@@ -20,22 +19,24 @@ Quicktime open, showing pad
 
 instructors/lxx-notes.txt open in emacs on other screen (or printed)
 
+close mail, whatsapp etc.
 
 start zoom
-  turn off: share screen, chat, start video, share whiteboards, request recording
 
   share laptop screen, turn on share sound
 
   in preferences check selected mic
   also check zoom volume which tends to reset to very low
-  
-  open participants
 
-  open chat (used during work periods)
+  open participants and chat
+  
+  turn off: chat to everyone, start video
+
 
 
 let TA know plan on slack
   clickers?
-  HtDF?
+  HtDF quiz?
+  open lecture channel in separate window to allow quickly displaying bar charts
   leave slack open to lecture ta channel
   
