@@ -141,7 +141,7 @@
                   [(member? p path) false]
                   [else
                    (if (equal? p start)
-                       (fn-for-lop (next-ps p) (cons p path) true)                       
+                       (fn-for-lop (next-ps p) (cons p path) true)
                        (fn-for-lop (next-ps p) (cons p path) passed-start?))]))
 
           (define (fn-for-lop lop path dist)
