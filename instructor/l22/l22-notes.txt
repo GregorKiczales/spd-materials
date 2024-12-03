@@ -1,5 +1,7 @@
 
 
+go through tandem worklist lists slowly - model the behaviour of working an accumulator out well before typing
+
 
 
 (define (first-out-of-order map num0)
@@ -31,27 +33,27 @@
   ;; p-wl is (listof (listof Natural)); tandem worklist of paths
   ;; visited is (listof Natural); numbers of nodes already visited in the tr
   
-  (local [(define (fn-for-node n path  nn-wl path-wl  visited)
+  (local [(define (fn-for-node n path  nn-wl PATH-WL  visited)
             (local [(define num      (node-number n))
                     (define nexts    (node-nexts n))
                     (define npath    (cons num path))
                     (define nvisited (cons num visited))]
-              (cond [(member num visited) (fn-for-lonn nn-wl path-wl visited)]
+              (cond [(member num visited) (fn-for-lonn nn-wl PATH-WL visited)]
                     [(not (= num (add1 (first visited)))) (reverse npath)]
                     [else
                      (fn-for-lonn (append nexts
                                           nn-wl)
-                                  (append (make-list (length nexts) npath)
-                                          path-wl)
+                                  (APPEND (MAKE-LIST (LENGTH NEXTS) NPATH)
+                                          PATH-WL)
                                   nvisited)])))
           
-          (define (fn-for-lonn nn-wl path-wl visited)
+          (define (fn-for-lonn nn-wl PATH-WL visited)
             (cond [(empty? nn-wl) false] 
                   [else
                    (fn-for-node (generate-node map (first nn-wl))
-                                (first path-wl)
+                                (FIRST PATH-WL)
                                 (rest nn-wl)
-                                (rest path-wl)
+                                (REST PATH-WL)
                                 visited)]))]
     
     (fn-for-lonn (node-nexts (generate-node map num0))

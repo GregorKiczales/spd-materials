@@ -6,14 +6,23 @@ intro (3 slides)
 
 we will work fairly slowly, these use everything we did last time
 
+quick reminder of graphs, how 4 way maze is a graph, and the cycles problem
+
 start with 2 clickers, participation, to prime peoples thinking
+
+
+!!! add more generic cycle join pictures to deck and work with those when doing the two functions, so the function of the more abstract slides is to bridge to that style of picture
+
+!!! take try catch out of templates
+
+!!! rename to distance-between
 
 
 
 
 solvable-no-revisits
 
-use slides to review what it does do, but then ask what happens at the first join
+use slides to review what it needs to do
 
 graph picture
 
@@ -23,8 +32,9 @@ at the join  - do we want to go this way? how might we stop?
 
  - requires visited --> requires tail recursive (that order)
 
-first make it TR w/ worklist
+first make it TR w/ worklist (or can use templates)
 then add visited
+then add termination argument
 
 
           ;; tail recursion, with visited accumulator
@@ -40,10 +50,10 @@ then add visited
 	  
           (define (solve/p p p-wl visited)
             (cond [(solved? p) true]
-                  [(member p visited) (solve/lop p-wl visited)]
+                  [(member p visited)
+                   (solve/lop                     p-wl          visited)]
                   [else
-                   (solve/lop (append (next-ps p) p-wl)
-                              (cons p visited))]))
+                   (solve/lop (append (next-ps p) p-wl) (cons p visited))]))
 
           (define (solve/lop p-wl visited)
             (cond [(empty? p-wl) false]
@@ -52,6 +62,9 @@ then add visited
 
 
 - discuss/questions
+  - how to fail in tail recursion - proceed w/ rest of list
+  - is it backtracking search? yes, even though no try-catch
+  
 
 
 - start adding path
@@ -79,16 +92,14 @@ then add visited
           ;; reduction: 
           ;; argument:
            
-          (define (fn-for-p p path dist)
-            (cond [(equal? p end)   (distance-add1 dist)]
+          (define (fn-for-p p path passed-start?)
+            (cond [(equal? p end)   (add1 (position-of start path))]
                  ;[(solved? p)      false]
                   [(member? p path) false]
                   [else
                    (if (equal? p start)
-                       (fn-for-lop (next-ps p) (cons p path) 0)
-                       (fn-for-lop (next-ps p)
-                           	   (cons p path)
-                                   (distance-add1 dist)))]))
+                       (fn-for-lop (next-ps p) (cons p path) true)
+                       (fn-for-lop (next-ps p) (cons p path) passed-start?))]))
 
           (define (fn-for-lop lop path dist)
             (cond [(empty? lop) false]
@@ -98,12 +109,11 @@ then add visited
                          try
                          (fn-for-lop (rest lop) path dist)))]))
 
-          
-          ;; Distance is one of:
-          ;;  - false   (have not yet passed start)
-          ;;  - Natural (distance from start including start)
-          
-          (define (distance-add1 dist)
-            (cond [(false? dist) false]
-                  [else (add1 dist)]))
+          ;; CONSTRAINT: p is in lop
+          (define (position-of p lop)
+            (cond [(empty? p) (error "p was not in lop")]
+                  [else
+                   (if (equal? p (first lop))
+                       0
+                       (add1 (position-of p (rest lop))))]))
           

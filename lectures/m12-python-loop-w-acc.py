@@ -54,10 +54,10 @@ def average(lon):
     one element.
 
     >>> average([1, 2, 3])
-    2
+    2.0
 
     >>> average([5, 3, 4])
-    4
+    4.0
     """
     return 0
 
