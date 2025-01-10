@@ -94,10 +94,11 @@
                   (%%board? b)
                   (equal? r (%%solved? b)))
 
-                (grade-tests-argument-thoroughness (b)
-                   (= (length (filter identity b)) 1)
-                   (> (length (filter identity b)) 1)
-                   (member? false b))
+                (grade-argument-thoroughness ()
+                  (per-args (b)
+                    (= (length (filter identity b)) 1)
+                    (> (length (filter identity b)) 1)
+                    (member? false b)))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (solved? b)

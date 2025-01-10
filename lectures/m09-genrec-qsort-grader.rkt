@@ -18,9 +18,10 @@
                   (andmap number? r)
                   (equal? r (sort lon <)))
                 
-                (grade-tests-argument-thoroughness (lon)
-                  (empty? lon)
-                  (and (> (length lon) 1) (not (equal? (sort lon <) lon))))
+                (grade-argument-thoroughness ()
+                  (per-args (lon)
+                    (empty? lon)
+                    (and (> (length lon) 1) (not (equal? (sort lon <) lon)))))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (qsort lon)

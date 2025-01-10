@@ -40,9 +40,10 @@
               (grade-tests-validity (n) r
                 (and (integer? n) (>= n 0))
                 (equal? (%%boxes n) r))
-              (grade-tests-argument-thoroughness (n)
-                (zero? n)
-                (> n 0))
+              (grade-argument-thoroughness ()
+                (per-args (n)
+                  (zero? n)
+                  (> n 0)))
               (grade-thoroughness-by-faulty-functions 1
                 (define (boxes n)
                   (cond [(zero? n) (square 1 "outline" "black")]
@@ -88,9 +89,10 @@
             (grade-tests-validity (n) r
               (and (number? n) (>= n 0))
               (equal? r (foldr * 1 (build-list n add1))))
-            (grade-tests-argument-thoroughness (n)
-              (and (number? n) (zero? n))
-              (and (number? n) (> n 0)))
+            (grade-argument-thoroughness ()
+              (per-args (n)
+                (and (number? n) (zero? n))
+                (and (number? n) (> n 0))))
             (grade-thoroughness-by-faulty-functions 1
               (define (fact n)
                 0)

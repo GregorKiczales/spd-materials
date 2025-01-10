@@ -78,9 +78,10 @@
                   (list? loi)
                   (andmap image? loi)
                   (equal? r (%%layout-images loi)))
-                (grade-tests-argument-thoroughness (loi)
-                  (empty? loi)
-                  (> (length loi) 1))
+                (grade-argument-thoroughness ()
+                  (per-args (loi)
+                    (empty? loi)
+                    (> (length loi) 1)))
                 (grade-thoroughness-by-faulty-functions 1
                   (define (layout-images loi) empty-image)
                   (define (layout-images loi) (if (empty? loi) empty-image (first loi))))
@@ -101,12 +102,13 @@
                   (list? loi)
                   (andmap image? loi)
                   (equal? r (%%sort-images loi)))
-                (grade-tests-argument-thoroughness (loi)
-                  (empty? loi)
-                  (> (length loi) 1)
-                  ;(%%smaller-then-larger loi)  ;!!!
-                  ;(%%larger-then-smaller loi)  ;!!!
-                  )
+                (grade-argument-thoroughness ()
+                  (per-args (loi)
+                    (empty? loi)
+                    (> (length loi) 1)
+                    ;(%%smaller-then-larger loi)  ;!!!
+                    ;(%%larger-then-smaller loi)  ;!!!
+                    ))
                 (grade-thoroughness-by-faulty-functions 1
                   (define (sort-images loi) loi)
                   (define (sort-images loi) (reverse loi)))
