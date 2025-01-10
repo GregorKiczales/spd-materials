@@ -33,11 +33,12 @@
                 (andmap string? los)
                 (equal? r (%%contains-canucks? los)))
               
-              (grade-tests-argument-thoroughness (los)
-                (empty? los)
-                (and (> (length los) 0) (string=? "Canucks" (first los)))
-                (and (> (length los) 1) (member "Canucks" los) (not (string=? "Canucks" (first los))))
-                (and (> (length los) 1) (not (member "Canucks" los))))
+              (grade-argument-thoroughness ()
+                (per-args (los)
+                  (empty? los)
+                  (and (> (length los) 0) (string=? "Canucks" (first los)))
+                  (and (> (length los) 1) (member "Canucks" los) (not (string=? "Canucks" (first los))))
+                  (and (> (length los) 1) (not (member "Canucks" los)))))
 
               (grade-thoroughness-by-faulty-functions 1
                 (define (contains-canucks? los)

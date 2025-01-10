@@ -38,10 +38,11 @@
               (%%spider? sp)
               (equal? r (%%tock sp)))
 
-            (grade-tests-argument-thoroughness (sp)
-                                               (= sp (- BOT  1 SPEED))
-                                               (= sp (- BOT  0 SPEED))
-                                               (= sp (- BOT -1 SPEED)))
+            (grade-argument-thoroughness ()
+              (per-args (sp)
+                (= sp (- BOT  1 SPEED))
+                (= sp (- BOT  0 SPEED))
+                (= sp (- BOT -1 SPEED))))
 
             (grade-thoroughness-by-faulty-functions 1
               (define (,tick-handler-name s)

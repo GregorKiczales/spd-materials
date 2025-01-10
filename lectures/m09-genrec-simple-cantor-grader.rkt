@@ -30,11 +30,12 @@
                   (and (number? n) (>= n 0))
                   (equal? r (%%cantor n)))
 
-                (grade-tests-argument-thoroughness (n)
-                  (= 0 n)
-                  (> n CUTOFF)
-                  (= n CUTOFF)
-                  (< n CUTOFF))
+                (grade-argument-thoroughness ()
+                  (per-args (n)
+                    (= 0 n)
+                    (> n CUTOFF)
+                    (= n CUTOFF)
+                    (< n CUTOFF)))
 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (cantor w)

@@ -33,9 +33,10 @@
                 (andmap number? lon)
                 (equal? r (foldr + 0 lon)))
 
-              (grade-tests-argument-thoroughness (lon)
-                (empty? lon)
-                (>= (length lon) 2))
+              (grade-argument-thoroughness ()
+                (per-args (lon)
+                  (empty? lon)
+                  (>= (length lon) 2)))
 
               (grade-thoroughness-by-faulty-functions 1
                 (define (sum lon)
@@ -76,9 +77,10 @@
                 (andmap number? lon)
                 (equal? r (foldr * 1 lon)))
 
-              (grade-tests-argument-thoroughness (lon)
-                (empty? lon)
-                (>= (length lon) 2))
+              (grade-argument-thoroughness ()
+                (per-args (lon)
+                  (empty? lon)
+                  (>= (length lon) 2)))
 
                (grade-thoroughness-by-faulty-functions 1
                  (define (product lon) 0)            ;bad base
@@ -119,9 +121,10 @@
                 (andmap number? lon)
                 (equal? r (length lon)))
 
-              (grade-tests-argument-thoroughness (lon)
-                (empty? lon)
-                (>= (length lon) 2))
+              (grade-argument-thoroughness ()
+                (per-args (lon)
+                  (empty? lon)
+                  (>= (length lon) 2)))
 
               (grade-thoroughness-by-faulty-functions 1
                 (define (count lon) 0)
@@ -147,9 +150,10 @@
                 (andmap number? lon)
                 (equal? r (%%doubles lon)))
               
-              (grade-tests-argument-thoroughness (lon)
-                (empty? lon)
-                (>= (length lon) 2))
+              (grade-argument-thoroughness ()
+                (per-args (lon)
+                  (empty? lon)
+                  (>= (length lon) 2)))
               
               (grade-thoroughness-by-faulty-functions 1
                 (define (doubles lon)

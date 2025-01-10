@@ -58,11 +58,12 @@
                   (%%region? reg)
                   (equal? r (%%all-with-color c reg)))
 
-                (grade-tests-argument-thoroughness (c reg)
-                  (leaf? reg)
-                  (and (inner? reg)
-                       (not (empty? (inner-subs reg)))
-                       (not (empty? (all-with-color--region c reg)))))
+                (grade-argument-thoroughness ()
+                  (per-args (c reg)
+                    (leaf? reg)
+                    (and (inner? reg)
+                         (not (empty? (inner-subs reg)))
+                         (not (empty? (all-with-color--region c reg))))))
                 
                 (grade-thoroughness-by-faulty-functions 1
 

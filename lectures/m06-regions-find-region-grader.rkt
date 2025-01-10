@@ -58,9 +58,10 @@
                   (%%region? reg)
                   (equal? r (%%find-region c reg)))
                 
-                (grade-tests-argument-thoroughness (c reg)
-                  (leaf? reg)
-                  (and (inner? reg) (not (empty? (inner-subs reg)))))
+                (grade-argument-thoroughness ()
+                  (per-args (c reg)
+                    (leaf? reg)
+                    (and (inner? reg) (not (empty? (inner-subs reg))))))
                 
                 (grade-thoroughness-by-faulty-functions 1
                   (define (,$F2 c r)

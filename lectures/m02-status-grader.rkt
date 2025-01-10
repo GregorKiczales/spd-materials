@@ -22,9 +22,10 @@
                 (and (string? s) (or (string=? s "minor") (string=? s "adult")))
                 (cond [(string=? s "minor") (not r)]
                       [(string=? s "adult") r]))
-              (grade-tests-argument-thoroughness (s)
-                (string=? s "minor")
-                (string=? s "adult"))
+              (grade-argument-thoroughness ()
+                (per-args (s)
+                  (string=? s "minor")
+                  (string=? s "adult")))
 
               (grade-template-origin (Status))
               (grade-template         Status)
