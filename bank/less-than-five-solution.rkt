@@ -21,8 +21,9 @@
 
 (@template-origin String)
 
-(@template (define (less-than-5? s)
-             (... s)))
+(@template
+ (define (less-than-5? s)
+   (... s)))
 
 (define (less-than-5? s)
   (< (string-length s) 5))

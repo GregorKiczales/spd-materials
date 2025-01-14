@@ -144,13 +144,13 @@
                        (fn-for-lop (next-ps p) (cons p path) true)
                        (fn-for-lop (next-ps p) (cons p path) passed-start?))]))
 
-          (define (fn-for-lop lop path dist)
+          (define (fn-for-lop lop path passed-start?)
             (cond [(empty? lop) false]
                   [else
-                   (local [(define try (fn-for-p (first lop) path dist))]
+                   (local [(define try (fn-for-p (first lop) path passed-start?))]
                      (if (not (false? try))
                          try
-                         (fn-for-lop (rest lop) path dist)))]))
+                         (fn-for-lop (rest lop) path passed-start?)))]))
 
           ;; CONSTRAINT: p is in lop
           (define (position-of p lop)

@@ -18,8 +18,9 @@
 
 (@template-origin Image)
 
-(@template (define (image-area img)
-             (... img)))
+(@template
+ (define (image-area img)
+   (... img)))
 
 (define (image-area img)
   (* (image-width img)

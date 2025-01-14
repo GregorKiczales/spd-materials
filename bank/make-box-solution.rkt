@@ -18,8 +18,9 @@
 
 (@template-origin Color)
 
-(@template (define (make-box c)
-             (... c)))
+(@template
+ (define (make-box c)
+   (... c)))
 
 (define (make-box c)
   (square 10 "solid" c))

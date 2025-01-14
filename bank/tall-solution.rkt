@@ -21,8 +21,9 @@
 
 (@template-origin Image)
 
-(@template (define (tall? img)
-             (... img)))
+(@template
+ (define (tall? img)
+   (... img)))
 
 (define (tall? img)
   (> (image-height img) (image-width img)))

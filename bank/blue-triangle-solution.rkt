@@ -19,8 +19,9 @@
 
 (@template-origin Natural)
 
-(@template (define (blue-triangle n)
-             (... n)))
+(@template
+ (define (blue-triangle n)
+   (... n)))
 
 (define (blue-triangle n)
   (triangle n "solid" "blue"))

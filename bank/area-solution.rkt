@@ -18,8 +18,9 @@
 
 (@template-origin Number)
 
-(@template (define (area s)
-             (... s)))
+(@template
+ (define (area s)
+   (... s)))
 
 (define (area s)
   (* s s))
