@@ -24,8 +24,9 @@
 
 (@template-origin Image)
 
-(@template (define (boxify i)
-             (... i)))
+(@template
+ (define (boxify i)
+   (... i)))
 
 (define (boxify i)
   (overlay (rectangle (+ (image-width  i) 2)

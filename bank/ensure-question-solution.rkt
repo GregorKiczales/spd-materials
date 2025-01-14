@@ -20,8 +20,9 @@
 
 (@template-origin String)
 
-(@template (define (ensure-question str)
-             (... str)))
+(@template
+ (define (ensure-question str)
+   (... str)))
 
 (define (ensure-question str)
   (if (string=? (substring str (- (string-length str) 1)) "?")

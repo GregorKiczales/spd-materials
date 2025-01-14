@@ -18,8 +18,9 @@
 
 (@template-origin String)
 
-(@template (define (yell s)
-             (... s)))
+(@template
+ (define (yell s)
+   (... s)))
 
 (define (yell s)
   (string-append s "!"))

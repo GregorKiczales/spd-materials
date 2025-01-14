@@ -18,8 +18,9 @@
 
 (@template-origin Number)
 
-(@template (define (distance x1 y1 x2 y2)
-             (... x1 y1 x2 y2)))
+(@template
+ (define (distance x1 y1 x2 y2)
+   (... x1 y1 x2 y2)))
 
 (define (distance x1 y1 x2 y2)
   (sqrt (+ (sqr (- x2 x1))
