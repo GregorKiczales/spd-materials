@@ -87,7 +87,7 @@
 
 (@problem 2)
 ;; Design a function that consumes Element and produces a list of the names of
-;;all the elements in the tree.
+;; all the elements in the tree.
 
 
 (@problem 3)

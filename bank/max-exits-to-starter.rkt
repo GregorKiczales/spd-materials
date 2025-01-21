@@ -44,8 +44,8 @@
 ;; You should not edit this function, but you can experiment with it to see how
 ;; it works.
 
-;;(@htdf lookup-room)
-;;(@signature String -> Room)
+(@htdf lookup-room)
+(@signature String -> Room)
 (define (lookup-room name)
   (local [(define (scan lst)
             (cond [(empty? lst) (error "No room named " name)]

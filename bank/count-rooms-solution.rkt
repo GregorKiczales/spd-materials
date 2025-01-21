@@ -173,8 +173,8 @@ Cross Product of Types
 ;; You should not edit this function, but you can experiment with it to see how
 ;; it works.
 
-;;(@htdf lookup-room)
-;;(@signature String Map -> Room)
+(@htdf lookup-room)
+(@signature String Map -> Room)
 (define (lookup-room name map)
   (local [(define alist (with-input-from-string map read))
           (define entry (assoc name alist))]

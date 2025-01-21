@@ -4,8 +4,8 @@
 (require 2htdp/image)
 (require spd/tags)
 (@assignment lectures/m06-bst-count)
-;(@cwl      );;enter your cwl here
-;; bst-starter.rkt
+
+
 (@problem 1)
 (define TEXT-SIZE 60)
 (define TEXT-COLOR "black")

@@ -221,7 +221,7 @@
 (@template-origin genrec arb-tree encapsulated)  
 
 (define (solve bd)
-  ;;Termination argument:
+  ;; Termination argument:
   ;; trivial case:  checked board has no blanks
   ;; reduction step: fill blank with all possible valid values
   ;; argument: the reduction step fills the board by one, so
