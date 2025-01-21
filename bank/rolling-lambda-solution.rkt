@@ -59,18 +59,11 @@
 ;;        360
 ;;
 ;; Also note that the rotate function requires an angle in degrees as its 
-;; first argument. [By that it means Number[0, 360). As time goes by the lambda
-;; may end up spinning more than once, for example, you may get to a point 
-;; where it has spun 362 degrees, which rotate won't accept. One solution to 
-;;that is to  use the modulo function as follows:
+;; first argument.
 ;;
-;; (rotate (modulo ... 360) LAMBDA)
+;; (rotate ... LAMBDA)
 ;;
-;; where ... can be an expression that produces any positive number of degrees 
-;; and remainder will produce a number in [0, 360).
-;;
-;; Remember that you can lookup the documentation of modulo if you need to know 
-;; more about it.
+;; where ... can be an expression that produces any number of degrees.
 
 
 ;; A lambda that rolls back and forth across screen.
@@ -150,7 +143,7 @@
     (on-tick tock)          ; LambdaState -> LambdaState
     (to-draw render)        ; LambdaState -> Image
     (on-mouse change-dir))) ; LambdaState Integer Integer
-; MouseEvent -> LambdaState
+;;                          ; MouseEvent -> LambdaState
 
 
 (@htdf tock)

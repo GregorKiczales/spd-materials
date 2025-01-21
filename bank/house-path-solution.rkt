@@ -89,7 +89,7 @@
 (@signature Result Result -> Result)
 ;; produce the logical combination of two results
 
-;;Cross Product of Types Table:
+;; Cross Product of Types Table:
 ;;
 ;; ╔════════════════╦═══════════════╦══════════════╗
 ;; ║                ║               ║              ║
@@ -128,7 +128,7 @@
 (@signature Result Result -> Result)
 ;; produce the logical combination of two results
 
-;;Cross Product of Types Table:
+;; Cross Product of Types Table:
 ;;
 ;; ╔════════════════╦═══════════════╦══════════════╗
 ;; ║                ║               ║              ║

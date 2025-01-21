@@ -89,7 +89,7 @@
 (@signature Result Result -> Result)
 ;; produce the logical combination of two results
 
-;;Cross Product of Types Table:
+;; Cross Product of Types Table:
 ;;
 ;; ╔════════════════╦═══════════════╦══════════════╗
 ;; ║                ║               ║              ║
@@ -128,7 +128,7 @@
 (@signature Result Result -> Result)
 ;; produce the logical combination of two results
 
-;;Cross Product of Types Table:
+;; Cross Product of Types Table:
 ;;
 ;; ╔════════════════╦═══════════════╦══════════════╗
 ;; ║                ║               ║              ║
@@ -179,5 +179,3 @@
 ;; 
 ;; Once you have always-before working, make a copy of it, rename the copy to
 ;; always-before-tr, and then modify the function to be tail recursive.
-
-

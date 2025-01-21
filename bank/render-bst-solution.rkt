@@ -43,8 +43,8 @@
 ;;     the same key never appears twice in the tree
 (define BST0 false)
 (define BST1 (make-node 1 "abc" false false))
-(define BST7 (make-node 7 "ruf" false false)) ;!!!! ADDDED
-(define BST4 (make-node 4 "dcj" false (make-node 7 "ruf" false false))) ;;<<<
+(define BST7 (make-node 7 "ruf" false false)) ;!!! ADDDED
+(define BST4 (make-node 4 "dcj" false (make-node 7 "ruf" false false)))
 (define BST3 (make-node 3 "ilk" BST1 BST4))
 (define BST42 
   (make-node 42 "ily"

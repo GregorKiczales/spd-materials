@@ -11,20 +11,21 @@
 ;; the function design below, and make the minimal changes required to 
 ;; resolve the error that occurs when you run it.
 
+#|
 
-;(@htdf double)
-;(@signature Number -> Number)
-;;; produce 2 times n
-;(check-expect (double 0) 0)
-;(check-expect (double 4) 8)
-;(check-expect (double 3.3) (* 2 3.3))
-;(check-expect (double -1) -2)
-;
-;
-;
-;;(define (double n) 0) ; stub
-;
-;(@template-origin Number)
-;
-;(define (double n)
-;  (2 * n)))
+(@htdf double)
+(@signature Number -> Number)
+;; produce 2 times n
+(check-expect (double 0) 0)
+(check-expect (double 4) 8)
+(check-expect (double 3.3) (* 2 3.3))
+(check-expect (double -1) -2)
+
+;(define (double n) 0) ; stub
+
+(@template-origin Number)
+
+(define (double n)
+  (2 * n)))
+
+|#

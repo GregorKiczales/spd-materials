@@ -5,7 +5,7 @@
 
 (provide grader)
 
-;;GRADER ONLY RUNS GIVEN TESTS AGAINST THE FUNCTIONS
+;; GRADER ONLY RUNS GIVEN TESTS AGAINST THE FUNCTIONS
 (define grader 
   (lambda ()
     (grade-submission
