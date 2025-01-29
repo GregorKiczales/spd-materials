@@ -1,7 +1,8 @@
 #lang racket
 
-(require spd-grader/grader)
-(require spd-grader/design-abstract-fold)
+(require spd-grader/grader
+         spd-grader/style
+         spd-grader/design-abstract-fold)
 
 (provide grader)
 
@@ -22,8 +23,14 @@
                                          (make-node 14 "I"  9 false false))
                               (make-node 50 "H" 16 false false))))
 
+      
+
       (grade-problem 3
+
+        (check-2-semi-comments)
+        #;
         (grade-design-abstract-fold fold-accounts
+
 
           (@signature (Natural String Integer X X -> X) X Accounts -> X)
 

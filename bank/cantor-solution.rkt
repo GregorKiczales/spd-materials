@@ -81,8 +81,9 @@
 
 ;; In a more elaborate version of the program the world state
 ;; could be the last x, y position of the mouse, something like:
-;; ;; WorldState is (make-posn Number Number)
-;; ;; interp. last x and y coordinate of mouse
+;;
+;; WorldState is (make-posn Number Number)
+;; interp. last x and y coordinate of mouse
 
 (@htdd WorldState)
 ;; WorldState is Number

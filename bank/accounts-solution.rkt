@@ -64,7 +64,7 @@
 
 (@htdf remove-acts)
 (@signature (Accounts -> Boolean) Accounts -> Accounts)
-;; remove accounts that satisfy pred predicate
+;; remove accounts that satisfy predicate
 (check-expect (local [(define (yes? act) true)]
                 (remove-acts yes? false))
               false)

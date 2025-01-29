@@ -56,35 +56,35 @@
 (define (sum-of-lengths los) (abstract-sum string-length los))
 
 
-;; For reference, here are the function definitions for the two original 
-;; functions.
+;; For reference, here are the designs for the two original functions.
+#|
+(@htdf sum-of-squares)
+(@signature (listof Number) -> Number)
+;; produce the sum of the squares of the numbers in lon
+(check-expect (sum-of-squares empty) 0)
+(check-expect (sum-of-squares (list 2 4)) (+ 4 16))
 
-;; (@htdf sum-of-squares)
-;; (@signature (listof Number) -> Number)
-;; ;; produce the sum of the squares of the numbers in lon
-;; (check-expect (sum-of-squares empty) 0)
-;; (check-expect (sum-of-squares (list 2 4)) (+ 4 16))
-;;
-;; (@template-origin (listof Number))
-;;
-;; (define (sum-of-squares lon)
-;;   (cond [(empty? lon) 0]
-;;         [else
-;;          (+ (sqr (first lon))
-;;             (sum-of-squares (rest lon)))]))
-;;
-;;
-;; (@htdf sum-of-lengths)
-;; (@signature (listof String) -> Number)
-;; ;; produce the sum of the lengths of the strings in los
-;; (check-expect (sum-of-lengths empty) 0)
-;; (check-expect (sum-of-lengths (list "a" "bc")) 3)
-;;
-;; (@template-origin (listof String))
-;;
-;; (define (sum-of-lengths los)
-;;   (cond [(empty? los) 0]
-;;         [else
-;;          (+ (string-length (first los))
-;;             (sum-of-lengths (rest los)))]))
+(@template-origin (listof Number))
 
+(define (sum-of-squares lon)
+  (cond [(empty? lon) 0]
+        [else
+         (+ (sqr (first lon))
+            (sum-of-squares (rest lon)))]))
+
+
+(@htdf sum-of-lengths)
+(@signature (listof String) -> Number)
+;; produce the sum of the lengths of the strings in los
+(check-expect (sum-of-lengths empty) 0)
+(check-expect (sum-of-lengths (list "a" "bc")) 3)
+
+(@template-origin (listof String))
+
+(define (sum-of-lengths los)
+  (cond [(empty? los) 0]
+        [else
+         (+ (string-length (first los))
+            (sum-of-lengths (rest los)))]))
+
+|#
