@@ -36,7 +36,7 @@
 ;; (@htdf vkline)
 ;; (@signature Posn Posn Image -> Image)
 ;; Add a simplified Koch fractal to image, going from p1 to p2.
-;; Assume p1 and p2 have same y-coordinate.
+;; CONSTRAINT: p1 and p2 have same y-coordinate.
 ;;
 ;; (define (vkline p1 p2 img) img) ;stub
 ;;

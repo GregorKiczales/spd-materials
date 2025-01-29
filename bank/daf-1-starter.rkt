@@ -84,6 +84,8 @@ Violating one or more will cause your solution to receive 0 marks.
 
 ;; <put the signature here>
 
+;; abstract fold for tree
+
 ;; <put the copy test here>
 
 ;; <put the count test here>

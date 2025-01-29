@@ -97,8 +97,7 @@
 ;; 
 ;; The function should consume a ListOfSchool. Call it cheapest.
 ;; 
-;; ;; ASSUME the list includes at least one school or else
-;; ;;        the notion of cheapest doesn't make sense
+;; You may constrain the list to include at least one school.
 ;;
 ;; Also note that the template for a function that consumes a non-empty 
 ;; list is:

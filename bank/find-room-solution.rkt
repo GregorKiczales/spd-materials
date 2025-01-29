@@ -140,6 +140,7 @@
 
 (@htdf lookup-room)
 (@signature String Map -> Room)
+;; produce room with given name in Map
 (define (lookup-room name map)
   (local [(define alist (with-input-from-string map read))
           (define entry (assoc name alist))]

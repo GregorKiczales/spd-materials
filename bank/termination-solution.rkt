@@ -38,7 +38,7 @@
 (@htdf hailstones)
 (@signature Integer -> (listof Integer))
 ;; produce hailstone sequence for n
-;; ASSUME: n >= 1
+;; CONSTRAINT: n >= 1
 (check-expect (hailstones 1) (list 1))
 (check-expect (hailstones 2) (list 2 1))
 (check-expect (hailstones 4) (list 4 2 1))

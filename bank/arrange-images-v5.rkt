@@ -129,7 +129,7 @@
 (@htdf insert)
 (@signature Image ListOfImage -> ListOfImage)
 ;; insert img in proper place in loi (in increasing order of size)
-;; ASSUME: loi is already sorted
+;; CONSTRAINT: loi is already sorted
 (check-expect (insert I1 empty) (cons I1 empty))
 (check-expect (insert I1 (cons I2 (cons I3 empty)))
               (cons I1 (cons I2 (cons I3 empty))))

@@ -125,7 +125,7 @@
 (@htdf union)
 (@signature (listof X) (listof X) -> (listof X))
 ;; produce list containing all elements of l1 and l2 w/ no duplicates
-;; ASSUME: l1 and l2 have no duplicates themselves
+;; CONSTRAINT: l1 and l2 have no duplicates themselves
 (check-expect (union empty empty) empty)
 (check-expect (union empty (list "a")) (list "a"))
 (check-expect (union (list "b") empty) (list "b"))
@@ -175,6 +175,7 @@ Cross Product of Types
 
 (@htdf lookup-room)
 (@signature String Map -> Room)
+;; produce room with given name in Map
 (define (lookup-room name map)
   (local [(define alist (with-input-from-string map read))
           (define entry (assoc name alist))]

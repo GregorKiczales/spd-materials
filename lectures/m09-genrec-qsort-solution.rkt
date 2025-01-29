@@ -9,7 +9,7 @@
 (@htdf qsort)
 (@signature (listof Number) -> (listof Number))
 ;; use quicksort to produce list of numbers in ascending order
-;; CONSTRAINT there are no duplicates
+;; CONSTRAINT: there are no duplicates
 (check-expect (qsort (list)) (list))
 (check-expect (qsort (list 2)) (list 2))
 (check-expect (qsort (list 5 4 6)) (list 4 5 6))

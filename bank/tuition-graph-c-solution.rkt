@@ -120,8 +120,8 @@
 ;; 
 ;; The function should consume a ListOfSchool. Call it cheapest.
 ;; 
-;; ;; ASSUME the list includes at least one school or else
-;; ;;        the notion of cheapest doesn't make sense
+;; You may constrain the list to include at least one school or else
+;; the notion of cheapest doesn't make sense.
 ;;
 ;; Also note that the template for a function that consumes a non-empty 
 ;; list is:
@@ -144,8 +144,7 @@
 (@htdf cheapest)
 (@signature ListOfSchool -> School)
 ;; produce the school with the lowest tuition
-;; ASSUME the list includes at least one school or else
-;;        the notion of cheapest doesn't make sense
+;; CONSTRAINT: the list includes at least one school
 (check-expect (cheapest (cons S1 empty)) S1)
 (check-expect (cheapest (cons S1 (cons S2 (cons S3 empty)))) S2)
 

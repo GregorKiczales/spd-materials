@@ -14,7 +14,7 @@
 (@htdf average)
 (@signature (listof Number) -> Number) 
 ;; Produce the average of a list of numbers
-;; ASSUME: lon contains at least 1 element
+;; CONSTRAINT: lon contains at least 1 element
 (check-expect (average (list 5)) 5)
 (check-expect (average (list 2 3 4)) 3) 
 

@@ -133,7 +133,7 @@ Do not change other helpers inside of solve.
 (@htdf solve)
 (@signature Maze -> Boolean)
 ;; produce true if maze is solvable, false otherwise
-;; CONSTRAINT maze has a true at least in the upper left
+;; CONSTRAINT: maze has a true at least in the upper left
 (check-expect (solve M1) #t)
 (check-expect (solve M2) #t)
 (check-expect (solve M3) #t) 
@@ -189,7 +189,7 @@ Do not change other helpers inside of solve.
 
           ;; Maze Pos -> Boolean
           ;; produce contents of maze at location p
-          ;; assume p is within bounds of maze
+          ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
             (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
     

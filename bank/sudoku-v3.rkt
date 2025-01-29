@@ -210,7 +210,7 @@
 (@htdf solve)
 (@signature Board -> Board or false)
 ;; produce a solution for bd; or false if bd is unsolvable
-;; Assume: bd is valid  
+;; CONSTRAINT: bd is valid  
 (check-expect (solve BD4) BD4s)
 (check-expect (solve BD5) BD5s)
 (check-expect (solve BD7) false)
@@ -239,7 +239,7 @@
 (@htdf solved?)
 (@signature Board -> Boolean)
 ;; produce true if board is solved
-;; Assume: board is valid, so it is solved if it is full
+;; CONSTRAINT: board is valid, so it is solved if it is full
 (check-expect (solved? BD1) false) 
 (check-expect (solved? BD2) false)
 (check-expect (solved? BD4s) true)
@@ -277,7 +277,7 @@
 (@htdf find-blank)
 (@signature Board -> Pos)
 ;; produces the position of the first blank square
-;; ASSUME: the board has at least one blank square
+;; CONSTRAINT: the board has at least one blank square
 ;; !!!
 (define (find-blank bd) 0) ;stub
 

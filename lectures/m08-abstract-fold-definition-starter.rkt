@@ -109,7 +109,7 @@ function definition and the two following check-expects:
 
 (@htdf fold-course)
 
-
+;; abstract fold for course
 
 
 

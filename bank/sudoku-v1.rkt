@@ -210,7 +210,7 @@
 (@htdf solve)
 (@signature Board -> Board or false)
 ;; produce a solution for bd; or false if bd is unsolvable
-;; Assume: bd is valid  
+;; CONSTRAINT: bd is valid  
 (check-expect (solve BD4) BD4s)
 (check-expect (solve BD5) BD5s)
 (check-expect (solve BD7) false)

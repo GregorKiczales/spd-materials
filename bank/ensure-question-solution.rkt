@@ -10,7 +10,7 @@
 (@htdf ensure-question)
 (@signature String -> String)
 ;; add ? to end of str unless it already ends in ?
-;; ASSUME: str is at least 1 long
+;; CONSTRAINT: str is at least 1 long
 (check-expect (ensure-question "Hello") "Hello?")
 (check-expect (ensure-question "OK?") "OK?")
 

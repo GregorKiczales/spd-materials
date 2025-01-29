@@ -101,7 +101,7 @@
 (@htdf main)
 (@signature WorldState -> WorldState)
 ;; run the interactive cantor set generator; call with (main 0)
-;; <no tests for main function>
+;; no tests for main function
 
 (@template-origin htdw-main)
 

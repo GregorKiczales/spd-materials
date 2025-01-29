@@ -64,7 +64,7 @@
 (@htdf insert)
 (@signature Integer String BST -> BST)
 ;; produce new BST in which key, val pair have been inserted in proper place
-;; ASSUME: key does not already exist in tree
+;; CONSTRAINT: key does not already exist in tree
 (check-expect (insert 2 "b" false) 
               (make-node 2 "b" false false))
 (check-expect (insert 1 "a" 

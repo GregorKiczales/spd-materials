@@ -207,7 +207,7 @@
 (@htdf render-team)
 (@signature ListOfPlayer Natural -> Image)
 ;; given a list of players lop on team t, render an image of the roster.
-;; ASSUME: All the players in lop are on team t
+;; CONSTRAINT: All the players in lop are on team t
 (check-expect (render-team empty 1) (render-cell "Team 1"))
 (check-expect (render-team 
                (cons (make-player "Samael" 2)

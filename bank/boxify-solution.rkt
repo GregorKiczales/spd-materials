@@ -9,10 +9,11 @@
 
 (@problem 1)
 (@htdf boxify)
+;; NOTE: A solution that follows the recipe but makes the box the same width
+;;       and height is also good. It just doesn't look quite as nice.
+
 (@signature Image -> Image)
 ;; Put box 2 pixels wider and taller around given image.
-;; NOTE: A solution that follows the recipe but makes the box the same width
-;;       and height is also good. It just doesn't look quite as nice. 
 (check-expect (boxify (circle 10 "solid" "red")) 
               (overlay (rectangle 22 22 "outline" "black")
                        (circle 10 "solid" "red")))

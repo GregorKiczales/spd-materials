@@ -46,6 +46,7 @@
 
 (@htdf lookup-room)
 (@signature String -> Room)
+;; produce room with given name in Map
 (define (lookup-room name)
   (local [(define (scan lst)
             (cond [(empty? lst) (error "No room named " name)]

@@ -82,7 +82,7 @@
 (@htdf solvable?)
 (@signature Maze -> Boolean)
 ;; produce true if maze is solvable, false otherwise
-;; assume maze has an empty square at least in the upper left
+;; CONSTRAINT: maze has an empty square at least in the upper left
 (check-expect (solvable? M1) #t)
 (check-expect (solvable? M2) #t)
 (check-expect (solvable? M3) #t) 
