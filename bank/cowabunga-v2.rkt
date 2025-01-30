@@ -80,9 +80,9 @@
 
 (define (main c)
   (big-bang c
-            (on-tick next-cow)       ; Cow -> Cow
-            (to-draw render-cow)     ; Cow -> Image
-            (on-key  handle-key)))   ; Cow KeyEvent -> Cow
+    (on-tick next-cow)       ; Cow -> Cow
+    (to-draw render-cow)     ; Cow -> Image
+    (on-key  handle-key)))   ; Cow KeyEvent -> Cow
 
 
 (@htdf next-cow)

@@ -107,10 +107,10 @@
 (@template-origin htdw-main)
 
 (define (main ws)
-  (big-bang ws                        ; WorldState
-            (on-draw render)          ; WorldState -> Image
-            (on-mouse handle-mouse))) ; WorldState Integer Integer MouseEvent
-                                      ;  -> WorldState
+  (big-bang ws                ; WorldState
+    (to-draw render)          ; WorldState -> Image
+    (on-mouse handle-mouse))) ; WorldState Integer Integer MouseEvent
+                              ;  -> WorldState
 
 
 (@htdf render)

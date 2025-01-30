@@ -72,8 +72,8 @@
 
 (define (main e)
   (big-bang e 
-            (to-draw render)      ; Editor -> Image
-            (on-key handle-key))) ; Editor KeyEvent -> Editor
+    (to-draw render)      ; Editor -> Image
+    (on-key handle-key))) ; Editor KeyEvent -> Editor
 
 
 (@htdf render)
