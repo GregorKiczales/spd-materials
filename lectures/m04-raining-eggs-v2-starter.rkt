@@ -80,7 +80,7 @@
 (@htdf main)
 (@signature ListOfEgg -> ListOfEgg)
 ;; start the world with ...
-;;
+;; No tests for main functions
 
 (@template-origin htdw-main)
 

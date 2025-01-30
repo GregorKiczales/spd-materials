@@ -89,7 +89,7 @@
 (@htdf SUBTRACT)
 (@signature NATURAL NATURAL -> NATURAL)
 ;; produce a - b
-;; ASSUME b is <= a
+;; CONSTRAINT: b is <= a
 (check-expect (SUBTRACT N2 N0) N2)
 (check-expect (SUBTRACT N6 N2) N4)
 

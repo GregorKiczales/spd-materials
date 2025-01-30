@@ -93,7 +93,7 @@
 (@htdf render-bst)
 (@signature BST -> Image)
 ;; produce SIMPLE rendering of bst
-;; ASSUME BST is relatively well balanced
+;; CONSTRAINT: BST is relatively well balanced
 (check-expect (render-bst false) MTTREE)
 (check-expect (render-bst BST1)
               (above (render-key-val 1 "abc") 

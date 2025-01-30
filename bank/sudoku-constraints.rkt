@@ -213,7 +213,7 @@
 (@htdf solve)
 (@signature Board -> Board or false)
 ;; produce solution for bd; or false if bd is unsolvable
-;; ASSUME: bd is already valid
+;; CONSTRAINT: bd is already valid
 (check-expect (solve BD4) BD4s)
 (check-expect (solve BD5) BD5s)
 (check-expect (solve BD7) false)
@@ -272,7 +272,7 @@
 (@htdf find-blank)
 (@signature Board -> Pos)
 ;; Produce the position of the blank square with the smallest constraint set
-;; ASSUME: the board contains at least 1 blank square
+;; CONSTRAINT: the board contains at least 1 blank square
 (check-expect (find-blank BD1) (r-c->pos 0 0))
 (check-expect (find-blank BD2) (r-c->pos 1 0))
 (check-expect (find-blank BD3) (r-c->pos 0 1))
@@ -311,7 +311,7 @@
 (@htdf bsubst)
 (@signature Board Pos Val -> Board)
 ;; produce new board with val at given position
-;; ASSUME: pos must identify a cell that is still a constraint set.
+;; CONSTRAINT: pos must identify a cell that is still a constraint set.
 (check-expect (bsubst BD1 (r-c->pos 0 0) 1)
               (local [(define X (rest ALL-VALS))]
                 (list 1 X X  X X X  X X X

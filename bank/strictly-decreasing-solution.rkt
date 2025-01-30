@@ -15,7 +15,7 @@
 (@htdf strictly-decreasing?)
 (@signature (listof Number) -> Boolean)
 ;; Produce true if the numbers in lon are strictly decreasing
-;; ASSUME: the list has at least two elements
+;; CONSTRAINT: the list has at least two elements
 (check-expect (strictly-decreasing? (list 1 1))   false)
 (check-expect (strictly-decreasing? (list 1 2))   false)
 (check-expect (strictly-decreasing? (list 2 1))   true)

@@ -13,11 +13,12 @@
 ;; videos.
 ;;
 ;; (define-struct school (name tuition next))
-;; ;; School is one of:
-;; ;;  - false
-;; ;;  - (make-school String Natural School)
-;; ;; interp. an arbitrary number of schools, where for each school we have its
-;; ;;         name and its tuition in USD
+;; School is one of:
+;;  - false
+;;  - (make-school String Natural School)
+;; interp. an arbitrary number of schools, where for each school we have its
+;;         name and its tuition in USD
+
 
 (@problem 1)
 ;; Confirm for yourself that this is a well-formed self-referential data 

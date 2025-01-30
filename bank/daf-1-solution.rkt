@@ -57,7 +57,8 @@ Consider the following data definitions.
             Y
             Tree
             -> X)
-                     
+;; abstract fold for Tree
+;
 (check-expect (fold-tree make-tree cons make-branch empty TTOP) TTOP)
 (check-expect (fold-tree (lambda (n rmr) rmr) + + 0 TTOP) (+ 1 2 3 4 11 12))
 

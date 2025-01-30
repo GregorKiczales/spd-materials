@@ -118,7 +118,7 @@
     (on-tick   spin-bears)      ; ListOfBear -> ListOfBear
     (to-draw   render-bears)    ; ListOfBear -> Image
     (on-mouse  handle-mouse)))  ; ListOfBear Integer Integer
-; MouseEvent -> ListOfBear
+;;                              ; MouseEvent -> ListOfBear
 
 
 (@htdf spin-bears)

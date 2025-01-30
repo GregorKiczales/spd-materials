@@ -14,47 +14,48 @@
 ;; getting an error message. Uncomment the code below and revise it until all
 ;; the tests run (even though several tests still fail).
 
+#|
+;; =================
+;; Data definitions:
 
-;;; =================
-;;; Data definitions:
-;
-;(@htdd LetterGrade)
-;;; LetterGrade is one of: 
-;;;  - "A"
-;;;  - "B"
-;;;  - "C"
-;;;  - "D"
-;;;  - "F"
-;;; interp. a grade in a course
-;;; <examples are redundant for enumerations>
-;
-;(@dd-template-rules one-of           ;5 cases
-;                    atomic-distinct  ;"A"
-;                    atomic-distinct  ;"B"
-;                    atomic-distinct  ;"C"
-;                    atomic-distinct  ;"D"
-;                    atomic-distinct) ;"F"
-;
-;#;
-;(define (fn-for-letter-grade lg)
-;  (cond [(string=? "A" lg) (...)]
-;        [(string=? "B" lg) (...)]
-;        [(string=? "C" lg) (...)]
-;        [(string=? "D" lg) (...)]
-;        [(string=? "F" lg) (...)]))
-;
-;
-;
-;;; =================
-;;; Functions:
-;
-;(@htdf pass?)
-;(@signature LetterGrade -> Boolean)
-;;; produce true if the LetterGrade represents a passing grade
-;(check-expect (pass? A) true)
-;(check-expect (pass? B) true)
-;(check-expect (pass? C) true)
-;(check-expect (pass? D) true)
-;(check-expect (pass? F) false)
-;
-;(define (pass? lg) true)
+(@htdd LetterGrade)
+;; LetterGrade is one of: 
+;;  - "A"
+;;  - "B"
+;;  - "C"
+;;  - "D"
+;;  - "F"
+;; interp. a grade in a course
+;; <examples are redundant for enumerations>
+
+(@dd-template-rules one-of           ;5 cases
+                    atomic-distinct  ;"A"
+                    atomic-distinct  ;"B"
+                    atomic-distinct  ;"C"
+                    atomic-distinct  ;"D"
+                    atomic-distinct) ;"F"
+
+#;
+(define (fn-for-letter-grade lg)
+  (cond [(string=? "A" lg) (...)]
+        [(string=? "B" lg) (...)]
+        [(string=? "C" lg) (...)]
+        [(string=? "D" lg) (...)]
+        [(string=? "F" lg) (...)]))
+
+
+
+;; =================
+;; Functions:
+
+(@htdf pass?)
+(@signature LetterGrade -> Boolean)
+;; produce true if the LetterGrade represents a passing grade
+(check-expect (pass? A) true)
+(check-expect (pass? B) true)
+(check-expect (pass? C) true)
+(check-expect (pass? D) true)
+(check-expect (pass? F) false)
+
+(define (pass? lg) true)
+|#

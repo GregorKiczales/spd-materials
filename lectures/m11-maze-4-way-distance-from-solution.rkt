@@ -116,7 +116,7 @@
 (@htdf distance-from)
 (@signature Maze Pos Pos -> Natural or false)
 ;; if path exists from start to end produce distance between
-;; CONSTRAINT maze has a true at least in the upper left
+;; CONSTRAINT: maze has a true at least in the upper left
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 4 1)) #f)
 
@@ -183,7 +183,7 @@
 
           ;; Maze Pos -> Boolean
           ;; produce contents of maze at location p
-          ;; assume p is within bounds of maze
+          ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
             (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
     

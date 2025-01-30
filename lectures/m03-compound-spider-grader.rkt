@@ -90,7 +90,7 @@
                 (check-expect (,tick-handler-name (make-spider (- BOT 3)  3)) (%%tock (make-spider (- BOT 3)  3)))
                 (check-expect (,tick-handler-name (make-spider (- BOT 3)  4)) (%%tock (make-spider (- BOT 3)  4))))))
 
-          (grade-bb-handler (on-draw draw-handler-name)
+          (grade-bb-handler (to-draw draw-handler-name)
             (weights (*)
               (grade-signature (Spider -> Image))
               (grade-template-origin (Spider))

@@ -64,7 +64,7 @@
 
 (@htdf remove-acts)
 (@signature (Accounts -> Boolean) Accounts -> Accounts)
-;; remove accounts that satisfy pred predicate
+;; remove accounts that satisfy predicate
 (check-expect (local [(define (yes? act) true)]
                 (remove-acts yes? false))
               false)
@@ -168,7 +168,7 @@
 (@htdf join)
 (@signature Accounts Accounts -> Accounts)
 ;; Combine two Accounts's into one
-;; ASSUME: all ids in act1 are less than the ids in act2
+;; CONSTRAINT: all ids in act1 are less than the ids in act2
 (check-expect (join ACT42 false) ACT42)
 (check-expect (join false ACT42) ACT42)
 (check-expect (join ACT1 ACT4) 

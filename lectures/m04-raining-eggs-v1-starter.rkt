@@ -56,7 +56,7 @@
 (@htdf main)
 (@signature WS -> WS)
 ;; start the world with ...
-;;
+;; No tests for main functions
 
 (@template-origin htdw-main)
 

@@ -129,6 +129,6 @@
 (@htdf insert)
 (@signature Image ListOfImage -> ListOfImage)
 ;; insert img in proper place in loi (in increasing order of size)
-;; ASSUME: loi is already sorted
+;; CONSTRAINT: loi is already sorted
 ;; !!!
 (define (insert img loi) loi)

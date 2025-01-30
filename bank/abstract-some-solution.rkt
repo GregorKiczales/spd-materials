@@ -62,35 +62,35 @@
 
 ;; For reference, here are the function definitions for the two original 
 ;; functions.
-;;
-;; (@htdf some-positive?)
-;; (@signature (listof Number) -> Boolean)
-;; ;; produce true if some number in lon is positive
-;; (check-expect (some-positive? empty) false)
-;; (check-expect (some-positive? (list -2 -3 4)) true)
-;; (check-expect (some-positive? (list -2 -3 -4)) false)
-;; 
-;; (@template-origin (listof Number))
-;; 
-;; (define (some-positive? lon)
-;;   (cond [(empty? lon) false]
-;;         [else
-;;          (or (positive? (first lon))
-;;              (some-positive? (rest lon)))]))
-;; 
-;; 
-;; (@htdf some-negative?)
-;; (@signature (listof Number) -> Boolean)
-;; ;; produce true if some number in lon is negative
-;; (check-expect (some-negative? empty) false)
-;; (check-expect (some-negative? (list 2 3 -4)) true)
-;; (check-expect (some-negative? (list 2 3 4)) false)
-;;
-;; (@template-origin (listof Number))
-;;
-;; (define (some-negative? lon)
-;;   (cond [(empty? lon) false]
-;;         [else
-;;          (or (negative? (first lon))
-;;              (some-negative? (rest lon)))]))
+#|
+(@htdf some-positive?)
+(@signature (listof Number) -> Boolean)
+;; produce true if some number in lon is positive
+(check-expect (some-positive? empty) false)
+(check-expect (some-positive? (list -2 -3 4)) true)
+(check-expect (some-positive? (list -2 -3 -4)) false)
+ 
+(@template-origin (listof Number))
+ 
+(define (some-positive? lon)
+  (cond [(empty? lon) false]
+        [else
+         (or (positive? (first lon))
+             (some-positive? (rest lon)))]))
+ 
+ 
+(@htdf some-negative?)
+(@signature (listof Number) -> Boolean)
+;; produce true if some number in lon is negative
+(check-expect (some-negative? empty) false)
+(check-expect (some-negative? (list 2 3 -4)) true)
+(check-expect (some-negative? (list 2 3 4)) false)
 
+(@template-origin (listof Number))
+
+(define (some-negative? lon)
+  (cond [(empty? lon) false]
+        [else
+         (or (negative? (first lon))
+             (some-negative? (rest lon)))]))
+|#

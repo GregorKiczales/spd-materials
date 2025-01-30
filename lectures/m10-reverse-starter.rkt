@@ -13,7 +13,7 @@
 ;;
 (@htdf copy)
 (@signature (listof X) -> (listof X))
-
+;; produce a copy of lox
 (check-expect (copy empty) empty)
 (check-expect (copy (list 1)) (list 1))
 (check-expect (copy (list 1 2 3)) (list 1 2 3))
@@ -40,7 +40,7 @@
 (@htdf rev)
 
 (@signature (listof X) -> (listof X))
-
+;; produce the reverse of lox (same elememts, opposite order)
 (check-expect (rev empty) empty)
 (check-expect (rev (list 1)) (list 1))
 (check-expect (rev (list "a" "b" "c")) (list "c" "b" "a"))

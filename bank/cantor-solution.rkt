@@ -81,8 +81,9 @@
 
 ;; In a more elaborate version of the program the world state
 ;; could be the last x, y position of the mouse, something like:
-;; ;; WorldState is (make-posn Number Number)
-;; ;; interp. last x and y coordinate of mouse
+;;
+;; WorldState is (make-posn Number Number)
+;; interp. last x and y coordinate of mouse
 
 (@htdd WorldState)
 ;; WorldState is Number
@@ -101,15 +102,15 @@
 (@htdf main)
 (@signature WorldState -> WorldState)
 ;; run the interactive cantor set generator; call with (main 0)
-;; <no tests for main function>
+;; no tests for main function
 
 (@template-origin htdw-main)
 
 (define (main ws)
-  (big-bang ws                        ; WorldState
-            (on-draw render)          ; WorldState -> Image
-            (on-mouse handle-mouse))) ; WorldState Integer Integer MouseEvent
-                                      ;  -> WorldState
+  (big-bang ws                ; WorldState
+    (to-draw render)          ; WorldState -> Image
+    (on-mouse handle-mouse))) ; WorldState Integer Integer MouseEvent
+                              ;  -> WorldState
 
 
 (@htdf render)

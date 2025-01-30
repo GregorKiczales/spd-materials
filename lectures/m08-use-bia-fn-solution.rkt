@@ -59,6 +59,7 @@
 (@problem 3)
 (@htdf odds-minus-evens)
 (@signature (listof Integer) -> Integer)
+;; produce result of adding all odd numbers and subtracting all even
 (check-expect (odds-minus-evens (list 3)) 3)
 (check-expect (odds-minus-evens (list 2)) -2)
 (check-expect (odds-minus-evens (list 1 4 5 2)) 0)

@@ -97,11 +97,11 @@
 (@template-origin htdw-main)
 
 (define (main lod0)
-  (big-bang lod0                      ; ListOfDrop
-            (on-mouse handle-mouse)   ; ListOfDrop Integer Integer
-                                      ; MouseEvent -> ListOfDrop
-            (on-tick  next-drops)     ; ListOfDrop -> ListOfDrop
-            (to-draw  render-drops))) ; ListOfDrop -> Image
+  (big-bang lod0              ; ListOfDrop
+    (on-mouse handle-mouse)   ; ListOfDrop Integer Integer MouseEvent
+    ;;                        ;   -> ListOfDrop
+    (on-tick  next-drops)     ; ListOfDrop -> ListOfDrop
+    (to-draw  render-drops))) ; ListOfDrop -> Image
 
 
 (@htdf handle-mouse)

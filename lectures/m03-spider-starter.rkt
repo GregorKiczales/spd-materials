@@ -61,7 +61,7 @@ features.
 (@htdf main)
 (@signature WS -> WS)
 ;; start the world with ...
-;;
+;; no tests for main functions
 
 (@template-origin htdw-main)
 
