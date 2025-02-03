@@ -68,20 +68,14 @@
 
 (@template-origin Movie)
 
-(@template
- (define (fn-for-movie m)
-   (... (movie-title m)
-        (movie-budget m)
-        (movie-year m))))
-
-#;
-(define (fn-for-movie m1 m2)
-  (... (movie-title m1)
-       (movie-budget m1)
-       (movie-year m1)
-       (movie-title m2)
-       (movie-budget m2)
-       (movie-year m2)))
+(@template 
+ (define (most-recent-title m1 m2)
+   (... (movie-title m1)
+        (movie-budget m1)
+        (movie-year m1)
+        (movie-title m2)
+        (movie-budget m2)
+        (movie-year m2))))
 
 (define (most-recent-title m1 m2)
   (if (>= (movie-year m1) (movie-year m2))
