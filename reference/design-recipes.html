@@ -534,7 +534,9 @@ It can also be useful to add constant values which are extremely likely to be us
 </tr>
 </tbody>
 </table>
-<p>The template above is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the compound rule. Then for each of the selectors, the result type of the selector (Number in the case of ball-x and ball-y) is used to decide whether the selector call itself should be wrapped in a call to another template function expression. In this case, where the result types are primitive, no additional wrapping occurs. C.f. cases below when the reference rule applies.</p>
+    <p>The template above is formed according to the <a href="#Data">Data Driven Templates recipe</a> using the compound rule. Then for each of the selectors, the result type of the selector (Number in the case of ball-x and ball-y) is used to decide whether the selector call itself should be wrapped in a call to another template function expression. In this case, where the result types are primitive, no additional wrapping occurs. C.f. cases below when the reference rule applies.</p>
+
+    
 <h4>Guidance on Data Examples and Function Example/Tests</h4>
 <p>For compound data definitions it is often useful to have numerous examples, for example to illustrate special cases. For a snake in a snake game you might have an example where the snake is very short, very long, hitting the edge of a box, etc. These data examples can also be useful for writing function tests because they save space in each <tt>check-expect</tt>.</p>
 <p><br /> <a id="Reference"></a></p>
@@ -1157,9 +1159,35 @@ It can also be useful to add constant values which are extremely likely to be us
 <li>If a subtask involves special domain knowledge a helper function should be used.</li>
 <li>In addition always keep the "one task per function" goal in mind. If part of a function you are designing seems to be a well-defined subtask put that into a helper function.</li>
 </ol>
+
+<hr /><hr /><hr />
+<div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+
+<h2>Functions Consuming 2 or More Compound Data Values</h2>
+
+<p>When a function consumes two or more arguments of a compound data type, and consumes no other complex types, then the template is formed by including the templates for each parameter.  For example:</p>
+<table title="Two-Ball Template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
+<tbody>
+<tr>
+<td>
+<pre>
+(@template-origin Ball)
+
+(define (collide-balls b1 b2)
+  (... (ball-x b1)
+       (ball-y b1)
+       (ball-x b2)
+       (ball-y b2)))
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
 <p> <a name="2One-of"></a></p>
 <hr /><hr /><hr />
 <div align="right"><a href="#top">Back to Design Recipes Table</a></div>
+
 <h2>Functions On 2 One-Of Data</h2>
 <p>This page outlines the variations in the normal HtDF recipe when designing a function that consumes 2 data that have a one-of in their type comments. Examples of functions for which this applies include functions with the following signatures:</p>
 <ol>
