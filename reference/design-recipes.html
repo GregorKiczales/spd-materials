@@ -426,8 +426,8 @@ It can also be useful to add constant values which are extremely likely to be us
 <pre>(@template-origin KeyEvent)
 
 (@template
- (define (fn-for-key-event kevt)
-   (cond [(key=? " " kevt) (...)]
+ (define (fn-for-key-event ke)
+   (cond [(key=? ke " ") (...)]
          [else
           (...)])))
 </pre>
