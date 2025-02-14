@@ -122,7 +122,7 @@
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
 (define (solve m)
-  (local [(define R (sqrt (length m)))	  
+  (local [(define rank (sqrt (length m)))	  
 
           ;; trivial:   reach bottom right corner, or previously traversed pos
           ;; reduction: valid positions among up, down, left, right
@@ -150,8 +150,8 @@
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
           (define (solved? p)
-            (and (= (pos-x p) (sub1 R))
-                 (= (pos-y p) (sub1 R))))
+            (and (= (pos-x p) (sub1 rank))
+                 (= (pos-y p) (sub1 rank))))
 
 
           ;; Pos -> (listof Pos)
@@ -160,19 +160,19 @@
             (local [(define x (pos-x p))
                     (define y (pos-y p))]
               (filter (lambda (p1)
-                        (and (<= 0 (pos-x p1) (sub1 R))  ;legal x
-                             (<= 0 (pos-y p1) (sub1 R))  ;legal y
-                             (open? (maze-ref m p1))))   ;open?
-                      (list (make-pos x (sub1 y))        ;up
-                            (make-pos x (add1 y))        ;down
-                            (make-pos (sub1 x) y)        ;left
-                            (make-pos (add1 x) y)))))    ;right
+                        (and (<= 0 (pos-x p1) (sub1 rank)) ;legal x
+                             (<= 0 (pos-y p1) (sub1 rank)) ;legal y
+                             (open? (maze-ref m p1))))     ;open?
+                      (list (make-pos x (sub1 y))          ;up
+                            (make-pos x (add1 y))          ;down
+                            (make-pos (sub1 x) y)          ;left
+                            (make-pos (add1 x) y)))))      ;right
 
           ;; Maze Pos -> Boolean
           ;; produce contents of maze at location p
           ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
-            (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
+            (list-ref m (+ (pos-x p) (* rank (pos-y p)))))]
     
     (solve/p (make-pos 0 0) empty)))
 
@@ -301,7 +301,7 @@
 (@template-origin genrec arb-tree try-catch accumulator)
 
 (define (find-path m)
-  (local [(define R (sqrt (length m)))
+  (local [(define rank (sqrt (length m)))
 
           ;; trivial:   reaches lower right, previously seen position
           ;; reduction: move up, down, left, right if possible
@@ -331,8 +331,8 @@
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
           (define (solved? p)
-            (and (= (pos-x p) (sub1 R))
-                 (= (pos-y p) (sub1 R))))
+            (and (= (pos-x p) (sub1 rank))
+                 (= (pos-y p) (sub1 rank))))
 
 
           ;; Pos -> (listof Pos)
@@ -341,19 +341,19 @@
             (local [(define x (pos-x p))
                     (define y (pos-y p))]
               (filter (lambda (p1)
-                        (and (<= 0 (pos-x p1) (sub1 R))  ;legal x
-                             (<= 0 (pos-y p1) (sub1 R))  ;legal y
-                             (open? (maze-ref m p1))))   ;open?
-                      (list (make-pos x (sub1 y))        ;up
-                            (make-pos x (add1 y))        ;down
-                            (make-pos (sub1 x) y)        ;left
-                            (make-pos (add1 x) y)))))    ;right
+                        (and (<= 0 (pos-x p1) (sub1 rank)) ;legal x
+                             (<= 0 (pos-y p1) (sub1 rank)) ;legal y
+                             (open? (maze-ref m p1))))     ;open?
+                      (list (make-pos x (sub1 y))          ;up
+                            (make-pos x (add1 y))          ;down
+                            (make-pos (sub1 x) y)          ;left
+                            (make-pos (add1 x) y)))))      ;right
 
           ;; Maze Pos -> Boolean
           ;; produce contents of maze at location p
           ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
-            (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
+            (list-ref m (+ (pos-x p) (* rank (pos-y p)))))]
     
     (find-path/p (make-pos 0 0) empty)))
 
@@ -391,9 +391,9 @@
                            
 
 (define (render-maze-w/path m path)
-  (local [(define S (sqrt (length m)))
+  (local [(define rank (sqrt (length m)))
 
-          (define BKGRD (square (* S SQUARE-SZ) "outline" "black"))
+          (define bkgrd (square (* rank SQUARE-SZ) "outline" "black"))
 
           ;; foldr w/ extra accumulator
           ;; i is Integer; index number of (first lov) in original m
@@ -402,8 +402,8 @@
                   [else
                    ;; be prepared to put RED over wall because the path
                    ;; might be buggy
-                   (place-image (if (member (make-pos (remainder i S)
-                                                      (quotient i S))
+                   (place-image (if (member (make-pos (remainder i rank)
+                                                      (quotient i rank))
                                             path)
                                     (overlay RED (if (first lov) OS WS))
                                     (if (first lov) OS WS))
@@ -412,8 +412,8 @@
                                 (fold (rest lov) (add1 i) img))]))
 
           (define (i->x i)
-            (floor (+ (* (remainder i S) SQUARE-SZ) (/ SQUARE-SZ 2))))
+            (floor (+ (* (remainder i rank) SQUARE-SZ) (/ SQUARE-SZ 2))))
           (define (i->y i)
-            (floor (+ (* (quotient  i S) SQUARE-SZ) (/ SQUARE-SZ 2))))]
+            (floor (+ (* (quotient  i rank) SQUARE-SZ) (/ SQUARE-SZ 2))))]
     
-    (fold m 0 BKGRD)))
+    (fold m 0 bkgrd)))

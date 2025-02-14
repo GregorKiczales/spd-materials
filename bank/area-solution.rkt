@@ -13,8 +13,8 @@
 (check-expect (area 2) (* 2 2))
 (check-expect (area 2.5) (* 2.5 2.5))
 
-;(define (area s) ; stub
-;  2)
+;(define (area s) 0) ; stub
+
 
 (@template-origin Number)
 

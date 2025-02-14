@@ -154,7 +154,7 @@ and delete or comment out the others.
 (@template-origin encapsulated genrec arb-tree accumulator)
 
 (define (solvable-no-revisits? m)
-  (local [(define R (sqrt (length m)))
+  (local [(define rank (sqrt (length m)))
 
           ;; trivial:    
           ;; reduction: 
@@ -175,8 +175,8 @@ and delete or comment out the others.
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
           (define (solved? p)
-            (and (= (pos-x p) (sub1 R))
-                 (= (pos-y p) (sub1 R))))
+            (and (= (pos-x p) (sub1 rank))
+                 (= (pos-y p) (sub1 rank))))
 
 
           ;; Pos -> (listof Pos)
@@ -185,19 +185,19 @@ and delete or comment out the others.
             (local [(define x (pos-x p))
                     (define y (pos-y p))]
               (filter (lambda (p1)
-                        (and (<= 0 (pos-x p1) (sub1 R))  ;legal x
-                             (<= 0 (pos-y p1) (sub1 R))  ;legal y
-                             (open? (maze-ref m p1))))   ;open?
-                      (list (make-pos x (sub1 y))        ;up
-                            (make-pos x (add1 y))        ;down
-                            (make-pos (sub1 x) y)        ;left
-                            (make-pos (add1 x) y)))))    ;right
+                        (and (<= 0 (pos-x p1) (sub1 rank)) ;legal x
+                             (<= 0 (pos-y p1) (sub1 rank)) ;legal y
+                             (open? (maze-ref m p1))))     ;open?
+                      (list (make-pos x (sub1 y))          ;up
+                            (make-pos x (add1 y))          ;down
+                            (make-pos (sub1 x) y)          ;left
+                            (make-pos (add1 x) y)))))      ;right
 
           ;; Maze Pos -> Boolean
           ;; produce contents of maze at location p
           ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
-            (list-ref m (+ (pos-x p) (* R (pos-y p)))))]
+            (list-ref m (+ (pos-x p) (* rank (pos-y p)))))]
     
     (fn-for-p (make-pos 0 0) empty empty)))
 

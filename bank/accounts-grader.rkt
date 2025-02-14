@@ -27,8 +27,6 @@
 
       (grade-problem 3
 
-        (check-2-semi-comments)
-        #;
         (grade-design-abstract-fold fold-accounts
 
 

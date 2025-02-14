@@ -154,7 +154,7 @@
 (@template-origin fn-composition encapsulated) ;could also add use-abstract-fn and Pos
 
 (define (next-ps m p)
-  (local [(define SIZE (sqrt (length m)))
+  (local [(define size (sqrt (length m)))
           (define (new-ps p)
             (local [(define x (pos-x p))
                     (define y (pos-y p))]
@@ -165,8 +165,8 @@
             (filter valid? lop))
           
           (define (valid? p)
-            (and (<= 0 (pos-x p) (- SIZE 1))
-                 (<= 0 (pos-y p) (- SIZE 1))
+            (and (<= 0 (pos-x p) (- size 1))
+                 (<= 0 (pos-y p) (- size 1))
                  (mref m p)))]
     
     (valid-only m (new-ps p))))
@@ -202,23 +202,23 @@
 (@template-origin encapsulated fn-composition use-abstract-fn)
 
 (define (render m)
-  (local [(define SIZE (sqrt (length m)))          ;for 4x4 this is 4
-          (define IDXS (build-list SIZE identity)) ;for 4x4 this is
+  (local [(define size (sqrt (length m)))          ;for 4x4 this is 4
+          (define idxs (build-list size identity)) ;for 4x4 this is
                                                    ;(list 0 1 2 3)
-          (define CELL-SIZE 30)
-          (define T (square CELL-SIZE "solid" "light gray"))
-          (define F (square CELL-SIZE "solid" "black"))
+          (define cell-size 30)
+          (define t (square cell-size "solid" "light gray"))
+          (define f (square cell-size "solid" "black"))
           
           (define (cv->image cv)
-            (cond [cv   OPEN]
-                  [else WALL]))]
+            (cond [cv   open]
+                  [else wall]))]
     
     (foldr (lambda (i img)
              (above (foldr (lambda (j img)
-                             (beside (cv->image (list-ref m (+ (* i SIZE) j)))
+                             (beside (cv->image (list-ref m (+ (* i size) j)))
                                      img))
                            empty-image
-                           IDXS)
+                           idxs)
                     img))
            empty-image
-           IDXS)))
+           idxs)))
