@@ -17,15 +17,15 @@
 (@htdd Position)
 ;; Position is Natural
 ;; interp. positions on the board
-;;         if    N is the number of queens
-;;         then  (sqr N) is the number of positions on the board
-;;         so    this number should be in [0, (- (sqr N) 1)]
+;;         if    rank is the number of queens
+;;         then  (sqr rank) is the number of positions on the board
+;;         so    this number should be in [0, (- (sqr rank) 1)]
 (define P1 0)        ;upper left corner of board
 (define P2 (- 16 1)) ;lower right corner of 4x4 board
 
 
 (@htdd Board)
-;; Board is (listof Position)  up to N elements long
+;; Board is (listof Position)  up to rank elements long
 ;; interp. the positions of the queens that have been placed on the board
 (define BD1 empty)           ;no queens placed
 (define BD2 (list 0))        ;one queen in upper left corner
@@ -36,16 +36,16 @@
 ;; =================
 ;; Functions:
 
-;; NOTE about following function. It could have been designed with N as a
+;; NOTE about following function. It could have been designed with rank as a
 ;; top-level constant and all the locally defined functions as top-level
 ;; functions. But doing it the way we have done below, makes it easy to make
-;; the top-level nqueens function consume N which is kind of nice.  The
+;; the top-level nqueens function consume rank which is kind of nice.  The
 ;; trampoline starts the actual search out by calling fn-for-bd with an empty
 ;; board.
 
 (@htdf nqueens)
 (@signature Natural -> Board or false)
-;; produce first found solution for n queens of size N; or false if none exists
+;; produce first found solution for n queens of rank; or false if none exists
 (check-expect (nqueens 1) (list 0))
 (check-expect (nqueens 2) false)
 (check-expect (nqueens 3) false)
@@ -57,7 +57,7 @@
 
 (@template-origin encapsulated try-catch genrec arb-tree)
 
-(define (nqueens N)          
+(define (nqueens rank)          
   ;; Termination argument:
   ;; Trivial cases:
   ;;   bd is solved or there are no valid next boards left to explore
@@ -87,8 +87,8 @@
           
           
           ;; Board -> Boolean
-          ;; Produce true if board has N queens.
-          (define (solved? bd) (= (length bd) N))
+          ;; Produce true if board has rank queens.
+          (define (solved? bd) (= (length bd) rank))
 
 
           ;; Board -> (listof Board)
@@ -98,7 +98,7 @@
             (map (lambda (p2) (cons p2 bd))
                  (filter (lambda (p2)
                            (not-attacks-existing-queen? p2 bd))
-                         (build-list (sqr N) identity)))) ;all positions
+                         (build-list (sqr rank) identity)))) ;all positions
 
           (define (not-attacks-existing-queen? p bd)
             (andmap (lambda (existing-queen)
@@ -119,7 +119,7 @@
           ;                                (andmap (lambda (p1)     
           ;                                          (not (attack? p2 p1)))
           ;                                        bd)))
-          ;                         (build-list (sqr N) identity)))))
+          ;                         (build-list (sqr rank) identity)))))
                     
           
           ;; Position Position -> Boolean
@@ -136,9 +136,9 @@
           
           
           ;; Pos -> Natural
-          ;; produce the row or column number in [0, N) for the given position
-          (define (pos-x p) (remainder p N))
-          (define (pos-y p) (quotient  p N))]
+          ;; produce the row or column number in [0, rank) for the given position
+          (define (pos-x p) (remainder p rank))
+          (define (pos-y p) (quotient  p rank))]
     
     (fn-for-bd empty)))
 

@@ -147,7 +147,7 @@
 (@template-origin encapsulated genrec arb-tree accumulator htdw-main)
 
 (define (main m)
-  (local [(define R (sqrt (length m)))
+  (local [(define rank (sqrt (length m)))
           ;; ----
           ;; tail recursion, with visited accumulator and tandem worklists
 
@@ -205,15 +205,17 @@
 
           ;; WS -> Image
           (define (render ws)
-            (local [(define S (sqrt (length m)))          
-                    (define BKGRD  (square (* S SQUARE-SZ) "solid" "white"))
-                    (define BORDER (square (* S SQUARE-SZ) "outline" "black"))
-                    (define SPACER (square SQUARE-SZ "outline" "transparent"))]
-              (above (overlay BORDER
+            (local [(define bkgrd
+                      (square (* rank SQUARE-SZ) "solid" "white"))
+                    (define border
+                      (square (* rank SQUARE-SZ) "outline" "black"))
+                    (define spacer
+                      (square SQUARE-SZ "outline" "transparent"))]
+              (above (overlay border
                               (foldr (lambda (fn img) (fn m ws img))
-                                     BKGRD
+                                     bkgrd
                                      DECORATORS))
-                     SPACER
+                     spacer
                      (overlay/align "left" "top"
                                     (render-call ws)
                                     (rectangle TEXT-WIDTH TEXT-HEIGHT
@@ -225,8 +227,8 @@
           ;; Pos -> Boolean          
           ;; produce true if pos is at the lower right
           (define (solved? p)
-            (and (= (pos-x p) (sub1 R))
-                 (= (pos-y p) (sub1 R))))
+            (and (= (pos-x p) (sub1 rank))
+                 (= (pos-y p) (sub1 rank))))
 
 
           ;; Pos -> (listof Pos)
@@ -235,8 +237,8 @@
             (local [(define x (pos-x p))
                     (define y (pos-y p))]
               (filter (lambda (p1)
-                        (and (<= 0 (pos-x p1) (sub1 R))  ;legal x
-                             (<= 0 (pos-y p1) (sub1 R))  ;legal y
+                        (and (<= 0 (pos-x p1) (sub1 rank))  ;legal x
+                             (<= 0 (pos-y p1) (sub1 rank))  ;legal y
                              (open? (maze-ref m p1))))   ;open?
                       (list (make-pos x (sub1 y))        ;up
                             (make-pos x (add1 y))        ;down
@@ -247,7 +249,7 @@
           ;; produce contents of maze at location p
           ;; CONSTRAINT: p is within bounds of maze
           (define (maze-ref m p)
-            (list-ref m (+ (pos-x p) (* R (pos-y p)))))
+            (list-ref m (+ (pos-x p) (* rank (pos-y p)))))
 
           (define INIT-WS
             (make-solve/p-args (make-pos 0 0)

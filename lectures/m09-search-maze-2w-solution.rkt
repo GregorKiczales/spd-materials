@@ -240,19 +240,19 @@ HOW WE GOT THERE.
                            
 
 (define (render-maze-w/path m path)
-  (local [(define S (sqrt (length m)))     
+  (local [(define rank (sqrt (length m)))
 
-          (define BKGRD (square (* S SQUARE-SZ) "outline" "black"))
+          (define bkgrd (square (* rank SQUARE-SZ) "outline" "black"))
 
           ;; foldr w/ extra accumulator
           ;; i is Integer; index number of (first lov) in original m
-          (define (fold lov i img)       
+          (define (fold lov i img)
             (cond [(empty? lov) img]
                   [else
                    ;; be prepared to put RED over wall because the path
-                   ;; might be buggy    
-                   (place-image (if (member (make-pos (remainder i S)
-                                                      (quotient i S))
+                   ;; might be buggy
+                   (place-image (if (member (make-pos (remainder i rank)
+                                                      (quotient i rank))
                                             path)
                                     (overlay RED (if (first lov) OS WS))
                                     (if (first lov) OS WS))
@@ -260,9 +260,9 @@ HOW WE GOT THERE.
                                 (i->y i)
                                 (fold (rest lov) (add1 i) img))]))
 
-          (define (i->x i)       
-            (floor (+ (* (remainder i S) SQUARE-SZ) (/ SQUARE-SZ 2))))
-          (define (i->y i)    
-            (floor (+ (* (quotient  i S) SQUARE-SZ) (/ SQUARE-SZ 2))))]
+          (define (i->x i)
+            (floor (+ (* (remainder i rank) SQUARE-SZ) (/ SQUARE-SZ 2))))
+          (define (i->y i)
+            (floor (+ (* (quotient  i rank) SQUARE-SZ) (/ SQUARE-SZ 2))))]
     
-    (fold m 0 BKGRD)))
+    (fold m 0 bkgrd)))

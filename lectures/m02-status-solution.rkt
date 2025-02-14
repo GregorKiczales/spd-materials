@@ -25,6 +25,8 @@
 (check-expect (can-vote? 0) false)
 (check-expect (can-vote? 1) true)
 
+;(define (can-vote? s) false) ;stub
+
 (@template-origin Natural)
 
 (define (can-vote? s)
@@ -56,6 +58,8 @@
 ;; produces true if a person with given status is eligible to vote
 (check-expect (can-vote? "minor") false)
 (check-expect (can-vote? "adult") true)
+
+;(define (can-vote? s) false) ;stub
 
 (@template-origin Status)
 

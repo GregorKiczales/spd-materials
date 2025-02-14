@@ -13,8 +13,7 @@
 (check-expect (yell "hello") "hello!")
 (check-expect (yell "bye") (string-append "bye" "!"))
 
-;(define (yell s)  ;stub
-;  "a")
+;(define (yell s) "a")  ;stub
 
 (@template-origin String)
 
