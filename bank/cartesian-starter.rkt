@@ -10,10 +10,9 @@
 ;; In interactive games it is often useful to be able to determine the distance
 ;; between two points on the screen. We can describe those points using
 ;; Cartesian coordinates as four numbers: x1, y1 and x2, y2. 
-;; The formula for the distance between those points is found in this link:
+;; The formula for the distance between those points is:
 ;;
-;; https://s3.amazonaws.com/edx-course-spdx-kiczales/HTC/
-;;  problems/cartesian-formula.png
+;; sqrt((x2 - x1)^2 + (y2 - y1)^2)
 ;;
 ;; Use the How to Design Functions (HtDF) recipe to design a function called
 ;; distance that consumes four numbers representing two points and produces the

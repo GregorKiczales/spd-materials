@@ -289,7 +289,12 @@
 
 <p><br /><a name="Selector"></a></p>
 
-<dl><dt>Selector</dt><dd>A selector is a function that is used on compound data to "select for" (or, to get the values of) the different fields of the data. The selector name consists of the data structure's name followed by a dash and then the name of the field that the selector&nbsp; <span style="color: #323333; font-family: 'Helvetica Neue'; line-height: normal;">accesses</span>&nbsp; The argument for the selector should be the specific compound data for which you want to access the field. For example, with a data definition such as:&nbsp; <br /> <img src="https://spark-public.s3.amazonaws.com/programdesign/image_files/selector.jpg" alt="selector " title="Image: https://spark-public.s3.amazonaws.com/programdesign/image_files/selector.jpg" /> <br />Then for a cat c, the expressions would be <tt>(cat-x c)</tt> to get the cat's x-coordinate and <tt>(cat-y c)</tt> to get the cat's y-coordinate.</dd></dl>
+<dl><dt>Selector</dt><dd>A selector is a function that is used on compound data to "select" (get the value of) one of the fields of the compound data. The selector name consists of the structure's name followed by a dash and then the name of the field that the selector accesses. The argument for the selector should be the specific compound data for which you want to access the field. For example, with a structure definition such as:<br>
+
+<pre>
+(define-struct cat (x y))
+</pre>
+Then for a cat c, the expressions would be <tt>(cat-x c)</tt> to get the cat's x field value and <tt>(cat-y c)</tt> to get the cat's y field value.</dd></dl>
 
 
 <p><br /><a name="Signature"></a></p>

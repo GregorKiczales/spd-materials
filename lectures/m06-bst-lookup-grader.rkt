@@ -79,7 +79,7 @@
                                [else (lookup (node-l t) k)])])))
 
               (grade-template-origin (BST))
-              (grade-questions-intact lookup BST)
+              (grade-questions-intact lookup BST Integer)
               
               (grade-submitted-tests)
               (grade-additional-tests 1

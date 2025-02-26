@@ -1519,7 +1519,7 @@ Note that once we have local, this gets re-written as:
 <a name="TempBlend"></a>
 <h2>Template Blending</h2>
 <p>To understand template blending its important to understand that templates are what we know about the core of a function (or set of functions) before we get to the details. Data driven (or structural recursion) templates are that, backtracking templates are that, and generative recursion templates are that.<i></i></p>
-<p>In some cases we know more than one thing about the core structure of a function (or set of functions). In the <a href="https://s3.amazonaws.com/edx-course-spdx-kiczales/HTC/sudoku-starter.rkt" target="[object Object]">sudoku-solver</a>&nbsp;for example&nbsp;three different templates apply to the solve functions.</p>
+<p>In some cases we know more than one thing about the core structure of a function (or set of functions). In the <a href="https://cs110.students.cs.ubc.ca/bank/sudoku-starter.rkt" target="[object Object]">sudoku-solver</a>&nbsp;for example&nbsp;three different templates apply to the solve functions.</p>
 <ul>
 <li><b>arbitrary-arity tree</b> - we consider each board to have a set of next boards formed by filling the first empty cell with the numbers from 1 - 9. So this forms an arbitrary-arity tree (the arity is actually [0, 9]).</li>
 <li><b>generative recursion</b> - while each board has a set of next boards that set is included in the representation of the board. Instead those next boards have to be generated. So we have a generated arbitrary-arity tree.</li>

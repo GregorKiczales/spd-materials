@@ -77,12 +77,10 @@ nodes in the tree that have an odd key.(Hint - odd? predicate exists in BSL)
 (check-expect (count-odds BST10) 4)
 
 (@template-origin BST)
+
 (define (count-odds t)
   (cond [(false? t) 0]      
         [else
-         (if (odd? (node-key t))
-             (+ 1       
-                (count-odds (node-l t))
-                (count-odds (node-r t)))
-             (+ (count-odds (node-l t))    
-                (count-odds (node-r t))))]))
+         (+ (if (odd? (node-key t)) 1 0)
+            (count-odds (node-l t))
+            (count-odds (node-r t)))]))
