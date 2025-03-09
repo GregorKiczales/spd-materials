@@ -78,8 +78,7 @@
 <td><tt><br />(local [(define DOT&nbsp;(circle 5 "solid" "red"))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(define (add-dot img)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (beside img DOT))]&nbsp;<br />&nbsp;&nbsp;(add-dot (square 20 "solid" "blue")))<br /><br /></tt></td>
 </tr>
 <tr>
-<td><tt><i>Intermediate Student Language</i><br /><br />(shared [(&lt;variable-name&gt; &lt;expression&gt;)...] <br />&nbsp;&nbsp;&lt;expression&gt;)</tt> <br /> <br />Shared is a special version of local that makes it possible to build circular structure. Any variable defined within the shared is valid within the entire body of the shared expression, but not outside of the shared expression. By convention the variable names that are used in circular references are given names of the form -1- -2- etc. But this is just a convention, any variable name can be used.</td>
-<td><tt><br />(shared [(-1- (list -2-))<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(-2- (list -1-))]<br />&nbsp;&nbsp;-1-)<br /><br /></tt></td>
+<td><i>The course no longer uses the shared language construct in designing graph data definitions. Instead it uses the map and lookup function approach.</i></td>
 </tr>
 </tbody>
 </table>
@@ -248,17 +247,7 @@ true              ;so entire or produces true</pre>
 
                         ;evaluation continues normally from this point
 </pre>
-<p>For a <strong>shared expression</strong>:</p>
-<p>The evaluation of shared is truly one of the deep mysteries of the universe. There are two very different ways to describe the evaluation rules.</p>
-<p>One cannot be described exactly in terms of BSL (or ISL), but informally goes as follows:</p>
-<ul>
-<li>Each of the variables is defined as a constant with a special unique dummy value.</li>
-<li>Then the expressions are evaluated.</li>
-<li>Then each of the constants has its value change to the corresponding value. This is the part we have no words for in BSL or ISL, it is called mutation.</li>
-<li>Finally each of those values is traversed and each time one of the dummy values appears it is replaced in-situ by the corresponding value. (A different form of mutation.)</li>
-</ul>
-<p>This evaluation rule for shared is cumbersome but goes beyond what we know.</p>
-<p>The other evaluation rule is truly profound, see <a href="http://www.dreamsongs.com/Files/WhyOfY.pdf">The Why of Y</a> for an explanation.</p>
+
 <!-- <p>For <strong>lambda</strong> expressions:</p> -->
 <p></p>
 <h3>Built-In Abstract Functions</h3>
