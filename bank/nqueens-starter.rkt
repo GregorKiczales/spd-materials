@@ -21,7 +21,7 @@
 ;; on a n by n chess board while making sure that none of the queens attack each
 ;; other. 
 ;;
-;; The BOARD consists of n^2 individual SQUARES arranged in 4 rows of 4 columns.
+;; The BOARD consists of n^2 individual SQUARES arranged in n rows of n columns.
 ;; The colour of the squares does not matter. Each square can either be empty
 ;; or can contain a queen.
 ;;
@@ -40,9 +40,9 @@
 ;;  
 ;;   - Use a backtracking search over a generated arb-arity tree that
 ;;     is trying to add 1 queen at a time to the board. If you find a
-;;     valid board with 4 queens produce that result.
+;;     valid board with n queens produce that result.
 ;;
-;;   - You should design a function that consumes a natural - N - and
+;;   - You should design a function that consumes a natural - n - and
 ;;     tries to find a solution.
 ;;    
 ;;    
