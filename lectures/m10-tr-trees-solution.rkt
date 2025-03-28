@@ -178,7 +178,7 @@
 (define (all-numbers t0)
   ;; t-wl is (listof Tree); worklist of Trees to visit
   ;;                        unvisited direct subs of visited trees
-  ;; rsf is (listof Natural); numbers of nodes VISITED before t
+  ;; rsf is (listof Natural); numbers of nodes VISITED before t in reverse order
   ;; ** visited means in the dynamic flow of the tail recursion **
   ;; ** not in the static structure of the tree                 **
   (local [(define (fn-for-t t t-wl rsf)
