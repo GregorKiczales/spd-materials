@@ -114,7 +114,7 @@
 (@htdf max-exits-to)
 (@signature Room -> Room)
 ;; produce the room to which the greatest number of other rooms have exits
-(check-expect (max-exits-to RB) RE)
+(check-expect (max-exits-to RB) RB)
 (check-expect (max-exits-to RE) RE)
 
 (@template-origin genrec Room (listof String) accumulator encapsulated)
@@ -167,6 +167,6 @@
                     (first rsf)
                     (rest rsf))))]
     ;; function composition
-    (pick-max (fn-for-lor (room-exists r0)
+    (pick-max (fn-for-lor (room-exits r0)
                           (list (room-name r0))
                           (merge-exit r0 empty)))))
