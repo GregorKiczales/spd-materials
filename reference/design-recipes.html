@@ -965,7 +965,8 @@ It can also be useful to add constant values which are extremely likely to be us
 <p>Always use <tt>else</tt> for the last question for itemizations and large enumerations. Normal enumerations should not use else.</p>
 <p>Note that in a <i>mixed data itemization</i>, such as</p>
 <p><tt>;; Measurement is one of:</tt><br /> <tt>;; - "high"</tt><br /> <tt>;; - "low"</tt><br /> <tt>;; - Number</tt></p>
-<p>the cond questions must be <strong>guarded</strong> with an appropriate type predicate. In particular, the first cond question for <tt>Measurement</tt> must be</p>
+<p>where atomic distinct elements precede elements of another type, the atomic
+  distinct cond questions must be <strong>guarded</strong> with an appropriate type predicate. In particular, the first cond question for <tt>Measurement</tt> must be</p>
 <p><tt>(and (string? m)</tt><br /> <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string=? m "high"))</tt></p>
 <p>where the call to <tt>string?</tt> guards the call to <tt>string=?</tt>. This will protect <tt>string=?</tt> from ever receiving a number as an argument.</p>
 </td>
