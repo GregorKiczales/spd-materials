@@ -298,7 +298,7 @@ It can also be useful to add constant values which are extremely likely to be us
 <p>When creating example/tests for a specific function operating on simple atomic data at least two test cases will be required. Additional tests are required if there are multiple cases involved. If the function produces <tt>Boolean</tt> there needs to be at least a <tt>true</tt> and <tt>false</tt> test case. Also be on the lookout for cases where a number of some form is an <a href="#Interval">interval</a> in disguise, for example given a type comment like <tt>Countdown is Natural</tt>, in some functions <tt>0</tt> is likely to be a special case.</p>
 <p><br /> <a id="Interval"></a></p>
 <h3>Intervals</h3>
-<p>A special case of the number types (Number, Integer, and Natural) arises when the information to be represented is numbers within a certain range.  In an interval data definition describe the bounds of the interval as part of the interpretation. For example, integers in the range [0, 10]. In specifying the bounds use the notation that [ and ] mean that the end of the interval includes the end point; ( and ) mean that the end of the interval does not include the end point. So [0, 10] is 0 to 10 inclusive; [0, 10) 0 inclusive to 10 exclusive.</p>
+<p>A special case of the number types (Number, Integer, and Natural) arises when the information to be represented is numbers within a certain range.  In an interval data definition describe the bounds of the interval as a <tt>CONSTRAINT</tt>. For example, integers in the range [0, 10]. In specifying the bounds use the notation that [ and ] mean that the end of the interval includes the end point; ( and ) mean that the end of the interval does not include the end point. So [0, 10] is 0 to 10 inclusive; [0, 10) 0 inclusive to 10 exclusive.</p>
 
 <table title="Countdown Data Definition" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
 <tbody>
@@ -306,7 +306,8 @@ It can also be useful to add constant values which are extremely likely to be us
 <td>
 <pre>(@htdd Countdown)
 ;; Countdown is Integer
-;; interp. the number of seconds remaining to liftoff, restricted to [0, 10]
+;; interp. the number of seconds remaining to liftoff
+;; CONSTRAINT: restricted to [0, 10]
 (define C1 10)  ; start
 (define C2 5)   ; middle
 (define C3 0)   ; end
