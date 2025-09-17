@@ -48,7 +48,7 @@ features.
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
 
-(define SPEED 2) ; pixels per tick
+(define SPEED 2) ;pixels per tick
 
 (define MTS (empty-scene WIDTH HEIGHT))
 
