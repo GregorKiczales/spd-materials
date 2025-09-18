@@ -106,7 +106,6 @@ explicitly as a field in the world state.
   (big-bang s             ; Spider
     (on-tick   tock)      ; Spider -> Spider
     (to-draw   render)    ; Spider -> Image
-    ;(stop-when ...)      ; Spider -> Boolean
     ;(on-mouse  ...)      ; Spider Integer Integer MouseEvent -> Spider
     ;(on-key    ...)      ; Spider KeyEvent -> Spider
     ))
