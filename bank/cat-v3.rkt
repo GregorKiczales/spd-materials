@@ -44,7 +44,6 @@
 
 (@dd-template-rules atomic-non-distinct) ;Number
 
-#;
 (define (fn-for-cat c)
   (... c))
 
