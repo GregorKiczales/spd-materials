@@ -14,7 +14,7 @@
 #|
 PROBLEM:
 
-Revise this program so that when the program starts the spider moves down the 
+Revise this program so that when the program starts the spider moves down the
 screen, but pressing the space key changes its direction. It should also change
 direction when it hits the top or bottom edge.
 
@@ -55,7 +55,6 @@ explicitly as a field in the world state.
 (define TOP (+ 0        SPIDER-RADIUS)) ;to be entirely visible
 (define BOT (- HEIGHT 1 SPIDER-RADIUS)) ;center has to be in [TOP, BOT]
 
-
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
 (define MTS (empty-scene WIDTH HEIGHT))
@@ -90,17 +89,17 @@ explicitly as a field in the world state.
 ;; no @template for htdw-main template
 
 (define (main s)
-  (big-bang s             ; Spider
-    (on-tick   tock)      ; Spider -> Spider
-    (to-draw   render)    ; Spider -> Image
-    ;(on-mouse  ...)      ; Spider Integer Integer MouseEvent -> Spider
-    ;(on-key    ...)      ; Spider KeyEvent -> Spider
+  (big-bang s                    ; Spider
+    (on-tick   tock)             ; Spider -> Spider
+    (to-draw   render)           ; Spider -> Image
+    ;(on-mouse ...)              ; Spider Integer Integer MouseEvent -> Spider
+    ;(on-key   ...)              ; Spider KeyEvent -> Spider
     ))
 
 
 (@htdf tock)
 (@signature Spider -> Spider)
-;; produce the next spider by adding SPEED to s, stopping at bottom
+;; advance spider downward by SPEED, stopping at bottom
 (check-expect (tock (- BOT  1 SPEED)) (- BOT 1))
 (check-expect (tock (- BOT  0 SPEED))    BOT)
 (check-expect (tock (- BOT -1 SPEED))    BOT)
@@ -151,10 +150,10 @@ explicitly as a field in the world state.
 (@htdf render)
 (@signature Spider -> Image)
 ;; place SPIDER-IMAGE and thread image on MTS
-(check-expect (render 21)
-              (add-line (place-image SPIDER-IMAGE CTR-X 21 MTS)
+(check-expect (render MID)
+              (add-line (place-image SPIDER-IMAGE CTR-X MID MTS)
                         CTR-X 0
-                        CTR-X 21
+                        CTR-X MID
                         "black"))
 
 (check-expect (render 36)
@@ -163,7 +162,7 @@ explicitly as a field in the world state.
                         CTR-X 36
                         "black"))
 
-;(define (render s) MTS)
+;(define (render s) MTS) ;stub
 
 (@template-origin Spider)
 
