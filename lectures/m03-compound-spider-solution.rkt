@@ -26,7 +26,6 @@
 
 (define MID (/ HEIGHT 2))
 
-
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
 (define MTS (empty-scene WIDTH HEIGHT))
@@ -54,12 +53,11 @@
   (... (spider-y s)
        (spider-dy s)))
 
-
 ;; =================
 ;; Functions:
 
 (@htdf main)
-(@signature Spider -> Spider) 
+(@signature Spider -> Spider)
 ;; start the world with (main S-TOP-D)
 ;; no tests for htdw-main template
 
@@ -68,10 +66,10 @@
 ;; no @template for htdw-main template
 
 (define (main s)
-  (big-bang s                ; Spider
-    (on-tick   tock)         ; Spider -> Spider
-    (to-draw   render)       ; Spider -> Image
-    (on-key    handle-key))) ; Spider KeyEvent -> Spider
+  (big-bang s                    ; Spider
+    (on-tick   tock)             ; Spider -> Spider
+    (to-draw   render)           ; Spider -> Image
+    (on-key    reverse-spider))) ; Spider KeyEvent -> Spider
 
 
 (@htdf tock)
@@ -105,10 +103,10 @@
         [else
          (make-spider (+ (spider-y s) (spider-dy s))
                       (spider-dy s))]))
-        
+
 
 (@htdf render)
-(@signature Spider -> Image) 
+(@signature Spider -> Image)
 ;; place SPIDER-IMAGE and thread image on MTS, at spider's y coordinate
 (check-expect (render S-MID-D)
               (add-line (place-image SPIDER-IMAGE CTR-X (spider-y S-MID-D) MTS)
@@ -122,7 +120,7 @@
                         CTR-X 36
                         "black"))
 
-;(define (render s) MTS)
+;(define (render s) MTS) ;stub
 
 (@template-origin Spider)
 
@@ -130,7 +128,7 @@
  (define (render s)
    (... (spider-y s)
         (spider-dy s))))
-  
+
 (define (render s)
   (add-line (place-image SPIDER-IMAGE
                          CTR-X
@@ -141,37 +139,25 @@
             "black"))
 
 
-(@htdf handle-key)
+(@htdf reverse-spider)
 (@signature Spider KeyEvent -> Spider)
-;; change direction of spider on space, unchanged for other keys
-(check-expect (handle-key (make-spider 100  2) " ") (make-spider 100 -2))
-(check-expect (handle-key (make-spider 200 -3) " ") (make-spider 200  3))
-(check-expect (handle-key (make-spider 100  2) "a") (make-spider 100  2))
+;; change direction of spider on space; remain unchanged for other keys
+(check-expect (reverse-spider (make-spider 100  2) " ") (make-spider 100 -2))
+(check-expect (reverse-spider (make-spider 200 -3) " ") (make-spider 200  3))
+(check-expect (reverse-spider (make-spider 100  2) "a") (make-spider 100  2))
 
-;(define (handle-key s ke) s)
-
-;(@template-origin KeyEvent);using large enumeration rule
-;
-;(@template 
-; (define (handle-key s ke)
-;  (cond [(key=? ke " ") (... s)]
-;        [else s])))
+;(define (reverse-spider s ke) s) ;stub
 
 (@template-origin KeyEvent ;using large enumeration rule
-                  Spider)  ;to get Spider selectors in cond answer
+                  Spider)  ;accessing spider fields
 
-(@template 
- (define (handle-key s ke)
-   (cond [(key=? ke " ") (... (spider-y s)
-                              (spider-dy s)) ]
-         [else (... (spider-y s)
-                    (spider-dy s))])))
-
+(@template
+ (define (reverse-spider s ke)
+   (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
+         [else
+          (... (spider-y s) (spider-dy s) ke)])))
 
 
-
-
-
-(define (handle-key s ke)
-  (cond [(key=? ke " ") (make-spider (spider-y s) (- (spider-dy s)))]
-        [else s]))
+(define (reverse-spider s ke)
+   (cond [(key=? ke " ") (make-spider (spider-y s) (- (spider-dy s)))]
+         [else s]))

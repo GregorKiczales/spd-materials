@@ -14,7 +14,7 @@
 #|
 PROBLEM:
 
-Revise this program so that when the program starts the spider moves down the 
+Revise this program so that when the program starts the spider moves down the
 screen, but pressing the space key changes its direction. It should also change
 direction when it hits the top or bottom edge.
 
@@ -48,7 +48,7 @@ explicitly as a field in the world state.
 
 (define CTR-X (/ WIDTH 2))
 
-(define SPEED 2) ;pixels per tick
+(define SPEED 2) ;pixels per tick ;!!! DELETE WHEN DONE
 
 (define SPIDER-RADIUS 10)
 
@@ -56,7 +56,6 @@ explicitly as a field in the world state.
 (define BOT (- HEIGHT 1 SPIDER-RADIUS)) ;center has to be in [TOP, BOT]
 
 (define MID (/ HEIGHT 2))
-
 
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
@@ -95,7 +94,7 @@ explicitly as a field in the world state.
 
 (@htdf main)
 (@signature Spider -> Spider)
-;; start the world with (main TOP)
+;; start the world with (main S-TOP-D)
 ;; no tests for htdw-main template
 
 (@template-origin htdw-main)
@@ -103,12 +102,10 @@ explicitly as a field in the world state.
 ;; no @template for htdw-main template
 
 (define (main s)
-  (big-bang s                     ; Spider
-    (on-tick   tock)      ; Spider -> Spider
-    (to-draw   render)    ; Spider -> Image
-    ;(on-mouse  ...)      ; Spider Integer Integer MouseEvent -> Spider
-    ;(on-key    ...)      ; Spider KeyEvent -> Spider
-    ))
+  (big-bang s                    ; Spider
+    (on-tick   tock)             ; Spider -> Spider
+    (to-draw   render)           ; Spider -> Image
+    (on-key    reverse-spider))) ; Spider KeyEvent -> Spider
 
 
 (@htdf tock)
@@ -174,61 +171,43 @@ explicitly as a field in the world state.
 
 (@htdf render)
 (@signature Spider -> Image)
-;; place SPIDER-IMAGE and thread image on MTS
-(check-expect (render 21)
-              (add-line (place-image SPIDER-IMAGE CTR-X 21 MTS)
+;; place SPIDER-IMAGE and thread image on MTS, at spider's y coordinate
+(check-expect (render S-MID-D)
+              (add-line (place-image SPIDER-IMAGE CTR-X (spider-y S-MID-D) MTS)
                         CTR-X 0
-                        CTR-X 21
+                        CTR-X (spider-y S-MID-D)
                         "black"))
 
-(check-expect (render 36)
+(check-expect (render (make-spider 36 -10))
               (add-line (place-image SPIDER-IMAGE CTR-X 36 MTS)
                         CTR-X 0
                         CTR-X 36
                         "black"))
 
-;(define (render s) MTS)
+;(define (render s) MTS) ;stub
 
 (@template-origin Spider)
 
 (@template
  (define (render s)
-   (... s)))
+   (... (spider-y s)
+        (spider-dy s))))
 
 (define (render s)
   (add-line (place-image SPIDER-IMAGE
                          CTR-X
-                         s
+                         (spider-y s)
                          MTS)
             CTR-X 0
-            CTR-X s
+            CTR-X (spider-y s)
             "black"))
 
 
 (@htdf reverse-spider)
 (@signature Spider KeyEvent -> Spider)
-;; change direction of spider on space, unchanged for other keys
+;; change direction of spider on space; remain unchanged for other keys
 (check-expect (reverse-spider (make-spider 100  2) " ") (make-spider 100 -2))
 (check-expect (reverse-spider (make-spider 200 -3) " ") (make-spider 200  3))
 (check-expect (reverse-spider (make-spider 100  2) "a") (make-spider 100  2))
-
-;(define (reverse-spider s ke) s)
-
-;(@template-origin KeyEvent Spider);using large enumeration rule
-;
-;(@template 
-; (define (reverse-spider s ke)
-;  (cond [(key=? ke " ") (... s)]
-;        [else s])))
-
-(@template-origin KeyEvent ;using large enumeration rule
-                  Spider)  ;to get Spider selectors in cond answer
-
-(@template 
- (define (reverse-spider s ke)
-  (cond [(key=? ke " ") (... (spider-y s) (spider-dy s))]
-        [else (... (spider-y s) (spider-dy s))])))
-
-(define (reverse-spider s ke)
-  (cond [(key=? ke " ") (make-spider (spider-y s) (- (spider-dy s)))]
-        [else s]))
+;!!!
+(define (reverse-spider s ke) s) ;stub

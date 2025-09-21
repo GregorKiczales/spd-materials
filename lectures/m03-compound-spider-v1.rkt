@@ -14,7 +14,7 @@
 #|
 PROBLEM:
 
-Revise this program so that when the program starts the spider moves down the 
+Revise this program so that when the program starts the spider moves down the
 screen, but pressing the space key changes its direction. It should also change
 direction when it hits the top or bottom edge.
 
@@ -48,7 +48,7 @@ explicitly as a field in the world state.
 
 (define CTR-X (/ WIDTH 2))
 
-(define SPEED 2) ;pixels per tick
+(define SPEED 2) ;pixels per tick ;!!! DELETE WHEN DONE
 
 (define SPIDER-RADIUS 10)
 
@@ -56,7 +56,6 @@ explicitly as a field in the world state.
 (define BOT (- HEIGHT 1 SPIDER-RADIUS)) ;center has to be in [TOP, BOT]
 
 (define MID (/ HEIGHT 2))
-
 
 (define SPIDER-IMAGE (circle SPIDER-RADIUS "solid" "black"))
 
@@ -71,7 +70,7 @@ explicitly as a field in the world state.
 ;; Spider is (make-spider Number Number)
 ;; interp. y is spider's vertical position in screen coordinates (pixels)
 ;;         dy is velocity in pixels per tick, + is down, - is up
-;; CONSTRAINT: to be visible, must be in
+;; CONSTRAINT: to be visible, y must be in
 ;;             [TOP, BOT] which is [SPIDER-RADIUS, HEIGHT - 1 - SPIDER-RADIUS]
 (define S-TOP-D (make-spider TOP  3))   ;top going down
 (define S-MID-D (make-spider MID  2))   ;middle going down
@@ -95,7 +94,7 @@ explicitly as a field in the world state.
 
 (@htdf main)
 (@signature Spider -> Spider)
-;; start the world with (main TOP)
+;; start the world with (main S-TOP-D)
 ;; no tests for htdw-main template
 
 (@template-origin htdw-main)
@@ -103,12 +102,10 @@ explicitly as a field in the world state.
 ;; no @template for htdw-main template
 
 (define (main s)
-  (big-bang s             ; Spider
-    (on-tick   tock)      ; Spider -> Spider
-    (to-draw   render)    ; Spider -> Image
-    ;(on-mouse  ...)      ; Spider Integer Integer MouseEvent -> Spider
-    ;(on-key    ...)      ; Spider KeyEvent -> Spider
-    ))
+  (big-bang s                    ; Spider
+    (on-tick   tock)             ; Spider -> Spider
+    (to-draw   render)           ; Spider -> Image
+    (on-key    reverse-spider))) ; Spider KeyEvent -> Spider
 
 
 (@htdf tock)
@@ -175,10 +172,10 @@ explicitly as a field in the world state.
 (@htdf render)
 (@signature Spider -> Image)
 ;; place SPIDER-IMAGE and thread image on MTS
-(check-expect (render 21)
-              (add-line (place-image SPIDER-IMAGE CTR-X 21 MTS)
+(check-expect (render MID)
+              (add-line (place-image SPIDER-IMAGE CTR-X MID MTS)
                         CTR-X 0
-                        CTR-X 21
+                        CTR-X MID
                         "black"))
 
 (check-expect (render 36)
@@ -187,7 +184,7 @@ explicitly as a field in the world state.
                         CTR-X 36
                         "black"))
 
-;(define (render s) MTS)
+;(define (render s) MTS) ;stub
 
 (@template-origin Spider)
 
@@ -203,3 +200,10 @@ explicitly as a field in the world state.
             CTR-X 0
             CTR-X s
             "black"))
+
+
+(@htdf reverse-spider)
+(@signature Spider KeyEvent -> Spider)
+;; change direction of spider on space; remain unchanged for other keys
+;!!!
+(define (reverse-spider s ke) s) ;stub
