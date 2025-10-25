@@ -1240,13 +1240,13 @@ It can also be useful to add constant values which are extremely likely to be us
 ;;                                     lstb
 ;;                           empty           (cons String LOS)                
 ;;                                         
-;; l   empty                           true
+;; l   empty                           true 
 ;; s                         
-;; t   (cons String LOS)       false          (and (string=? (first lsta) (first lstb))
+;; t   (cons String LOS)       false          (and (string=? (first lsta) (first lstb)) 
 ;; a                                               (prefix=? (rest lsta) (rest lstb)))
 </code></pre>
-<div>Now we are almost done. The next step is to code the function body directly from the table. This in effect intertwines templating with coding of details. Because the simplified table has only three cells, we know that the body of the function will be a three case <tt>cond</tt>. For the first question we always pick the largest cell, in this case the top row. The question needs to be true of the entire combined cell, so in this case the question is <tt>(empty? lsta)</tt>. The answer in this case is just <tt>true</tt>.</div>
-<div>For the next case of the <tt>cond</tt> we pick the lower left cell. At this point, we know that the top row has been handled, so we only need a question that distinguishes the remaining cells apart. In this case <tt>(empty? lstb)</tt> distinguishes the lower left from the lower right cell. The answer in this case is <tt>false</tt>.</div>
+<div>Now we are almost done. The next step is to code the function body directly from the table. This in effect intertwines templating with coding of details. Because the simplified table has only three cells, we know that the body of the function will be a three case <tt>cond</tt>. For the first question we always pick the largest cell, in this case the top row. The question needs to be true of the entire combined cell, so in this case the question is <tt>(empty? lsta)</tt>. The answer in this case is just <tt>true</tt>. We label the cell in the table and the cond case <tt>[1]</tt> to show the correspondence.</div>
+<div>For the next case of the <tt>cond</tt> we pick the lower left cell. At this point, we know that the top row has been handled, so we only need a question that distinguishes the remaining cells apart. In this case <tt>(empty? lstb)</tt> distinguishes the lower left from the lower right cell. The answer in this case is <tt>false</tt>. We label the cell in the table and the cond case <tt>[2]</tt> to show the correspondence.</div>
 <div>In larger tables this process continues until you get to the last cell, at which point the question can be <tt>else</tt>.</div>
 <div>In cells that involve natural recursion, the natural recursion can be formed by applying the normal rules for handling self-reference. In this case the template for the <tt>cond</tt> answer in the third <tt>cond</tt> case is:</div>
 <pre><code>              (... (first lsta)
@@ -1255,14 +1255,24 @@ It can also be useful to add constant values which are extremely likely to be us
                    (prefix=? ... (rest lstb)))
 </code></pre>
 <div>After filling that in we end up with:</div>
-<pre><code>(@template-origin 2-one-of)
+<pre><code>;; CROSS PRODUCT OF TYPE COMMENTS TABLE
+;;
+;;                                     lstb
+;;                           empty           (cons String LOS)                
+;;                                         
+;; l   empty                           true [1]
+;; s                         
+;; t   (cons String LOS)       false [2]      (and (string=? (first lsta) (first lstb)) [3]
+;; a                                               (prefix=? (rest lsta) (rest lstb)))
+
+(@template-origin 2-one-of)
 
 ;; no @template for 2-one-of    
 
 (define (prefix=? lsta lstb)
-  (cond [(empty? lsta) true]
-        [(empty? lstb) false]
-        [else
+  (cond [(empty? lsta) true]       ;[1]
+        [(empty? lstb) false]      ;[2]
+        [else                      ;[3]
          (and (string=? (first lsta) (first lstb))
               (prefix=? (rest lsta)
                         (rest lstb)))]))
