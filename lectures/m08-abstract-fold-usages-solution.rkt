@@ -90,7 +90,7 @@
 ;;
 
 (@htdf all-course-numbers)
-(@signature Course -> ListOfNatural)
+(@signature Course -> (listof Natural))
 ;; produce a list of all course numbers in given tree
 (check-expect (all-course-numbers C100) (list 100))
 (check-expect (all-course-numbers C213) (list 213 313 317))
