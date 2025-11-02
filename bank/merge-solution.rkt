@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname m07-2-one-of-merge-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname merge-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 (@assignment bank/merge)
 
@@ -22,7 +22,7 @@ save space later we are calling it LON instead of ListOfNumber
 
 ;; Data Definitions:
 ;;
-;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LON FOR ListOfString.
+;; NOTE: IN 2-ONE-OF PROBLEMS ONLY, WE USE LON FOR ListOfNumber.
 ;;
 
 (@htdd LON)
