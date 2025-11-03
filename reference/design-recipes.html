@@ -418,7 +418,7 @@ It can also be useful to add constant values which are extremely likely to be us
 <p>Data examples are redundant for enumerations.</p>
 <p>Functions operating on enumerations should have (at least) as many tests as there are cases in the enumeration.</p>
 <h4>Large Enumerations</h4>
-<p>Some enumerations contain a large number of elements. A canonical example is <tt>KeyEvent</tt>, which is provided as part of big-bang. <tt>KeyEvent</tt> includes all the letters of the alphabet as well as other keys you can press on the keyboard. It is not necessary to write out all the cases for such a data definition. Instead write one or two, as well as a comment saying what the others are, where they are defined etc.</p>
+<p>Some enumerations contain a large number of elements. A canonical example is <tt>KeyEvent</tt>, which is provided as part of big-bang. <tt>KeyEvent</tt> includes all the letters of the alphabet as well as other keys you can press on the keyboard. It is not necessary to write out all the cases for such a data definition. Instead write one or two, as well as an <tt>else</tt> clause that handles the remainder.</p> 
 <p>Defer writing templates for such large enumerations until a template is needed for a specific function. At that point include the specific cases that particular function cares about. Be sure to include an else clause in the template to handle the other cases. As an example, some functions operating on <tt>KeyEvent</tt> may only care about the space key and ignore all other keys, the following would be an appropriate template for such functions.</p>
 <table title="KeyEvent template" border="none" cellpadding="10" style="border: 0px solid #000000; padding: 10px;">
 <tbody>
