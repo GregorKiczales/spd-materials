@@ -12,7 +12,7 @@
             (let* ([htdf   (car (context))]
                    [defns  (htdf-defns htdf)]
                    [called (called-fn-names (caddr (car defns)))])
-              (begin (ensure-unchanged '((@signature Course -> ListOfNatural)
+              (begin (ensure-unchanged '((@signature Course -> (listof Natural))
                                          (check-expect (all-course-numbers C100) (list 100))
                                          (check-expect (all-course-numbers C213) (list 213 313 317))
                                          (check-expect (all-course-numbers C210)
