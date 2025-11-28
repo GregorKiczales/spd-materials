@@ -122,16 +122,16 @@
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
 (define (solve m)
-  (local [(define rank (sqrt (length m)))	  
-
-          ;; trivial:   reach bottom right corner, or previously traversed pos
-          ;; reduction: valid positions among up, down, left, right
-          ;; argument:  maze is finite, so pursuing valid moves will reach
-          ;;            walls, edges, cycles or solution if it exists
-
-          ;; path is (listof Pos)
-          ;; traversed positions from (0, 0) to current p in reverse order
-          
+  ;; trivial: 1) reach bottom right corner;
+  ;;          2) reach previous position on the current path
+  ;; reduction: all valid and acyclic positions among down, right, up, left
+  ;; argument:  maze is finite, so there are finite acyclic paths
+  ;;   in the maze, each of which is finite.  If bottom right corner
+  ;;   is reachable, then some path goes there.
+  
+  ;; path is (listof Pos)
+  ;; traversed positions from (0, 0) to current p in reverse order
+  (local [(define rank (sqrt (length m)))	            
           (define (solve/p p path)
             (cond [(solved? p)     true]
                   [(member? p path) false]

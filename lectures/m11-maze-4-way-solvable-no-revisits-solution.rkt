@@ -154,12 +154,19 @@ and delete or comment out the others.
 (@template-origin encapsulated genrec arb-tree accumulator)
 
 (define (solvable-no-revisits? m)
+  ;; trivial: 1) reach bottom right corner;
+  ;;          2) reach previously visited
+  ;; reduction: moves down and right, up, or left when possible,
+  ;;            and when not previously revisited
+  ;; argument:  maze is finite, and positions are not revisited,
+  ;;            so moving will eventually
+  ;;            reach trivial case or run out of positions to visit
+
+  ;; p-wl is (listof Pos)
+  ;; worklist of positions to visit: direct subs of visited
+  ;; positions that are not yet known to be visited
   (local [(define rank (sqrt (length m)))
 
-          ;; trivial:    
-          ;; reduction: 
-          ;; argument:
-          
           (define (fn-for-p p p-wl visited)
             (cond [(solved? p) true]
                   [(member? p visited) (fn-for-lop p-wl visited)]

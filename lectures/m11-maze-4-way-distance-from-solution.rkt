@@ -118,6 +118,7 @@
 ;; if path exists from start to end produce distance between
 ;; CONSTRAINT: maze has a true at least in the upper left
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)
+(check-expect (distance-from M1 (make-pos 1 4) (make-pos 1 1)) #f)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 4 1)) #f)
 
 (check-expect (distance-from M2 (make-pos 0 0) (make-pos 4 4)) 8)
@@ -129,15 +130,24 @@
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
 (define (distance-from m start end)
+  ;; trivial: 1) reach end passing through (0,0)
+  ;;          2) reach previous position on the current path
+  ;; reduction: all valid and acyclic positions among down, right, up, left
+  ;; argument:  maze is finite, so there are finite acyclic paths
+  ;;   in the maze, each of which is finite.  If end is reachable,
+  ;;   then some path goes there.
+
+  ;; path is (listof Pos)
+  ;; positions traversed from (0,0) to p/lop, in reverse order
+
+  ;; passed-start? is Boolean
+  ;; true if start has been passed on current path, otherwise false
   (local [(define rank (sqrt (length m)))	  
 
-          ;; trivial:   
-          ;; reduction: 
-          ;; argument:
-           
           (define (fn-for-p p path passed-start?)
-            (cond [(equal? p end)   (add1 (position-of start path))]
-                 ;[(solved? p)      false]
+            (cond [(and passed-start? (equal? p end))
+                   (add1 (position-of start path))]
+                  [(equal? p end) false]
                   [(member? p path) false]
                   [else
                    (if (equal? p start)
@@ -147,7 +157,8 @@
           (define (fn-for-lop lop path passed-start?)
             (cond [(empty? lop) false]
                   [else
-                   (local [(define try (fn-for-p (first lop) path passed-start?))]
+                   (local [(define try
+                             (fn-for-p (first lop) path passed-start?))]
                      (if (not (false? try))
                          try
                          (fn-for-lop (rest lop) path passed-start?)))]))
