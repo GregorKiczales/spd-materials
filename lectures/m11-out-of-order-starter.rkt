@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-out-of-order-solution) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-out-of-order-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require spd/tags)
 
 (@assignment lectures/m11-out-of-order)
@@ -14,7 +14,7 @@
 
 (@htdd Node)
 (define-struct node (number nexts))
-;; Node is (make-node Natural (listof String))
+;; Node is (make-node Natural (listof Natural))
 ;; interp. node's number, and list of numbers of nodes that the arrows point to
 
 (define N101 (make-node 101 (list 102 108 107)))
@@ -97,7 +97,7 @@
 
 (@htdf first-out-of-order)
 (@signature Map Natural -> Natural or false)
-;; in TR traversal of graph from n, produce first out of sequence node number
+;; first node number in a TR traversal from num0 that is not +1 of previous node
 
 (check-expect (first-out-of-order MAP   1) 8)
 (check-expect (first-out-of-order MAP  11) false)
