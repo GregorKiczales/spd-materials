@@ -14,7 +14,7 @@
 
 (@htdd Node)
 (define-struct node (number nexts))
-;; Node is (make-node Natural (listof String))
+;; Node is (make-node Natural (listof Natural))
 ;; interp. node's number, and list of numbers of nodes that the arrows point to
 
 (define N101 (make-node 101 (list 102 108 107)))
@@ -36,7 +36,7 @@
 
 (@htdf first-out-of-order)
 (@signature Map Natural -> Natural or false)
-;; in TR traversal of graph from n, produce first out of sequence node number
+;; first node number in a TR traversal from num0 that is not +1 of previous node
 
 (check-expect (first-out-of-order MAP   1) 8)
 (check-expect (first-out-of-order MAP  11) false)
@@ -54,7 +54,7 @@
             (local [(define num (node-number n))
                     (define nexts (node-nexts n))
                     (define nvisited (cons num visited))]
-              (cond [(member num visited) (fn-for-lonn nn-wl visited)]
+              (cond [(member? num visited) (fn-for-lonn nn-wl visited)]
                     [(not (= num (add1 (first visited)))) num]
                     [else
                      (fn-for-lonn (append nexts nn-wl) nvisited)])))
@@ -95,7 +95,7 @@
                     (define nexts    (node-nexts n))
                     (define npath    (cons num path))
                     (define nvisited (cons num visited))]
-              (cond [(member num visited) (fn-for-lonn nn-wl path-wl visited)]
+              (cond [(member? num visited) (fn-for-lonn nn-wl path-wl visited)]
                     [(not (= num (add1 (first visited)))) (reverse npath)]
                     [else
                      (fn-for-lonn (append nexts
