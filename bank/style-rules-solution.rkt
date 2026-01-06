@@ -28,8 +28,8 @@
 
 (@htdd SeatNum)
 ;; SeatNum is Natural
-;; interp. The number of a seat in a row, restricted to [1, 32].
-;;         Seats 1 and 32 are aisle seats.
+;; interp. seat numbers in a row, where 1 and 32 are aisle seats
+;; CONSTRAINT: SeatNum is in [1,32]
 (define SN1 1)
 (define SN2 32)
 

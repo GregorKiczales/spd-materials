@@ -51,7 +51,7 @@
 (@htdd Countdown)
 ;; Countdown is Natural
 ;; interp. the current seconds remaining in the countdown
-;;         in the interval [0, 10]
+;; CONSTRAINT: Countdown is in [0, 10]
 (define CD1 10)  ;countdown hasn't started
 (define CD2 5)   ;countdown in progress
 (define CD3 0)   ;countdown finished
