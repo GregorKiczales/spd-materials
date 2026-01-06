@@ -22,7 +22,7 @@
 (@htdd Employees)
 ;; Employees is Natural
 ;; interp. range of employees working at a ski lodge at one time
-;;         restricted to (10, 50]
+;; CONSTRAINT: Employees are restricted to (10, 50]
 (define E1 11)
 (define E2 40)
 (define E3 50)

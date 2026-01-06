@@ -16,7 +16,8 @@
 
 (@htdd SeatNum)
 ;; SeatNum is Natural
-;; interp. Seat numbers within [1, 32] in a row; 1 and 32 are aisle seats
+;; interp. seat numbers in a row, where 1 and 32 are aisle seats
+;; CONSTRAINT: SeatNum is in [1,32]
 (define SN1  1) ;aisle
 (define SN2 12) ;middle
 (define SN3 32) ;aisle

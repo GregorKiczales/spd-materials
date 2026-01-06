@@ -25,7 +25,8 @@
 ;; - Number
 ;; - false
 ;; interp. false if rocket's descent has ended, otherwise number of kilometers
-;;         left to Earth, restricted to (0, 100]
+;;         left to Earth
+;; CONSTRAINT: Number is in (0, 100]
 (define RD1 100)
 (define RD2 40)
 (define RD3 0.5)

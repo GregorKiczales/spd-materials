@@ -27,8 +27,8 @@
 ;; interp.
 ;;    false           means countdown has not yet started
 ;;    Natural         means countdown is running and how many seconds left
-;;                    in [1, 10]
 ;;    "complete"      means countdown is over
+;; CONSTRAINT: Natural is in [1, 10]
 (define CD1 false)
 (define CD2 10)          ;just started running
 (define CD3  1)          ;almost over
