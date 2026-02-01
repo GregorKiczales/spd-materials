@@ -53,7 +53,6 @@
 
 (@dd-template-rules atomic-non-distinct) ;Number
 
-#;
 (define (fn-for-cat c)
   (... c))
 
@@ -74,7 +73,7 @@
     (to-draw   render)         ; Cat -> Image
     (on-key    handle-key)))   ; Cat KeyEvent -> Cat
 
-    
+
 (@htdf advance-cat)
 (@signature Cat -> Cat)
 ;; produce the next cat, by advancing it SPEED pixel(s) to right
@@ -121,11 +120,11 @@
 
 (@template-origin KeyEvent)
 
-(@template
- (define (handle-mouse ws x y me)
-   (cond [(mouse=? me "button-down") (... ws x y)]
-         [else
-          (... ws x y)])))
+(@template   
+ (define (handle-key c ke)
+   (cond [(key=? ke " ") (... c)]
+         [else 
+          (... c)])))
 
 (define (handle-key c ke)
   (cond [(key=? ke " ") 0]
