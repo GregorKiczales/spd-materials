@@ -30,10 +30,10 @@
 (define (fn-for-bt bt)
   (cond [(false? bt) (...)]
         [else
-         (... (bt-k bt)
-              (bt-v bt)
-              (fn-for-bt (bt-l bt))
-              (fn-for-bt (bt-r bt)))]))
+         (... (node-k bt)
+              (node-v bt)
+              (fn-for-bt (node-l bt))
+              (fn-for-bt (node-r bt)))]))
 
 (@htdd Path)
 ;; Path is one of:
