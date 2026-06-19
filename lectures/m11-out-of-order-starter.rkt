@@ -19,6 +19,7 @@
 
 (define N101 (make-node 101 (list 102 108 107)))
 
+;; <template omitted intentionally>
 
 (@htdd Map)
 #|
@@ -58,8 +59,8 @@
           (define (fn-for-lonn lonn)
             (cond [(empty? lonn) (...)]
                   [else
-                   (... (fn-for-node (first lonn))
-                        (fn-for-node (generate-node map (first lonn))))]))]
+                   (... (fn-for-node (generate-node map (first lonn)))
+                        (fn-for-lonn (rest lonn)))]))]
     
     (fn-for-? ...num0))) 
 
