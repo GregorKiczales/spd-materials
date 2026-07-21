@@ -10,7 +10,7 @@
 
 
 ;; =================
-;; Data Definitions: 
+;; Data Definitions:
 
 (@htdd Node)
 (define-struct node (number nexts))
@@ -38,14 +38,14 @@
 (@signature Map Natural -> Natural or false)
 ;; first node number in a TR traversal from num0 that is not +1 of previous node
 
-(check-expect (first-out-of-order MAP   1) 8)
-(check-expect (first-out-of-order MAP  11) false)
-(check-expect (first-out-of-order MAP 101) 108)
+(check-expect (first-out-of-order GRAPH   1) 8)
+(check-expect (first-out-of-order GRAPH  11) false)
+(check-expect (first-out-of-order GRAPH 101) 108)
 
 (@template-origin genrec arb-tree accumulator)
- 
 
-(define (first-out-of-order map num0)
+
+(define (first-out-of-order the-map num0)
   ;; nn-wl is (listof Natural);   worklist of node numbers
   ;; visited is (listof Natural)
   ;; Numbers of nodes already visited in the tr. (first visited) is always
@@ -58,15 +58,15 @@
                     [(not (= num (add1 (first visited)))) num]
                     [else
                      (fn-for-lonn (append nexts nn-wl) nvisited)])))
-          
+
           (define (fn-for-lonn nn-wl visited)
-            (cond [(empty? nn-wl) false] 
+            (cond [(empty? nn-wl) false]
                   [else
-                   (fn-for-node (generate-node map (first nn-wl))
+                   (fn-for-node (generate-node the-map (first nn-wl))
                                 (rest nn-wl)
                                 visited)]))]
     ;; must start at fn-for-lonn to satisfy visited invariant
-    (fn-for-lonn (node-nexts (generate-node map num0))
+    (fn-for-lonn (node-nexts (generate-node the-map num0))
                  (list num0))))
 
 
@@ -76,20 +76,21 @@
 (@signature Map Natural -> (listof Natural) or false)
 ;; in TR traversal of graph from n, produce path if first out of sequence node
 
-(check-expect (first-out-of-order-path MAP   1) (list 1 6 8))
-(check-expect (first-out-of-order-path MAP  11) false)
-(check-expect (first-out-of-order-path MAP 101) (list 101 102 103 105 106 108))
+(check-expect (first-out-of-order-path GRAPH   1) (list 1 6 8))
+(check-expect (first-out-of-order-path GRAPH  11) false)
+(check-expect (first-out-of-order-path GRAPH 101)
+              (list 101 102 103 105 106 108))
 
 (@template-origin genrec arb-tree accumulator)
 
-(define (first-out-of-order-path map num0)
-  
+(define (first-out-of-order-path the-map num0)
+
   ;; nn-wl   is (listof Natural);          worklist of node numbers
   ;; path-wl is (listof (listof Natural)); tandem worklist of paths
   ;; visited is (listof Natural)
   ;; Numbers of nodes already visited in the tr. (first visited) is always
   ;; the previous node's number which implies visited is never empty
-  
+
   (local [(define (fn-for-node n path nn-wl path-wl  visited)
             (local [(define num      (node-number n))
                     (define nexts    (node-nexts n))
@@ -103,19 +104,19 @@
                                   (append (make-list (length nexts) npath)
                                           path-wl)
                                   nvisited)])))
-          
+
           (define (fn-for-lonn nn-wl path-wl visited)
-            (cond [(empty? nn-wl) false] 
+            (cond [(empty? nn-wl) false]
                   [else
-                   (fn-for-node (generate-node map (first nn-wl))
+                   (fn-for-node (generate-node the-map (first nn-wl))
                                 (first path-wl)
                                 (rest nn-wl)
                                 (rest path-wl)
                                 visited)]))]
-    
+
     ;; must start at fn-for-lonn to satisfy visited invariant
-    (fn-for-lonn (node-nexts (generate-node map num0))
-                 (make-list (length (node-nexts (generate-node map num0)))
+    (fn-for-lonn (node-nexts (generate-node the-map num0))
+                 (make-list (length (node-nexts (generate-node the-map num0)))
                             (list num0))
                  (list num0))))
 
@@ -131,41 +132,41 @@
 
 (@htdf generate-node)
 (@signature Map Natural -> Node)
-;; Give map and node number (name), generate corresponding node
-(define (generate-node map number)
-  (local [(define entry (assoc number map))]
+;; given the-map and node number (name), generate corresponding node
+(define (generate-node the-map number)
+  (local [(define entry (assoc number the-map))]
     (if (false? entry)
         (error "Node with given number does not exist." number)
         (apply make-node entry))))
 
 
-(define MAP '((1 (2 6)) 
-              (2 (3 5))
-              (3 (4))
-              (4 ())
-              (5 ())
-              (6 (8))
-              (8 (9))
-              (9 ())
+(define GRAPH '((1 (2 6))
+                (2 (3 5))
+                (3 (4))
+                (4 ())
+                (5 ())
+                (6 (8))
+                (8 (9))
+                (9 ())
 
-              (11 (12 15 16))
-              (12 (13 14))
-              (13 ())
-              (14 (12))
-              (15 ())
-              (16 (17 18))
-              (17 ())
-              (18 ())
+                (11 (12 15 16))
+                (12 (13 14))
+                (13 ())
+                (14 (12))
+                (15 ())
+                (16 (17 18))
+                (17 ())
+                (18 ())
 
-              (101 (102 108 107))
-              
-              (102 (103))
-              (108 (103))
-              (107 ())
-              
-              (103 (104 105))
-              
-              (104 ())
-              (105 (106))
-              (106 (108))               
-              ))
+                (101 (102 108 107))
+
+                (102 (103))
+                (108 (103))
+                (107 ())
+
+                (103 (104 105))
+
+                (104 ())
+                (105 (106))
+                (106 (108))
+                ))
