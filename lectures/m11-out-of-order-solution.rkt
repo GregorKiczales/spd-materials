@@ -48,8 +48,9 @@
 (define (first-out-of-order the-map num0)
   ;; nn-wl is (listof Natural);   worklist of node numbers
   ;; visited is (listof Natural)
-  ;; Numbers of nodes already visited in the tr. (first visited) is always
-  ;; the previous node's number which implies visited is never empty
+  ;; numbers of nodes already visited in the tr in reverse order, so
+  ;; (first visited) is always the previous node's number
+  ;; CONSTRAINT: always has at least one element
   (local [(define (fn-for-node n nn-wl visited)
             (local [(define num (node-number n))
                     (define nexts (node-nexts n))
@@ -88,9 +89,8 @@
   ;; nn-wl   is (listof Natural);          worklist of node numbers
   ;; path-wl is (listof (listof Natural)); tandem worklist of paths
   ;; visited is (listof Natural)
-  ;; Numbers of nodes already visited in the tr. (first visited) is always
-  ;; the previous node's number which implies visited is never empty
-
+  ;; numbers of nodes already visited in the tr in reverse order
+  ;; CONSTRAINT: always has at least one element
   (local [(define (fn-for-node n path nn-wl path-wl  visited)
             (local [(define num      (node-number n))
                     (define nexts    (node-nexts n))
