@@ -20,9 +20,9 @@
              '((@signature Map Natural -> Natural or false)
                ;; in TR traversal of graph from n, produce first out of sequence node number
 
-               (check-expect (first-out-of-order MAP   1) 8)
-               (check-expect (first-out-of-order MAP  11) false)
-               (check-expect (first-out-of-order MAP 101) 108)
+               (check-expect (first-out-of-order GRAPH   1) 8)
+               (check-expect (first-out-of-order GRAPH  11) false)
+               (check-expect (first-out-of-order GRAPH 101) 108)
 
                (@template-origin genrec arb-tree accumulator)))
 
@@ -50,9 +50,9 @@
              '((@signature Map Natural -> (listof Natural) or false)
                ;; in TR traversal of graph from n, produce path if first out of sequence node
 
-               (check-expect (first-out-of-order-path MAP   1) (list 1 6 8))
-               (check-expect (first-out-of-order-path MAP  11) false)
-               (check-expect (first-out-of-order-path MAP 101) (list 101 102 103 105 106 108))
+               (check-expect (first-out-of-order-path GRAPH   1) (list 1 6 8))
+               (check-expect (first-out-of-order-path GRAPH  11) false)
+               (check-expect (first-out-of-order-path GRAPH 101) (list 101 102 103 105 106 108))
                
                (@template-origin genrec arb-tree accumulator)))
             
