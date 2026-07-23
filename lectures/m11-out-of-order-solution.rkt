@@ -44,7 +44,6 @@
 
 (@template-origin genrec arb-tree accumulator)
 
-
 (define (first-out-of-order the-map num0)
   ;; nn-wl is (listof Natural);   worklist of node numbers
   ;; visited is (listof Natural)
@@ -70,6 +69,32 @@
     (fn-for-lonn (node-nexts (generate-node the-map num0))
                  (list num0))))
 
+;; ALTERNATIVE SOLUTION DUE TO DIFFERENT `visited` ACCUMULATOR INVARIANT
+#;
+(define (first-out-of-order the-map num0)
+  ;; nn-wl is (listof Natural);   worklist of node numbers
+  ;; visited is (listof Natural);
+  ;; Numbers of nodes already visited in the tr (empty if none visited)
+  (local [(define (fn-for-node n nn-wl visited)
+            (local [(define num (node-number n))
+                    (define nexts (node-nexts n))
+                    (define nvisited (cons num visited))]
+              (cond [(member? num visited) (fn-for-lonn nn-wl visited)]
+                    [(and (not (empty? visited))
+                          (not (= num (add1 (first visited))))) num]
+                    [else
+                     (fn-for-lonn (append nexts nn-wl) nvisited)])))
+          
+          (define (fn-for-lonn nn-wl visited)
+            (cond [(empty? nn-wl) false] 
+                  [else
+                   (fn-for-node (generate-node the-map (first nn-wl))
+                                (rest nn-wl)
+                                visited)]))]
+    (fn-for-node (generate-node the-map num0) empty empty)))
+
+
+
 
 (@problem 2)
 
@@ -85,7 +110,6 @@
 (@template-origin genrec arb-tree accumulator)
 
 (define (first-out-of-order-path the-map num0)
-
   ;; nn-wl   is (listof Natural);          worklist of node numbers
   ;; path-wl is (listof (listof Natural)); tandem worklist of paths
   ;; visited is (listof Natural)
@@ -120,6 +144,39 @@
                             (list num0))
                  (list num0))))
 
+#;
+;; ALTERNATIVE SOLUTION DUE TO DIFFERENT `visited` ACCUMULATOR INVARIANT
+(define (first-out-of-order-path the-map num0)
+  ;; nn-wl   is (listof Natural);          worklist of node numbers
+  ;; path-wl is (listof (listof Natural)); tandem worklist of paths
+  ;; visited is (listof Natural)
+  ;; numbers of nodes already visited in the tr in reverse order (empty if none)
+  (local [(define (fn-for-node n path nn-wl path-wl  visited)
+            (local [(define num      (node-number n))
+                    (define nexts    (node-nexts n))
+                    (define npath    (cons num path))
+                    (define nvisited (cons num visited))]
+              (cond [(member? num visited) (fn-for-lonn nn-wl path-wl visited)]
+                    [(and (not (empty? visited))
+                          (not (= num (add1 (first visited))))) (reverse npath)]
+                    [else
+                     (fn-for-lonn (append nexts
+                                          nn-wl)
+                                  (append (make-list (length nexts) npath)
+                                          path-wl)
+                                  nvisited)])))
+
+          (define (fn-for-lonn nn-wl path-wl visited)
+            (cond [(empty? nn-wl) false]
+                  [else
+                   (fn-for-node (generate-node the-map (first nn-wl))
+                                (first path-wl)
+                                (rest nn-wl)
+                                (rest path-wl)
+                                visited)]))]
+
+    ;; must start at fn-for-lonn to satisfy visited invariant
+    (fn-for-node (generate-node the-map num0) empty empty empty empty)))
 
 
 ;;
