@@ -70,6 +70,32 @@
     (fn-for-lonn (node-nexts (generate-node the-map num0))
                  (list num0))))
 
+;; ALTERNATIVE SOLUTION DUE TO DIFFERENT `visited` ACCUMULATOR INVARIANT
+#;
+(define (first-out-of-order map num0)
+  ;; nn-wl is (listof Natural);   worklist of node numbers
+  ;; visited is (listof Natural);
+  ;; Numbers of nodes already visited in the tr (empty if none visited)
+  (local [(define (fn-for-node n nn-wl visited)
+            (local [(define num (node-number n))
+                    (define nexts (node-nexts n))
+                    (define nvisited (cons num visited))]
+              (cond [(member? num visited) (fn-for-lonn nn-wl visited)]
+                    [(and (not (empty? visited))
+                          (not (= num (add1 (first visited))))) num]
+                    [else
+                     (fn-for-lonn (append nexts nn-wl) nvisited)])))
+          
+          (define (fn-for-lonn nn-wl visited)
+            (cond [(empty? nn-wl) false] 
+                  [else
+                   (fn-for-node (generate-node map (first nn-wl))
+                                (rest nn-wl)
+                                visited)]))]
+    (fn-for-node (generate-node map num0) empty empty)))
+
+
+
 
 (@problem 2)
 
