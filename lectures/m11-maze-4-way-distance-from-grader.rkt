@@ -39,10 +39,15 @@
             (grade-encapsulated-template-fns (fn-for-p fn-for-lop)
               (weights (*)
                 
-                (grade-questions-intact/body fn-for-p (p path dist)
+                (score-max
+                 (grade-questions-intact/body fn-for-p (p path dist)
                   (cond [(equal? p end) ...]
                         #;[(solved? p) ...]
                         [(member? p path) ...] [else ...]))
+                 (grade-questions-intact/body fn-for-p (p path dist)
+                  (cond [(member? p path) ...]
+                        #;[(solved? p) ...]
+                        [(equal? p end) ...] [else ...])))
 
                 (grade-mr-intact        fn-for-p fn-for-lop)
 
