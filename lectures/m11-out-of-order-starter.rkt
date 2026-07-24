@@ -23,17 +23,17 @@
 
 (@htdd Map)
 #|
- A Map is AN OPAQUE DATA STRUCTURE that represents one or more maps.
- OPAQUE means you can't look inside it.  THE ONLY THING YOU ARE  ALLOWED TO DO
+ A Map is AN OPAQUE DATA STRUCTURE that represents one or more lookup maps.
+ OPAQUE means you can't look inside it.  THE ONLY THING YOU ARE ALLOWED TO DO
  WITH A MAP IS PASS IT TO generate-node.
 
- generate-node is defined at the bottom of the fole. You should treat it as a
+ generate-node is defined at the bottom of the file. You should treat it as a
  primitive function described as follows:
 
  generate node
  Map Natural -> Node
 
- If a node with the given number exists in map then generate and produce it.
+ If a node with the given number exists in the map then generate and produce it.
  Signal an error if no node with the given number exists in the map.
 
  The bottom of the file defines a map called GRAPH for the graphs shown in
@@ -48,7 +48,7 @@
 ;; Here are normal recursion and tail recursion templates.
 ;;
 #;
-(define (fn-for-graph/nr map num0)
+(define (fn-for-graph/nr the-map num0)
   (local [(define (fn-for-node n)
             (local [(define num (node-number n))
                     (define nexts (node-nexts n))]
@@ -59,13 +59,13 @@
           (define (fn-for-lonn lonn)
             (cond [(empty? lonn) (...)]
                   [else
-                   (... (fn-for-node (generate-node map (first lonn)))
+                   (... (fn-for-node (generate-node the-map (first lonn)))
                         (fn-for-lonn (rest lonn)))]))]
 
     (fn-for-? ...num0)))
 
 #;
-(define (fn-for-graph/tr map num0)
+(define (fn-for-graph/tr the-map num0)
   ;; nn-wl is (listof Natural); node number worklist
   ;; fn-for-node adds the unvisited direct subs of n
   ;; fn-for-lonn takes node numbers off one at a time to call fn-for-node
@@ -79,7 +79,7 @@
           (define (fn-for-lonn nn-wl)
             (cond [(empty? nn-wl) (...)]
                   [else
-                   (fn-for-node (generate-node map (first nn-wl))
+                   (fn-for-node (generate-node the-map (first nn-wl))
                                 (rest nn-wl))]))]
 
     (fn-for-? ...num0)))
@@ -106,7 +106,7 @@
 
 (@template-origin genrec arb-tree accumulator)
 
-(define (first-out-of-order map num0) false)
+(define (first-out-of-order the-map num0) false)
 
 
 (@problem 2)
@@ -127,7 +127,7 @@
 
 (@template-origin genrec arb-tree accumulator)
 
-(define (first-out-of-order-path map num0) false)
+(define (first-out-of-order-path the-map num0) false)
 
 
 
@@ -141,8 +141,8 @@
 (@htdf generate-node)
 (@signature Map Natural -> Node)
 ;; given map and node number (name), generate corresponding node
-(define (generate-node map number)
-  (local [(define entry (assoc number map))]
+(define (generate-node the-map number)
+  (local [(define entry (assoc number the-map))]
     (if (false? entry)
         (error "Node with given number does not exist." number)
         (apply make-node entry))))
