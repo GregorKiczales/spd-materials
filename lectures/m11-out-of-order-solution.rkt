@@ -19,11 +19,12 @@
 
 (define N101 (make-node 101 (list 102 108 107)))
 
+;; <template omitted intentionally>
 
 (@htdd Map)
 #|
- A Map is AN OPAQUE DATA STRUCTURE that represents one or more maps.
- OPAQUE means you can't look inside it.  THE ONLY THING YOU ARE  ALLOWED TO DO
+ A Map is AN OPAQUE DATA STRUCTURE that represents one or more lookup maps.
+ OPAQUE means you can't look inside it.  THE ONLY THING YOU ARE ALLOWED TO DO
  WITH A MAP IS PASS IT TO generate-node.
 |#
 
@@ -185,11 +186,9 @@
 ;; You should not look at and definitely must not edit this code.
 ;;
 
-
-
 (@htdf generate-node)
 (@signature Map Natural -> Node)
-;; given the-map and node number (name), generate corresponding node
+;; given map and node number (name), generate corresponding node
 (define (generate-node the-map number)
   (local [(define entry (assoc number the-map))]
     (if (false? entry)
