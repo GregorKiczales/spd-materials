@@ -165,6 +165,9 @@ and delete or comment out the others.
   ;; p-wl is (listof Pos)
   ;; worklist of positions to visit: direct subs of visited
   ;; positions that are not yet known to be visited
+
+  ;; visited is (listof Pos)
+  ;; list of positions visited so far, in reverse order
   (local [(define rank (sqrt (length m)))
 
           (define (fn-for-p p p-wl visited)

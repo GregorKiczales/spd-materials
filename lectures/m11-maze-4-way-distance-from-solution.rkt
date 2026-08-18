@@ -115,8 +115,9 @@
 
 (@htdf distance-from)
 (@signature Maze Pos Pos -> Natural or false)
-;; if path exists from start to end produce distance between
+;; if can start at 0,0, reach start, and then end, produce distance between them
 ;; CONSTRAINT: maze has a true at least in the upper left
+(check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 1)) #f)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)
 (check-expect (distance-from M1 (make-pos 1 4) (make-pos 1 1)) #f)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 4 1)) #f)
@@ -129,6 +130,84 @@
 
 (@template-origin encapsulated try-catch genrec arb-tree accumulator)
 
+(define (distance-from m start end)
+  ;; trivial: 1) reach end passing through (0,0)
+  ;;          2) reach a previous position on the current path
+  ;; reduction: all valid and acyclic positions among down, right, up, left
+  ;; argument:  maze is finite, so there are finite acyclic paths
+  ;;   in the maze, each of which is finite.  If end is reachable,
+  ;;   then some path goes there.
+
+  ;; path is (listof Pos)
+  ;; positions traversed from (0,0) to p/lop, in reverse order
+
+  ;; distance is Distance
+  ;; current distance past start, or #f if path has not passed through start
+  (local [(define rank (sqrt (length m)))	  
+
+          (define (fn-for-p p path distance)
+            (cond [(member? p path) false]
+                  [(equal? p end) (distance-add1 distance)]
+                  [else
+                   (if (equal? p start)
+                       (fn-for-lop (next-ps p) (cons p path) 0)
+                       (fn-for-lop (next-ps p) (cons p path)
+                                   (distance-add1 distance)))]))
+
+          (define (fn-for-lop lop path distance)
+            (cond [(empty? lop) false]
+                  [else
+                   (local [(define try
+                             (fn-for-p (first lop) path distance))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lop (rest lop) path distance)))]))
+
+          ;; Distance is one of:
+          ;;  - false
+          ;;  - Natural
+          ;; interp. distance past start, where
+          ;;    false means we have not yet passed start
+          ;;    and natural n is the distance from start, including start
+          (define (distance-add1 dist)
+            (cond [(false? dist) false]
+                  [else (add1 dist)]))
+          
+
+          ;; Pos -> Boolean          
+          ;; produce true if pos is at the lower right
+          (define (solved? p)
+            (and (= (pos-x p) (sub1 rank))
+                 (= (pos-y p) (sub1 rank))))
+
+
+          ;; Pos -> (listof Pos)
+          ;; produce next possible positions based on maze geometry
+          (define (next-ps p)
+            (local [(define x (pos-x p))
+                    (define y (pos-y p))]
+              (filter (lambda (p1)
+                        (and (<= 0 (pos-x p1) (sub1 rank)) ;legal x
+                             (<= 0 (pos-y p1) (sub1 rank)) ;legal y
+                             (open? (maze-ref m p1))))     ;open?
+                      (list (make-pos x (sub1 y))          ;up
+                            (make-pos x (add1 y))          ;down
+                            (make-pos (sub1 x) y)          ;left
+                            (make-pos (add1 x) y)))))      ;right
+
+          ;; Maze Pos -> Boolean
+          ;; produce contents of maze at location p
+          ;; CONSTRAINT: p is within bounds of maze
+          (define (maze-ref m p)
+            (list-ref m (+ (pos-x p) (* rank (pos-y p)))))]
+    
+    (fn-for-p (make-pos 0 0) empty false)))
+
+
+;; ALTERNATIVE SOLUTION: Boolean accumulator tracks whether current path
+;; has passed through start
+;; NOTE: uses `error` function to identify bad function arguments.
+#;
 (define (distance-from m start end)
   ;; trivial: 1) reach end passing through (0,0)
   ;;          2) reach previous position on the current path
@@ -163,6 +242,8 @@
                          try
                          (fn-for-lop (rest lop) path passed-start?)))]))
 
+          ;; Pos (listof Pos) -> Natural
+          ;; produce the 0-based position of p in lop
           ;; CONSTRAINT: p is in lop
           (define (position-of p lop)
             (cond [(empty? p) (error "p was not in lop")]

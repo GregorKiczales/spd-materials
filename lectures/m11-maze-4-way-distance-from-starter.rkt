@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-path-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname m11-maze-4-way-distance-from-starter) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
 (require spd/tags)
 
 (@assignment lectures/m11-maze-4-way-distance-from)
@@ -117,7 +117,7 @@
 
 In the following partially complete function design:
 
- - The next-ps function has been updated so to produce all valid
+ - The next-ps function has been updated to produce all valid
    moves chosen from up, down, left, and right of the given position.
 
  - ONE set of templates for fn-for-p and fn-for-lop uses ordinary recursion.
@@ -127,15 +127,15 @@ In the following partially complete function design:
  - Neither set of templates have accumulators to prevent cycling.
 
 Complete the design of the function below. Note carefully that this 
-function produces a natural if there is a path starting at 0,0 that first
-passes through start, and then passes through end. The natural is the number
-of steps from from start to end.  If there is no such path it fails.
+function produces a natural if there is an acyclic path starting at 0,0 that
+first *passes through* start, and then passes through end. The natural is the
+number of steps from start to end.  If there is no such path it fails.
 
-Start by figuring out what addtional accumulator(s) you need and then
-choose normal or tail recursion. Work with the right set of templates
+Start by figuring out what additional accumulator(s) you need and then
+choose normal recursion or tail recursion. Work with the right set of templates
 and delete or comment out the others.
 
-NOTE THAT WE HAVE PUT A USEFUL DATA DEFINITION AND A HELPER FUNCTION
+NOTE THAT WE HAVE PUT A USEFUL DATA DEFINITION Distance AND A HELPER FUNCTION
 CALLED distance-add1 in for you.
 
 |#
@@ -146,7 +146,9 @@ CALLED distance-add1 in for you.
 (@signature Maze Pos Pos -> Natural or false)
 ;; if can start at 0,0, reach start, and then end, produce distance between them
 ;; CONSTRAINT: maze has a true at least in the upper left
+(check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 1)) #f)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 1 4)) 3)
+(check-expect (distance-from M1 (make-pos 1 4) (make-pos 1 1)) #f)
 (check-expect (distance-from M1 (make-pos 1 1) (make-pos 4 1)) #f)
 
 (check-expect (distance-from M2 (make-pos 0 0) (make-pos 4 4)) 8)
@@ -197,9 +199,11 @@ CALLED distance-add1 in for you.
           
 
           ;; Distance is one of:
-          ;;  - false   (have not yet passed start)
-          ;;  - Natural (distance from start including start)
-          
+          ;;  - false
+          ;;  - Natural
+          ;; interp. distance past start, where
+          ;;    false means we have not yet passed start
+          ;;    and natural n is the distance from start, including start
           (define (distance-add1 dist)
             (cond [(false? dist) false]
                   [else (add1 dist)]))
